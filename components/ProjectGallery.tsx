@@ -11,16 +11,44 @@ interface ProjectGalleryProps {
 export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onRestore }) => {
     const [filterStyle, setFilterStyle] = useState<string>('All Styles');
     const [filterView, setFilterView] = useState<string>('All Views');
+    const [filterTime, setFilterTime] = useState<string>('All Time');
     const [showStyleDropdown, setShowStyleDropdown] = useState(false);
     const [showViewDropdown, setShowViewDropdown] = useState(false);
+    const [showTimeDropdown, setShowTimeDropdown] = useState(false);
 
     // Get unique styles and views from history
     const uniqueStyles = ['All Styles', ...Array.from(new Set(history.map(item => item.style)))];
     const uniqueViews = ['All Views', ...Array.from(new Set(history.map(item => item.viewType)))];
+    const timeOptions = ['All Time', 'Today', 'Last 7 Days', 'Last 30 Days'];
+
+    const closeAllDropdowns = () => {
+        setShowStyleDropdown(false);
+        setShowViewDropdown(false);
+        setShowTimeDropdown(false);
+    };
+
+    const resetFilters = () => {
+        setFilterStyle('All Styles');
+        setFilterView('All Views');
+        setFilterTime('All Time');
+        closeAllDropdowns();
+    };
 
     const filteredHistory = history.filter(item => {
+        // Style filter
         if (filterStyle !== 'All Styles' && item.style !== filterStyle) return false;
+        // View filter
         if (filterView !== 'All Views' && item.viewType !== filterView) return false;
+        // Time filter
+        if (filterTime !== 'All Time' && item.timestamp) {
+            const itemDate = new Date(item.timestamp);
+            const now = new Date();
+            const diffDays = Math.floor((now.getTime() - itemDate.getTime()) / (1000 * 60 * 60 * 24));
+
+            if (filterTime === 'Today' && diffDays > 0) return false;
+            if (filterTime === 'Last 7 Days' && diffDays > 7) return false;
+            if (filterTime === 'Last 30 Days' && diffDays > 30) return false;
+        }
         return true;
     });
 
@@ -35,7 +63,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onResto
                     {/* Style Filter */}
                     <div className="relative">
                         <button
-                            onClick={() => { setShowStyleDropdown(!showStyleDropdown); setShowViewDropdown(false); }}
+                            onClick={() => { setShowStyleDropdown(!showStyleDropdown); setShowViewDropdown(false); setShowTimeDropdown(false); }}
                             className={`flex items-center gap-2 px-3 py-2 bg-white border ${filterStyle !== 'All Styles' ? 'border-slate-900 text-slate-900 bg-slate-50' : 'border-slate-200 text-slate-600'} rounded-lg text-xs font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap`}
                         >
                             <Filter size={14} />
@@ -63,7 +91,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onResto
                     {/* View Filter */}
                     <div className="relative">
                         <button
-                            onClick={() => { setShowViewDropdown(!showViewDropdown); setShowStyleDropdown(false); }}
+                            onClick={() => { setShowViewDropdown(!showViewDropdown); setShowStyleDropdown(false); setShowTimeDropdown(false); }}
                             className={`flex items-center gap-2 px-3 py-2 bg-white border ${filterView !== 'All Views' ? 'border-slate-900 text-slate-900 bg-slate-50' : 'border-slate-200 text-slate-600'} rounded-lg text-xs font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap`}
                         >
                             <Layers size={14} />
@@ -88,12 +116,40 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onResto
                         )}
                     </div>
 
-                    <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap opacity-50 cursor-not-allowed">
-                        <Calendar size={14} />
-                        <span>All Time</span>
-                        <ChevronDown size={14} className="text-slate-400" />
-                    </button>
-                    <button className="p-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    {/* Time Filter */}
+                    <div className="relative">
+                        <button
+                            onClick={() => { setShowTimeDropdown(!showTimeDropdown); setShowStyleDropdown(false); setShowViewDropdown(false); }}
+                            className={`flex items-center gap-2 px-3 py-2 bg-white border ${filterTime !== 'All Time' ? 'border-slate-900 text-slate-900 bg-slate-50' : 'border-slate-200 text-slate-600'} rounded-lg text-xs font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap`}
+                        >
+                            <Calendar size={14} />
+                            <span>{filterTime}</span>
+                            <ChevronDown size={14} className="text-slate-400" />
+                        </button>
+                        {showTimeDropdown && (
+                            <>
+                                <div className="fixed inset-0 z-10" onClick={() => setShowTimeDropdown(false)}></div>
+                                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-1 z-20 max-h-60 overflow-y-auto">
+                                    {timeOptions.map(time => (
+                                        <button
+                                            key={time}
+                                            onClick={() => { setFilterTime(time); setShowTimeDropdown(false); }}
+                                            className={`w-full text-left px-4 py-2 text-xs hover:bg-slate-50 ${filterTime === time ? 'font-bold text-slate-900 bg-slate-50' : 'text-slate-600'}`}
+                                        >
+                                            {time}
+                                        </button>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Reset Filters Button */}
+                    <button
+                        onClick={resetFilters}
+                        title="Reset all filters"
+                        className="p-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                    >
                         <SlidersHorizontal size={14} />
                     </button>
                 </div>
@@ -106,7 +162,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onResto
                     </div>
                     <p className="text-sm font-medium text-slate-500">No projects found matching filters.</p>
                     <button
-                        onClick={() => { setFilterStyle('All Styles'); setFilterView('All Views'); }}
+                        onClick={resetFilters}
                         className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-2"
                     >
                         Clear Filters
