@@ -1,189 +1,19 @@
-
-import React, { useState, useEffect } from 'react';
-import { Box, Sparkles, ArrowRight, Search, X, Maximize2, Zap, User as UserIcon, Grid, LayoutTemplate, Aperture, Layers, Palette, PenTool } from 'lucide-react';
-import { Button } from './Button';
+import React from 'react';
+import { Box, Sparkles, Search } from 'lucide-react';
+import { UploadForm } from './UploadForm';
 
 interface LandingPageProps {
     onGetStarted: () => void;
 }
 
-interface GalleryItem {
-    id: number;
-    image: string;
-    style: string;
-    type: string;
-    category: string;
-    user: string;
-    prompt: string;
-    aspectRatio: string;
-}
-
-// Fallback gallery data in case JSON fails to load
-const FALLBACK_GALLERY: GalleryItem[] = [
-    {
-        id: 1,
-        image: "/thumbnails/photorealistic.jpg",
-        style: "Photorealistic",
-        type: "Exterior Render",
-        category: "render",
-        user: "salARCHman",
-        prompt: "Modern minimalist villa with glass facades, natural landscape setting, golden hour lighting",
-        aspectRatio: "16:9"
-    },
-    {
-        id: 2,
-        image: "/thumbnails/conceptual.jpg",
-        style: "Operative Massing",
-        type: "Volumetric Study",
-        category: "ideation",
-        user: "salARCHman",
-        prompt: "Volumetric exploration with additive and subtractive operations, white model aesthetic",
-        aspectRatio: "1:1"
-    },
-    {
-        id: 3,
-        image: "/thumbnails/pencil-sketch.jpg",
-        style: "Pencil Sketch",
-        type: "Conceptual Sketch",
-        category: "sketch",
-        user: "salARCHman",
-        prompt: "Hand-drawn conceptual sketch of a residential complex, loose lines, expressive style",
-        aspectRatio: "4:3"
-    },
-    {
-        id: 4,
-        image: "/thumbnails/blueprint.jpg",
-        style: "Blueprint",
-        type: "Technical Drawing",
-        category: "diagram",
-        user: "salARCHman",
-        prompt: "Traditional blueprint style floor plan with dimensions and annotations",
-        aspectRatio: "16:9"
-    },
-    {
-        id: 5,
-        image: "/thumbnails/semi-realistic.jpg",
-        style: "Semi-Realistic",
-        type: "Interior Render",
-        category: "render",
-        user: "salARCHman",
-        prompt: "Contemporary living room with warm wooden accents, natural lighting, Scandinavian influence",
-        aspectRatio: "3:4"
-    },
-    {
-        id: 6,
-        image: "/thumbnails/technical-pen.jpg",
-        style: "Technical Pen",
-        type: "Architectural Drawing",
-        category: "diagram",
-        user: "salARCHman",
-        prompt: "Detailed pen and ink architectural illustration, cross-hatching, perspective view",
-        aspectRatio: "16:9"
-    },
-    {
-        id: 7,
-        image: "/thumbnails/watercolor-wash.jpg",
-        style: "Watercolor",
-        type: "Artistic Render",
-        category: "sketch",
-        user: "salARCHman",
-        prompt: "Soft watercolor rendering of a coastal residence, artistic interpretation",
-        aspectRatio: "4:3"
-    },
-    {
-        id: 8,
-        image: "/thumbnails/clay.jpg",
-        style: "Clay Model",
-        type: "Massing Study",
-        category: "ideation",
-        user: "salARCHman",
-        prompt: "Clean clay model rendering, soft ambient occlusion, form exploration",
-        aspectRatio: "1:1"
-    },
-    {
-        id: 9,
-        image: "/thumbnails/hyperreal.jpg",
-        style: "Hyperreal",
-        type: "Exterior Render",
-        category: "render",
-        user: "salARCHman",
-        prompt: "Ultra-realistic architectural visualization, sunset atmosphere, professional quality",
-        aspectRatio: "16:9"
-    },
-    {
-        id: 10,
-        image: "/thumbnails/charcoal.jpg",
-        style: "Charcoal Sketch",
-        type: "Conceptual Art",
-        category: "sketch",
-        user: "salARCHman",
-        prompt: "Expressive charcoal drawing of urban architecture, dramatic shadows",
-        aspectRatio: "3:4"
-    },
-    {
-        id: 11,
-        image: "/thumbnails/white-model.jpg",
-        style: "White Model",
-        type: "Mass Study",
-        category: "ideation",
-        user: "salARCHman",
-        prompt: "Clean white architectural model, studio lighting, shadow study",
-        aspectRatio: "1:1"
-    },
-    {
-        id: 12,
-        image: "/thumbnails/marker.jpg",
-        style: "Marker Render",
-        type: "Presentation",
-        category: "sketch",
-        user: "salARCHman",
-        prompt: "Professional marker rendering, architectural illustration style",
-        aspectRatio: "4:3"
-    }
-];
-
-const CATEGORY_FILTERS = [
-    { id: 'all', label: 'All', icon: Grid },
-    { id: 'render', label: 'Render', icon: Aperture },
-    { id: 'ideation', label: 'Ideation', icon: Layers },
-    { id: 'sketch', label: 'Sketch', icon: PenTool },
-    { id: 'diagram', label: 'Diagram', icon: LayoutTemplate }
+const DEVELOPER_GALLERY = [
+    "/gallery/archivision-1765932651101.jpg?v=1",
+    "/gallery/archivision-1765933707253.jpg?v=1",
+    "/gallery/salARCHman-1765944744165.jpg?v=1",
+    "/gallery/salARCHman-1765956698737.jpg?v=1"
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
-    const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-    const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(FALLBACK_GALLERY);
-    const [activeFilter, setActiveFilter] = useState('all');
-
-    // Try to load gallery data from JSON file
-    useEffect(() => {
-        fetch('/gallery/gallery-data.json')
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.length > 0) {
-                    setGalleryItems(data);
-                }
-            })
-            .catch(() => {
-                // Use fallback data if JSON fails to load
-                console.log('Using fallback gallery data');
-            });
-    }, []);
-
-    const filteredItems = activeFilter === 'all'
-        ? galleryItems
-        : galleryItems.filter(item => item.category === activeFilter);
-
-    const getCategoryIcon = (category: string) => {
-        switch (category) {
-            case 'render': return <Aperture size={10} className="text-blue-500" />;
-            case 'ideation': return <Layers size={10} className="text-purple-500" />;
-            case 'sketch': return <PenTool size={10} className="text-orange-500" />;
-            case 'diagram': return <LayoutTemplate size={10} className="text-green-500" />;
-            default: return <Grid size={10} className="text-slate-500" />;
-        }
-    };
-
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-500/20 relative">
 
@@ -228,189 +58,53 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </nav>
 
             {/* Main Content */}
-            <main className="relative z-10 pt-24 pb-12 px-4 md:px-8 max-w-[1920px] mx-auto">
+            <main className="relative z-10 pt-32 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
 
                 {/* Header / Intro */}
-                <div className="flex flex-col items-center justify-center py-12 text-center space-y-6">
+                <div className="flex flex-col items-center justify-center py-12 text-center space-y-6 mb-8">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs font-bold text-blue-600 mb-2 uppercase tracking-wide">
-                        <Sparkles size={12} className="text-blue-600" /> Community Showcase
+                        <Sparkles size={12} className="text-blue-600" /> AI Powered Rendering
                     </div>
                     <h1 className="text-4xl md:text-6xl font-light tracking-tight text-slate-900 leading-tight max-w-4xl">
-                        From rough sketch to <span className="font-bold">high quality render.</span>
+                        Transform your sketches into <span className="font-bold">photorealistic renders.</span>
                     </h1>
-                    <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed">
-                        Discover what's being created with salARCHman. From conceptual massing to photorealistic interiors.
+                    <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed mx-auto">
+                        Upload your architectural sketches and let our AI generate stunning visualizations in seconds.
                     </p>
+                </div>
 
-                    {/* Category Filters */}
-                    <div className="flex flex-wrap justify-center gap-2 pt-4">
-                        {CATEGORY_FILTERS.map((filter) => {
-                            const Icon = filter.icon;
-                            return (
-                                <button
-                                    key={filter.id}
-                                    onClick={() => setActiveFilter(filter.id)}
-                                    className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm ${activeFilter === filter.id
-                                            ? 'bg-slate-900 text-white'
-                                            : 'bg-white border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300'
-                                        }`}
-                                >
-                                    <Icon size={12} />
-                                    {filter.label}
-                                </button>
-                            );
-                        })}
+                {/* Upload Form Section */}
+                <div className="flex justify-center mb-16">
+                    <UploadForm onUpload={(file) => console.log('Uploaded:', file)} />
+                </div>
+
+                {/* Developer Gallery Section */}
+                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex items-center justify-center">
+                        <h2 className="text-2xl font-light text-slate-900 flex items-center gap-2">
+                            <Box size={20} /> Showcase Gallery
+                        </h2>
                     </div>
-                </div>
 
-                {/* Masonry Grid */}
-                <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
-                    {filteredItems.map((item) => (
-                        <div
-                            key={item.id}
-                            onClick={() => setSelectedImage(item)}
-                            className="break-inside-avoid relative group cursor-zoom-in rounded-xl overflow-hidden bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                        >
-                            <img
-                                src={item.image}
-                                alt={item.style}
-                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                                onError={(e) => {
-                                    // Fallback to a thumbnail if gallery image fails
-                                    const target = e.target as HTMLImageElement;
-                                    if (!target.src.includes('thumbnails')) {
-                                        target.src = '/thumbnails/photorealistic.jpg';
-                                    }
-                                }}
-                            />
-
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4">
-                                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    <p className="text-white text-xs font-bold line-clamp-1">{item.prompt}</p>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <span className="text-[10px] text-slate-800 bg-white/90 px-2 py-0.5 rounded-md backdrop-blur-sm font-medium shadow-sm flex items-center gap-1">
-                                            {getCategoryIcon(item.category)}
-                                            {item.style}
-                                        </span>
-                                        <div className="flex items-center gap-1.5 text-[10px] text-slate-200">
-                                            <UserIcon size={10} /> {item.user}
-                                        </div>
-                                    </div>
-                                </div>
+                    <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                        {DEVELOPER_GALLERY.map((img, index) => (
+                            <div key={index} className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                                <img
+                                    src={img}
+                                    alt={`Showcase ${index + 1}`}
+                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                                    onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                                    }}
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                             </div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Load More Trigger */}
-                <div className="flex justify-center py-16">
-                    <button onClick={onGetStarted} className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium bg-white px-6 py-3 rounded-full border border-slate-200 shadow-sm hover:shadow-md">
-                        <span>Sign in to view more</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
+                        ))}
+                    </div>
                 </div>
 
             </main>
-
-            {/* Image Details Modal (Lightbox) - Light Mode */}
-            {selectedImage && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-200">
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-                        onClick={() => setSelectedImage(null)}
-                    ></div>
-
-                    {/* Modal Content */}
-                    <div className="relative w-full max-w-6xl h-full max-h-[90vh] bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl ring-1 ring-black/5">
-                        <button
-                            onClick={() => setSelectedImage(null)}
-                            className="absolute top-4 right-4 z-10 p-2 bg-white/80 hover:bg-white text-slate-900 rounded-full transition-colors backdrop-blur-md shadow-sm"
-                        >
-                            <X size={20} />
-                        </button>
-
-                        {/* Image Side */}
-                        <div className="flex-1 bg-slate-100 flex items-center justify-center p-4 relative group" style={{
-                            backgroundImage: 'linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)',
-                            backgroundSize: '20px 20px'
-                        }}>
-                            <img
-                                src={selectedImage.image}
-                                alt={selectedImage.prompt}
-                                className="max-w-full max-h-full object-contain shadow-2xl rounded-sm"
-                            />
-                        </div>
-
-                        {/* Details Side */}
-                        <div className="w-full md:w-[400px] bg-white border-l border-slate-100 p-8 flex flex-col overflow-y-auto">
-                            <div className="flex items-center gap-3 mb-8 pb-6 border-b border-slate-100">
-                                <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                                    {selectedImage.user[0].toUpperCase()}
-                                </div>
-                                <div>
-                                    <h3 className="text-sm font-bold text-slate-900">{selectedImage.user}</h3>
-                                    <p className="text-xs text-slate-500 flex items-center gap-1">
-                                        <Zap size={10} className="text-yellow-500 fill-yellow-500" /> Community Member
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="space-y-8">
-                                <div>
-                                    <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-3 block flex items-center gap-2">
-                                        <LayoutTemplate size={12} /> Prompt
-                                    </label>
-                                    <p className="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100 font-medium">
-                                        {selectedImage.prompt}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-y-6 gap-x-4">
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1.5 block">Style</label>
-                                        <div className="flex items-center gap-2 text-sm font-medium text-slate-900 bg-white border border-slate-100 py-1.5 px-3 rounded-lg shadow-sm">
-                                            <Aperture size={14} className="text-blue-500" />
-                                            {selectedImage.style}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1.5 block">Ratio</label>
-                                        <div className="flex items-center gap-2 text-sm font-medium text-slate-900 bg-white border border-slate-100 py-1.5 px-3 rounded-lg shadow-sm">
-                                            <Grid size={14} className="text-slate-500" />
-                                            {selectedImage.aspectRatio}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1.5 block">Category</label>
-                                        <div className="flex items-center gap-2 text-sm font-medium text-slate-900 bg-white border border-slate-100 py-1.5 px-3 rounded-lg shadow-sm capitalize">
-                                            {getCategoryIcon(selectedImage.category)}
-                                            {selectedImage.category}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1.5 block">Type</label>
-                                        <div className="flex items-center gap-2 text-sm font-medium text-slate-900 bg-white border border-slate-100 py-1.5 px-3 rounded-lg shadow-sm">
-                                            <LayoutTemplate size={14} className="text-green-500" />
-                                            {selectedImage.type}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="pt-8 mt-auto">
-                                    <Button onClick={onGetStarted} className="w-full bg-slate-900 text-white hover:bg-black shadow-lg shadow-slate-900/10 py-3">
-                                        <Sparkles size={16} /> Remix this Style
-                                    </Button>
-                                    <p className="text-center text-[10px] text-slate-400 mt-4">
-                                        Sign up to use this as a reference image
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
