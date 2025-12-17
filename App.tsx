@@ -743,34 +743,102 @@ function App() {
           {/* DIAGRAM TAB CONTROLS */}
           {activeTab === 'diagram' && (
             <div className="space-y-6">
+              {/* Analytical Diagrams Card */}
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Spline size={14} className="text-slate-900" />
+                  <h4 className="text-sm font-bold text-slate-900">Analytical Diagrams</h4>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Select a diagram type below to visualize analysis, flow, or assembly.
+                </p>
+              </div>
+
+              {/* Style Gallery */}
               <div>
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Diagram Type</h4>
-                <div className="grid grid-cols-1 gap-2">
-                  {Object.keys(DIAGRAM_PROMPTS).map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => setSelectedDiagramType(type as DiagramType)}
-                      className={`text-left px-3 py-2 rounded-lg text-xs font-medium border transition-all ${selectedDiagramType === type ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
-                    >
-                      {type}
-                    </button>
-                  ))}
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1"><Grid size={10} /> Style Gallery</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.keys(DIAGRAM_PROMPTS).map((type) => {
+                    const isSelected = selectedDiagramType === type;
+
+                    // Helper to get icon and description for each type
+                    const getDiagramDetails = (t: string) => {
+                      switch (t) {
+                        case 'Concept / Schematic': return { icon: <Lightbulb size={16} />, desc: "Simplified massing with arrows showing core design idea" };
+                        case 'Exploded Axonometric': return { icon: <Layers size={16} />, desc: "Vertical deconstruction of layers and assembly" };
+                        case 'Programmatic & Zoning': return { icon: <Cuboid size={16} />, desc: "Color-coded functional zoning and volumes" };
+                        case 'Circulation & Flow': return { icon: <ArrowUpRight size={16} />, desc: "Flow paths, movement vectors, and access" };
+                        case 'Climate & Environmental': return { icon: <Wind size={16} />, desc: "Sun path, wind flow, and thermal analysis" };
+                        case 'Sectional Perspective': return { icon: <BoxSelect size={16} />, desc: "3D cut revealing interior life and depth" };
+                        case 'Activity & Usage': return { icon: <Users size={16} />, desc: "Ghosted view with activity mapping and usage" };
+                        case 'Geometric Analysis': return { icon: <Ruler size={16} />, desc: "Regulating lines, symmetry, and proportions" };
+                        case 'Structural Tectonics': return { icon: <Grid3x3 size={16} />, desc: "X-ray view of load-bearing skeletal system" };
+                        case 'Urban Context & Mapping': return { icon: <Map size={16} />, desc: "Relationship to city fabric and mapping" };
+                        case 'Form Evolution': return { icon: <GitBranch size={16} />, desc: "Step-by-step generative design process" };
+                        case 'Living Collage Cutaway': return { icon: <Leaf size={16} />, desc: "Whimsical cutaway with lush plants and life" };
+                        default: return { icon: <Shapes size={16} />, desc: "Architectural diagram style" };
+                      }
+                    };
+
+                    const details = getDiagramDetails(type);
+
+                    return (
+                      <button
+                        key={type}
+                        onClick={() => setSelectedDiagramType(type as DiagramType)}
+                        className={`text-left p-3 rounded-xl border transition-all h-full flex flex-col gap-2 ${isSelected ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:shadow-sm'}`}
+                      >
+                        <div className={`${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                          {details.icon}
+                        </div>
+                        <div>
+                          <h5 className={`text-[10px] font-bold uppercase leading-tight mb-1 ${isSelected ? 'text-white' : 'text-slate-900'}`}>{type}</h5>
+                          <p className={`text-[9px] leading-relaxed ${isSelected ? 'text-slate-300' : 'text-slate-400'}`}>{details.desc}</p>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
+
               {/* Output Config (Shared) */}
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Output Config</label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2">
                   <select
-                    value={selectedImageSize}
-                    onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
+                    value={selectedAspectRatio}
+                    onChange={(e) => setSelectedAspectRatio(e.target.value as AspectRatio)}
                     className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
                   >
-                    <option value="1K">1K (5c)</option>
-                    <option value="2K">2K (10c)</option>
-                    <option value="4K">4K (20c)</option>
+                    <option value="16:9">Landscape (16:9)</option>
+                    <option value="4:3">Standard (4:3)</option>
+                    <option value="1:1">Square (1:1)</option>
+                    <option value="9:16">Portrait (9:16)</option>
                   </select>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['1K', '2K', '4K'].map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedImageSize(size as ImageSize)}
+                        className={`flex flex-col items-center justify-center py-2 rounded-lg border transition-all ${selectedImageSize === size ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                      >
+                        <span className="text-xs font-bold">{size}</span>
+                        <span className={`text-[9px] ${selectedImageSize === size ? 'text-slate-300' : 'text-slate-400'}`}>{CREDIT_COSTS[size as ImageSize]} Cr</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
+              </div>
+
+              {/* Refine */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sliders size={10} /> Refine</label>
+                <textarea
+                  placeholder="Specific details for the diagram..."
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="w-full h-20 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
+                />
               </div>
             </div>
           )}
