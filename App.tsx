@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
@@ -8,6 +7,7 @@ import { Button } from './components/Button';
 import { HistoryCard } from './components/HistoryCard';
 import { LoginScreen } from './components/LoginScreen';
 import { LandingPage } from './components/LandingPage';
+import { ProfileView } from './components/ProfileView';
 import { storageService } from './services/storageService';
 import { supabase } from './services/supabaseClient';
 
@@ -36,10 +36,6 @@ function App() {
 
   const [newStyleName, setNewStyleName] = useState('');
   const [newStylePrompt, setNewStylePrompt] = useState('');
-
-  const [editName, setEditName] = useState('');
-  const [editPassword, setEditPassword] = useState('');
-  const [isSavingProfile, setIsSavingProfile] = useState(false);
 
   const [galleryStyleFilter, setGalleryStyleFilter] = useState<string>('All');
   const [galleryViewFilter, setGalleryViewFilter] = useState<string>('All');
@@ -125,7 +121,6 @@ function App() {
       setHistory(userData.history || []);
       setCustomStyles(userData.customStyles || []);
       setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
-      setEditName(currentUser.name);
     }
   }, [currentUser]);
 
@@ -156,17 +151,6 @@ function App() {
     setReferenceImage(null);
     setApiKeyError(null);
     setActiveTab('render');
-  };
-
-  const handleUpdateProfile = () => {
-    if (!currentUser) return;
-    setIsSavingProfile(true);
-    setTimeout(() => {
-      const updatedUser = { ...currentUser, name: editName };
-      setCurrentUser(updatedUser);
-      setIsSavingProfile(false);
-      setEditPassword('');
-    }, 800);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -398,18 +382,6 @@ function App() {
     if (referenceInputRef.current) referenceInputRef.current.value = '';
   };
 
-  const getAtmosphereIcon = (atmosphere: Atmosphere) => {
-    switch (atmosphere) {
-      case 'High-key': return <Sun size={14} className="text-yellow-500" />;
-      case 'Golden Hour': return <Sunset size={14} className="text-orange-500" />;
-      case 'Blue Hour': return <Moon size={14} className="text-blue-500" />;
-      case 'Night': return <Cloud size={14} className="text-slate-400" />;
-      case 'Fog/Rain/Snow': return <CloudRain size={14} className="text-slate-500" />;
-      case 'Brutal Contrast': return <Zap size={14} className="text-slate-900" />;
-      default: return <Sun size={14} />;
-    }
-  };
-
   if (loadingAuth) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-2 border-slate-300 border-t-slate-800 rounded-full animate-spin"></div></div>;
   if (!currentUser) {
     if (showLogin) return <LoginScreen onLogin={handleLogin} onBack={() => setShowLogin(false)} />;
@@ -435,33 +407,81 @@ function App() {
             <button onClick={() => setActiveTab('diagram')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Diagram</button>
           </div>
 
-          {/* Styles & Controls (Simplified for brevity, assuming similar logic to original) */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Configuration</h3>
-            {/* Create Mode */}
-            {activeTab === 'render' && (
-              <div className="grid grid-cols-2 bg-slate-100 p-1 rounded-xl gap-1">
-                <button onClick={() => setCreateMode('Exterior')} className={`text-xs py-2 rounded-lg ${createMode === 'Exterior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Exterior</button>
-                <button onClick={() => setCreateMode('Interior')} className={`text-xs py-2 rounded-lg ${createMode === 'Interior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Interior</button>
-              </div>
-            )}
+          {/* Styles & Controls */}
+          {activeTab !== 'profile' && (
+            <div className="space-y-6">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Configuration</h3>
+              {/* Create Mode */}
+              {activeTab === 'render' && (
+                <div className="grid grid-cols-2 bg-slate-100 p-1 rounded-xl gap-1 mb-4">
+                  <button onClick={() => setCreateMode('Exterior')} className={`text-xs py-2 rounded-lg ${createMode === 'Exterior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Exterior</button>
+                  <button onClick={() => setCreateMode('Interior')} className={`text-xs py-2 rounded-lg ${createMode === 'Interior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Interior</button>
+                </div>
+              )}
 
-            {/* Style List (Truncated for brevity, normally would map EXTERIOR_STYLE_CATEGORIES) */}
-            <div className="grid grid-cols-2 gap-2">
-              {EXTERIOR_STYLE_CATEGORIES[0].styles.slice(0, 4).map(style => (
-                <button key={style} onClick={() => setSelectedStyle(style)} className={`p-2 text-xs border rounded-lg ${selectedStyle === style ? 'border-slate-900 bg-slate-50' : 'border-slate-200'}`}>{style}</button>
-              ))}
+              {/* Style Selection */}
+              {activeTab === 'render' && createMode === 'Exterior' && (
+                <div className="space-y-6">
+                  {EXTERIOR_STYLE_CATEGORIES.map((category) => (
+                    <div key={category.title}>
+                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">{category.title}</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {category.styles.map(style => (
+                          <button
+                            key={style}
+                            onClick={() => setSelectedStyle(style)}
+                            className={`group relative overflow-hidden rounded-lg aspect-video border transition-all ${selectedStyle === style ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-200 hover:border-slate-300'}`}
+                          >
+                            <img src={EXTERIOR_STYLE_THUMBNAILS[style]} alt={style} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110" />
+                            <div className={`absolute inset-0 flex items-end p-2 ${selectedStyle === style ? 'bg-black/40' : 'bg-black/20 group-hover:bg-black/30'}`}>
+                              <span className="text-[10px] font-medium text-white leading-tight shadow-sm">{style}</span>
+                            </div>
+                            {selectedStyle === style && (
+                              <div className="absolute top-1 right-1 bg-white text-slate-900 rounded-full p-0.5"><Check size={8} /></div>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === 'render' && createMode === 'Interior' && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Interior Styles</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {Object.values(InteriorStyle).map(style => (
+                        <button
+                          key={style}
+                          onClick={() => setSelectedStyle(style)}
+                          className={`group relative overflow-hidden rounded-lg aspect-video border transition-all ${selectedStyle === style ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-200 hover:border-slate-300'}`}
+                        >
+                          <img src={INTERIOR_STYLE_THUMBNAILS[style]} alt={style} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110" />
+                          <div className={`absolute inset-0 flex items-end p-2 ${selectedStyle === style ? 'bg-black/40' : 'bg-black/20 group-hover:bg-black/30'}`}>
+                            <span className="text-[10px] font-medium text-white leading-tight shadow-sm">{style}</span>
+                          </div>
+                          {selectedStyle === style && (
+                            <div className="absolute top-1 right-1 bg-white text-slate-900 rounded-full p-0.5"><Check size={8} /></div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
         <div className="p-4 border-t border-slate-100">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors" onClick={() => setActiveTab('profile')}>
             <img src={currentUser.avatar} alt={currentUser.name} className="w-8 h-8 rounded-full" />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{currentUser.name}</p>
               <p className="text-xs text-slate-500 truncate">{credits.available} credits</p>
             </div>
-            <button onClick={handleLogout} className="p-2 text-slate-400 hover:text-slate-900"><LogOut size={16} /></button>
+            <button onClick={(e) => { e.stopPropagation(); handleLogout(); }} className="p-2 text-slate-400 hover:text-slate-900"><LogOut size={16} /></button>
           </div>
         </div>
       </aside>
@@ -470,9 +490,9 @@ function App() {
       <main className="flex-1 flex flex-col h-screen overflow-hidden relative">
         {/* Header */}
         <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md flex items-center justify-between px-6 z-10">
-          <h2 className="text-sm font-medium text-slate-900">Workspace / {activeTab === 'render' ? 'Architectural Render' : activeTab}</h2>
+          <h2 className="text-sm font-medium text-slate-900">Workspace / {activeTab === 'render' ? 'Architectural Render' : (activeTab === 'profile' ? 'User Profile' : activeTab)}</h2>
           <div className="flex items-center gap-4">
-            <button className="text-xs font-medium text-slate-500 hover:text-slate-900 flex items-center gap-1"><CreditCard size={14} /> Buy Credits</button>
+            <button onClick={() => setActiveTab('profile')} className="text-xs font-medium text-slate-500 hover:text-slate-900 flex items-center gap-1"><CreditCard size={14} /> Buy Credits</button>
             <div className="h-4 w-px bg-slate-200"></div>
             <button className="text-xs font-medium text-slate-500 hover:text-slate-900">Help</button>
           </div>
@@ -480,96 +500,141 @@ function App() {
 
         {/* Canvas Area */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50 flex items-center justify-center">
-          <div className="w-full max-w-5xl h-full flex flex-col gap-6">
-            {/* Image Display */}
-            <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group">
-              {!uploadedImage ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                  <Upload size={48} className="mb-4 opacity-50" />
-                  <p className="text-sm font-medium">Upload a base image to start</p>
-                  <p className="text-xs opacity-70 mt-1">Supports JPG, PNG, WEBP</p>
-                  <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                </div>
-              ) : (
-                <div className="relative w-full h-full flex">
-                  {/* Original */}
-                  <div className={`relative h-full transition-all duration-500 ${generatedImage ? 'w-1/2 border-r border-white/20' : 'w-full'}`}>
-                    <img src={uploadedImage} alt="Original" className="w-full h-full object-cover" />
-                    <div className="absolute top-4 left-4 bg-black/50 text-white text-[10px] px-2 py-1 rounded backdrop-blur-md">Original</div>
-                  </div>
-                  {/* Generated */}
-                  {generatedImage && (
-                    <div className="relative w-1/2 h-full">
-                      <img src={generatedImage} alt="Generated" className="w-full h-full object-cover" />
-                      <div className="absolute top-4 right-4 bg-blue-600 text-white text-[10px] px-2 py-1 rounded backdrop-blur-md shadow-lg">Generated</div>
-                      <button onClick={handleDownload} className="absolute bottom-4 right-4 bg-white text-slate-900 p-2 rounded-full shadow-lg hover:bg-slate-50"><Download size={16} /></button>
+          {activeTab === 'profile' ? (
+            <ProfileView user={currentUser} credits={credits} onUpdateProfile={(name) => setCurrentUser({ ...currentUser, name })} onPurchase={handlePurchase} />
+          ) : (
+            <div className="w-full max-w-6xl h-full flex gap-6">
+              {/* Left Column: Inputs */}
+              <div className="w-1/2 flex flex-col gap-6">
+                {/* Main Image Upload */}
+                <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group min-h-[300px]">
+                  <div className="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-slate-600 border border-slate-200">Base Image</div>
+                  {!uploadedImage ? (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                      <Upload size={48} className="mb-4 opacity-50" />
+                      <p className="text-sm font-medium">Upload Sketch / Model</p>
+                      <p className="text-xs opacity-70 mt-1">PNG, JPG (MAX 10MB)</p>
+                      <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                    </div>
+                  ) : (
+                    <div className="relative w-full h-full">
+                      <img src={uploadedImage} alt="Original" className="w-full h-full object-cover" />
+                      <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
                     </div>
                   )}
-                  {/* Clear Button */}
-                  <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
                 </div>
-              )}
-            </div>
 
-            {/* Controls Bar */}
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4 items-center">
-              <div className="flex-1">
-                <input
-                  type="text"
-                  placeholder="Describe additional details (e.g., 'warm lighting, snowy weather')..."
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10"
-                />
+                {/* Secondary Inputs Row */}
+                <div className="h-48 flex gap-6">
+                  {/* Context / Satellite */}
+                  <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                    <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
+                    {!siteImage ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                        <Plus size={24} className="mb-2 opacity-50" />
+                        <p className="text-xs font-medium">Add Site</p>
+                        <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full">
+                        <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
+                        <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Style Reference */}
+                  <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                    <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
+                    {!referenceImage ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                        <Plus size={24} className="mb-2 opacity-50" />
+                        <p className="text-xs font-medium">Add Style</p>
+                        <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full">
+                        <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
+                        <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Controls & Generate */}
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4 items-center">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      placeholder="Describe details..."
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-slate-900">Est. Cost {currentCost} CR</span>
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={!uploadedImage || isGenerating}
+                      className="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      {isGenerating ? <RefreshCw size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                      {isGenerating ? 'Rendering...' : 'Generate'}
+                    </Button>
+                  </div>
+                </div>
+                {apiKeyError && (
+                  <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
+                    <AlertCircle size={14} /> {apiKeyError}
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-2">
-                <select
-                  value={selectedImageSize}
-                  onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
-                  className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
-                >
-                  <option value="1K">1K (5c)</option>
-                  <option value="2K">2K (10c)</option>
-                  <option value="4K">4K (20c)</option>
-                </select>
-                <Button
-                  onClick={handleGenerate}
-                  disabled={!uploadedImage || isGenerating}
-                  className="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  {isGenerating ? <RefreshCw size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                  {isGenerating ? 'Rendering...' : 'Generate'}
-                </Button>
+
+              {/* Right Column: Output */}
+              <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex items-center justify-center">
+                {!generatedImage ? (
+                  <div className="text-center text-slate-300">
+                    <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <ImageIcon size={32} className="opacity-50" />
+                    </div>
+                    <p className="text-sm font-medium">Ready to Render</p>
+                  </div>
+                ) : (
+                  <div className="relative w-full h-full group">
+                    <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
+                    <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-            {apiKeyError && (
-              <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
-                <AlertCircle size={14} /> {apiKeyError}
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </main>
 
-      {/* Right Panel (History) */}
-      <aside className="w-80 border-l border-slate-200 bg-white hidden xl:flex flex-col h-screen sticky top-0">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-          <h3 className="text-sm font-medium">History</h3>
-          <button className="text-slate-400 hover:text-slate-900"><Filter size={14} /></button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {history.length === 0 ? (
-            <div className="text-center text-slate-400 mt-10">
-              <History size={32} className="mx-auto mb-2 opacity-20" />
-              <p className="text-xs">No renders yet</p>
-            </div>
-          ) : (
-            history.map(item => (
-              <HistoryCard key={item.id} item={item} onRestore={handleRestoreHistory} />
-            ))
-          )}
-        </div>
-      </aside>
+      {/* Right Panel (History) - Only show in Render/Ideation/Diagram modes */}
+      {activeTab !== 'profile' && (
+        <aside className="w-80 border-l border-slate-200 bg-white hidden xl:flex flex-col h-screen sticky top-0">
+          <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+            <h3 className="text-sm font-medium">History</h3>
+            <button className="text-slate-400 hover:text-slate-900"><Filter size={14} /></button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {history.length === 0 ? (
+              <div className="text-center text-slate-400 mt-10">
+                <History size={32} className="mx-auto mb-2 opacity-20" />
+                <p className="text-xs">No renders yet</p>
+              </div>
+            ) : (
+              history.map(item => (
+                <HistoryCard key={item.id} item={item} onRestore={handleRestoreHistory} />
+              ))
+            )}
+          </div>
+        </aside>
+      )}
     </div>
   );
 }
