@@ -157,10 +157,12 @@ function App() {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setUploadedImage(reader.result as string);
-        setGeneratedImage(null);
-        setApiKeyError(null);
+      reader.onload = (event) => {
+        if (event.target?.result && typeof event.target.result === 'string') {
+          setUploadedImage(event.target.result);
+          setGeneratedImage(null);
+          setApiKeyError(null);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -170,8 +172,10 @@ function App() {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setSiteImage(reader.result as string);
+      reader.onload = (event) => {
+        if (event.target?.result && typeof event.target.result === 'string') {
+          setSiteImage(event.target.result);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -181,12 +185,14 @@ function App() {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setReferenceImage(reader.result as string);
-        if (createMode === 'Exterior') {
-          setSelectedStyle(RenderStyle.PHOTOREALISTIC);
-        } else {
-          setSelectedStyle(InteriorStyle.PHOTOREALISTIC);
+      reader.onload = (event) => {
+        if (event.target?.result && typeof event.target.result === 'string') {
+          setReferenceImage(event.target.result);
+          if (createMode === 'Exterior') {
+            setSelectedStyle(RenderStyle.PHOTOREALISTIC);
+          } else {
+            setSelectedStyle(InteriorStyle.PHOTOREALISTIC);
+          }
         }
       };
       reader.readAsDataURL(file);
@@ -535,8 +541,8 @@ function App() {
                         key={side}
                         onClick={() => setElevationSide(side as ElevationSide)}
                         className={`py-2 text-[10px] font-medium rounded-lg border transition-all ${elevationSide === side
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                          ? 'bg-slate-900 text-white border-slate-900'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
                           }`}
                       >
                         {side}
@@ -722,8 +728,8 @@ function App() {
                         key={side}
                         onClick={() => setElevationSide(side as ElevationSide)}
                         className={`py-2 text-[10px] font-medium rounded-lg border transition-all ${elevationSide === side
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                          ? 'bg-slate-900 text-white border-slate-900'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
                           }`}
                       >
                         {side}
