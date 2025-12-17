@@ -31,7 +31,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ history, onResto
                     <LayoutGrid size={20} /> <span>Project Gallery</span>
                 </div>
 
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 relative z-30">
                     {/* Style Filter */}
                     <div className="relative">
                         <button
