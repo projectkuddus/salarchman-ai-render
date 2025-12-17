@@ -877,7 +877,7 @@ function App() {
         </header>
 
         {/* Canvas Area */}
-        <div className="flex-1 overflow-y-auto p-6 bg-slate-50 flex items-center justify-center">
+        <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 flex items-center justify-center ${activeTab === 'diagram' ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
           {activeTab === 'profile' ? (
             <ProfileView
               user={currentUser}
@@ -887,6 +887,105 @@ function App() {
               onPurchase={handlePurchase}
               onRestore={handleRestoreHistory}
             />
+          ) : activeTab === 'diagram' ? (
+            <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
+              {/* Diagram Header */}
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-1">
+                  <Spline size={24} className="text-slate-900" />
+                  <h2 className="text-xl font-light text-slate-900">Analytical Diagrams</h2>
+                </div>
+                <p className="text-xs text-slate-500 ml-9">Convert sketches into clear, stylized architectural diagrams.</p>
+              </div>
+
+              {/* Diagram Workspace */}
+              <div className="flex-1 flex gap-6 min-h-0 mb-6">
+                {/* Left Column */}
+                <div className="w-1/3 flex flex-col gap-4">
+                  {/* Base Geometry */}
+                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
+                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <Box size={12} /> Base Geometry
+                    </div>
+                    {!uploadedImage ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                        <Upload size={32} className="mb-3 opacity-50" />
+                        <p className="text-sm font-medium text-slate-900">Upload Sketch</p>
+                        <p className="text-[10px] opacity-60 mt-1">PNG, JPG (MAX 10MB)</p>
+                        <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                        <img src={uploadedImage} alt="Base Geometry" className="w-full h-full object-cover" />
+                        <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Diagram Style Ref */}
+                  <div className="h-48 bg-white rounded-2xl border border-dashed border-slate-300 relative group">
+                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <Sparkles size={12} /> Diagram Style Ref
+                    </div>
+                    {!referenceImage ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                        <Plus size={24} className="mb-2 opacity-50" />
+                        <p className="text-xs font-medium">Add Style</p>
+                        <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                        <img src={referenceImage} alt="Style Ref" className="w-full h-full object-cover" />
+                        <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right Column (Output) */}
+                <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                    Diagram &bull; {selectedImageSize} &bull; {selectedAspectRatio}
+                  </div>
+                  {!generatedImage ? (
+                    <div className="text-center text-slate-300">
+                      <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <ImageIcon size={32} className="opacity-50" />
+                      </div>
+                      <p className="text-sm font-medium">Ready to Render</p>
+                    </div>
+                  ) : (
+                    <div className="relative w-full h-full group">
+                      <img src={generatedImage} alt="Generated Diagram" className="w-full h-full object-contain bg-slate-50" />
+                      <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom Bar */}
+              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-500">Estimated Cost</span>
+                  <span className="text-sm font-bold text-slate-900">{currentCost} CR</span>
+                </div>
+                <Button
+                  onClick={handleGenerate}
+                  disabled={!uploadedImage || isGenerating}
+                  className="px-6 py-2 bg-white border border-slate-200 text-slate-900 rounded-lg text-sm font-medium hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {isGenerating ? <RefreshCw size={16} className="animate-spin" /> : <Key size={16} />}
+                  {isGenerating ? 'Processing...' : 'Select API Key'}
+                </Button>
+              </div>
+              {apiKeyError && (
+                <div className="mt-2 bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
+                  <AlertCircle size={14} /> {apiKeyError}
+                </div>
+              )}
+            </div>
           ) : (
             <div className="w-full max-w-6xl h-full flex gap-6">
               {/* Left Column: Inputs */}
