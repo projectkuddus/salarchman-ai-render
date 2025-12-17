@@ -142,7 +142,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     <div>
                         <h3 className="text-lg font-medium text-slate-900">Need more credits?</h3>
                         <p className="text-sm text-slate-500 mt-1">
-                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly.
+                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly at <span className="font-medium text-slate-900">salarchman@gmail.com</span>.
                         </p>
                     </div>
                     <a
