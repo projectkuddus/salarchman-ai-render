@@ -61,13 +61,7 @@ function App() {
   const siteInputRef = useRef<HTMLInputElement>(null);
   const referenceInputRef = useRef<HTMLInputElement>(null);
 
-  const [baseImageKey, setBaseImageKey] = useState(0);
 
-  const handleRemoveBaseImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setUploadedImage(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
 
   const currentCost = CREDIT_COSTS[selectedImageSize];
 
@@ -161,20 +155,38 @@ function App() {
     setActiveTab('render');
   };
 
+  const [baseImageKey, setBaseImageKey] = useState(0);
+  const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Create a Blob URL for immediate preview
+      const objectUrl = URL.createObjectURL(file);
+      setUploadedImagePreview(objectUrl);
+      setGeneratedImage(null);
+      setApiKeyError(null);
+
+      // Also read as Data URL for the API
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result && typeof event.target.result === 'string') {
           setUploadedImage(event.target.result);
-          setGeneratedImage(null);
-          setApiKeyError(null);
         }
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const handleRemoveBaseImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setUploadedImage(null);
+    setUploadedImagePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+
+
 
   const handleSiteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

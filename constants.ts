@@ -87,13 +87,13 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite.jpg',
 
   // 3D Model
-  [RenderStyle.WIREFRAME]: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=150&q=80",
-  [RenderStyle.CLAY]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=80", // Using abstract shape for clay
-  [RenderStyle.WHITE_MODEL]: "https://images.unsplash.com/photo-1518112390430-f4ab02e9c2c8?w=150&q=80",
-  [RenderStyle.AMBIENT_OCCLUSION]: "https://images.unsplash.com/photo-1437652633881-df07db29c32a?w=150&q=80", // Abstract grey
+  [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
+  [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
+  [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
+  [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
-  [RenderStyle.MATERIAL_STUDY]: "https://images.unsplash.com/photo-1518640165980-d3e0e2aa6c1e?w=150&q=80",
-  [RenderStyle.LIGHTING_STUDY]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80",
+  [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
+  [RenderStyle.LIGHTING_STUDY]: '/thumbnails/lighting-study.jpg',
 
   // Stylized
   [RenderStyle.TOON_CEL]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
