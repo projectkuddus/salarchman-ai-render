@@ -10,19 +10,9 @@ const DEVELOPER_GALLERY = [
     "/gallery/archivision-1765933707253.jpg?v=1",
     "/gallery/salARCHman-1765944744165.jpg?v=1",
     "/gallery/salARCHman-1765956698737.jpg?v=1",
-    "/gallery/gallery-upload-01.png?v=1",
-    "/gallery/gallery-upload-02.png?v=1",
-    "/gallery/gallery-upload-03.png?v=1",
-    "/gallery/gallery-upload-04.png?v=1",
-    "/gallery/gallery-upload-05.png?v=1",
-    "/gallery/gallery-upload-06.png?v=1",
-    "/gallery/gallery-upload-07.png?v=1",
-    "/gallery/gallery-upload-08.png?v=1",
-    "/gallery/gallery-upload-09.png?v=1",
-    "/gallery/gallery-upload-10.png?v=1",
-    "/gallery/gallery-upload-11.png?v=1",
-    "/gallery/gallery-upload-12.png?v=1",
-    "/gallery/gallery-upload-13.png?v=1"
+    "/gallery/salARCHman-1765976559982.jpg?v=1",
+    "/gallery/salARCHman-1765985641048.jpg?v=1",
+    "/gallery/salARCHman-1765987283493.jpg?v=1"
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
