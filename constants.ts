@@ -4,8 +4,8 @@ import { RenderStyle, ViewType, ImageSize, DiagramType, InteriorStyle, Atmospher
 // Credit costs based on resolution
 export const CREDIT_COSTS: Record<ImageSize, number> = {
   '1K': 5,
-  '2K': 10,
-  '4K': 20
+  '2K': 7,
+  '4K': 10
 };
 
 export const INITIAL_CREDITS = 50;
@@ -79,48 +79,48 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
 
 // Mapping styles to Unsplash thumbnail images for preview
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
-    // Realism
-    [RenderStyle.CONCEPTUAL]: "https://images.unsplash.com/photo-1517544845501-bb78cc08022a?w=150&q=80",
-    [RenderStyle.SEMI_REALISTIC]: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=150&q=80",
-    [RenderStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=150&q=80",
-    [RenderStyle.HYPERREAL]: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=150&q=80",
-    [RenderStyle.SATELLITE_DRONE]: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=150&q=80",
+  // Realism
+  [RenderStyle.CONCEPTUAL]: "https://images.unsplash.com/photo-1517544845501-bb78cc08022a?w=150&q=80",
+  [RenderStyle.SEMI_REALISTIC]: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=150&q=80",
+  [RenderStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=150&q=80",
+  [RenderStyle.HYPERREAL]: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=150&q=80",
+  [RenderStyle.SATELLITE_DRONE]: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=150&q=80",
 
-    // 3D Model
-    [RenderStyle.WIREFRAME]: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=150&q=80",
-    [RenderStyle.CLAY]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=80", // Using abstract shape for clay
-    [RenderStyle.WHITE_MODEL]: "https://images.unsplash.com/photo-1518112390430-f4ab02e9c2c8?w=150&q=80",
-    [RenderStyle.AMBIENT_OCCLUSION]: "https://images.unsplash.com/photo-1437652633881-df07db29c32a?w=150&q=80", // Abstract grey
-    [RenderStyle.SIMPLE_SHADED]: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=150&q=80",
-    [RenderStyle.MATERIAL_STUDY]: "https://images.unsplash.com/photo-1518640165980-d3e0e2aa6c1e?w=150&q=80",
-    [RenderStyle.LIGHTING_STUDY]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80",
+  // 3D Model
+  [RenderStyle.WIREFRAME]: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=150&q=80",
+  [RenderStyle.CLAY]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=80", // Using abstract shape for clay
+  [RenderStyle.WHITE_MODEL]: "https://images.unsplash.com/photo-1518112390430-f4ab02e9c2c8?w=150&q=80",
+  [RenderStyle.AMBIENT_OCCLUSION]: "https://images.unsplash.com/photo-1437652633881-df07db29c32a?w=150&q=80", // Abstract grey
+  [RenderStyle.SIMPLE_SHADED]: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=150&q=80",
+  [RenderStyle.MATERIAL_STUDY]: "https://images.unsplash.com/photo-1518640165980-d3e0e2aa6c1e?w=150&q=80",
+  [RenderStyle.LIGHTING_STUDY]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80",
 
-    // Stylized
-    [RenderStyle.TOON_CEL]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-    [RenderStyle.SKETCHY_NPR]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-    [RenderStyle.WATERCOLOR_NPR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-    [RenderStyle.MINIATURE]: "https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=150&q=80",
-    [RenderStyle.LOW_POLY]: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80",
+  // Stylized
+  [RenderStyle.TOON_CEL]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
+  [RenderStyle.SKETCHY_NPR]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
+  [RenderStyle.WATERCOLOR_NPR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
+  [RenderStyle.MINIATURE]: "https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=150&q=80",
+  [RenderStyle.LOW_POLY]: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80",
 
-    // Hand-Drawn
-    [RenderStyle.PENCIL_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-    [RenderStyle.INK_LINE]: "https://images.unsplash.com/photo-1579783902614-a3fb39279c0f?w=150&q=80",
-    [RenderStyle.MARKER_RENDERING]: "https://images.unsplash.com/photo-1531736275454-adc48d07996f?w=150&q=80",
-    [RenderStyle.WATERCOLOR_WASH]: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&q=80",
-    [RenderStyle.CHARCOAL]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
-    [RenderStyle.PASTEL]: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=150&q=80",
-    [RenderStyle.TECHNICAL_PEN]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-    [RenderStyle.BLUEPRINT]: "https://images.unsplash.com/photo-1542621334-a254cf47733d?w=150&q=80",
+  // Hand-Drawn
+  [RenderStyle.PENCIL_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
+  [RenderStyle.INK_LINE]: "https://images.unsplash.com/photo-1579783902614-a3fb39279c0f?w=150&q=80",
+  [RenderStyle.MARKER_RENDERING]: "https://images.unsplash.com/photo-1531736275454-adc48d07996f?w=150&q=80",
+  [RenderStyle.WATERCOLOR_WASH]: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&q=80",
+  [RenderStyle.CHARCOAL]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
+  [RenderStyle.PASTEL]: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=150&q=80",
+  [RenderStyle.TECHNICAL_PEN]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
+  [RenderStyle.BLUEPRINT]: "https://images.unsplash.com/photo-1542621334-a254cf47733d?w=150&q=80",
 
-    // Legacy Fallbacks
-    [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=80",
-    [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-    [RenderStyle.WATERCOLOR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-    [RenderStyle.RAW_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-    [RenderStyle.CARTOONISH]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-    [RenderStyle.COMIC_BOOK]: "https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=80",
-    [RenderStyle.ULTRA_RENDER]: "https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=80",
-    [RenderStyle.CONCEPT_SKETCH]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80"
+  // Legacy Fallbacks
+  [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=80",
+  [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
+  [RenderStyle.WATERCOLOR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
+  [RenderStyle.RAW_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
+  [RenderStyle.CARTOONISH]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
+  [RenderStyle.COMIC_BOOK]: "https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=80",
+  [RenderStyle.ULTRA_RENDER]: "https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=80",
+  [RenderStyle.CONCEPT_SKETCH]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80"
 };
 
 export const STYLE_PROMPTS: Record<string, string> = {
@@ -206,23 +206,23 @@ export const DIAGRAM_PROMPTS: Record<DiagramType, string> = {
   [DiagramType.CONCEPT]: "Concept / Schematic Diagram. A minimalist isometric massing diagram explaining the core design idea. Render the form as clean white volumes with sharp black outlines. Overlay bold red arrows to indicate design moves (push, pull, lift, view). Use dashed lines to show cuts or axes. Ground plane should be abstract, simple green or grey patches. Aesthetic: Clear, instructional, architectural diagram style (like BIG or OMA process diagrams). Focus on simple geometry and logic.",
 
   [DiagramType.EXPLODED]: "Exploded Axonometric Diagram. Deconstruct the building into expanded vertical layers (floor plates, structure, skin, roof) floating above each other to reveal the assembly. Use dashed 'trace lines' connecting the corners to show alignment. Aesthetic: Clean white minimal background, ambient occlusion, vector-style outlines, 'Morphosis' or 'Thom Mayne' style technical complexity.",
-  
+
   [DiagramType.PROGRAMMATIC]: "Programmatic & Zoning Diagram. Render the building geometry as translucent or wireframe containers. Fill specific functional volumes (public, private, circulation) with distinct, vibrant pastel color blocks (Cyan, Magenta, Yellow). Add 3D floating text labels. Aesthetic: 'BIG' (Bjarke Ingels Group) style, iconic, bold, infographic clarity.",
-  
+
   [DiagramType.CIRCULATION]: "Circulation & Flow Diagram. Render the architecture in muted grey or white clay mode. Overlay bold, fluid, ribbon-like arrows indicating human movement. Red for public flow, Blue for services. Highlight vertical cores (stairs/elevators) as solid colored shafts. Show entrances and exits clearly. Aesthetic: UNStudio style, fluid, dynamic vectors.",
-  
+
   [DiagramType.ENVIRONMENTAL]: "Climate & Environmental Analysis. White clay model base. Overlay graphical climate vectors: Yellow gradients for solar gain/radiation on facades, Blue stream-lines for wind ventilation through the building, Red zones for thermal mass. Include a Sun Path arc. Aesthetic: Technical, analytical, 'Transsolar' engineering style.",
-  
+
   [DiagramType.SECTIONAL_PERSP]: "Sectional Perspective (3D Section). A vertical cut through the building that reveals the interior life while maintaining 3D depth. Show people, furniture, and activity inside the cut sections. Render the cut plane in solid black or heavy hatch. Aesthetic: 'Lewis Tsurumaki Lewis' (LTL) style, detailed, atmospheric interior lighting against a white section cut.",
-  
+
   [DiagramType.ACTIVITY]: "Activity & Usage Mapping. 'Ghosted' architectural view. The building is semi-transparent white lines. The focus is on 'Events': populate the space with silhouetted scale figures engaging in specific activities (sitting, walking, gathering). Use color coding for different activity intensities. Aesthetic: Bernard Tschumi 'Event Cities' style, notation-based, dynamic.",
-  
+
   [DiagramType.GEOMETRY]: "Geometric & Regulating Lines Analysis. Overlay the regulating grids, symmetry axes, and golden ratio proportions used to generate the form. Use thin red and dashed black lines over a wireframe model. Highlight the primary geometric primitives (Cube, Sphere, Pyramid). Aesthetic: Eisenman style, formalist, grid-based, intellectual.",
-  
+
   [DiagramType.STRUCTURE]: "Structural Tectonics (X-Ray). Highlight the load-bearing skeleton (columns, beams, trusses, space frame) in dark bold material (Steel/Concrete). Make the skin/cladding transparent or removed completely. Focus on the transfer of loads to the ground. Aesthetic: High-tech, Renzo Piano style, engineering focus.",
-  
+
   [DiagramType.URBAN_CONTEXT]: "Urban Context & Mapping. Aerial Isometric view. Show the building in pure white, but render the surrounding city context as simple grey masses. Highlight specific urban connections (views, transport lines, green corridors) with colored dashed lines extending into the city. Aesthetic: MVRDV data-scape style, urban planning focus.",
-  
+
   [DiagramType.FORM_EVOLUTION]: "Form Evolution (Generative Process). A sequence or single composite image showing the 'operations' that created the form. Show the base block -> subtraction -> addition -> final form. Use ghosted red volumes for removed parts and blue for added parts. Aesthetic: Step-by-step diagram, clean, instructional.",
 
   [DiagramType.LIVING_COLLAGE]: "Living Collage Cutaway Diagram. A highly detailed isometric cutaway or section presented as a whimsical digital collage. 'Dollhouse' view revealing complex interior life. Densely populate every room with lush hanging plants, potted vegetation, detailed furniture, and eclectic decor. Show people engaging in domestic activities (reading, cooking, resting). Aesthetic: Soft textured paper background, muted pastel colors, flat lighting, artistic illustration style (e.g., Fala Atelier, Dogma). Emphasize biophilia, domestic narrative, and 'lived-in' atmosphere."
@@ -244,14 +244,14 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Nest': { category: 'Additive', prompt: "NEST: Place a smaller volume inside or partially embedded within a larger volume." },
   'Inflate': { category: 'Additive', prompt: "INFLATE: Expand the volume outwards, creating bulbous or soft convex forms." },
   'Stack': { category: 'Additive', prompt: "STACK: Place volumes on top of one another, potentially with slight misalignments." },
-  
+
   // Subtractive
   'Subtract': { category: 'Subtractive', prompt: "SUBTRACT: Remove a significant geometric chunk from the main mass to create voids." },
   'Punch': { category: 'Subtractive', prompt: "PUNCH: Create deep, specific window-like openings or apertures through the solid mass." },
   'Split': { category: 'Subtractive', prompt: "SPLIT: Divide the volume into two separated halves with a clear gap or canyon between them." },
   'Carve': { category: 'Subtractive', prompt: "CARVE: Erode the edges or corners of the volume organically or geometrically." },
   'Notch': { category: 'Subtractive', prompt: "NOTCH: Cut small, precise angular indentations into the corners or edges." },
-  
+
   // Displacement / Surface
   'Twist': { category: 'Displacement', prompt: "TWIST: Rotate the top of the volume relative to the bottom, creating a torqued form." },
   'Fold': { category: 'Displacement', prompt: "FOLD: Bend the volume or surface like a continuous sheet of paper or origami." },

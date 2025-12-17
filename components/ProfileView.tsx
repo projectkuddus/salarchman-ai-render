@@ -134,11 +134,24 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
                 </div>
 
-                {/* Purchase Options */}
-                <div className="md:col-span-2 space-y-4">
-                    <CreditPack amount={100} price={1200} onPurchase={() => onPurchase(100)} />
-                    <CreditPack amount={500} price={5000} onPurchase={() => onPurchase(500)} popular />
-                    <CreditPack amount={1200} price={11000} onPurchase={() => onPurchase(1200)} />
+                {/* Contact for Credits */}
+                <div className="md:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm flex flex-col justify-center items-start space-y-4">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                        <Mail size={24} />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-medium text-slate-900">Need more credits?</h3>
+                        <p className="text-sm text-slate-500 mt-1">
+                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly.
+                        </p>
+                    </div>
+                    <a
+                        href="mailto:salarchman@gmail.com?subject=Credit Purchase Request"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-colors"
+                    >
+                        <Mail size={18} />
+                        <span>Contact Sales</span>
+                    </a>
                 </div>
             </div>
 
@@ -170,25 +183,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
     );
 };
 
-const CreditPack = ({ amount, price, onPurchase, popular }: { amount: number, price: number, onPurchase: () => void, popular?: boolean }) => (
-    <div className={`flex items-center justify-between p-4 rounded-xl border transition-all ${popular ? 'bg-white border-blue-200 shadow-md shadow-blue-900/5 ring-1 ring-blue-100' : 'bg-white border-slate-200 hover:border-slate-300'}`}>
-        <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold text-lg ${popular ? 'bg-blue-50 text-blue-600' : 'bg-slate-100 text-slate-700'}`}>
-                {amount}
-            </div>
-            <div>
-                <h4 className="font-medium text-slate-900">Credit Pack</h4>
-                <p className="text-xs text-slate-500">One-time purchase</p>
-            </div>
-        </div>
-        <div className="flex items-center gap-4">
-            <span className="font-medium text-slate-900">৳{price.toLocaleString()}</span>
-            <button onClick={onPurchase} className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${popular ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'}`}>
-                Buy
-            </button>
-        </div>
-    </div>
-);
+
 
 const SettingsIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
