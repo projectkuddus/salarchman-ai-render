@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserCredits, GenerationResult } from '../types';
 import { Button } from './Button';
-import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Maximize2 } from 'lucide-react';
+import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Maximize2, X, Download } from 'lucide-react';
 
 interface ProfileViewProps {
     user: User;
@@ -16,6 +16,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<GenerationResult | null>(null);
 
     const handleSave = () => {
         setIsSaving(true);
@@ -173,7 +174,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                                     <img
                                         src={item.generatedImage}
                                         alt={item.style}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        onClick={() => setSelectedImage(item)}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
                                         <button
@@ -196,6 +198,49 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     </div>
                 )}
             </div>
+
+            {/* Lightbox Modal */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <div
+                        className="relative max-w-4xl max-h-[90vh] w-full"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={selectedImage.generatedImage}
+                            alt={selectedImage.style}
+                            className="w-full h-full object-contain rounded-xl shadow-2xl"
+                        />
+                        <div className="absolute top-4 right-4 flex gap-2">
+                            <a
+                                href={selectedImage.generatedImage}
+                                download={`${selectedImage.style}-${selectedImage.viewType}.png`}
+                                className="p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
+                                title="Download"
+                            >
+                                <Download size={20} className="text-slate-900" />
+                            </a>
+                            <button
+                                onClick={() => setSelectedImage(null)}
+                                className="p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
+                                title="Close"
+                            >
+                                <X size={20} className="text-slate-900" />
+                            </button>
+                        </div>
+                        <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-xl p-4 shadow-lg">
+                            <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
+                                <span className="uppercase tracking-wider font-medium">{selectedImage.viewType}</span>
+                                <span>{new Date(selectedImage.timestamp).toLocaleDateString()}</span>
+                            </div>
+                            <p className="text-lg font-medium text-slate-900">{selectedImage.style}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
