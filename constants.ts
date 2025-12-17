@@ -77,50 +77,50 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
   'Brutal Contrast': "Brutal contrast, sharp direct sunlight, deep black shadows, chiaroscuro effect, strong geometric composition."
 };
 
-// Mapping styles to Unsplash thumbnail images for preview
+// Mapping styles to local thumbnail images for preview
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   // Realism
-  [RenderStyle.CONCEPTUAL]: "https://images.unsplash.com/photo-1517544845501-bb78cc08022a?w=150&q=80",
-  [RenderStyle.SEMI_REALISTIC]: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=150&q=80",
-  [RenderStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=150&q=80",
-  [RenderStyle.HYPERREAL]: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=150&q=80",
-  [RenderStyle.SATELLITE_DRONE]: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=150&q=80",
+  [RenderStyle.CONCEPTUAL]: "/thumbnails/conceptual.jpg",
+  [RenderStyle.SEMI_REALISTIC]: "/thumbnails/semi-realistic.jpg",
+  [RenderStyle.PHOTOREALISTIC]: "/thumbnails/photorealistic.jpg",
+  [RenderStyle.HYPERREAL]: "/thumbnails/hyperreal.jpg",
+  [RenderStyle.SATELLITE_DRONE]: "/thumbnails/satellite.jpg",
 
   // 3D Model
-  [RenderStyle.WIREFRAME]: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=150&q=80",
-  [RenderStyle.CLAY]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=80", // Using abstract shape for clay
-  [RenderStyle.WHITE_MODEL]: "https://images.unsplash.com/photo-1518112390430-f4ab02e9c2c8?w=150&q=80",
-  [RenderStyle.AMBIENT_OCCLUSION]: "https://images.unsplash.com/photo-1437652633881-df07db29c32a?w=150&q=80", // Abstract grey
-  [RenderStyle.SIMPLE_SHADED]: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=150&q=80",
-  [RenderStyle.MATERIAL_STUDY]: "https://images.unsplash.com/photo-1518640165980-d3e0e2aa6c1e?w=150&q=80",
-  [RenderStyle.LIGHTING_STUDY]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80",
+  [RenderStyle.WIREFRAME]: "/thumbnails/wireframe.jpg",
+  [RenderStyle.CLAY]: "/thumbnails/clay.jpg",
+  [RenderStyle.WHITE_MODEL]: "/thumbnails/white-model.jpg",
+  [RenderStyle.AMBIENT_OCCLUSION]: "/thumbnails/ambient-occlusion.jpg",
+  [RenderStyle.SIMPLE_SHADED]: "/thumbnails/simple-shaded.jpg",
+  [RenderStyle.MATERIAL_STUDY]: "/thumbnails/material-study.jpg",
+  [RenderStyle.LIGHTING_STUDY]: "/thumbnails/lighting-study.jpg",
 
   // Stylized
-  [RenderStyle.TOON_CEL]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-  [RenderStyle.SKETCHY_NPR]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.WATERCOLOR_NPR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-  [RenderStyle.MINIATURE]: "https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=150&q=80",
-  [RenderStyle.LOW_POLY]: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80",
+  [RenderStyle.TOON_CEL]: "/thumbnails/toon.jpg",
+  [RenderStyle.SKETCHY_NPR]: "/thumbnails/sketchy-npr.jpg",
+  [RenderStyle.WATERCOLOR_NPR]: "/thumbnails/watercolor-npr.jpg",
+  [RenderStyle.MINIATURE]: "/thumbnails/miniature.jpg",
+  [RenderStyle.LOW_POLY]: "/thumbnails/low-poly.jpg",
 
   // Hand-Drawn
-  [RenderStyle.PENCIL_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-  [RenderStyle.INK_LINE]: "https://images.unsplash.com/photo-1579783902614-a3fb39279c0f?w=150&q=80",
-  [RenderStyle.MARKER_RENDERING]: "https://images.unsplash.com/photo-1531736275454-adc48d07996f?w=150&q=80",
-  [RenderStyle.WATERCOLOR_WASH]: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&q=80",
-  [RenderStyle.CHARCOAL]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
-  [RenderStyle.PASTEL]: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=150&q=80",
-  [RenderStyle.TECHNICAL_PEN]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.BLUEPRINT]: "https://images.unsplash.com/photo-1542621334-a254cf47733d?w=150&q=80",
+  [RenderStyle.PENCIL_SKETCH]: "/thumbnails/pencil-sketch.jpg",
+  [RenderStyle.INK_LINE]: "/thumbnails/ink-line.jpg",
+  [RenderStyle.MARKER_RENDERING]: "/thumbnails/marker.jpg",
+  [RenderStyle.WATERCOLOR_WASH]: "/thumbnails/watercolor-wash.jpg",
+  [RenderStyle.CHARCOAL]: "/thumbnails/charcoal.jpg",
+  [RenderStyle.PASTEL]: "/thumbnails/pastel.jpg",
+  [RenderStyle.TECHNICAL_PEN]: "/thumbnails/technical-pen.jpg",
+  [RenderStyle.BLUEPRINT]: "/thumbnails/blueprint.jpg",
 
-  // Legacy Fallbacks
-  [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=80",
-  [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.WATERCOLOR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-  [RenderStyle.RAW_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-  [RenderStyle.CARTOONISH]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-  [RenderStyle.COMIC_BOOK]: "https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=80",
-  [RenderStyle.ULTRA_RENDER]: "https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=80",
-  [RenderStyle.CONCEPT_SKETCH]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80"
+  // Legacy Fallbacks (mapped to closest available)
+  [RenderStyle.FUTURISTIC]: "/thumbnails/hyperreal.jpg",
+  [RenderStyle.SKETCHY]: "/thumbnails/sketchy-npr.jpg",
+  [RenderStyle.WATERCOLOR]: "/thumbnails/watercolor-npr.jpg",
+  [RenderStyle.RAW_SKETCH]: "/thumbnails/pencil-sketch.jpg",
+  [RenderStyle.CARTOONISH]: "/thumbnails/toon.jpg",
+  [RenderStyle.COMIC_BOOK]: "/thumbnails/toon.jpg",
+  [RenderStyle.ULTRA_RENDER]: "/thumbnails/photorealistic.jpg",
+  [RenderStyle.CONCEPT_SKETCH]: "/thumbnails/conceptual.jpg"
 };
 
 export const STYLE_PROMPTS: Record<string, string> = {
@@ -160,19 +160,19 @@ export const STYLE_PROMPTS: Record<string, string> = {
 };
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
-  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=80",
-  [InteriorStyle.DHAKA_LUXURY]: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=150&q=80",
-  [InteriorStyle.ART_DECO]: "https://images.unsplash.com/photo-1550525811-e5869dd03032?w=150&q=80",
-  [InteriorStyle.FUTURISTIC_INT]: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=150&q=80",
-  [InteriorStyle.PARAMETRIC]: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=150&q=80",
-  [InteriorStyle.MINIMALIST]: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=150&q=80",
-  [InteriorStyle.BRUTALIST]: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=150&q=80",
-  [InteriorStyle.BOHO]: "https://images.unsplash.com/photo-1522444195799-478538b28823?w=150&q=80",
-  [InteriorStyle.CLASSICAL]: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=150&q=80",
-  [InteriorStyle.POST_MODERN]: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=150&q=80",
-  [InteriorStyle.DOODLE_ART]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
-  [InteriorStyle.SCANDINAVIAN]: "https://images.unsplash.com/photo-1556910103-1c02745a30bf?w=150&q=80",
-  [InteriorStyle.INDUSTRIAL]: "https://images.unsplash.com/photo-1515263487990-61b07816b324?w=150&q=80"
+  [InteriorStyle.PHOTOREALISTIC]: "/thumbnails/interior-photorealistic.jpg",
+  [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior-dhaka-luxury.jpg",
+  [InteriorStyle.ART_DECO]: "/thumbnails/interior-art-deco.jpg",
+  [InteriorStyle.FUTURISTIC_INT]: "/thumbnails/interior-futuristic.jpg",
+  [InteriorStyle.PARAMETRIC]: "/thumbnails/interior-parametric.jpg",
+  [InteriorStyle.MINIMALIST]: "/thumbnails/interior-minimalist.jpg",
+  [InteriorStyle.BRUTALIST]: "/thumbnails/interior-brutalist.jpg",
+  [InteriorStyle.BOHO]: "/thumbnails/interior-boho.jpg",
+  [InteriorStyle.CLASSICAL]: "/thumbnails/interior-classical.jpg",
+  [InteriorStyle.POST_MODERN]: "/thumbnails/interior-post-modern.jpg",
+  [InteriorStyle.DOODLE_ART]: "/thumbnails/interior-doodle.jpg",
+  [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior-scandinavian.jpg",
+  [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior-industrial.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
