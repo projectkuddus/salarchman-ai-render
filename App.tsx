@@ -1040,7 +1040,7 @@ function App() {
                     </div>
                   ) : (
                     <div className="relative w-full h-full">
-                      <img src={uploadedImage} alt="Original" className="w-full h-full object-cover" />
+                      <img key={uploadedImage} src={uploadedImage} alt="Original" className="w-full h-full object-cover" />
                       <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
                     </div>
                   )}
