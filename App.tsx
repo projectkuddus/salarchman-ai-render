@@ -939,7 +939,7 @@ function App() {
         </header>
 
         {/* Canvas Area */}
-        <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 flex items-center justify-center ${activeTab === 'diagram' ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
+        <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${activeTab === 'diagram' ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
           {activeTab === 'profile' ? (
             <ProfileView
               user={currentUser}
