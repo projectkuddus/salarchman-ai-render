@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { User, UserCredits } from '../types';
+import { User, UserCredits, GenerationResult } from '../types';
 import { Button } from './Button';
-import { Save, CreditCard, User as UserIcon, Shield, Mail, Key } from 'lucide-react';
+import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Filter } from 'lucide-react';
+import { HistoryCard } from './HistoryCard';
 
 interface ProfileViewProps {
     user: User;
     credits: UserCredits;
+    history: GenerationResult[];
     onUpdateProfile: (name: string, password?: string) => void;
     onPurchase: (amount: number) => void;
+    onRestore: (item: GenerationResult) => void;
 }
 
-export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, onUpdateProfile, onPurchase }) => {
+export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history, onUpdateProfile, onPurchase, onRestore }) => {
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -137,6 +140,31 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, onUpdat
                     <CreditPack amount={500} price={39.99} onPurchase={() => onPurchase(500)} popular />
                     <CreditPack amount={1200} price={89.99} onPurchase={() => onPurchase(1200)} />
                 </div>
+            </div>
+
+            {/* History Section */}
+            <div className="pt-8 border-t border-slate-200">
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2 text-slate-900 font-medium">
+                        <History size={20} /> <span>Generation History</span>
+                    </div>
+                    <button className="text-slate-400 hover:text-slate-900 flex items-center gap-1 text-xs font-medium">
+                        <Filter size={14} /> Filter
+                    </button>
+                </div>
+
+                {history.length === 0 ? (
+                    <div className="text-center text-slate-400 py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                        <History size={32} className="mx-auto mb-3 opacity-20" />
+                        <p className="text-sm">No generation history yet</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {history.map(item => (
+                            <HistoryCard key={item.id} item={item} onRestore={onRestore} />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

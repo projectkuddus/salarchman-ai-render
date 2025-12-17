@@ -254,6 +254,7 @@ function App() {
 
     setPrompt(item.prompt);
     setApiKeyError(null);
+    setActiveTab('render'); // Switch back to workspace to see restored state
   };
 
   const handlePurchase = (amount: number) => {
@@ -802,7 +803,14 @@ function App() {
         {/* Canvas Area */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50 flex items-center justify-center">
           {activeTab === 'profile' ? (
-            <ProfileView user={currentUser} credits={credits} onUpdateProfile={(name) => setCurrentUser({ ...currentUser, name })} onPurchase={handlePurchase} />
+            <ProfileView
+              user={currentUser}
+              credits={credits}
+              history={history}
+              onUpdateProfile={(name) => setCurrentUser({ ...currentUser, name })}
+              onPurchase={handlePurchase}
+              onRestore={handleRestoreHistory}
+            />
           ) : (
             <div className="w-full max-w-6xl h-full flex gap-6">
               {/* Left Column: Inputs */}
@@ -908,28 +916,6 @@ function App() {
           )}
         </div>
       </main>
-
-      {/* Right Panel (History) - Only show in Render/Ideation/Diagram modes */}
-      {activeTab !== 'profile' && (
-        <aside className="w-80 border-l border-slate-200 bg-white hidden xl:flex flex-col h-screen sticky top-0">
-          <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-            <h3 className="text-sm font-medium">History</h3>
-            <button className="text-slate-400 hover:text-slate-900"><Filter size={14} /></button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {history.length === 0 ? (
-              <div className="text-center text-slate-400 mt-10">
-                <History size={32} className="mx-auto mb-2 opacity-20" />
-                <p className="text-xs">No renders yet</p>
-              </div>
-            ) : (
-              history.map(item => (
-                <HistoryCard key={item.id} item={item} onRestore={handleRestoreHistory} />
-              ))
-            )}
-          </div>
-        </aside>
-      )}
     </div>
   );
 }
