@@ -79,12 +79,12 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
 
 // Mapping styles to Unsplash thumbnail images for preview
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
-  // Realism
-  [RenderStyle.CONCEPTUAL]: "https://images.unsplash.com/photo-1517544845501-bb78cc08022a?w=150&q=80",
-  [RenderStyle.SEMI_REALISTIC]: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=150&q=80",
-  [RenderStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=150&q=80",
-  [RenderStyle.HYPERREAL]: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=150&q=80",
-  [RenderStyle.SATELLITE_DRONE]: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=150&q=80",
+  // Realism Spectrum
+  [RenderStyle.PHOTOREALISTIC]: '/thumbnails/photorealistic.jpg',
+  [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
+  [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
+  [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
+  [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite.jpg',
 
   // 3D Model
   [RenderStyle.WIREFRAME]: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=150&q=80",

@@ -61,6 +61,14 @@ function App() {
   const siteInputRef = useRef<HTMLInputElement>(null);
   const referenceInputRef = useRef<HTMLInputElement>(null);
 
+  const [baseImageKey, setBaseImageKey] = useState(0);
+
+  const handleRemoveBaseImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setUploadedImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const currentCost = CREDIT_COSTS[selectedImageSize];
 
   const availableViews = activeTab === 'ideation' ? IDEATION_ALLOWED_VIEWS : Object.values(ViewType);
@@ -1036,12 +1044,12 @@ function App() {
                       <Upload size={48} className="mb-4 opacity-50" />
                       <p className="text-sm font-medium">Upload Sketch / Model</p>
                       <p className="text-xs opacity-70 mt-1">PNG, JPG (MAX 10MB)</p>
-                      <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      <input type="file" ref={fileInputRef} onChange={(e) => { handleFileUpload(e); setBaseImageKey(prev => prev + 1); }} className="absolute inset-0 opacity-0 cursor-pointer" />
                     </div>
                   ) : (
-                    <div className="relative w-full h-full">
-                      <img key={uploadedImage} src={uploadedImage} alt="Original" className="w-full h-full object-cover" />
-                      <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                    <div className="relative w-full h-full bg-slate-100">
+                      <img key={baseImageKey} src={uploadedImage} alt="Original" className="w-full h-full object-contain" />
+                      <button onClick={handleRemoveBaseImage} className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-md transition-colors z-20"><X size={16} /></button>
                     </div>
                   )}
                 </div>
