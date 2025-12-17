@@ -136,9 +136,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
 
                 {/* Purchase Options */}
                 <div className="md:col-span-2 space-y-4">
-                    <CreditPack amount={100} price={9.99} onPurchase={() => onPurchase(100)} />
-                    <CreditPack amount={500} price={39.99} onPurchase={() => onPurchase(500)} popular />
-                    <CreditPack amount={1200} price={89.99} onPurchase={() => onPurchase(1200)} />
+                    <CreditPack amount={100} price={1200} onPurchase={() => onPurchase(100)} />
+                    <CreditPack amount={500} price={5000} onPurchase={() => onPurchase(500)} popular />
+                    <CreditPack amount={1200} price={11000} onPurchase={() => onPurchase(1200)} />
                 </div>
             </div>
 
@@ -182,7 +182,7 @@ const CreditPack = ({ amount, price, onPurchase, popular }: { amount: number, pr
             </div>
         </div>
         <div className="flex items-center gap-4">
-            <span className="font-medium text-slate-900">${price}</span>
+            <span className="font-medium text-slate-900">৳{price.toLocaleString()}</span>
             <button onClick={onPurchase} className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${popular ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'}`}>
                 Buy
             </button>
