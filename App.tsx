@@ -121,12 +121,62 @@ function App() {
       const userData = storageService.loadUserData(currentUser.email);
       setHistory(userData.history || []);
       setCustomStyles(userData.customStyles || []);
+
+      // Load initial credits from local storage
       if (userData.credits) {
         setCredits(userData.credits);
       } else {
         setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
       }
+
+      // Sync credits from Supabase
+      const fetchCredits = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('credits')
+            .eq('id', currentUser.id)
+            .single();
+
+          if (error) throw error;
+
+          if (data) {
+            setCredits(prev => ({ ...prev, available: data.credits }));
+          }
+        } catch (error) {
+          console.error('Error fetching credits from Supabase:', error);
+        }
+      };
+
+      fetchCredits();
     }
+  }, [currentUser]);
+
+  // Real-time subscription for credit updates
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const channel = supabase
+      .channel('realtime-credits')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `id=eq.${currentUser.id}`,
+        },
+        (payload) => {
+          if (payload.new && typeof payload.new.credits === 'number') {
+            setCredits(prev => ({ ...prev, available: payload.new.credits }));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [currentUser]);
 
   useEffect(() => {
