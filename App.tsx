@@ -528,6 +528,22 @@ function App() {
                     <option key={view} value={view}>{view}</option>
                   ))}
                 </select>
+                {selectedView === 'Elevation' && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {['Front', 'Back', 'Left', 'Right'].map((side) => (
+                      <button
+                        key={side}
+                        onClick={() => setElevationSide(side as ElevationSide)}
+                        className={`py-2 text-[10px] font-medium rounded-lg border transition-all ${elevationSide === side
+                            ? 'bg-slate-900 text-white border-slate-900'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                          }`}
+                      >
+                        {side}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Output Config */}
@@ -699,6 +715,22 @@ function App() {
                     <option key={view} value={view}>{view}</option>
                   ))}
                 </select>
+                {selectedView === 'Elevation' && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {['Front', 'Back', 'Left', 'Right'].map((side) => (
+                      <button
+                        key={side}
+                        onClick={() => setElevationSide(side as ElevationSide)}
+                        className={`py-2 text-[10px] font-medium rounded-lg border transition-all ${elevationSide === side
+                            ? 'bg-slate-900 text-white border-slate-900'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                          }`}
+                      >
+                        {side}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Output Config */}
