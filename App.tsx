@@ -382,6 +382,56 @@ function App() {
     if (referenceInputRef.current) referenceInputRef.current.value = '';
   };
 
+  // Helper for icons
+  const getMaterialIcon = (name: string) => {
+    switch (name) {
+      case 'Concrete': return <BrickWall size={14} />;
+      case 'White Card': return <Square size={14} />;
+      case 'Blue Foam': return <Box size={14} />;
+      case 'Wood Block': return <TreeDeciduous size={14} />;
+      case 'Wireframe': return <Grid3x3 size={14} />;
+      case 'Translucent': return <Droplets size={14} />;
+      default: return <Box size={14} />;
+    }
+  };
+
+  const getFormIcon = (name: string) => {
+    switch (name) {
+      case 'Orthogonal': return <LayoutGrid size={14} />;
+      case 'Organic': return <Leaf size={14} />;
+      case 'Curvilinear': return <Waves size={14} />;
+      case 'Faceted': return <Gem size={14} />;
+      case 'Crystalline': return <Hexagon size={14} />;
+      case 'Parametric': return <Cpu size={14} />;
+      case 'Deconstructivist': return <Scissors size={14} />;
+      default: return <Shapes size={14} />;
+    }
+  };
+
+  const getVerbIcon = (name: string) => {
+    switch (name) {
+      case 'Extrude': return <ArrowUpSquare size={12} />;
+      case 'Branch': return <GitBranch size={12} />;
+      case 'Merge': return <Merge size={12} />;
+      case 'Nest': return <BoxSelect size={12} />;
+      case 'Inflate': return <Expand size={12} />;
+      case 'Stack': return <Layers size={12} />;
+      case 'Subtract': return <MinusSquare size={12} />;
+      case 'Punch': return <Target size={12} />;
+      case 'Split': return <Split size={12} />;
+      case 'Carve': return <Eraser size={12} />;
+      case 'Notch': return <Puzzle size={12} />;
+      case 'Twist': return <RotateCw size={12} />;
+      case 'Fold': return <Scroll size={12} />;
+      case 'Shear': return <MoveDiagonal size={12} />;
+      case 'Cantilever': return <ArrowRightFromLine size={12} />;
+      case 'Lift': return <ArrowUpFromLine size={12} />;
+      case 'Terrace': return <Signal size={12} />;
+      case 'Bend': return <CornerUpRight size={12} />;
+      default: return <Sparkles size={12} />;
+    }
+  };
+
   if (loadingAuth) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-2 border-slate-300 border-t-slate-800 rounded-full animate-spin"></div></div>;
   if (!currentUser) {
     if (showLogin) return <LoginScreen onLogin={handleLogin} onBack={() => setShowLogin(false)} />;
@@ -521,66 +571,149 @@ function App() {
           {/* IDEATION TAB CONTROLS */}
           {activeTab === 'ideation' && (
             <div className="space-y-6">
-              {/* Spatial Verbs */}
-              <div>
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Spatial Verbs</h4>
-                <div className="flex flex-wrap gap-2">
-                  {Object.keys(SPATIAL_VERBS).map(verb => (
+              {/* Operative Design Card */}
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Shapes size={14} className="text-slate-900" />
+                  <h4 className="text-sm font-bold text-slate-900">Operative Design</h4>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Select spatial verbs to apply volumetric operations to your base massing. Combined verbs create complex geometries.
+                </p>
+              </div>
+
+              {/* Innovation Level */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <Sliders size={10} /> Innovation Level
+                </div>
+                <div className="px-1">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={innovationLevel}
+                    onChange={(e) => setInnovationLevel(parseInt(e.target.value))}
+                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
+                  />
+                  <div className="flex justify-between mt-2 text-[10px] font-medium text-slate-500">
+                    <span>Strict</span>
+                    <span>Balanced</span>
+                    <span>Radical</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Materiality */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <Cuboid size={10} /> Materiality
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.keys(IDEATION_MATERIALS).map(m => (
                     <button
-                      key={verb}
-                      onClick={() => toggleVerb(verb)}
-                      className={`px-3 py-1.5 rounded-full text-[10px] font-medium border transition-all ${selectedVerbs.includes(verb) ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                      key={m}
+                      onClick={() => setIdeationMaterial(m)}
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium border transition-all ${ideationMaterial === m ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
                     >
-                      {verb}
+                      {getMaterialIcon(m)}
+                      {m}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Material & Form */}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Materiality</label>
-                  <select
-                    value={ideationMaterial}
-                    onChange={(e) => setIdeationMaterial(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
-                  >
-                    {Object.keys(IDEATION_MATERIALS).map(m => <option key={m} value={m}>{m}</option>)}
-                  </select>
+              {/* Sun & Shadows */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <Sun size={10} /> Sun & Shadows
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Form Language</label>
-                  <select
-                    value={ideationForm}
-                    onChange={(e) => setIdeationForm(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
-                  >
-                    {Object.keys(IDEATION_FORMS).map(f => <option key={f} value={f}>{f}</option>)}
-                  </select>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Morning', 'Noon', 'Sunset'].map(t => (
+                    <button
+                      key={t}
+                      onClick={() => setTimeOfDay(t)}
+                      className={`flex flex-col items-center justify-center gap-1 py-2 rounded-lg text-[10px] font-medium border transition-all ${timeOfDay === t ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      {t === 'Morning' && <Sunrise size={14} />}
+                      {t === 'Noon' && <Sun size={14} />}
+                      {t === 'Sunset' && <Sunset size={14} />}
+                      {t}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Innovation Slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <span>Innovation Level</span>
-                  <span>{innovationLevel}%</span>
+              {/* Form Language */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <Component size={10} /> Form Language
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={innovationLevel}
-                  onChange={(e) => setInnovationLevel(parseInt(e.target.value))}
-                  className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
-                />
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.keys(IDEATION_FORMS).map(f => (
+                    <button
+                      key={f}
+                      onClick={() => setIdeationForm(f)}
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium border transition-all ${ideationForm === f ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      {getFormIcon(f)}
+                      {f}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              {/* Output Config (Shared) */}
+              {/* Spatial Verbs */}
+              <div className="space-y-4 pt-2 border-t border-slate-100">
+                {['Additive', 'Subtractive', 'Displacement'].map(category => (
+                  <div key={category} className="space-y-2">
+                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{category} Operations</h5>
+                    <div className="grid grid-cols-2 gap-2">
+                      {Object.entries(SPATIAL_VERBS)
+                        .filter(([_, data]) => data.category === category)
+                        .map(([verb, _]) => (
+                          <button
+                            key={verb}
+                            onClick={() => toggleVerb(verb)}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-medium border transition-all ${selectedVerbs.includes(verb) ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                          >
+                            {getVerbIcon(verb)}
+                            {verb}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Projection */}
+              <div className="space-y-2 pt-2 border-t border-slate-100">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Box size={10} /> Projection</label>
+                <select
+                  value={selectedView}
+                  onChange={(e) => setSelectedView(e.target.value as ViewType)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                >
+                  {availableViews.map(view => (
+                    <option key={view} value={view}>{view}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Output Config */}
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Output Config</label>
                 <div className="grid grid-cols-2 gap-2">
+                  <select
+                    value={selectedAspectRatio}
+                    onChange={(e) => setSelectedAspectRatio(e.target.value as AspectRatio)}
+                    className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    <option value="16:9">Landscape (16:9)</option>
+                    <option value="4:3">Standard (4:3)</option>
+                    <option value="1:1">Square (1:1)</option>
+                    <option value="9:16">Portrait (9:16)</option>
+                  </select>
                   <select
                     value={selectedImageSize}
                     onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
@@ -591,6 +724,17 @@ function App() {
                     <option value="4K">4K (20c)</option>
                   </select>
                 </div>
+              </div>
+
+              {/* Refine */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sliders size={10} /> Refine</label>
+                <textarea
+                  placeholder="Describe the specific volumetric outcome..."
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="w-full h-20 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
+                />
               </div>
             </div>
           )}
