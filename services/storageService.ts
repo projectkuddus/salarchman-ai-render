@@ -1,10 +1,11 @@
 
-import { CustomStyle, GenerationResult, User } from '../types';
+import { CustomStyle, GenerationResult, User, UserCredits } from '../types';
 
 interface UserData {
   history: GenerationResult[];
   customStyles: CustomStyle[];
   userProfile?: Partial<User>; // Store updated user details
+  credits?: UserCredits;
 }
 
 const STORAGE_PREFIX = 'salarchman_user_data_';
@@ -40,40 +41,40 @@ export const storageService = {
         error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
       ) {
         console.warn("LocalStorage quota exceeded. Attempting to trim history to save latest data.");
-        
+
         const dataToSave = { ...data };
-        
+
         // If history exists, try to trim it from the end (oldest items)
         // Note: In App.tsx, new items are added to the front ([new, ...old]). 
         // So the end of the array contains the oldest items.
         if (dataToSave.history && dataToSave.history.length > 0) {
-            const originalHistory = [...dataToSave.history];
-            
-            // Iteratively remove the oldest item until it fits
-            while (originalHistory.length > 0) {
-                originalHistory.pop(); // Remove the last (oldest) item
-                dataToSave.history = originalHistory;
-                
-                try {
-                    localStorage.setItem(key, JSON.stringify(dataToSave));
-                    // If successful, break the loop
-                    console.log(`Recovered from quota error. History trimmed to ${originalHistory.length} items.`);
-                    return; 
-                } catch (e) {
-                    // If still failing, loop continues to pop another item
-                    continue;
-                }
+          const originalHistory = [...dataToSave.history];
+
+          // Iteratively remove the oldest item until it fits
+          while (originalHistory.length > 0) {
+            originalHistory.pop(); // Remove the last (oldest) item
+            dataToSave.history = originalHistory;
+
+            try {
+              localStorage.setItem(key, JSON.stringify(dataToSave));
+              // If successful, break the loop
+              console.log(`Recovered from quota error. History trimmed to ${originalHistory.length} items.`);
+              return;
+            } catch (e) {
+              // If still failing, loop continues to pop another item
+              continue;
             }
-            
-            // If we are here, we removed all history and it still might have failed 
-            // (e.g., if just customStyles + profile are too big, or one massive item currently being added)
-             try {
-                // Try saving with empty history
-                dataToSave.history = [];
-                localStorage.setItem(key, JSON.stringify(dataToSave));
-            } catch(e) {
-                console.error("Critical: Unable to save user data even after clearing history.", e);
-            }
+          }
+
+          // If we are here, we removed all history and it still might have failed 
+          // (e.g., if just customStyles + profile are too big, or one massive item currently being added)
+          try {
+            // Try saving with empty history
+            dataToSave.history = [];
+            localStorage.setItem(key, JSON.stringify(dataToSave));
+          } catch (e) {
+            console.error("Critical: Unable to save user data even after clearing history.", e);
+          }
         }
       } else {
         console.error("Failed to save user data", error);
@@ -92,12 +93,12 @@ export const storageService = {
         const data = localStorage.getItem(key);
         let savedProfile = {};
         if (data) {
-            try {
-                const parsed = JSON.parse(data);
-                if (parsed.userProfile) savedProfile = parsed.userProfile;
-            } catch (e) {
-                console.error("Error parsing saved user data during login", e);
-            }
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.userProfile) savedProfile = parsed.userProfile;
+          } catch (e) {
+            console.error("Error parsing saved user data during login", e);
+          }
         }
 
         resolve({

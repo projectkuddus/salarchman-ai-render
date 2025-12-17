@@ -121,7 +121,11 @@ function App() {
       const userData = storageService.loadUserData(currentUser.email);
       setHistory(userData.history || []);
       setCustomStyles(userData.customStyles || []);
-      setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
+      if (userData.credits) {
+        setCredits(userData.credits);
+      } else {
+        setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
+      }
     }
   }, [currentUser]);
 
@@ -130,10 +134,11 @@ function App() {
       storageService.saveUserData(currentUser.email, {
         history,
         customStyles,
-        userProfile: { name: currentUser.name, avatar: currentUser.avatar }
+        userProfile: { name: currentUser.name, avatar: currentUser.avatar },
+        credits
       });
     }
-  }, [history, customStyles, currentUser]);
+  }, [history, customStyles, currentUser, credits]);
 
   const handleLogin = (user: User) => {
     setCurrentUser(user);
