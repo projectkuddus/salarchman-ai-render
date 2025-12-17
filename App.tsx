@@ -407,22 +407,19 @@ function App() {
             <button onClick={() => setActiveTab('diagram')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Diagram</button>
           </div>
 
-          {/* Styles & Controls */}
-          {activeTab !== 'profile' && (
+          {/* RENDER TAB CONTROLS */}
+          {activeTab === 'render' && (
             <div className="space-y-6">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Configuration</h3>
               {/* Create Mode */}
-              {activeTab === 'render' && (
-                <div className="grid grid-cols-2 bg-slate-100 p-1 rounded-xl gap-1 mb-4">
-                  <button onClick={() => setCreateMode('Exterior')} className={`text-xs py-2 rounded-lg ${createMode === 'Exterior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Exterior</button>
-                  <button onClick={() => setCreateMode('Interior')} className={`text-xs py-2 rounded-lg ${createMode === 'Interior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Interior</button>
-                </div>
-              )}
+              <div className="grid grid-cols-2 bg-slate-100 p-1 rounded-xl gap-1">
+                <button onClick={() => setCreateMode('Exterior')} className={`text-xs py-2 rounded-lg ${createMode === 'Exterior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Exterior</button>
+                <button onClick={() => setCreateMode('Interior')} className={`text-xs py-2 rounded-lg ${createMode === 'Interior' ? 'bg-white shadow-sm' : 'text-slate-500'}`}>Interior</button>
+              </div>
 
-              {/* Style Selection */}
-              {activeTab === 'render' && createMode === 'Exterior' && (
-                <div className="space-y-6">
-                  {EXTERIOR_STYLE_CATEGORIES.map((category) => (
+              {/* Styles */}
+              <div className="space-y-6">
+                {createMode === 'Exterior' ? (
+                  EXTERIOR_STYLE_CATEGORIES.map((category) => (
                     <div key={category.title}>
                       <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">{category.title}</h4>
                       <div className="grid grid-cols-2 gap-2">
@@ -443,12 +440,8 @@ function App() {
                         ))}
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-
-              {activeTab === 'render' && createMode === 'Interior' && (
-                <div className="space-y-6">
+                  ))
+                ) : (
                   <div>
                     <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Interior Styles</h4>
                     <div className="grid grid-cols-2 gap-2">
@@ -469,10 +462,174 @@ function App() {
                       ))}
                     </div>
                   </div>
+                )}
+              </div>
+
+              {/* Projection / View */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Box size={10} /> Projection</label>
+                <select
+                  value={selectedView}
+                  onChange={(e) => setSelectedView(e.target.value as ViewType)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                >
+                  {availableViews.map(view => (
+                    <option key={view} value={view}>{view}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Output Config */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Output Config</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <select
+                    value={selectedAspectRatio}
+                    onChange={(e) => setSelectedAspectRatio(e.target.value as AspectRatio)}
+                    className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    <option value="16:9">Landscape (16:9)</option>
+                    <option value="4:3">Standard (4:3)</option>
+                    <option value="1:1">Square (1:1)</option>
+                    <option value="9:16">Portrait (9:16)</option>
+                  </select>
+                  <select
+                    value={selectedImageSize}
+                    onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
+                    className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    <option value="1K">1K (5c)</option>
+                    <option value="2K">2K (10c)</option>
+                    <option value="4K">4K (20c)</option>
+                  </select>
                 </div>
-              )}
+              </div>
+
+              {/* Refine / Prompt */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sliders size={10} /> Refine</label>
+                <textarea
+                  placeholder="Additional context: e.g. North-facing light, brutalist concrete texture..."
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
+                />
+              </div>
             </div>
           )}
+
+          {/* IDEATION TAB CONTROLS */}
+          {activeTab === 'ideation' && (
+            <div className="space-y-6">
+              {/* Spatial Verbs */}
+              <div>
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Spatial Verbs</h4>
+                <div className="flex flex-wrap gap-2">
+                  {Object.keys(SPATIAL_VERBS).map(verb => (
+                    <button
+                      key={verb}
+                      onClick={() => toggleVerb(verb)}
+                      className={`px-3 py-1.5 rounded-full text-[10px] font-medium border transition-all ${selectedVerbs.includes(verb) ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      {verb}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Material & Form */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Materiality</label>
+                  <select
+                    value={ideationMaterial}
+                    onChange={(e) => setIdeationMaterial(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    {Object.keys(IDEATION_MATERIALS).map(m => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Form Language</label>
+                  <select
+                    value={ideationForm}
+                    onChange={(e) => setIdeationForm(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    {Object.keys(IDEATION_FORMS).map(f => <option key={f} value={f}>{f}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              {/* Innovation Slider */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <span>Innovation Level</span>
+                  <span>{innovationLevel}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={innovationLevel}
+                  onChange={(e) => setInnovationLevel(parseInt(e.target.value))}
+                  className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
+                />
+              </div>
+
+              {/* Output Config (Shared) */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Output Config</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <select
+                    value={selectedImageSize}
+                    onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
+                    className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    <option value="1K">1K (5c)</option>
+                    <option value="2K">2K (10c)</option>
+                    <option value="4K">4K (20c)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* DIAGRAM TAB CONTROLS */}
+          {activeTab === 'diagram' && (
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Diagram Type</h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {Object.keys(DIAGRAM_PROMPTS).map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => setSelectedDiagramType(type as DiagramType)}
+                      className={`text-left px-3 py-2 rounded-lg text-xs font-medium border transition-all ${selectedDiagramType === type ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Output Config (Shared) */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Output Config</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <select
+                    value={selectedImageSize}
+                    onChange={(e) => setSelectedImageSize(e.target.value as ImageSize)}
+                    className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none"
+                  >
+                    <option value="1K">1K (5c)</option>
+                    <option value="2K">2K (10c)</option>
+                    <option value="4K">4K (20c)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
         <div className="p-4 border-t border-slate-100">
           <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors" onClick={() => setActiveTab('profile')}>
@@ -524,65 +681,59 @@ function App() {
                   )}
                 </div>
 
-                {/* Secondary Inputs Row */}
-                <div className="h-48 flex gap-6">
-                  {/* Context / Satellite */}
-                  <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                    <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
-                    {!siteImage ? (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
-                        <Plus size={24} className="mb-2 opacity-50" />
-                        <p className="text-xs font-medium">Add Site</p>
-                        <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                      </div>
-                    ) : (
-                      <div className="relative w-full h-full">
-                        <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
-                        <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                      </div>
-                    )}
-                  </div>
+                {/* Secondary Inputs Row (Only for Render Tab) */}
+                {activeTab === 'render' && (
+                  <div className="h-48 flex gap-6">
+                    {/* Context / Satellite */}
+                    <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
+                      {!siteImage ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Add Site</p>
+                          <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
+                          <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Style Reference */}
-                  <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                    <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
-                    {!referenceImage ? (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
-                        <Plus size={24} className="mb-2 opacity-50" />
-                        <p className="text-xs font-medium">Add Style</p>
-                        <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                      </div>
-                    ) : (
-                      <div className="relative w-full h-full">
-                        <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
-                        <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                      </div>
-                    )}
+                    {/* Style Reference */}
+                    <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
+                      {!referenceImage ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Add Style</p>
+                          <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
+                          <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
 
-                {/* Controls & Generate */}
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4 items-center">
-                  <div className="flex-1">
-                    <input
-                      type="text"
-                      placeholder="Describe details..."
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10"
-                    />
+                {/* Generate Button Area (Simplified as controls are in sidebar) */}
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                    <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-slate-900">Est. Cost {currentCost} CR</span>
-                    <Button
-                      onClick={handleGenerate}
-                      disabled={!uploadedImage || isGenerating}
-                      className="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                    >
-                      {isGenerating ? <RefreshCw size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                      {isGenerating ? 'Rendering...' : 'Generate'}
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={handleGenerate}
+                    disabled={!uploadedImage || isGenerating}
+                    className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
+                  >
+                    {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                    {isGenerating ? 'Rendering...' : 'Generate'}
+                  </Button>
                 </div>
                 {apiKeyError && (
                   <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
