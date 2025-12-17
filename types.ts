@@ -12,7 +12,7 @@ export enum RenderStyle {
   CLAY = 'Clay Render',
   WHITE_MODEL = 'White Model',
   AMBIENT_OCCLUSION = 'Ambient Occlusion',
-  SIMPLE_SHADED = 'Simple Shaded',
+
   MATERIAL_STUDY = 'Material Study',
   LIGHTING_STUDY = 'Lighting Study',
 
@@ -32,7 +32,7 @@ export enum RenderStyle {
   PASTEL = 'Pastel / Chalk',
   TECHNICAL_PEN = 'Technical Pen',
   BLUEPRINT = 'Blueprint',
-  
+
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
   SKETCHY = 'Sketchy',

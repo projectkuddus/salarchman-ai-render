@@ -29,7 +29,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.CLAY,
       RenderStyle.WHITE_MODEL,
       RenderStyle.AMBIENT_OCCLUSION,
-      RenderStyle.SIMPLE_SHADED,
+
       RenderStyle.MATERIAL_STUDY,
       RenderStyle.LIGHTING_STUDY
     ]
@@ -91,7 +91,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.CLAY]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=80", // Using abstract shape for clay
   [RenderStyle.WHITE_MODEL]: "https://images.unsplash.com/photo-1518112390430-f4ab02e9c2c8?w=150&q=80",
   [RenderStyle.AMBIENT_OCCLUSION]: "https://images.unsplash.com/photo-1437652633881-df07db29c32a?w=150&q=80", // Abstract grey
-  [RenderStyle.SIMPLE_SHADED]: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=150&q=80",
+
   [RenderStyle.MATERIAL_STUDY]: "https://images.unsplash.com/photo-1518640165980-d3e0e2aa6c1e?w=150&q=80",
   [RenderStyle.LIGHTING_STUDY]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80",
 
@@ -133,7 +133,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.CLAY]: "Clay render, matte white material, ambient occlusion, focus on light and shadow volume.",
   [RenderStyle.WHITE_MODEL]: "White physical model look, clean materials, soft studio lighting, architectural scale model.",
   [RenderStyle.AMBIENT_OCCLUSION]: "Ambient occlusion pass, greyscale, soft shadows showing geometry contacts.",
-  [RenderStyle.SIMPLE_SHADED]: "Simple shaded view, basic colors, clear volume definition, no complex textures.",
+
   [RenderStyle.MATERIAL_STUDY]: "Material study, focus on specific textures (wood, concrete, glass), close-up details.",
   [RenderStyle.LIGHTING_STUDY]: "Lighting study, focus on light interaction, shadows, and contrast, atmospheric.",
   [RenderStyle.TOON_CEL]: "Toon shaded / Cel-shaded style, bold outlines, flat colors, comic book or anime aesthetic.",
