@@ -96,11 +96,11 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.LIGHTING_STUDY]: '/thumbnails/lighting-study.jpg',
 
   // Stylized
-  [RenderStyle.TOON_CEL]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-  [RenderStyle.SKETCHY_NPR]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.WATERCOLOR_NPR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-  [RenderStyle.MINIATURE]: "https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=150&q=80",
-  [RenderStyle.LOW_POLY]: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80",
+  [RenderStyle.TOON_CEL]: '/thumbnails/toon.jpg',
+  [RenderStyle.SKETCHY_NPR]: '/thumbnails/sketchy-npr.jpg',
+  [RenderStyle.WATERCOLOR_NPR]: '/thumbnails/watercolor-npr.jpg',
+  [RenderStyle.MINIATURE]: '/thumbnails/miniature.jpg',
+  [RenderStyle.LOW_POLY]: '/thumbnails/low-poly.jpg',
 
   // Hand-Drawn
   [RenderStyle.PENCIL_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
