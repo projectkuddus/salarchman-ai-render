@@ -103,14 +103,14 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.LOW_POLY]: '/thumbnails/low-poly.jpg',
 
   // Hand-Drawn
-  [RenderStyle.PENCIL_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-  [RenderStyle.INK_LINE]: "https://images.unsplash.com/photo-1579783902614-a3fb39279c0f?w=150&q=80",
-  [RenderStyle.MARKER_RENDERING]: "https://images.unsplash.com/photo-1531736275454-adc48d07996f?w=150&q=80",
-  [RenderStyle.WATERCOLOR_WASH]: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=150&q=80",
-  [RenderStyle.CHARCOAL]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
-  [RenderStyle.PASTEL]: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=150&q=80",
-  [RenderStyle.TECHNICAL_PEN]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.BLUEPRINT]: "https://images.unsplash.com/photo-1542621334-a254cf47733d?w=150&q=80",
+  [RenderStyle.PENCIL_SKETCH]: '/thumbnails/pencil-sketch.jpg',
+  [RenderStyle.INK_LINE]: '/thumbnails/ink-line.jpg',
+  [RenderStyle.MARKER_RENDERING]: '/thumbnails/marker.jpg',
+  [RenderStyle.CHARCOAL]: '/thumbnails/charcoal.jpg',
+  [RenderStyle.PASTEL]: '/thumbnails/pastel.jpg',
+  [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
+  [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
+  [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=80",
