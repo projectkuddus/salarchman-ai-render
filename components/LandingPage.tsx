@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Sparkles, Search } from 'lucide-react';
-import { UploadForm } from './UploadForm';
 
 interface LandingPageProps {
     onGetStarted: () => void;
@@ -73,10 +72,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     </p>
                 </div>
 
-                {/* Upload Form Section */}
-                <div className="flex justify-center mb-16">
-                    <UploadForm onUpload={(file) => console.log('Uploaded:', file)} />
-                </div>
 
                 {/* Developer Gallery Section */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
