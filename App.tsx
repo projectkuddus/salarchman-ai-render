@@ -1030,16 +1030,16 @@ function App() {
               {/* Bottom Bar */}
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500">Estimated Cost</span>
-                  <span className="text-sm font-bold text-slate-900">{currentCost} CR</span>
+                  <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                  <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
                 </div>
                 <Button
                   onClick={handleGenerate}
                   disabled={!uploadedImage || isGenerating}
-                  className="px-6 py-2 bg-white border border-slate-200 text-slate-900 rounded-lg text-sm font-medium hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
                 >
-                  {isGenerating ? <RefreshCw size={16} className="animate-spin" /> : <Key size={16} />}
-                  {isGenerating ? 'Processing...' : 'Select API Key'}
+                  {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                  {isGenerating ? 'Rendering...' : 'Generate'}
                 </Button>
               </div>
               {apiKeyError && (
@@ -1132,18 +1132,17 @@ function App() {
 
               {/* Bottom Bar */}
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-slate-400">Estimated Cost</span>
-                  <span className="text-lg font-bold text-slate-900">{currentCost}</span>
-                  <span className="text-xs text-slate-500">CR</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                  <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
                 </div>
                 <Button
                   onClick={handleGenerate}
-                  disabled={isGenerating || credits.available < currentCost || !uploadedImage}
-                  className="bg-slate-900 text-white px-6 py-2 hover:bg-slate-800 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  disabled={!uploadedImage || isGenerating}
+                  className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
                 >
-                  {isGenerating ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Key size={16} />}
-                  <span>Select API Key</span>
+                  {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                  {isGenerating ? 'Rendering...' : 'Generate'}
                 </Button>
               </div>
               {apiKeyError && (
