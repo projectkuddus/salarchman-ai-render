@@ -756,27 +756,27 @@ function App() {
 
               {/* Style Gallery */}
               <div>
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1"><Grid size={10} /> Style Gallery</h4>
-                <div className="grid grid-cols-2 gap-2">
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1"><Grid size={10} /> Style Gallery</h4>
+                <div className="grid grid-cols-2 gap-3">
                   {Object.keys(DIAGRAM_PROMPTS).map((type) => {
                     const isSelected = selectedDiagramType === type;
 
                     // Helper to get icon and description for each type
                     const getDiagramDetails = (t: string) => {
                       switch (t) {
-                        case 'Concept / Schematic': return { icon: <Lightbulb size={16} />, desc: "Simplified massing with arrows showing core design idea" };
-                        case 'Exploded Axonometric': return { icon: <Layers size={16} />, desc: "Vertical deconstruction of layers and assembly" };
-                        case 'Programmatic & Zoning': return { icon: <Cuboid size={16} />, desc: "Color-coded functional zoning and volumes" };
-                        case 'Circulation & Flow': return { icon: <ArrowUpRight size={16} />, desc: "Flow paths, movement vectors, and access" };
-                        case 'Climate & Environmental': return { icon: <Wind size={16} />, desc: "Sun path, wind flow, and thermal analysis" };
-                        case 'Sectional Perspective': return { icon: <BoxSelect size={16} />, desc: "3D cut revealing interior life and depth" };
-                        case 'Activity & Usage': return { icon: <Users size={16} />, desc: "Ghosted view with activity mapping and usage" };
-                        case 'Geometric Analysis': return { icon: <Ruler size={16} />, desc: "Regulating lines, symmetry, and proportions" };
-                        case 'Structural Tectonics': return { icon: <Grid3x3 size={16} />, desc: "X-ray view of load-bearing skeletal system" };
-                        case 'Urban Context & Mapping': return { icon: <Map size={16} />, desc: "Relationship to city fabric and mapping" };
-                        case 'Form Evolution': return { icon: <GitBranch size={16} />, desc: "Step-by-step generative design process" };
-                        case 'Living Collage Cutaway': return { icon: <Leaf size={16} />, desc: "Whimsical cutaway with lush plants and life" };
-                        default: return { icon: <Shapes size={16} />, desc: "Architectural diagram style" };
+                        case 'Concept / Schematic': return { icon: <Lightbulb size={24} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
+                        case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
+                        case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
+                        case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
+                        case 'Climate & Environmental': return { icon: <Wind size={24} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
+                        case 'Sectional Perspective': return { icon: <BoxSelect size={24} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
+                        case 'Activity & Usage': return { icon: <Users size={24} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
+                        case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
+                        case 'Structural Tectonics': return { icon: <Grid3x3 size={24} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
+                        case 'Urban Context & Mapping': return { icon: <Map size={24} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
+                        case 'Form Evolution': return { icon: <GitBranch size={24} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
+                        case 'Living Collage Cutaway': return { icon: <Leaf size={24} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
+                        default: return { icon: <Shapes size={24} />, desc: "Architectural diagram style", color: "text-slate-500" };
                       }
                     };
 
@@ -786,14 +786,22 @@ function App() {
                       <button
                         key={type}
                         onClick={() => setSelectedDiagramType(type as DiagramType)}
-                        className={`text-left p-3 rounded-xl border transition-all h-full flex flex-col gap-2 ${isSelected ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:shadow-sm'}`}
+                        className={`relative overflow-hidden text-left p-4 rounded-2xl border transition-all h-full flex flex-col gap-3 group ${isSelected ? 'bg-slate-900 border-slate-900 shadow-lg scale-[1.02]' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'}`}
                       >
-                        <div className={`${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                        {/* Decorative Background Shape */}
+                        {!isSelected && (
+                          <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-[60px] -mr-4 -mt-4 transition-transform group-hover:scale-110" />
+                        )}
+                        {isSelected && (
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl" />
+                        )}
+
+                        <div className={`relative z-10 ${details.color}`}>
                           {details.icon}
                         </div>
-                        <div>
-                          <h5 className={`text-[10px] font-bold uppercase leading-tight mb-1 ${isSelected ? 'text-white' : 'text-slate-900'}`}>{type}</h5>
-                          <p className={`text-[9px] leading-relaxed ${isSelected ? 'text-slate-300' : 'text-slate-400'}`}>{details.desc}</p>
+                        <div className="relative z-10">
+                          <h5 className={`text-[11px] font-bold uppercase leading-tight mb-1.5 ${isSelected ? 'text-white' : 'text-slate-700'}`}>{type}</h5>
+                          <p className={`text-[10px] leading-relaxed ${isSelected ? 'text-slate-400' : 'text-slate-400'}`}>{details.desc}</p>
                         </div>
                       </button>
                     );
