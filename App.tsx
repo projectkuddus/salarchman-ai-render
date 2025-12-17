@@ -1079,7 +1079,7 @@ function App() {
                       {!siteImage ? (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
                           <Plus size={24} className="mb-2 opacity-50" />
-                          <p className="text-xs font-medium">Add Site</p>
+                          <p className="text-xs font-medium">Upload your real site image</p>
                           <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                         </div>
                       ) : (
@@ -1096,7 +1096,7 @@ function App() {
                       {!referenceImage ? (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
                           <Plus size={24} className="mb-2 opacity-50" />
-                          <p className="text-xs font-medium">Add Style</p>
+                          <p className="text-xs font-medium">Upload your reference project image</p>
                           <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                         </div>
                       ) : (
