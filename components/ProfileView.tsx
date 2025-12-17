@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserCredits, GenerationResult } from '../types';
 import { Button } from './Button';
-import { Save, CreditCard, User as UserIcon, Shield, Mail, Key } from 'lucide-react';
-import { ProjectGallery } from './ProjectGallery';
+import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Maximize2 } from 'lucide-react';
 
 interface ProfileViewProps {
     user: User;
@@ -20,7 +19,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
 
     const handleSave = () => {
         setIsSaving(true);
-        // Simulate API call
         setTimeout(() => {
             onUpdateProfile(name, password);
             setIsSaving(false);
@@ -129,7 +127,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                             </div>
                         </div>
                     </div>
-                    {/* Decorative background */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
                 </div>
@@ -155,13 +152,53 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                 </div>
             </div>
 
-            {/* Project Gallery Section */}
-            <ProjectGallery history={history} onRestore={onRestore} />
+            {/* Generation History Section - Simple & Clean */}
+            <div className="pt-8 border-t border-slate-200">
+                <div className="flex items-center gap-2 text-slate-900 font-medium mb-6">
+                    <History size={20} /> <span>Generation History</span>
+                    <span className="ml-auto text-xs text-slate-400">{history.length} projects</span>
+                </div>
+
+                {history.length === 0 ? (
+                    <div className="text-center text-slate-400 py-16 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                        <History size={32} className="mx-auto mb-3 opacity-20" />
+                        <p className="text-sm font-medium">No generation history yet</p>
+                        <p className="text-xs mt-1 opacity-70">Your generated images will appear here</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {history.map(item => (
+                            <div key={item.id} className="group relative bg-white rounded-xl overflow-hidden border border-slate-200 hover:border-slate-400 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1">
+                                <div className="aspect-square relative overflow-hidden bg-slate-100">
+                                    <img
+                                        src={item.generatedImage}
+                                        alt={item.style}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+                                        <button
+                                            onClick={() => onRestore(item)}
+                                            className="w-full bg-white text-slate-900 text-xs py-2.5 rounded-lg shadow-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition-colors"
+                                        >
+                                            <Maximize2 size={14} /> Restore
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="p-4 border-t border-slate-100">
+                                    <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                        <span className="uppercase tracking-wider font-medium">{item.viewType}</span>
+                                        <span>{new Date(item.timestamp).toLocaleDateString()}</span>
+                                    </div>
+                                    <p className="text-sm font-medium text-slate-900 truncate">{item.style}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
-
-
 
 const SettingsIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
