@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserCredits, GenerationResult } from '../types';
 import { Button } from './Button';
-import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Filter } from 'lucide-react';
+import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Filter, LayoutGrid, Layers, Calendar, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { HistoryCard } from './HistoryCard';
 
 interface ProfileViewProps {
@@ -155,21 +155,42 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                 </div>
             </div>
 
-            {/* History Section */}
+            {/* Project Gallery Section */}
             <div className="pt-8 border-t border-slate-200">
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div className="flex items-center gap-2 text-slate-900 font-medium">
-                        <History size={20} /> <span>Generation History</span>
+                        <LayoutGrid size={20} /> <span>Project Gallery</span>
                     </div>
-                    <button className="text-slate-400 hover:text-slate-900 flex items-center gap-1 text-xs font-medium">
-                        <Filter size={14} /> Filter
-                    </button>
+
+                    <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+                        <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap">
+                            <Filter size={14} />
+                            <span>All Styles</span>
+                            <ChevronDown size={14} className="text-slate-400" />
+                        </button>
+                        <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap">
+                            <Layers size={14} />
+                            <span>All Views</span>
+                            <ChevronDown size={14} className="text-slate-400" />
+                        </button>
+                        <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors whitespace-nowrap">
+                            <Calendar size={14} />
+                            <span>All Time</span>
+                            <ChevronDown size={14} className="text-slate-400" />
+                        </button>
+                        <button className="p-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                            <SlidersHorizontal size={14} />
+                        </button>
+                    </div>
                 </div>
 
                 {history.length === 0 ? (
-                    <div className="text-center text-slate-400 py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                        <History size={32} className="mx-auto mb-3 opacity-20" />
-                        <p className="text-sm">No generation history yet</p>
+                    <div className="text-center text-slate-400 py-24 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200 flex flex-col items-center justify-center">
+                        <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-4">
+                            <LayoutGrid size={32} className="opacity-20" />
+                        </div>
+                        <p className="text-sm font-medium text-slate-500">No projects found matching filters.</p>
+                        <button className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-2">Clear Filters</button>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
