@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Sparkles, Search } from 'lucide-react';
+import { Box, Sparkles, Search, X } from 'lucide-react';
 
 interface LandingPageProps {
     onGetStarted: () => void;
@@ -9,10 +9,15 @@ const DEVELOPER_GALLERY = [
     "/gallery/archivision-1765932651101.jpg?v=1",
     "/gallery/archivision-1765933707253.jpg?v=1",
     "/gallery/salARCHman-1765944744165.jpg?v=1",
-    "/gallery/salARCHman-1765956698737.jpg?v=1"
+    "/gallery/salARCHman-1765956698737.jpg?v=1",
+    "/gallery/gallery-new-1.png?v=1",
+    "/gallery/gallery-new-2.png?v=1",
+    "/gallery/gallery-new-3.png?v=1"
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
+    const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-500/20 relative">
 
@@ -83,7 +88,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
                     <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                         {DEVELOPER_GALLERY.map((img, index) => (
-                            <div key={index} className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                            <div
+                                key={index}
+                                className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                                onClick={() => setSelectedImage(img)}
+                            >
                                 <img
                                     src={img}
                                     alt={`Showcase ${index + 1}`}
@@ -100,6 +109,27 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 </div>
 
             </main>
+
+            {/* Lightbox Modal */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <button
+                        className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <X size={32} />
+                    </button>
+                    <img
+                        src={selectedImage}
+                        alt="Full size showcase"
+                        className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-300"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                </div>
+            )}
         </div>
     );
 };
