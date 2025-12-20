@@ -1022,7 +1022,7 @@ function App() {
         </header>
 
         {/* Canvas Area */}
-        <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${activeTab === 'diagram' ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
+        <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${(activeTab === 'diagram' || activeTab === 'render') ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
           {activeTab === 'profile' ? (
             <ProfileView
               user={currentUser}
@@ -1235,109 +1235,136 @@ function App() {
               )}
             </div>
           ) : (
-            <div className="w-full max-w-6xl h-full flex gap-6">
-              {/* Left Column: Inputs */}
-              <div className="w-1/2 flex flex-col gap-6">
-                {/* Main Image Upload */}
-                <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group min-h-[300px]">
-                  <div className="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-slate-600 border border-slate-200">Base Image</div>
-                  {!uploadedImagePreview && !uploadedImage ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                      <Upload size={48} className="mb-4 opacity-50" />
-                      <p className="text-sm font-medium">Upload Sketch / Model</p>
-                      <p className="text-xs opacity-70 mt-1">PNG, JPG (MAX 10MB)</p>
-                      <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+            <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
+              {/* Render Tab Header */}
+              <div className="mb-6">
+                <h2 className="text-3xl font-light text-slate-900">{createMode} Design Studio</h2>
+                <p className="text-sm text-slate-500 mt-1">Convert rough concepts into client-ready {createMode.toLowerCase()} visualizations.</p>
+              </div>
+
+              <div className="flex-1 flex gap-6 min-h-0 mb-6">
+                {/* Left Column: Inputs */}
+                <div className="w-1/2 flex flex-col gap-6">
+                  {/* Main Image Upload */}
+                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[400px] flex flex-col">
+                    <div className="absolute top-6 left-6 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <Box size={12} /> Base Geometry
                     </div>
-                  ) : (
-                    <div className="relative w-full h-full bg-slate-100">
-                      <img
-                        src={uploadedImagePreview || uploadedImage || ''}
-                        alt="Original"
-                        className="w-full h-full object-contain"
-                      />
-                      <button onClick={handleRemoveBaseImage} className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-md transition-colors z-20"><X size={16} /></button>
+                    {!uploadedImagePreview && !uploadedImage ? (
+                      <div className="flex-1 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50/50 transition-colors cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                        <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-slate-100">
+                          <Upload size={24} className="text-slate-900 opacity-80" />
+                        </div>
+                        <p className="text-sm font-medium text-slate-900">Upload Sketch / Model</p>
+                        <p className="text-[10px] opacity-50 mt-1">PNG, JPG (MAX 10MB)</p>
+                        <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full p-2">
+                        <div className="w-full h-full rounded-xl overflow-hidden relative bg-slate-100 border border-slate-100">
+                          <img
+                            src={uploadedImagePreview || uploadedImage || ''}
+                            alt="Original"
+                            className="w-full h-full object-contain"
+                          />
+                          <button onClick={(e) => { e.stopPropagation(); handleRemoveBaseImage(); }} className="absolute top-4 right-4 bg-white text-slate-900 p-2 rounded-lg shadow-lg hover:bg-slate-50 transition-colors z-20"><X size={16} /></button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Secondary Inputs Row (Only for Render Tab) */}
+                  {activeTab === 'render' && (
+                    <div className="h-48 flex gap-6">
+                      {/* Context / Satellite */}
+                      <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
+                        {!siteImage ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                            <Plus size={24} className="mb-2 opacity-50" />
+                            <p className="text-xs font-medium">Upload your real site image</p>
+                            <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full">
+                            <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
+                            <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Style Reference */}
+                      <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
+                        {!referenceImage ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                            <Plus size={24} className="mb-2 opacity-50" />
+                            <p className="text-xs font-medium">Upload your reference project image</p>
+                            <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full">
+                            <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
+                            <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Generate Button Area (Simplified as controls are in sidebar) */}
+                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                      <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
+                    </div>
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={!uploadedImage || isGenerating}
+                      className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
+                    >
+                      {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                      {isGenerating ? 'Rendering...' : 'Generate'}
+                    </Button>
+                  </div>
+                  {apiKeyError && (
+                    <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
+                      <AlertCircle size={14} /> {apiKeyError}
                     </div>
                   )}
                 </div>
 
-                {/* Secondary Inputs Row (Only for Render Tab) */}
-                {activeTab === 'render' && (
-                  <div className="h-48 flex gap-6">
-                    {/* Context / Satellite */}
-                    <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
-                      {!siteImage ? (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
-                          <Plus size={24} className="mb-2 opacity-50" />
-                          <p className="text-xs font-medium">Upload your real site image</p>
-                          <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                        </div>
-                      ) : (
-                        <div className="relative w-full h-full">
-                          <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
-                          <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                        </div>
-                      )}
+                {/* Right Column: Output */}
+                <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex flex-col">
+                  {/* Output Header Tags */}
+                  <div className="h-14 border-b border-slate-100 flex items-center justify-between px-6">
+                    <div className="flex items-center gap-2">
+                      <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{selectedStyle}</span>
                     </div>
-
-                    {/* Style Reference */}
-                    <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
-                      {!referenceImage ? (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
-                          <Plus size={24} className="mb-2 opacity-50" />
-                          <p className="text-xs font-medium">Upload your reference project image</p>
-                          <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                        </div>
-                      ) : (
-                        <div className="relative w-full h-full">
-                          <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
-                          <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                        </div>
-                      )}
+                    <div className="flex items-center gap-2">
+                      <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-medium px-2 py-1 rounded uppercase tracking-wider">{selectedImageSize} &bull; {selectedAspectRatio}</span>
                     </div>
                   </div>
-                )}
 
-                {/* Generate Button Area (Simplified as controls are in sidebar) */}
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
-                    <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
+                  {/* Output Canvas */}
+                  <div className="flex-1 relative flex items-center justify-center bg-slate-50/50">
+                    {!generatedImage ? (
+                      <div className="text-center text-slate-300">
+                        <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                          <ImageIcon size={32} className="opacity-30" />
+                        </div>
+                        <p className="text-sm font-medium text-slate-400">Ready to Render</p>
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full group p-4">
+                        <img src={generatedImage} alt="Generated" className="w-full h-full object-contain rounded-lg shadow-sm bg-white" />
+                        <div className="absolute bottom-8 right-8 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-xl font-medium text-sm flex items-center gap-2 hover:bg-slate-50 transform hover:scale-105 transition-all"><Download size={16} /> Download</button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={!uploadedImage || isGenerating}
-                    className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
-                  >
-                    {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                    {isGenerating ? 'Rendering...' : 'Generate'}
-                  </Button>
                 </div>
-                {apiKeyError && (
-                  <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
-                    <AlertCircle size={14} /> {apiKeyError}
-                  </div>
-                )}
-              </div>
-
-              {/* Right Column: Output */}
-              <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex items-center justify-center">
-                {!generatedImage ? (
-                  <div className="text-center text-slate-300">
-                    <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <ImageIcon size={32} className="opacity-50" />
-                    </div>
-                    <p className="text-sm font-medium">Ready to Render</p>
-                  </div>
-                ) : (
-                  <div className="relative w-full h-full group">
-                    <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
-                    <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           )}
