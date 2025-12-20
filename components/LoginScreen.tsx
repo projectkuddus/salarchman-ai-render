@@ -50,15 +50,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onBack }) => 
 
       <div className="z-10 w-full max-w-md p-8 relative">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center shadow-xl shadow-slate-200">
+          <div className="flex flex-col items-center justify-center mb-6">
+            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center shadow-xl shadow-slate-200 mb-4">
               <Box size={24} className="text-white" />
             </div>
+            <div className="flex flex-col items-center leading-tight">
+              <h1 className="text-4xl font-light tracking-tight text-slate-900">renderman.ai</h1>
+              <span className="text-lg font-normal text-slate-500 mt-1">by salARCHman studio</span>
+            </div>
           </div>
-          <h1 className="text-4xl font-light tracking-tight mb-2 text-slate-900">
-            renderman.ai <span className="text-lg font-normal text-slate-500 block">(by salARCHman studio)</span>
-          </h1>
-          <p className="text-slate-500 font-mono text-xs uppercase tracking-widest">Professional Rendering Engine</p>
+          <p className="text-slate-500 font-mono text-xs uppercase tracking-widest text-center">Professional Rendering Engine</p>
         </div>
 
         <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">

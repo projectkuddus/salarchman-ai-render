@@ -524,9 +524,12 @@ function App() {
       {/* Sidebar */}
       <aside className="w-full md:w-80 border-r border-slate-200 bg-white flex-shrink-0 flex flex-col h-screen sticky top-0 overflow-y-auto z-20">
         <div className="p-6 border-b border-slate-100">
-          <h1 className="text-xl font-light tracking-tight text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white"><Box size={16} /></div>
-            <span>renderman.ai <span className="text-[10px] font-normal text-slate-500">(by salARCHman studio)</span></span>
+          <h1 className="text-xl font-light tracking-tight text-slate-900 flex items-center gap-3">
+            <div className="w-8 h-8 bg-slate-900 rounded-lg flex-shrink-0 flex items-center justify-center text-white"><Box size={16} /></div>
+            <div className="flex flex-col items-start leading-none">
+              <span className="font-medium">renderman.ai</span>
+              <span className="text-[10px] font-normal text-slate-500 mt-0.5">by salARCHman studio</span>
+            </div>
           </h1>
           <p className="text-[10px] text-slate-400 font-mono mt-1 uppercase tracking-widest pl-10">Render Engine v2.0</p>
         </div>

@@ -31,10 +31,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200 shadow-sm">
                 <div className="max-w-[1920px] mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white shadow-md">
+                        <div className="w-8 h-8 bg-slate-900 rounded-lg flex-shrink-0 flex items-center justify-center text-white shadow-md">
                             <Box size={18} strokeWidth={3} />
                         </div>
-                        <span className="text-lg font-medium tracking-tight text-slate-900">renderman.ai <span className="text-xs font-normal text-slate-500">(by salARCHman studio)</span></span>
+                        <div className="flex flex-col items-start leading-none">
+                            <span className="text-lg font-medium tracking-tight text-slate-900">renderman.ai</span>
+                            <span className="text-[10px] font-normal text-slate-500 mt-0.5">by salARCHman studio</span>
+                        </div>
                     </div>
 
                     {/* Search Bar */}
