@@ -16,6 +16,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
     title: "Realism Spectrum",
     styles: [
       RenderStyle.PHOTOREALISTIC, // Moved to top as primary default
+      RenderStyle.SIMILAR_TO_REF,
       RenderStyle.HYPERREAL,
       RenderStyle.SEMI_REALISTIC,
       RenderStyle.CONCEPTUAL,
@@ -81,6 +82,7 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   // Realism Spectrum
   [RenderStyle.PHOTOREALISTIC]: '/thumbnails/photorealistic.jpg',
+  [RenderStyle.SIMILAR_TO_REF]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=80',
   [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
@@ -125,6 +127,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
 
 export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.PHOTOREALISTIC]: "Photorealistic architectural render, high fidelity, realistic lighting and materials, 8k resolution, professional photography style.",
+  [RenderStyle.SIMILAR_TO_REF]: "Match the exact architectural style, materials, lighting, and mood of the provided Style Reference image.",
   [RenderStyle.HYPERREAL]: "Hyperreal cinematic render, extreme detail, dramatic lighting, movie quality, atmospheric depth.",
   [RenderStyle.SEMI_REALISTIC]: "Semi-realistic render, clean and professional, suitable for early presentations, balanced detail.",
   [RenderStyle.CONCEPTUAL]: "Conceptual architectural render, focus on form and massing, abstract white or grey materials, clean aesthetic.",
@@ -198,7 +201,8 @@ export const VIEW_PROMPTS: Record<ViewType, string> = {
   [ViewType.SECTION]: "architectural section cut, showing interior structure, floor levels, and vertical relationships, technical shading",
   [ViewType.AXONOMETRIC]: "isometric or axonometric projection, 3D cutaway or whole view, technical presentation style",
   [ViewType.TOPSHOT]: "aerial top-down view, bird's eye perspective, site context, landscaping layout",
-  [ViewType.DETAILS]: "close-up architectural detail, construction joint, material transition, macro photography style"
+  [ViewType.DETAILS]: "close-up architectural detail, construction joint, material transition, macro photography style",
+  [ViewType.SIMILAR_TO_REF]: "match the exact camera angle, perspective, and composition of the provided reference image"
 };
 
 // Diagram Prompts - Enhanced for Professional Portfolio styles

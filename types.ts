@@ -41,7 +41,8 @@ export enum RenderStyle {
   CARTOONISH = 'Cartoonish',
   COMIC_BOOK = 'Comic Book',
   ULTRA_RENDER = 'Ultra Render',
-  CONCEPT_SKETCH = 'Concept Sketch'
+  CONCEPT_SKETCH = 'Concept Sketch',
+  SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
 export enum InteriorStyle {
@@ -71,7 +72,8 @@ export enum ViewType {
   SECTION = 'Section',
   AXONOMETRIC = 'Axonometric',
   TOPSHOT = 'Top Shot (Bird\'s Eye)',
-  DETAILS = 'Architectural Details'
+  DETAILS = 'Architectural Details',
+  SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
 export enum DiagramType {

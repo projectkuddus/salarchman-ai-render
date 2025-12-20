@@ -110,6 +110,8 @@ export const generateArchitecturalRender = async (
 
             if (viewType === ViewType.ELEVATION && elevationSide) {
                 viewInstruction = `2D Orthographic Elevation, strictly from the ${elevationSide} side. Flat projection, no perspective.`;
+            } else if (viewType === ViewType.SIMILAR_TO_REF) {
+                viewInstruction = `Match the exact camera angle, perspective, and composition of the provided Style Reference image.`;
             }
 
             prompt = `
@@ -155,7 +157,13 @@ export const generateArchitecturalRender = async (
             }
 
             if (referenceBase64Image) {
-                prompt += `\nREFERENCE: Apply materials and mood from Image #${refImageIndex}.`;
+                if (viewType === ViewType.SIMILAR_TO_REF) {
+                    prompt += `\nREFERENCE: Use Image #${refImageIndex} as the strict reference for CAMERA ANGLE and PERSPECTIVE. Also apply materials and mood from it.`;
+                } else if (styleName === RenderStyle.SIMILAR_TO_REF) {
+                    prompt += `\nREFERENCE: Use Image #${refImageIndex} as the strict reference for ARCHITECTURAL STYLE, MATERIALS, and MOOD.`;
+                } else {
+                    prompt += `\nREFERENCE: Apply materials and mood from Image #${refImageIndex}.`;
+                }
             }
         }
 

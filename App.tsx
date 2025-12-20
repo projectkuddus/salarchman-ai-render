@@ -19,7 +19,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'profile'>('render');
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
 
-  const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.PHOTOREALISTIC);
+  const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.SIMILAR_TO_REF);
   const [selectedAtmospheres, setSelectedAtmospheres] = useState<Atmosphere[]>([]);
   const [customStyles, setCustomStyles] = useState<CustomStyle[]>([]);
   const [showStyleCreator, setShowStyleCreator] = useState(false);
@@ -72,7 +72,7 @@ function App() {
       setSelectedView(ViewType.PERSPECTIVE);
       setSelectedAtmospheres([]);
     } else {
-      setSelectedStyle(RenderStyle.PHOTOREALISTIC);
+      setSelectedStyle(RenderStyle.SIMILAR_TO_REF);
     }
   }, [createMode]);
 
