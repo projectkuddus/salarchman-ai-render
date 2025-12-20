@@ -1033,6 +1033,12 @@ function App() {
           )}
 
         </div>
+        <div className="px-4 pb-2">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+            <p className="text-[10px] text-slate-400 font-medium text-center leading-tight">(image to video animation is coming soon)</p>
+            <p className="text-[10px] text-slate-400 font-medium text-center leading-tight mt-1">(image to 3D model is coming soon)</p>
+          </div>
+        </div>
         <div className="p-4 border-t border-slate-100">
           <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors" onClick={() => setActiveTab('profile')}>
             <img src={currentUser.avatar} alt={currentUser.name} className="w-8 h-8 rounded-full" />
