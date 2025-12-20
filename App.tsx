@@ -340,10 +340,22 @@ function App() {
   const handlePurchase = (amount: number) => {
     setIsGenerating(true);
     setTimeout(() => {
+      const newAvailable = credits.available + amount;
       setCredits(prev => ({
-        available: prev.available + amount,
+        available: newAvailable,
         totalUsed: prev.totalUsed
       }));
+
+      if (currentUser) {
+        supabase
+          .from('profiles')
+          .update({ credits: newAvailable })
+          .eq('id', currentUser.id)
+          .then(({ error }) => {
+            if (error) console.error('Error updating credits in Supabase:', error);
+          });
+      }
+
       setIsGenerating(false);
     }, 800);
   };
@@ -425,7 +437,21 @@ function App() {
 
       setGeneratedImage(resultImage);
       setHistory(prev => [newResult, ...prev]);
-      setCredits(prev => ({ available: prev.available - currentCost, totalUsed: prev.totalUsed + currentCost }));
+
+      const newAvailable = credits.available - currentCost;
+      const newTotalUsed = credits.totalUsed + currentCost;
+
+      setCredits({ available: newAvailable, totalUsed: newTotalUsed });
+
+      if (currentUser) {
+        supabase
+          .from('profiles')
+          .update({ credits: newAvailable })
+          .eq('id', currentUser.id)
+          .then(({ error }) => {
+            if (error) console.error('Error updating credits in Supabase:', error);
+          });
+      }
     } catch (error: any) {
       console.error("Generation Error:", error);
       let errorMessage = String(error).toLowerCase();
