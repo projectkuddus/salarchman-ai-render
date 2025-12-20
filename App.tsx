@@ -1306,7 +1306,7 @@ function App() {
                             alt="Original"
                             className="w-full h-full object-contain"
                           />
-                          <button onClick={(e) => { e.stopPropagation(); handleRemoveBaseImage(); }} className="absolute top-4 right-4 bg-white text-slate-900 p-2 rounded-lg shadow-lg hover:bg-slate-50 transition-colors z-20"><X size={16} /></button>
+                          <button onClick={handleRemoveBaseImage} className="absolute top-4 right-4 bg-white text-slate-900 p-2 rounded-lg shadow-lg hover:bg-slate-50 transition-colors z-20"><X size={16} /></button>
                         </div>
                       </div>
                     )}
