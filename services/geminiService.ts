@@ -213,8 +213,21 @@ export const generateArchitecturalRender = async (
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `Server error: ${response.status}`);
+            let errorMessage = `Server error: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.error || errorMessage;
+            } catch (e) {
+                // If response is not JSON (e.g. 413 Payload Too Large HTML), use status text
+                console.warn("Failed to parse error response as JSON:", e);
+                errorMessage = `Server Error (${response.status}): ${response.statusText}`;
+                if (response.status === 413) {
+                    errorMessage = "Request too large. Please use smaller images.";
+                } else if (response.status === 504) {
+                    errorMessage = "Gateway Timeout. The model took too long to respond.";
+                }
+            }
+            throw new Error(errorMessage);
         }
 
         const data = await response.json();
