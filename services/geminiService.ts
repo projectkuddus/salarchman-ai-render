@@ -18,7 +18,9 @@ export const generateArchitecturalRender = async (
     diagramType?: DiagramType,
     createMode: CreateMode = 'Exterior',
     atmospheres: Atmosphere[] = [],
-    elevationSide?: ElevationSide
+    elevationSide?: ElevationSide,
+    material1?: string,
+    material2?: string
 ): Promise<string> => {
     try {
         // --- COMPRESSION ---
@@ -140,11 +142,16 @@ export const generateArchitecturalRender = async (
                 atmosphereInstruction = `\nATMOSPHERE & MOOD: ${atmospheres.map(a => `${a} (${ATMOSPHERE_PROMPTS[a]})`).join(' + ')}. Combine these atmospheric effects to create the final mood.`;
             }
 
+            let materialInstruction = "";
+            if (material1) materialInstruction += `\nPRIMARY MATERIAL: ${material1}.`;
+            if (material2) materialInstruction += `\nSECONDARY MATERIAL: ${material2}.`;
+
             prompt += `
         TASK: Generate a ${viewType}.
         Style: ${styleName}. ${styleInstruction}.
         View: ${viewInstruction}.
         ${atmosphereInstruction}
+        ${materialInstruction}
         Context: ${additionalPrompt}.
         `;
 

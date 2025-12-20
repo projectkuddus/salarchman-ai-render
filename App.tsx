@@ -30,6 +30,8 @@ function App() {
   const [innovationLevel, setInnovationLevel] = useState<number>(30);
   const [elevationSide, setElevationSide] = useState<ElevationSide>('Front');
   const [timeOfDay, setTimeOfDay] = useState<string>('Noon');
+  const [material1, setMaterial1] = useState<string>('');
+  const [material2, setMaterial2] = useState<string>('');
 
   const [selectedDiagramType, setSelectedDiagramType] = useState<DiagramType>(DiagramType.CONCEPT);
 
@@ -412,7 +414,9 @@ function App() {
         createMode === 'Exterior' ? siteImage : null, referenceImage, selectedAspectRatio, selectedImageSize,
         verbsToUse, ideationConfig, diagramTypeToUse, createMode,
         activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : [],
-        (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined
+        (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
+        material1,
+        material2
       );
 
       const newResult: GenerationResult = {
