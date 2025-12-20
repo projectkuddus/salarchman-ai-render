@@ -56,7 +56,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onBack }) => 
             </div>
           </div>
           <h1 className="text-4xl font-light tracking-tight mb-2 text-slate-900">
-            sal<span className="font-bold">ARCH</span>man
+            renderman.ai <span className="text-lg font-normal text-slate-500 block">(by salARCHman studio)</span>
           </h1>
           <p className="text-slate-500 font-mono text-xs uppercase tracking-widest">Professional Rendering Engine</p>
         </div>
@@ -92,7 +92,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onBack }) => 
         </div>
 
         <p className="text-center text-[10px] text-slate-400 mt-8">
-          &copy; {new Date().getFullYear()} SalArchMan Render. All rights reserved.
+          &copy; {new Date().getFullYear()} renderman.ai (by salARCHman studio). All rights reserved.
         </p>
       </div>
     </div>

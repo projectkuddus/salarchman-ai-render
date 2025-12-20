@@ -34,7 +34,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white shadow-md">
                             <Box size={18} strokeWidth={3} />
                         </div>
-                        <span className="text-lg font-medium tracking-tight text-slate-900">sal<span className="font-bold">ARCH</span>man</span>
+                        <span className="text-lg font-medium tracking-tight text-slate-900">renderman.ai <span className="text-xs font-normal text-slate-500">(by salARCHman studio)</span></span>
                     </div>
 
                     {/* Search Bar */}

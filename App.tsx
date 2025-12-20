@@ -443,7 +443,7 @@ function App() {
     if (generatedImage) {
       const link = document.createElement('a');
       link.href = generatedImage;
-      link.download = `salARCHman-${Date.now()}.png`;
+      link.download = `renderman-ai-${Date.now()}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -526,7 +526,7 @@ function App() {
         <div className="p-6 border-b border-slate-100">
           <h1 className="text-xl font-light tracking-tight text-slate-900 flex items-center gap-2">
             <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white"><Box size={16} /></div>
-            <span>sal<span className="font-bold">ARCH</span>man</span>
+            <span>renderman.ai <span className="text-[10px] font-normal text-slate-500">(by salARCHman studio)</span></span>
           </h1>
           <p className="text-[10px] text-slate-400 font-mono mt-1 uppercase tracking-widest pl-10">Render Engine v2.0</p>
         </div>
