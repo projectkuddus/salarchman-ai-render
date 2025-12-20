@@ -1255,7 +1255,7 @@ function App() {
                         <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-slate-100">
                           <Upload size={24} className="text-slate-900 opacity-80" />
                         </div>
-                        <p className="text-sm font-medium text-slate-900">Upload Sketch / Model</p>
+                        <p className="text-sm font-medium text-slate-900 text-center px-8">Upload basic form or modeling screenshot from your 3D software like sketchup or just hand sketch</p>
                         <p className="text-[10px] opacity-50 mt-1">PNG, JPG (MAX 10MB)</p>
                         <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
                       </div>
