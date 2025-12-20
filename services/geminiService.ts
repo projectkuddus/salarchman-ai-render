@@ -1,6 +1,7 @@
 
 import { ViewType, AspectRatio, ImageSize, RenderStyle, IdeationConfig, DiagramType, CreateMode, Atmosphere, ElevationSide } from '../types';
 import { VIEW_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, DIAGRAM_PROMPTS, ATMOSPHERE_PROMPTS, INTERIOR_STYLE_PROMPTS } from '../constants';
+import { compressImage } from '../utils/imageUtils';
 
 export const generateArchitecturalRender = async (
     base64Image: string,
@@ -20,6 +21,12 @@ export const generateArchitecturalRender = async (
     elevationSide?: ElevationSide
 ): Promise<string> => {
     try {
+        // --- COMPRESSION ---
+        // Compress images to ensure they are within Vercel's payload limits (4.5MB)
+        const compressedBase64Image = await compressImage(base64Image);
+        const compressedSiteImage = siteBase64Image ? await compressImage(siteBase64Image) : null;
+        const compressedReferenceImage = referenceBase64Image ? await compressImage(referenceBase64Image) : null;
+
         // --- PROMPT CONSTRUCTION ---
         // (Logic moved from direct API call to here to prepare payload)
 
@@ -159,9 +166,9 @@ export const generateArchitecturalRender = async (
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                base64Image,
-                siteBase64Image,
-                referenceBase64Image,
+                base64Image: compressedBase64Image,
+                siteBase64Image: compressedSiteImage,
+                referenceBase64Image: compressedReferenceImage,
                 aspectRatio,
                 imageSize,
                 additionalPrompt: prompt, // Send the FULL constructed prompt as 'additionalPrompt' (API treats it as the main text)
