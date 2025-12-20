@@ -48,14 +48,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="hidden md:flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-full px-4 py-2 w-96 text-sm text-slate-500 focus-within:border-slate-400 focus-within:text-slate-900 focus-within:bg-white transition-all shadow-inner">
-                        <Search size={16} />
-                        <input
-                            type="text"
-                            placeholder="Search renders, styles, or prompts..."
-                            className="bg-transparent border-none outline-none w-full placeholder:text-slate-400"
-                        />
-                    </div>
+
 
                     <div className="flex items-center gap-4">
                         <button onClick={onGetStarted} className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
