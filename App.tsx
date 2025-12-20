@@ -58,6 +58,16 @@ function App() {
 
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
 
+  const [collapsedCategories, setCollapsedCategories] = useState<string[]>([]);
+
+  const toggleCategory = (title: string) => {
+    setCollapsedCategories(prev =>
+      prev.includes(title)
+        ? prev.filter(t => t !== title)
+        : [...prev, title]
+    );
+  };
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const siteInputRef = useRef<HTMLInputElement>(null);
   const referenceInputRef = useRef<HTMLInputElement>(null);
@@ -602,8 +612,14 @@ function App() {
                 {createMode === 'Exterior' ? (
                   EXTERIOR_STYLE_CATEGORIES.map((category) => (
                     <div key={category.title}>
-                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">{category.title}</h4>
-                      <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => toggleCategory(category.title)}
+                        className="w-full flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 hover:text-slate-600 transition-colors group"
+                      >
+                        {category.title}
+                        <ChevronDown size={12} className={`transition-transform duration-200 ${collapsedCategories.includes(category.title) ? '-rotate-90' : ''}`} />
+                      </button>
+                      <div className={`grid grid-cols-2 gap-2 transition-all duration-300 ${collapsedCategories.includes(category.title) ? 'hidden' : 'block'}`}>
                         {category.styles.map(style => (
                           <button
                             key={style}
