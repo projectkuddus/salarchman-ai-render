@@ -6,13 +6,20 @@ interface LandingPageProps {
 }
 
 const DEVELOPER_GALLERY = [
+    "/gallery/renderman-ai-1766242446688.jpg?v=1",
+    "/gallery/archivision-1765932433653.jpg?v=1",
+    "/gallery/renderman-ai-1766253232402.jpg?v=1",
+    "/gallery/salARCHman-1765976559982.jpg?v=1",
     "/gallery/archivision-1765932651101.jpg?v=1",
     "/gallery/archivision-1765933707253.jpg?v=1",
-    "/gallery/salARCHman-1765944744165.jpg?v=1",
     "/gallery/salARCHman-1765956698737.jpg?v=1",
-    "/gallery/salARCHman-1765976559982.jpg?v=1",
+    "/gallery/salARCHman-1765987075282.jpg?v=1",
     "/gallery/salARCHman-1765985641048.jpg?v=1",
-    "/gallery/salARCHman-1765987283493.jpg?v=1"
+    "/gallery/renderman-ai-1766242067169.jpg?v=1",
+    "/gallery/salARCHman-1765944744165.jpg?v=1",
+    "/gallery/salARCHman-1765987283493.jpg?v=1",
+    "/gallery/renderman-ai-1766242074715.jpg?v=1",
+    "/gallery/renderman-ai-1766253727085.jpg?v=1"
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
