@@ -9,6 +9,7 @@ import { LandingPage } from './components/LandingPage';
 import { ProfileView } from './components/ProfileView';
 import { storageService } from './services/storageService';
 import { supabase } from './services/supabaseClient';
+import { HelpModal } from './components/HelpModal';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -17,6 +18,7 @@ function App() {
 
   const [credits, setCredits] = useState<UserCredits>({ available: INITIAL_CREDITS, totalUsed: 0 });
   const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'profile'>('render');
+  const [showHelp, setShowHelp] = useState(false);
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
 
   const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.SIMILAR_TO_REF);
@@ -1059,9 +1061,11 @@ function App() {
           <div className="flex items-center gap-4">
             <button onClick={() => setActiveTab('profile')} className="text-xs font-medium text-slate-500 hover:text-slate-900 flex items-center gap-1"><CreditCard size={14} /> Buy Credits</button>
             <div className="h-4 w-px bg-slate-200"></div>
-            <button className="text-xs font-medium text-slate-500 hover:text-slate-900">Help</button>
+            <button onClick={() => setShowHelp(true)} className="text-xs font-medium text-slate-500 hover:text-slate-900">Help</button>
           </div>
         </header>
+
+        <HelpModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
 
         {/* Canvas Area */}
         <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${(activeTab === 'diagram' || activeTab === 'render') ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
