@@ -1009,6 +1009,9 @@ function App() {
                   onChange={(e) => setPrompt(e.target.value)}
                   className="w-full h-20 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
                 />
+                <p className="text-[10px] text-slate-400">
+                  Use this box for further details and specific adjustments.
+                </p>
               </div>
             </div>
           )}
@@ -1350,7 +1353,7 @@ function App() {
                         {!material2Image ? (
                           <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
                             <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload secondary material texture or accent</p>
+                            <p className="text-xs font-medium">Upload secondary material texture</p>
                             <input type="file" ref={material2InputRef} onChange={handleMaterial2Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
                           </div>
                         ) : (
@@ -1378,9 +1381,7 @@ function App() {
                       {isGenerating ? 'Rendering...' : 'Generate'}
                     </Button>
                   </div>
-                  <p className="text-xs text-slate-400 text-center mt-4">
-                    Use the <span className="font-medium text-slate-600">Refine</span> box below for further details and specific adjustments.
-                  </p>
+
                   {apiKeyError && (
                     <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
                       <AlertCircle size={14} /> {apiKeyError}
@@ -1389,7 +1390,7 @@ function App() {
                 </div>
 
                 {/* Right Column: Output */}
-                <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex flex-col">
+                <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex flex-col h-full">
                   {/* Output Header Tags */}
                   <div className="h-14 border-b border-slate-100 flex items-center justify-between px-6">
                     <div className="flex items-center gap-2">
