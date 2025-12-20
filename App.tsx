@@ -179,9 +179,9 @@ function App() {
       const fetchCredits = async () => {
         try {
           const { data, error } = await supabase
-            .from('user_credits')
+            .from('profiles')
             .select('credits')
-            .eq('user_id', currentUser.id)
+            .eq('id', currentUser.id)
             .single();
 
           if (data) {
