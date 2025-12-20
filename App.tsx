@@ -578,7 +578,7 @@ function App() {
               <span className="text-[10px] font-normal text-slate-500 mt-0.5">by salARCHman studio</span>
             </div>
           </h1>
-          <p className="text-[10px] text-slate-400 font-mono mt-1 uppercase tracking-widest pl-10">Render Engine v2.0</p>
+          <p className="text-[10px] text-slate-400 font-mono mt-1 tracking-widest pl-10">V1.0 (beta)</p>
         </div>
         <div className="p-6 flex-1 space-y-8">
           {/* Navigation */}
