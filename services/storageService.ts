@@ -1,5 +1,6 @@
 
 import { CustomStyle, GenerationResult, User, UserCredits } from '../types';
+import { indexedDBService } from './indexedDBService';
 
 interface UserData {
   history: GenerationResult[];
@@ -29,24 +30,47 @@ export const storageService = {
 
   /**
    * Saves data specific to a user email with Quota Exceeded handling
+   * Offloads large images to IndexedDB
    */
-  saveUserData: (email: string, data: UserData) => {
+  saveUserData: async (email: string, data: UserData) => {
     const key = `${STORAGE_PREFIX}${email}`;
+
+    // Deep copy to avoid mutating the state directly
+    const dataToSave = JSON.parse(JSON.stringify(data)) as UserData;
+
+    // Process history to offload images
+    if (dataToSave.history && dataToSave.history.length > 0) {
+      for (const item of dataToSave.history) {
+        // Helper to offload a specific image field
+        const offloadImage = async (field: keyof GenerationResult) => {
+          const value = item[field];
+          if (typeof value === 'string' && value.startsWith('data:image')) {
+            // Create a unique ID for the image if not already present (using item.id + field suffix)
+            const imageId = `${item.id}_${field}`;
+            await indexedDBService.saveImage(imageId, value);
+            // Replace with reference
+            (item as any)[field] = `indexeddb:${imageId}`;
+          }
+        };
+
+        await offloadImage('generatedImage');
+        await offloadImage('originalImage');
+        if (item.siteImage) await offloadImage('siteImage');
+        if (item.referenceImage) await offloadImage('referenceImage');
+      }
+    }
+
     try {
-      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem(key, JSON.stringify(dataToSave));
     } catch (error: any) {
       // Check for QuotaExceededError
       if (
         error.name === 'QuotaExceededError' ||
         error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
       ) {
-        console.warn("LocalStorage quota exceeded. Attempting to trim history to save latest data.");
-
-        const dataToSave = { ...data };
+        console.warn("LocalStorage quota exceeded even with IndexedDB offloading. Attempting to trim history.");
 
         // If history exists, try to trim it from the end (oldest items)
-        // Note: In App.tsx, new items are added to the front ([new, ...old]). 
-        // So the end of the array contains the oldest items.
         if (dataToSave.history && dataToSave.history.length > 0) {
           const originalHistory = [...dataToSave.history];
 
@@ -64,16 +88,6 @@ export const storageService = {
               // If still failing, loop continues to pop another item
               continue;
             }
-          }
-
-          // If we are here, we removed all history and it still might have failed 
-          // (e.g., if just customStyles + profile are too big, or one massive item currently being added)
-          try {
-            // Try saving with empty history
-            dataToSave.history = [];
-            localStorage.setItem(key, JSON.stringify(dataToSave));
-          } catch (e) {
-            console.error("Critical: Unable to save user data even after clearing history.", e);
           }
         }
       } else {

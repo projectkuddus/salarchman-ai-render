@@ -10,6 +10,7 @@ import { ProfileView } from './components/ProfileView';
 import { storageService } from './services/storageService';
 import { supabase } from './services/supabaseClient';
 import { HelpModal } from './components/HelpModal';
+import { indexedDBService } from './services/indexedDBService';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -135,7 +136,36 @@ function App() {
   useEffect(() => {
     if (currentUser) {
       const userData = storageService.loadUserData(currentUser.email);
-      setHistory(userData.history || []);
+
+      // Hydrate history from IndexedDB
+      const hydrateHistory = async () => {
+        const hydratedHistory = await Promise.all(
+          (userData.history || []).map(async (item) => {
+            const newItem = { ...item };
+
+            const resolveImage = async (field: keyof GenerationResult) => {
+              const value = newItem[field];
+              if (typeof value === 'string' && value.startsWith('indexeddb:')) {
+                const imageId = value.split('indexeddb:')[1];
+                const imageData = await indexedDBService.getImage(imageId);
+                if (imageData) {
+                  (newItem as any)[field] = imageData;
+                }
+              }
+            };
+
+            await resolveImage('generatedImage');
+            await resolveImage('originalImage');
+            await resolveImage('siteImage');
+            await resolveImage('referenceImage');
+
+            return newItem;
+          })
+        );
+        setHistory(hydratedHistory);
+      };
+
+      hydrateHistory();
       setCustomStyles(userData.customStyles || []);
 
       // Load initial credits from local storage
@@ -149,18 +179,23 @@ function App() {
       const fetchCredits = async () => {
         try {
           const { data, error } = await supabase
-            .from('profiles')
+            .from('user_credits')
             .select('credits')
-            .eq('id', currentUser.id)
+            .eq('user_id', currentUser.id)
             .single();
-
-          if (error) throw error;
 
           if (data) {
             setCredits(prev => ({ ...prev, available: data.credits }));
+            // Update local storage with synced credits
+            storageService.saveUserData(currentUser.email, {
+              history: userData.history || [],
+              customStyles: userData.customStyles || [],
+              userProfile: { name: currentUser.name, avatar: currentUser.avatar },
+              credits: { ...credits, available: data.credits }
+            });
           }
         } catch (error) {
-          console.error('Error fetching credits from Supabase:', error);
+          console.error('Error fetching credits:', error);
         }
       };
 
