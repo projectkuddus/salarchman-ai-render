@@ -163,19 +163,19 @@ export const STYLE_PROMPTS: Record<string, string> = {
 };
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
-  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=80",
-  [InteriorStyle.DHAKA_LUXURY]: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=150&q=80",
-  [InteriorStyle.ART_DECO]: "https://images.unsplash.com/photo-1550525811-e5869dd03032?w=150&q=80",
-  [InteriorStyle.FUTURISTIC_INT]: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=150&q=80",
-  [InteriorStyle.PARAMETRIC]: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=150&q=80",
-  [InteriorStyle.MINIMALIST]: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=150&q=80",
-  [InteriorStyle.BRUTALIST]: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=150&q=80",
-  [InteriorStyle.BOHO]: "https://images.unsplash.com/photo-1522444195799-478538b28823?w=150&q=80",
-  [InteriorStyle.CLASSICAL]: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=150&q=80",
-  [InteriorStyle.POST_MODERN]: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=150&q=80",
-  [InteriorStyle.DOODLE_ART]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=80",
-  [InteriorStyle.SCANDINAVIAN]: "https://images.unsplash.com/photo-1556910103-1c02745a30bf?w=150&q=80",
-  [InteriorStyle.INDUSTRIAL]: "https://images.unsplash.com/photo-1515263487990-61b07816b324?w=150&q=80"
+  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=80", // Missing file
+  [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior/dhaka-luxury.jpg",
+  [InteriorStyle.ART_DECO]: "/thumbnails/interior/art-deco.jpg",
+  [InteriorStyle.FUTURISTIC_INT]: "/thumbnails/interior/futuristic.jpg",
+  [InteriorStyle.PARAMETRIC]: "/thumbnails/interior/parametric.jpg",
+  [InteriorStyle.MINIMALIST]: "/thumbnails/interior/minimalist.jpg",
+  [InteriorStyle.BRUTALIST]: "/thumbnails/interior/brutalist.jpg",
+  [InteriorStyle.BOHO]: "/thumbnails/interior/boho.jpg",
+  [InteriorStyle.CLASSICAL]: "/thumbnails/interior/classical.jpg",
+  [InteriorStyle.POST_MODERN]: "/thumbnails/interior/post-modern.jpg",
+  [InteriorStyle.DOODLE_ART]: "/thumbnails/interior/doodle-art.jpg",
+  [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior/scandinavian.jpg",
+  [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
