@@ -136,36 +136,6 @@ function App() {
   useEffect(() => {
     if (currentUser) {
       const userData = storageService.loadUserData(currentUser.email);
-
-      // Hydrate history from IndexedDB
-      const hydrateHistory = async () => {
-        const hydratedHistory = await Promise.all(
-          (userData.history || []).map(async (item) => {
-            const newItem = { ...item };
-
-            const resolveImage = async (field: keyof GenerationResult) => {
-              const value = newItem[field];
-              if (typeof value === 'string' && value.startsWith('indexeddb:')) {
-                const imageId = value.split('indexeddb:')[1];
-                const imageData = await indexedDBService.getImage(imageId);
-                if (imageData) {
-                  (newItem as any)[field] = imageData;
-                }
-              }
-            };
-
-            await resolveImage('generatedImage');
-            await resolveImage('originalImage');
-            await resolveImage('siteImage');
-            await resolveImage('referenceImage');
-
-            return newItem;
-          })
-        );
-        setHistory(hydratedHistory);
-      };
-
-      hydrateHistory();
       setCustomStyles(userData.customStyles || []);
 
       // Load initial credits from local storage
@@ -175,7 +145,23 @@ function App() {
         setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
       }
 
-      // Sync credits from Supabase
+      // 1. Fetch Cloud History
+      const fetchHistory = async () => {
+        const cloudHistory = await historyService.getUserHistory(currentUser.id);
+        if (cloudHistory && cloudHistory.length > 0) {
+          setHistory(cloudHistory);
+        } else {
+          // Fallback to local if cloud is empty (or migration needed)
+          // For now, we just start fresh or show what's there.
+          // If we want to keep local history visible, we could merge, 
+          // but let's prioritize cloud to avoid duplicates.
+          // Let's just show cloud history to be clean.
+          setHistory([]);
+        }
+      };
+      fetchHistory();
+
+      // 2. Sync credits from Supabase
       const fetchCredits = async () => {
         try {
           const { data, error } = await supabase
@@ -188,7 +174,7 @@ function App() {
             setCredits(prev => ({ ...prev, available: data.credits }));
             // Update local storage with synced credits
             storageService.saveUserData(currentUser.email, {
-              history: userData.history || [],
+              history: [], // We don't need to save history to local anymore
               customStyles: userData.customStyles || [],
               userProfile: { name: currentUser.name, avatar: currentUser.avatar },
               credits: { ...credits, available: data.credits }
@@ -483,12 +469,13 @@ function App() {
         createMode === 'Exterior' ? material2Image : null
       );
 
-      const newResult: GenerationResult = {
-        id: crypto.randomUUID(),
-        originalImage: uploadedImage,
+      // Create history item
+      const newHistoryItem: GenerationResult = {
+        id: crypto.randomUUID(), // Use crypto.randomUUID for unique IDs
+        originalImage: uploadedImage, // Use uploadedImage directly
         siteImage: createMode === 'Exterior' ? siteImage : null,
         referenceImage: referenceImage,
-        generatedImage: resultImage,
+        generatedImage: resultImage, // Use resultImage directly
         style: activeTab === 'ideation' ? 'Operative Massing' : (activeTab === 'diagram' ? 'Diagram' : selectedStyle),
         viewType: viewToUse,
         diagramType: diagramTypeToUse,
@@ -496,29 +483,61 @@ function App() {
         imageSize: selectedImageSize,
         prompt: prompt,
         timestamp: Date.now(),
-        selectedVerbs: verbsToUse,
-        ideationConfig: ideationConfig,
-        createMode: activeTab === 'render' ? createMode : 'Exterior',
-        atmospheres: selectedAtmospheres,
+        selectedVerbs: activeTab === 'ideation' ? selectedVerbs : undefined,
+        ideationConfig: activeTab === 'ideation' ? {
+          innovationLevel,
+          material: ideationMaterial,
+          formLanguage: ideationForm,
+          elevationSide: selectedView === ViewType.ELEVATION ? elevationSide : undefined, // Use selectedView for elevationSide
+          timeOfDay: timeOfDay
+        } : undefined,
+        createMode: activeTab === 'render' ? createMode : 'Exterior', // Ensure createMode is set correctly
+        atmospheres: activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : undefined,
         elevationSide: (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined
       };
 
-      setGeneratedImage(resultImage);
-      setHistory(prev => [newResult, ...prev]);
+      // Optimistic update for UI
+      setHistory(prev => [newHistoryItem, ...prev]);
+      setGeneratedImage(resultImage); // Use resultImage directly
 
       const newAvailable = credits.available - currentCost;
       const newTotalUsed = credits.totalUsed + currentCost;
+      const newCredits = { available: newAvailable, totalUsed: newTotalUsed };
+      setCredits(newCredits);
 
-      setCredits({ available: newAvailable, totalUsed: newTotalUsed });
-
+      // Save to Cloud History (Supabase)
       if (currentUser) {
-        supabase
+        // We don't await this so the UI is responsive immediately
+        historyService.saveGeneration(currentUser.id, newHistoryItem)
+          .then((publicUrl) => {
+            console.log('Saved to cloud history:', publicUrl);
+            // Optionally update the item in state with the real URL if needed, 
+            // but for now the base64 is fine for the current session.
+          })
+          .catch(err => console.error('Failed to save to cloud history:', err));
+      } else {
+        // Fallback to local storage for guest (or just in memory)
+        // We can keep using storageService for guests if we want, 
+        // but the requirement is for logged in users.
+        const updatedHistory = [newHistoryItem, ...history];
+        storageService.saveUserData(currentUser?.email || 'guest', {
+          history: updatedHistory,
+          customStyles,
+          userProfile: currentUser || undefined,
+          credits: newCredits
+        });
+      }
+
+      // Update credits in Supabase
+      if (currentUser) {
+        const { error } = await supabase
           .from('profiles')
-          .update({ credits: newAvailable })
-          .eq('id', currentUser.id)
-          .then(({ error }) => {
-            if (error) console.error('Error updating credits in Supabase:', error);
-          });
+          .update({ credits: newCredits.available })
+          .eq('id', currentUser.id);
+
+        if (error) {
+          console.error('Error updating credits:', error);
+        }
       }
     } catch (error: any) {
       console.error("Generation Error:", error);
