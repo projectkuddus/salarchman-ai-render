@@ -11,6 +11,7 @@ import { storageService } from './services/storageService';
 import { supabase } from './services/supabaseClient';
 import { HelpModal } from './components/HelpModal';
 import { indexedDBService } from './services/indexedDBService';
+import { historyService } from './services/historyService';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
