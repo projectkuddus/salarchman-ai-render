@@ -576,9 +576,9 @@ function App() {
             <div className="flex flex-col items-start leading-none">
               <span className="font-medium">renderman.ai</span>
               <span className="text-[10px] font-normal text-slate-500 mt-0.5">by salARCHman studio</span>
+              <p className="text-[10px] text-slate-400 font-mono mt-1 tracking-widest">V1.0 (beta)</p>
             </div>
           </h1>
-          <p className="text-[10px] text-slate-400 font-mono mt-1 tracking-widest pl-10">V1.0 (beta)</p>
         </div>
         <div className="p-6 flex-1 space-y-8">
           {/* Navigation */}
@@ -1258,8 +1258,11 @@ function App() {
             <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
               {/* Render Tab Header */}
               <div className="mb-6">
-                <h2 className="text-3xl font-light text-slate-900">{createMode} Design Studio</h2>
-                <p className="text-sm text-slate-500 mt-1">Convert rough concepts into client-ready {createMode.toLowerCase()} visualizations.</p>
+                <div className="flex items-center gap-3 mb-1">
+                  {createMode === 'Exterior' ? <Home size={24} className="text-slate-900" /> : <Sofa size={24} className="text-slate-900" />}
+                  <h2 className="text-xl font-light text-slate-900">{createMode} Design Studio</h2>
+                </div>
+                <p className="text-xs text-slate-500 ml-9">Convert rough concepts into client-ready {createMode.toLowerCase()} visualizations.</p>
               </div>
 
               <div className="flex-1 flex gap-6 min-h-0 mb-6">
