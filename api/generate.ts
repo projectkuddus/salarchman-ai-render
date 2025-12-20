@@ -57,6 +57,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             parts.push({ inlineData: { data: referenceBase64Image.split(',')[1] || referenceBase64Image, mimeType: 'image/png' } });
         }
 
+        if (req.body.material1Image) {
+            parts.push({ inlineData: { data: req.body.material1Image.split(',')[1] || req.body.material1Image, mimeType: 'image/png' } });
+        }
+
+        if (req.body.material2Image) {
+            parts.push({ inlineData: { data: req.body.material2Image.split(',')[1] || req.body.material2Image, mimeType: 'image/png' } });
+        }
+
         const response = await ai.models.generateContent({
             model: 'gemini-3-pro-image-preview',
             contents: { parts: parts },

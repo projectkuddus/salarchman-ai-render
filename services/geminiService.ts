@@ -19,8 +19,8 @@ export const generateArchitecturalRender = async (
     createMode: CreateMode = 'Exterior',
     atmospheres: Atmosphere[] = [],
     elevationSide?: ElevationSide,
-    material1?: string,
-    material2?: string
+    material1Image?: string | null,
+    material2Image?: string | null
 ): Promise<string> => {
     try {
         // --- COMPRESSION ---
@@ -28,6 +28,8 @@ export const generateArchitecturalRender = async (
         const compressedBase64Image = await compressImage(base64Image);
         const compressedSiteImage = siteBase64Image ? await compressImage(siteBase64Image) : null;
         const compressedReferenceImage = referenceBase64Image ? await compressImage(referenceBase64Image) : null;
+        const compressedMaterial1Image = material1Image ? await compressImage(material1Image) : null;
+        const compressedMaterial2Image = material2Image ? await compressImage(material2Image) : null;
 
         // --- PROMPT CONSTRUCTION ---
         // (Logic moved from direct API call to here to prepare payload)
@@ -124,6 +126,8 @@ export const generateArchitecturalRender = async (
             let imageIndex = 2;
             let siteImageIndex = -1;
             let refImageIndex = -1;
+            let mat1ImageIndex = -1;
+            let mat2ImageIndex = -1;
 
             if (siteBase64Image) {
                 prompt += `\n      ${imageIndex}. Site Context/Map.`;
@@ -137,21 +141,28 @@ export const generateArchitecturalRender = async (
                 imageIndex++;
             }
 
+            if (material1Image) {
+                prompt += `\n      ${imageIndex}. Material 1 Texture.`;
+                mat1ImageIndex = imageIndex;
+                imageIndex++;
+            }
+
+            if (material2Image) {
+                prompt += `\n      ${imageIndex}. Material 2 Texture.`;
+                mat2ImageIndex = imageIndex;
+                imageIndex++;
+            }
+
             let atmosphereInstruction = "";
             if (atmospheres.length > 0) {
                 atmosphereInstruction = `\nATMOSPHERE & MOOD: ${atmospheres.map(a => `${a} (${ATMOSPHERE_PROMPTS[a]})`).join(' + ')}. Combine these atmospheric effects to create the final mood.`;
             }
-
-            let materialInstruction = "";
-            if (material1) materialInstruction += `\nPRIMARY MATERIAL: ${material1}.`;
-            if (material2) materialInstruction += `\nSECONDARY MATERIAL: ${material2}.`;
 
             prompt += `
         TASK: Generate a ${viewType}.
         Style: ${styleName}. ${styleInstruction}.
         View: ${viewInstruction}.
         ${atmosphereInstruction}
-        ${materialInstruction}
         Context: ${additionalPrompt}.
         `;
 
@@ -172,6 +183,14 @@ export const generateArchitecturalRender = async (
                     prompt += `\nREFERENCE: Apply materials and mood from Image #${refImageIndex}.`;
                 }
             }
+
+            if (material1Image) {
+                prompt += `\nMATERIAL 1: Apply the texture from Image #${mat1ImageIndex} as the PRIMARY exterior material.`;
+            }
+
+            if (material2Image) {
+                prompt += `\nMATERIAL 2: Apply the texture from Image #${mat2ImageIndex} as the SECONDARY exterior material.`;
+            }
         }
 
         // --- CALL API ---
@@ -184,6 +203,8 @@ export const generateArchitecturalRender = async (
                 base64Image: compressedBase64Image,
                 siteBase64Image: compressedSiteImage,
                 referenceBase64Image: compressedReferenceImage,
+                material1Image: compressedMaterial1Image,
+                material2Image: compressedMaterial2Image,
                 aspectRatio,
                 imageSize,
                 additionalPrompt: prompt, // Send the FULL constructed prompt as 'additionalPrompt' (API treats it as the main text)

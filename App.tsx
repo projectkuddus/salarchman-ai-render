@@ -30,8 +30,8 @@ function App() {
   const [innovationLevel, setInnovationLevel] = useState<number>(30);
   const [elevationSide, setElevationSide] = useState<ElevationSide>('Front');
   const [timeOfDay, setTimeOfDay] = useState<string>('Noon');
-  const [material1, setMaterial1] = useState<string>('');
-  const [material2, setMaterial2] = useState<string>('');
+  const [material1Image, setMaterial1Image] = useState<string | null>(null);
+  const [material2Image, setMaterial2Image] = useState<string | null>(null);
 
   const [selectedDiagramType, setSelectedDiagramType] = useState<DiagramType>(DiagramType.CONCEPT);
 
@@ -61,6 +61,8 @@ function App() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const siteInputRef = useRef<HTMLInputElement>(null);
   const referenceInputRef = useRef<HTMLInputElement>(null);
+  const material1InputRef = useRef<HTMLInputElement>(null);
+  const material2InputRef = useRef<HTMLInputElement>(null);
 
 
 
@@ -257,19 +259,34 @@ function App() {
     }
   };
 
-  const handleReferenceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleReferenceUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result && typeof event.target.result === 'string') {
-          setReferenceImage(event.target.result);
-          if (createMode === 'Exterior') {
-            setSelectedStyle(RenderStyle.PHOTOREALISTIC);
-          } else {
-            setSelectedStyle(InteriorStyle.PHOTOREALISTIC);
-          }
-        }
+      reader.onloadend = () => {
+        setReferenceImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleMaterial1Upload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMaterial1Image(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleMaterial2Upload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMaterial2Image(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -415,8 +432,8 @@ function App() {
         verbsToUse, ideationConfig, diagramTypeToUse, createMode,
         activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : [],
         (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
-        material1,
-        material2
+        createMode === 'Exterior' ? material1Image : null,
+        createMode === 'Exterior' ? material2Image : null
       );
 
       const newResult: GenerationResult = {
@@ -1273,16 +1290,16 @@ function App() {
                     )}
                   </div>
 
-                  {/* Secondary Inputs Row (Only for Render Tab) */}
+                  {/* Secondary Inputs Grid (Only for Render Tab) */}
                   {activeTab === 'render' && (
-                    <div className="h-48 flex gap-6">
-                      {/* Context / Satellite */}
-                      <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Box 1: Context / Satellite */}
+                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
                         <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
                         {!siteImage ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
                             <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload your real site image</p>
+                            <p className="text-xs font-medium">Upload site image or satellite screenshot (e.g. Google Maps)</p>
                             <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                           </div>
                         ) : (
@@ -1293,19 +1310,53 @@ function App() {
                         )}
                       </div>
 
-                      {/* Style Reference */}
-                      <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      {/* Box 2: Style Reference */}
+                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
                         <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
                         {!referenceImage ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors">
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
                             <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload your reference project image</p>
+                            <p className="text-xs font-medium">Upload reference image for materials, lighting, and mood</p>
                             <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                           </div>
                         ) : (
                           <div className="relative w-full h-full">
                             <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
                             <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Box 3: Material 1 */}
+                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 1</div>
+                        {!material1Image ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                            <Plus size={24} className="mb-2 opacity-50" />
+                            <p className="text-xs font-medium">Upload primary material texture (e.g. brick, wood)</p>
+                            <input type="file" ref={material1InputRef} onChange={handleMaterial1Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full">
+                            <img src={material1Image} alt="Material 1" className="w-full h-full object-cover" />
+                            <button onClick={() => setMaterial1Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Box 4: Material 2 */}
+                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 2</div>
+                        {!material2Image ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                            <Plus size={24} className="mb-2 opacity-50" />
+                            <p className="text-xs font-medium">Upload secondary material texture or accent</p>
+                            <input type="file" ref={material2InputRef} onChange={handleMaterial2Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full">
+                            <img src={material2Image} alt="Material 2" className="w-full h-full object-cover" />
+                            <button onClick={() => setMaterial2Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
                           </div>
                         )}
                       </div>
@@ -1327,6 +1378,9 @@ function App() {
                       {isGenerating ? 'Rendering...' : 'Generate'}
                     </Button>
                   </div>
+                  <p className="text-xs text-slate-400 text-center mt-4">
+                    Use the <span className="font-medium text-slate-600">Refine</span> box below for further details and specific adjustments.
+                  </p>
                   {apiKeyError && (
                     <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
                       <AlertCircle size={14} /> {apiKeyError}
