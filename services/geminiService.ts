@@ -164,6 +164,7 @@ export const generateArchitecturalRender = async (
         View: ${viewInstruction}.
         ${atmosphereInstruction}
         Context: ${additionalPrompt}.
+        ${viewType === ViewType.AXONOMETRIC ? "CRITICAL: The output MUST be an axonometric/isometric view. Do not output a perspective view." : ""}
         `;
 
             if (siteBase64Image) {

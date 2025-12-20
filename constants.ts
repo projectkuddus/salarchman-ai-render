@@ -199,7 +199,7 @@ export const VIEW_PROMPTS: Record<ViewType, string> = {
   [ViewType.PLAN]: "2D architectural floor plan, top-down view, clear wall definitions, room layout, black and white or technical colors",
   [ViewType.ELEVATION]: "2D orthographic facade elevation, flat view, material details, no perspective distortion",
   [ViewType.SECTION]: "architectural section cut, showing interior structure, floor levels, and vertical relationships, technical shading",
-  [ViewType.AXONOMETRIC]: "isometric or axonometric projection, 3D cutaway or whole view, technical presentation style",
+  [ViewType.AXONOMETRIC]: "Strictly render in isometric or axonometric projection. Do NOT render in perspective. Transform the view to be parallel projection.",
   [ViewType.TOPSHOT]: "aerial top-down view, bird's eye perspective, site context, landscaping layout",
   [ViewType.DETAILS]: "close-up architectural detail, construction joint, material transition, macro photography style",
   [ViewType.SIMILAR_TO_REF]: "match the exact camera angle, perspective, and composition of the provided reference image"
