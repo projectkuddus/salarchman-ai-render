@@ -128,7 +128,7 @@ export const storageService = {
         // Let's put them at the end (older)
 
         const newData = { ...userData, history: mergedHistory };
-        storageService.saveUserData(email, newData);
+        await storageService.saveUserData(email, newData);
         return mergedHistory;
       }
 
