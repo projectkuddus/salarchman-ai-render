@@ -65,11 +65,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             parts.push({ inlineData: { data: req.body.material2Image.split(',')[1] || req.body.material2Image, mimeType: 'image/png' } });
         }
 
+        const validAspectRatios = ['1:1', '2:3', '3:2', '3:4', '4:3', '4:5', '5:4', '9:16', '16:9', '21:9'];
+        const finalAspectRatio = validAspectRatios.includes(aspectRatio) ? aspectRatio : undefined;
+
         const response = await ai.models.generateContent({
             model: 'gemini-3-pro-image-preview',
             contents: { parts: parts },
             config: {
-                imageConfig: { aspectRatio: aspectRatio, imageSize: imageSize }
+                imageConfig: { aspectRatio: finalAspectRatio, imageSize: imageSize }
             }
         });
 
