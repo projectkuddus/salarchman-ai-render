@@ -53,6 +53,12 @@ class IndexedDBService {
         const db = await this.dbPromise;
         await db.clear(STORE_NAME);
     }
+
+    async getAllKeys(): Promise<string[]> {
+        const db = await this.dbPromise;
+        const keys = await db.getAllKeys(STORE_NAME);
+        return keys.map(k => String(k));
+    }
 }
 
 export const indexedDBService = new IndexedDBService();

@@ -1,5 +1,5 @@
 
-import { CustomStyle, GenerationResult, User, UserCredits } from '../types';
+import { CustomStyle, GenerationResult, User, UserCredits, ViewType } from '../types';
 import { indexedDBService } from './indexedDBService';
 
 interface UserData {
@@ -61,6 +61,83 @@ export const storageService = {
     }));
 
     return resolvedHistory;
+  },
+
+  /**
+   * Recovers lost history by scanning IndexedDB for orphaned images
+   */
+  recoverLostHistory: async (email: string): Promise<GenerationResult[]> => {
+    try {
+      const keys = await indexedDBService.getAllKeys();
+      const userData = storageService.loadUserData(email);
+      const existingIds = new Set(userData.history.map(h => h.id));
+
+      // Group keys by UUID (format: uuid_field)
+      const orphanedGroups = new Map<string, Set<string>>();
+
+      keys.forEach(key => {
+        // Assuming UUID is the first part before the last underscore
+        // But our format is ${item.id}_${field}
+        // UUIDs are usually 36 chars. Let's try to extract the ID.
+        // Or simpler: split by last underscore
+        const lastUnderscoreIndex = key.lastIndexOf('_');
+        if (lastUnderscoreIndex > 0) {
+          const id = key.substring(0, lastUnderscoreIndex);
+          const field = key.substring(lastUnderscoreIndex + 1);
+
+          if (!existingIds.has(id)) {
+            if (!orphanedGroups.has(id)) {
+              orphanedGroups.set(id, new Set());
+            }
+            orphanedGroups.get(id)?.add(field);
+          }
+        }
+      });
+
+      const recoveredItems: GenerationResult[] = [];
+
+      for (const [id, fields] of orphanedGroups) {
+        // We need at least a generatedImage to consider it valid
+        if (fields.has('generatedImage')) {
+          // Reconstruct item
+          const generatedImage = await indexedDBService.getImage(`${id}_generatedImage`);
+
+          if (generatedImage) {
+            const item: GenerationResult = {
+              id: id,
+              generatedImage: generatedImage,
+              originalImage: fields.has('originalImage') ? (await indexedDBService.getImage(`${id}_originalImage`)) || '' : '',
+              prompt: 'Restored from History',
+              style: 'Restored',
+              viewType: ViewType.PERSPECTIVE, // Default
+              aspectRatio: '16:9', // Default
+              timestamp: Date.now(), // We don't have the real timestamp easily unless we stored it in IDB value
+              // We could try to get timestamp from IDB value if we updated getImage to return full object
+            };
+            recoveredItems.push(item);
+          }
+        }
+      }
+
+      if (recoveredItems.length > 0) {
+        console.log(`Recovered ${recoveredItems.length} lost history items.`);
+        // Merge and save
+        const mergedHistory = [...recoveredItems, ...userData.history];
+        // Sort by timestamp if possible, but we don't have accurate timestamps for recovered ones
+        // So maybe put recovered at the end or beginning? 
+        // Let's put them at the end (older)
+
+        const newData = { ...userData, history: mergedHistory };
+        storageService.saveUserData(email, newData);
+        return mergedHistory;
+      }
+
+      return userData.history;
+
+    } catch (error) {
+      console.error("Error recovering history:", error);
+      return [];
+    }
   },
 
   /**

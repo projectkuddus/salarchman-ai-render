@@ -170,6 +170,8 @@ function App() {
       const fetchHistory = async () => {
         if (currentUser.id === 'dev-user') {
           // For dev-user, load from local storage with resolved images
+          // Try recovery first
+          await storageService.recoverLostHistory(currentUser.email);
           const localHistory = await storageService.loadHistoryWithImages(currentUser.email);
           setHistory(localHistory);
         } else {
