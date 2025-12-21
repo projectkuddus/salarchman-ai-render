@@ -166,23 +166,13 @@ function App() {
         setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
       }
 
-      // 1. Fetch History (Cloud or Local)
+      // 1. Fetch History (Local for all users currently)
       const fetchHistory = async () => {
-        if (currentUser.id === 'dev-user') {
-          // For dev-user, load from local storage with resolved images
-          // Try recovery first
-          await storageService.recoverLostHistory(currentUser.email);
-          const localHistory = await storageService.loadHistoryWithImages(currentUser.email);
-          setHistory(localHistory);
-        } else {
-          // For real users, load from Supabase
-          const cloudHistory = await historyService.getUserHistory(currentUser.id);
-          if (cloudHistory && cloudHistory.length > 0) {
-            setHistory(cloudHistory);
-          } else {
-            setHistory([]);
-          }
-        }
+        // We use local storage for everyone since Supabase Auth is not fully integrated yet
+        // This ensures data persistence for mock users like 'salARCHman Studio'
+        await storageService.recoverLostHistory(currentUser.email);
+        const localHistory = await storageService.loadHistoryWithImages(currentUser.email);
+        setHistory(localHistory);
       };
       fetchHistory();
 
@@ -532,6 +522,17 @@ function App() {
 
       // Save to Cloud History (Supabase)
       // Save History
+      // Always save to local storage for now to ensure persistence
+      const currentData = storageService.loadUserData(currentUser?.email || 'guest');
+      const updatedHistory = [newHistoryItem, ...(currentData.history || [])];
+
+      storageService.saveUserData(currentUser?.email || 'guest', {
+        ...currentData,
+        history: updatedHistory,
+        credits: newCredits
+      });
+
+      // Optionally try to sync to cloud if it's a real user, but don't rely on it
       if (currentUser && currentUser.id !== 'dev-user') {
         // Save to Cloud History (Supabase) for real users
         historyService.saveGeneration(currentUser.id, newHistoryItem)
@@ -539,7 +540,8 @@ function App() {
             console.log('Saved to cloud history:', publicUrl);
           })
           .catch(err => console.error('Failed to save to cloud history:', err));
-      } else {
+      }
+      if (false) {
         // Save to Local Storage for dev-user or guest
         // We need to reload the latest data first to avoid overwriting
         const currentData = storageService.loadUserData(currentUser?.email || 'guest');
