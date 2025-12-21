@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, TransformControls, Grid, Environment, ContactShadows, GizmoHelper, GizmoViewcube, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { SUBTRACTION, ADDITION, Brush, Evaluator } from 'three-bvh-csg';
+
 
 export interface SceneObject {
     id: string;
@@ -22,7 +22,7 @@ interface Scene3DProps {
     transformMode: 'translate' | 'rotate' | 'scale';
     onCapture?: (dataUrl: string) => void;
     captureTrigger?: number;
-    siteImage?: string | null;
+
 }
 
 const SceneObjectComponent = ({ obj, isSelected, onSelect, onUpdate, transformMode }: { obj: SceneObject, isSelected: boolean, onSelect: () => void, onUpdate: (updates: Partial<SceneObject>) => void, transformMode: 'translate' | 'rotate' | 'scale' }) => {
@@ -73,7 +73,7 @@ const SceneObjectComponent = ({ obj, isSelected, onSelect, onUpdate, transformMo
     );
 }
 
-const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, onUpdateObject, transformMode, onCapture, captureTrigger, siteImage }) => {
+const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, onUpdateObject, transformMode, onCapture, captureTrigger }) => {
     const { gl, scene, camera } = useThree();
 
     useEffect(() => {
@@ -104,19 +104,7 @@ const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, o
                 <shadowMaterial opacity={0.4} />
             </mesh>
 
-            {/* Site Image Overlay */}
-            {siteImage && (
-                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-                    <planeGeometry args={[20, 20]} />
-                    <meshBasicMaterial transparent opacity={0.8}>
-                        <canvasTexture attach="map" image={useMemo(() => {
-                            const img = new Image();
-                            img.src = siteImage;
-                            return img;
-                        }, [siteImage])} />
-                    </meshBasicMaterial>
-                </mesh>
-            )}
+
 
             {objects.map((obj) => (
                 <SceneObjectComponent

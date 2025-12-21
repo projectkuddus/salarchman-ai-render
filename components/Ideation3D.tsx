@@ -20,8 +20,7 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
     const [selectedId, setSelectedId] = useState<string | null>('default-cube');
     const [transformMode, setTransformMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
     const [captureTrigger, setCaptureTrigger] = useState(0);
-    const [siteImage, setSiteImage] = useState<string | null>(null);
-    const siteInputRef = useRef<HTMLInputElement>(null);
+
 
     const generateId = () => Math.random().toString(36).substr(2, 9);
 
@@ -52,21 +51,9 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
     const clearAll = () => {
         setObjects([]);
         setSelectedId(null);
-        setSiteImage(null);
     };
 
-    const handleSiteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                if (event.target?.result && typeof event.target.result === 'string') {
-                    setSiteImage(event.target.result);
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+
 
     const handleCapture = (dataUrl: string) => {
         onRender(dataUrl);
@@ -97,10 +84,6 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
 
                 {/* Actions */}
                 <div className="flex items-center gap-1 pl-2">
-                    <button onClick={() => siteInputRef.current?.click()} className={`p-2 hover:bg-slate-100 rounded-lg transition-colors ${siteImage ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`} title={siteImage ? "Change Site Plan" : "Upload Site Plan"}>
-                        <Upload size={20} />
-                        <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="hidden" accept="image/*" />
-                    </button>
                     <button onClick={deleteSelected} disabled={!selectedId} className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg disabled:opacity-50" title="Delete Selected"><Trash2 size={20} /></button>
                     <button onClick={clearAll} className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg" title="Clear All"><Layers size={20} /></button>
                 </div>
@@ -127,16 +110,15 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
                     transformMode={transformMode}
                     onCapture={handleCapture}
                     captureTrigger={captureTrigger}
-                    siteImage={siteImage}
                 />
 
                 {/* Empty State Overlay */}
-                {objects.length === 0 && !siteImage && (
+                {objects.length === 0 && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="text-center text-slate-500 bg-slate-900/80 p-6 rounded-xl backdrop-blur-sm border border-slate-800">
                             <Layers size={48} className="mx-auto mb-4 opacity-50" />
                             <h3 className="text-lg font-medium text-slate-300">Start Massing</h3>
-                            <p className="text-sm mt-2 max-w-xs">Add shapes from the toolbar or upload a site plan to begin.</p>
+                            <p className="text-sm mt-2 max-w-xs">Add shapes from the toolbar to begin.</p>
                         </div>
                     </div>
                 )}
