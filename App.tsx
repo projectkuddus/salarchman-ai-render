@@ -1069,6 +1069,7 @@ function App() {
                             active={selectedVerbs.includes(verb)}
                             onClick={() => toggleVerb(verb)}
                             graphic={getVerbGraphic(verb)}
+                            imageSrc={uploadedImage}
                           />
                         ))}
                     </div>

@@ -18,41 +18,73 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
         switch (name) {
             // Materials
             case 'Concrete':
-                return { ...baseStyle, filter: 'grayscale(100%) contrast(120%) brightness(90%) sepia(10%)' };
+                return { ...baseStyle, filter: 'grayscale(100%) contrast(110%) brightness(95%) sepia(5%)' };
             case 'White Card':
-                return { ...baseStyle, filter: 'grayscale(100%) brightness(110%) contrast(90%)' };
+                return { ...baseStyle, filter: 'grayscale(100%) brightness(115%) contrast(90%)' };
             case 'Blue Foam':
-                return { ...baseStyle, filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(300%) brightness(90%)' };
+                return { ...baseStyle, filter: 'grayscale(100%) sepia(100%) hue-rotate(190deg) saturate(400%) brightness(95%)' };
             case 'Wood Block':
-                return { ...baseStyle, filter: 'sepia(80%) saturate(150%) hue-rotate(-10deg) contrast(110%)' };
+                return { ...baseStyle, filter: 'sepia(60%) saturate(140%) hue-rotate(-15deg) contrast(110%) brightness(105%)' };
             case 'Cardboard':
-                return { ...baseStyle, filter: 'sepia(60%) saturate(120%) hue-rotate(10deg) brightness(95%)' };
+                return { ...baseStyle, filter: 'sepia(50%) saturate(120%) hue-rotate(10deg) brightness(95%) contrast(105%)' };
             case 'Translucent':
-                return { ...baseStyle, filter: 'opacity(70%) blur(0.5px) brightness(110%) saturate(50%)' };
+                return { ...baseStyle, filter: 'opacity(60%) blur(1px) brightness(120%) saturate(20%)' };
 
             // Forms (Simulated with simple filters as geometry change isn't possible with CSS)
             case 'Orthogonal':
-                return { ...baseStyle, filter: 'contrast(130%) saturate(0%)' }; // Sharp, clean
+                return { ...baseStyle, filter: 'contrast(130%) saturate(0%) brightness(105%)' }; // Sharp, clean
             case 'Organic':
-                return { ...baseStyle, filter: 'blur(1px) contrast(110%) saturate(120%)' }; // Soft, natural
+                return { ...baseStyle, filter: 'blur(0.5px) contrast(100%) saturate(110%) sepia(10%)' }; // Soft, natural
             case 'Curvilinear':
-                return { ...baseStyle, filter: 'blur(0.5px) contrast(100%)' }; // Smooth
+                return { ...baseStyle, filter: 'blur(0.3px) contrast(105%) brightness(105%)' }; // Smooth
             case 'Faceted':
-                return { ...baseStyle, filter: 'contrast(150%) brightness(110%)' }; // Sharp edges
+                return { ...baseStyle, filter: 'contrast(160%) brightness(110%) saturate(0%)' }; // Sharp edges
             case 'Crystalline':
-                return { ...baseStyle, filter: 'contrast(120%) brightness(120%) saturate(50%)' }; // Bright, sharp
+                return { ...baseStyle, filter: 'contrast(130%) brightness(120%) saturate(40%) hue-rotate(180deg)' }; // Bright, sharp, cool
             case 'Parametric':
-                return { ...baseStyle, filter: 'contrast(140%) hue-rotate(10deg)' }; // Complex
+                return { ...baseStyle, filter: 'contrast(140%) hue-rotate(45deg) saturate(150%)' }; // Complex
             case 'Deconstructivist':
-                return { ...baseStyle, filter: 'contrast(150%) saturate(0%) sepia(20%)' }; // Stark
+                return { ...baseStyle, filter: 'contrast(150%) saturate(0%) sepia(30%) invert(10%)' }; // Stark, inverted
 
             // Times of Day
             case 'Morning':
-                return { ...baseStyle, filter: 'brightness(110%) sepia(20%) hue-rotate(-10deg) saturate(110%)' }; // Warm, bright
+                return { ...baseStyle, filter: 'brightness(115%) sepia(15%) hue-rotate(-15deg) saturate(120%)' }; // Warm, bright
             case 'Noon':
-                return { ...baseStyle, filter: 'brightness(120%) contrast(110%) saturate(100%)' }; // Harsh, bright
+                return { ...baseStyle, filter: 'brightness(125%) contrast(115%) saturate(100%)' }; // Harsh, bright
             case 'Sunset':
-                return { ...baseStyle, filter: 'sepia(50%) hue-rotate(-20deg) saturate(150%) contrast(110%)' }; // Orange/Red glow
+                return { ...baseStyle, filter: 'sepia(60%) hue-rotate(-25deg) saturate(180%) contrast(110%) brightness(90%)' }; // Orange/Red glow
+
+            // Spatial Verbs - Additive (Green/Growth hint)
+            case 'Extrude':
+            case 'Branch':
+            case 'Merge':
+            case 'Nest':
+            case 'Inflate':
+            case 'Stack':
+                return { ...baseStyle, filter: 'sepia(20%) hue-rotate(80deg) saturate(150%) contrast(110%)' };
+
+            // Spatial Verbs - Subtractive (Red/Cut hint)
+            case 'Subtract':
+            case 'Punch':
+            case 'Split':
+            case 'Carve':
+            case 'Notch':
+                return { ...baseStyle, filter: 'sepia(30%) hue-rotate(-50deg) saturate(200%) contrast(120%) brightness(95%)' };
+
+            // Spatial Verbs - Displacement (Blue/Motion hint)
+            case 'Twist':
+            case 'Fold':
+            case 'Shear':
+            case 'Cantilever':
+            case 'Lift':
+            case 'Terrace':
+            case 'Bend':
+            case 'Shift':
+            case 'Rotate':
+            case 'Offset':
+            case 'Taper':
+            case 'Interlock':
+                return { ...baseStyle, filter: 'sepia(20%) hue-rotate(180deg) saturate(150%) contrast(110%) blur(0.2px)' };
 
             default:
                 return baseStyle;
