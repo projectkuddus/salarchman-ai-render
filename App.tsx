@@ -14,6 +14,7 @@ import { indexedDBService } from './services/indexedDBService';
 import { historyService } from './services/historyService';
 import { IdeationButton } from './components/IdeationButton';
 import { LiveIdeationPreview } from './components/LiveIdeationPreview';
+import { SVGFilters } from './components/SVGFilters';
 import {
   ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, CardboardGraphic, TranslucentGraphic,
   OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
@@ -1320,6 +1321,7 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <SVGFilters />
         {/* Header */}
         <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md flex items-center justify-between px-6 z-10">
           <h2 className="text-sm font-medium text-slate-900">Workspace / {activeTab === 'render' ? 'Architectural Render' : (activeTab === 'profile' ? 'User Profile' : activeTab)}</h2>
