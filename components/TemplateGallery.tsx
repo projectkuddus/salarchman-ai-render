@@ -85,7 +85,7 @@ export const TemplateGallery: React.FC = () => {
     };
 
     return (
-        <div className="flex-1 flex overflow-hidden bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]">
+        <div className="w-full max-w-7xl h-[85vh] bg-white rounded-2xl border border-slate-200 shadow-xl flex overflow-hidden">
             {/* Sidebar */}
             <div className="w-80 bg-white border-r border-slate-200 flex flex-col overflow-y-auto">
                 <div className="p-6 border-b border-slate-100">
