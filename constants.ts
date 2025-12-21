@@ -251,6 +251,9 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Nest': { category: 'Additive', prompt: "NEST: Place a smaller volume inside or partially embedded within a larger volume." },
   'Inflate': { category: 'Additive', prompt: "INFLATE: Expand the volume outwards, creating bulbous or soft convex forms." },
   'Stack': { category: 'Additive', prompt: "STACK: Place volumes on top of one another, potentially with slight misalignments." },
+  'Laminate': { category: 'Additive', prompt: "LAMINATE: Layer thin sheets or plates over the volume to create a stratified surface." },
+  'Grade': { category: 'Additive', prompt: "GRADE: Add a stepped or sloped addition that connects the volume to the ground or another level." },
+  'Embed': { category: 'Additive', prompt: "EMBED: Partially submerge a volume within another, creating a sense of weight and integration." },
 
   // Subtractive
   'Subtract': { category: 'Subtractive', prompt: "SUBTRACT: Remove a significant geometric chunk from the main mass to create voids." },
@@ -258,6 +261,8 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Split': { category: 'Subtractive', prompt: "SPLIT: Divide the volume into two separated halves with a clear gap or canyon between them." },
   'Carve': { category: 'Subtractive', prompt: "CARVE: Erode the edges or corners of the volume organically or geometrically." },
   'Notch': { category: 'Subtractive', prompt: "NOTCH: Cut small, precise angular indentations into the corners or edges." },
+  'Fracture': { category: 'Subtractive', prompt: "FRACTURE: Create a jagged, irregular break or crack through the volume." },
+  'Excavate': { category: 'Subtractive', prompt: "EXCAVATE: Dig out a large portion of the volume from the top down, creating a courtyard or pit." },
 
   // Displacement / Surface
   'Twist': { category: 'Displacement', prompt: "TWIST: Rotate the top of the volume relative to the bottom, creating a torqued form." },
@@ -271,6 +276,13 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Rotate': { category: 'Displacement', prompt: "ROTATE: Rotate a specific section of the volume around an axis to create dynamic movement." },
   'Offset': { category: 'Displacement', prompt: "OFFSET: Create a parallel shell or inner volume, establishing a layered depth." },
   'Taper': { category: 'Displacement', prompt: "TAPER: Gradually reduce the cross-section of the volume towards the top or one end." },
+  'Wrap': { category: 'Displacement', prompt: "WRAP: Envelop the volume with a continuous surface or skin that folds around it." },
+  'Weave': { category: 'Displacement', prompt: "WEAVE: Interlace linear elements or volumes to create a fabric-like structure." },
+  'Hinge': { category: 'Displacement', prompt: "HINGE: Rotate a part of the volume around a specific edge, opening it up like a door." },
+  'Pivot': { category: 'Displacement', prompt: "PIVOT: Rotate a volume around a central point, creating a dynamic, unbalanced composition." },
+  'Slide': { category: 'Displacement', prompt: "SLIDE: Shift a layer or section horizontally, creating a shearing effect." },
+  'Compress': { category: 'Displacement', prompt: "COMPRESS: Squeeze the volume, reducing its height or width and creating bulging sides." },
+  'Expand': { category: 'Displacement', prompt: "EXPAND: Pull the volume outwards from the center, creating a sense of internal pressure." },
   'Interlock': { category: 'Additive', prompt: "INTERLOCK: Fit two distinct volumes together like a puzzle, creating a complex intersection." }
 };
 

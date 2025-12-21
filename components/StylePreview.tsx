@@ -61,6 +61,9 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
             case 'Nest':
             case 'Inflate':
             case 'Stack':
+            case 'Laminate':
+            case 'Grade':
+            case 'Embed':
                 return { ...baseStyle, filter: 'sepia(20%) hue-rotate(80deg) saturate(150%) contrast(110%)' };
 
             // Spatial Verbs - Subtractive (Red/Cut hint)
@@ -69,6 +72,8 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
             case 'Split':
             case 'Carve':
             case 'Notch':
+            case 'Fracture':
+            case 'Excavate':
                 return { ...baseStyle, filter: 'sepia(30%) hue-rotate(-50deg) saturate(200%) contrast(120%) brightness(95%)' };
 
             // Spatial Verbs - Displacement (Blue/Motion hint)
@@ -84,6 +89,13 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
             case 'Offset':
             case 'Taper':
             case 'Interlock':
+            case 'Wrap':
+            case 'Weave':
+            case 'Hinge':
+            case 'Pivot':
+            case 'Slide':
+            case 'Compress':
+            case 'Expand':
                 return { ...baseStyle, filter: 'sepia(20%) hue-rotate(180deg) saturate(150%) contrast(110%) blur(0.2px)' };
 
             default:

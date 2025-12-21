@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2 } from 'lucide-react';
+import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -653,6 +653,18 @@ function App() {
       case 'Offset': return <Expand size={12} />;
       case 'Taper': return <Minimize2 size={12} />;
       case 'Interlock': return <Puzzle size={12} />;
+      case 'Laminate': return <Copy size={12} />;
+      case 'Grade': return <TrendingUp size={12} />;
+      case 'Embed': return <ArrowDownToLine size={12} />;
+      case 'Fracture': return <Zap size={12} />;
+      case 'Excavate': return <Shovel size={12} />;
+      case 'Wrap': return <WrapText size={12} />;
+      case 'Weave': return <Network size={12} />;
+      case 'Hinge': return <DoorOpen size={12} />;
+      case 'Pivot': return <Disc size={12} />;
+      case 'Slide': return <MoveHorizontal size={12} />;
+      case 'Compress': return <Shrink size={12} />;
+      case 'Expand': return <Maximize size={12} />;
       default: return <Sparkles size={12} />;
     }
   };
@@ -716,6 +728,18 @@ function App() {
       case 'Offset': return <OffsetGraphic />;
       case 'Taper': return <TaperGraphic />;
       case 'Interlock': return <InterlockGraphic />;
+      case 'Laminate': return <DefaultGraphic />;
+      case 'Grade': return <DefaultGraphic />;
+      case 'Embed': return <DefaultGraphic />;
+      case 'Fracture': return <DefaultGraphic />;
+      case 'Excavate': return <DefaultGraphic />;
+      case 'Wrap': return <DefaultGraphic />;
+      case 'Weave': return <DefaultGraphic />;
+      case 'Hinge': return <DefaultGraphic />;
+      case 'Pivot': return <DefaultGraphic />;
+      case 'Slide': return <DefaultGraphic />;
+      case 'Compress': return <DefaultGraphic />;
+      case 'Expand': return <DefaultGraphic />;
       default: return <DefaultGraphic />;
     }
   };
