@@ -191,7 +191,7 @@ function App() {
             storageService.saveUserData(currentUser.email, {
               history: [], // We don't save cloud history to local to avoid duplication
               customStyles: userData.customStyles || [],
-              userProfile: { name: currentUser.name, avatar: currentUser.avatar },
+              user: { name: currentUser.name, avatar: currentUser.avatar },
               credits: { ...credits, available: data.credits }
             });
           }
@@ -236,7 +236,7 @@ function App() {
       storageService.saveUserData(currentUser.email, {
         history,
         customStyles,
-        userProfile: { name: currentUser.name, avatar: currentUser.avatar },
+        user: { name: currentUser.name, avatar: currentUser.avatar },
         credits
       });
     }
@@ -1298,9 +1298,23 @@ function App() {
               user={currentUser}
               credits={credits}
               history={history}
-              onUpdateProfile={(name) => setCurrentUser({ ...currentUser, name })}
+              onUpdateProfile={(name) => {
+                const updatedUser = { ...currentUser, name };
+                setCurrentUser(updatedUser);
+                // Persist to local storage
+                const currentData = storageService.loadUserData(currentUser.email);
+                storageService.saveUserData(currentUser.email, {
+                  ...currentData,
+                  user: updatedUser
+                });
+              }}
               onPurchase={handlePurchase}
               onRestore={handleRestoreHistory}
+              onRecoverHistory={async () => {
+                const recovered = await storageService.recoverLostHistory(currentUser.email);
+                setHistory(recovered);
+                alert(`Recovery complete. Found ${recovered.length} items.`);
+              }}
             />
           ) : activeTab === 'diagram' ? (
             <div className="w-full max-w-6xl h-full flex flex-col relative z-10">

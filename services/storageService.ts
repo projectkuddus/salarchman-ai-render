@@ -5,7 +5,7 @@ import { indexedDBService } from './indexedDBService';
 interface UserData {
   history: GenerationResult[];
   customStyles: CustomStyle[];
-  userProfile?: Partial<User>; // Store updated user details
+  user?: Partial<User>; // Store updated user details
   credits?: UserCredits;
 }
 

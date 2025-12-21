@@ -10,9 +10,10 @@ interface ProfileViewProps {
     onUpdateProfile: (name: string, password?: string) => void;
     onPurchase: (amount: number) => void;
     onRestore: (item: GenerationResult) => void;
+    onRecoverHistory: () => void;
 }
 
-export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history, onUpdateProfile, onPurchase, onRestore }) => {
+export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history, onUpdateProfile, onPurchase, onRestore, onRecoverHistory }) => {
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -157,7 +158,15 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
             <div className="pt-8 border-t border-slate-200">
                 <div className="flex items-center gap-2 text-slate-900 font-medium mb-6">
                     <History size={20} /> <span>Generation History</span>
-                    <span className="ml-auto text-xs text-slate-400">{history.length} projects</span>
+                    <div className="ml-auto flex items-center gap-4">
+                        <button
+                            onClick={onRecoverHistory}
+                            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
+                        >
+                            <Shield size={12} /> Recover Lost History
+                        </button>
+                        <span className="text-xs text-slate-400">{history.length} projects</span>
+                    </div>
                 </div>
 
                 {history.length === 0 ? (
