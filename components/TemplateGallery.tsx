@@ -43,6 +43,16 @@ const TEMPLATES: Template[] = [
         outputImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
         prompt: 'High-tech office building, glass facade, urban context',
         style: 'Futuristic'
+    },
+    {
+        id: 'mat-1',
+        title: 'Material & Finish Swap',
+        description: 'Test different materials on an existing render in seconds.',
+        category: 'Commercial', // Fitting category
+        baseImage: '/templates/material-swap-example.png', // Using the example image as base for now
+        outputImage: '/templates/material-swap-example.png', // And output
+        prompt: 'Change the timber cladding to reflective zinc panels. Keep everything else exactly the same.',
+        style: 'Realistic'
     }
 ];
 
@@ -92,8 +102,8 @@ export const TemplateGallery: React.FC = () => {
                             key={template.id}
                             onClick={() => setSelectedTemplateId(template.id)}
                             className={`w-full p-3 rounded-xl border text-left transition-all group relative overflow-hidden ${selectedTemplateId === template.id
-                                    ? 'border-slate-900 bg-slate-50 ring-1 ring-slate-900'
-                                    : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                                ? 'border-slate-900 bg-slate-50 ring-1 ring-slate-900'
+                                : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                                 }`}
                         >
                             <div className="flex items-start gap-3 relative z-10">
