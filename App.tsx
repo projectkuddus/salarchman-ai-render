@@ -42,6 +42,8 @@ function App() {
 
   const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.SIMILAR_TO_REF);
   const [selectedAtmospheres, setSelectedAtmospheres] = useState<Atmosphere[]>([]);
+  const [history, setHistory] = useState<GenerationResult[]>([]);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const [customStyles, setCustomStyles] = useState<CustomStyle[]>([]);
   const [showStyleCreator, setShowStyleCreator] = useState(false);
 
@@ -75,7 +77,7 @@ function App() {
 
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [history, setHistory] = useState<GenerationResult[]>([]);
+
 
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
 
@@ -175,6 +177,7 @@ function App() {
         await storageService.recoverLostHistory(currentUser.email);
         const localHistory = await storageService.loadHistoryWithImages(currentUser.email);
         setHistory(localHistory);
+        setHistoryLoaded(true);
       };
       fetchHistory();
 
@@ -189,13 +192,9 @@ function App() {
 
           if (data) {
             setCredits(prev => ({ ...prev, available: data.credits }));
-            // Update local storage with synced credits
-            storageService.saveUserData(currentUser.email, {
-              history: [], // We don't save cloud history to local to avoid duplication
-              customStyles: userData.customStyles || [],
-              user: { name: currentUser.name, avatar: currentUser.avatar },
-              credits: { ...credits, available: data.credits }
-            });
+            setCredits(prev => ({ ...prev, available: data.credits }));
+            // REMOVED: Explicit save here caused race condition. 
+            // The main useEffect for saving will handle this once historyLoaded is true.
           }
         } catch (error) {
           console.error('Error fetching credits:', error);
@@ -234,7 +233,7 @@ function App() {
   }, [currentUser]);
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && historyLoaded) {
       storageService.saveUserData(currentUser.email, {
         history,
         customStyles,
@@ -242,7 +241,7 @@ function App() {
         credits
       });
     }
-  }, [history, customStyles, currentUser, credits]);
+  }, [history, customStyles, currentUser, credits, historyLoaded]);
 
   const handleLogin = (user: User) => {
     setCurrentUser(user);
