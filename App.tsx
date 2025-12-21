@@ -848,6 +848,8 @@ function App() {
                     <option value="4:3">Standard (4:3)</option>
                     <option value="1:1">Square (1:1)</option>
                     <option value="9:16">Portrait (9:16)</option>
+                    <option value="Similar to Input">Similar to Input</option>
+                    <option value="Similar to Reference">Similar to Reference</option>
                   </select>
                   <select
                     value={selectedImageSize}
@@ -1625,6 +1627,11 @@ function App() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-medium px-2 py-1 rounded uppercase tracking-wider">{selectedImageSize} &bull; {selectedAspectRatio}</span>
+                      {generatedImage && (
+                        <button onClick={handleDownload} className="bg-slate-900 text-white px-3 py-1 rounded-lg shadow-sm font-medium text-xs flex items-center gap-1 hover:bg-slate-800 transition-colors">
+                          <Download size={12} /> Download
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -1638,11 +1645,8 @@ function App() {
                         <p className="text-sm font-medium text-slate-400">Ready to Render</p>
                       </div>
                     ) : (
-                      <div className="relative w-full h-full group p-4">
-                        <img src={generatedImage} alt="Generated" className="w-full h-full object-contain rounded-lg shadow-sm bg-white" />
-                        <div className="absolute bottom-8 right-8 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-xl font-medium text-sm flex items-center gap-2 hover:bg-slate-50 transform hover:scale-105 transition-all"><Download size={16} /> Download</button>
-                        </div>
+                      <div className="relative w-full h-full group p-4 flex items-center justify-center">
+                        <img src={generatedImage} alt="Generated" className="max-w-full max-h-full object-contain rounded-lg shadow-sm bg-white" />
                       </div>
                     )}
                   </div>
