@@ -29,12 +29,10 @@ export const WoodBlockGraphic = () => (
     </div>
 );
 
-export const WireframeGraphic = () => (
-    <div className="w-full h-full bg-slate-900 relative rounded-md border border-slate-700 flex items-center justify-center">
-        <div className="w-8 h-8 border border-cyan-400 rotate-45 relative">
-            <div className="absolute inset-0 border border-cyan-400/50 transform translate-x-1 -translate-y-1"></div>
-            <div className="absolute inset-0 border border-cyan-400/30 transform -translate-x-1 translate-y-1"></div>
-        </div>
+export const CardboardGraphic = () => (
+    <div className="w-full h-full bg-[#d2b48c] relative rounded-md border border-[#c19a6b] overflow-hidden">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #8b4513 3px, transparent 4px)' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/10"></div>
     </div>
 );
 

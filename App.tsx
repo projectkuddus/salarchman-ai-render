@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu } from 'lucide-react';
+import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -14,7 +14,7 @@ import { indexedDBService } from './services/indexedDBService';
 import { historyService } from './services/historyService';
 import { IdeationButton } from './components/IdeationButton';
 import {
-  ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, WireframeGraphic, TranslucentGraphic,
+  ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, CardboardGraphic, TranslucentGraphic,
   OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
   MorningGraphic, NoonGraphic, SunsetGraphic,
   ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, DefaultGraphic
@@ -33,6 +33,7 @@ function App() {
   const [credits, setCredits] = useState<UserCredits>({ available: INITIAL_CREDITS, totalUsed: 0 });
   const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'profile'>('render');
   const [showHelp, setShowHelp] = useState(false);
+  const [showIdeationExample, setShowIdeationExample] = useState(false);
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
 
   const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.SIMILAR_TO_REF);
@@ -596,7 +597,7 @@ function App() {
       case 'White Card': return <Square size={14} />;
       case 'Blue Foam': return <Box size={14} />;
       case 'Wood Block': return <TreeDeciduous size={14} />;
-      case 'Wireframe': return <Grid3x3 size={14} />;
+      case 'Cardboard': return <Package size={14} />;
       case 'Translucent': return <Droplets size={14} />;
       default: return <Box size={14} />;
     }
@@ -645,7 +646,7 @@ function App() {
       case 'White Card': return <WhiteCardGraphic />;
       case 'Blue Foam': return <BlueFoamGraphic />;
       case 'Wood Block': return <WoodBlockGraphic />;
-      case 'Wireframe': return <WireframeGraphic />;
+      case 'Cardboard': return <CardboardGraphic />;
       case 'Translucent': return <TranslucentGraphic />;
       default: return <DefaultGraphic />;
     }
@@ -862,15 +863,80 @@ function App() {
           {activeTab === 'ideation' && (
             <div className="space-y-6">
               {/* Operative Design Card */}
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <Shapes size={14} className="text-slate-900" />
-                  <h4 className="text-sm font-bold text-slate-900">Operative Design</h4>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 relative overflow-hidden">
+                <div className="flex items-center justify-between mb-2 relative z-10">
+                  <div className="flex items-center gap-2">
+                    <Shapes size={14} className="text-slate-900" />
+                    <h4 className="text-sm font-bold text-slate-900">Operative Design</h4>
+                  </div>
+                  <button
+                    onClick={() => setShowIdeationExample(true)}
+                    className="text-[10px] font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded-full transition-colors"
+                  >
+                    <Eye size={10} /> See Example
+                  </button>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
+                <p className="text-xs text-slate-500 leading-relaxed relative z-10">
                   Select spatial verbs to apply volumetric operations to your base massing. Combined verbs create complex geometries.
                 </p>
               </div>
+
+              {/* Example Modal */}
+              {showIdeationExample && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowIdeationExample(false)}>
+                  <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+                    <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-slate-900">Ideation Power: Operative Design</h3>
+                      <button onClick={() => setShowIdeationExample(false)} className="text-slate-400 hover:text-slate-600 transition-colors">
+                        <X size={20} />
+                      </button>
+                    </div>
+                    <div className="p-6 space-y-6">
+                      <div className="grid grid-cols-2 gap-8">
+                        <div className="space-y-2">
+                          <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center relative overflow-hidden group">
+                            <div className="absolute inset-0 flex items-center justify-center text-slate-300">
+                              <span className="text-xs font-medium">Base Sketch</span>
+                            </div>
+                            {/* Placeholder for Sketch */}
+                            <svg className="w-32 h-32 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                              <rect x="4" y="4" width="16" height="16" rx="2" />
+                              <path d="M4 12h16M12 4v16" />
+                            </svg>
+                          </div>
+                          <p className="text-center text-xs font-bold text-slate-500 uppercase">Input: Simple Sketch</p>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="aspect-square bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-center relative overflow-hidden shadow-xl">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20"></div>
+                            {/* Placeholder for Result */}
+                            <div className="relative z-10 text-center space-y-1">
+                              <div className="text-white font-bold text-lg">Complex Form</div>
+                              <div className="text-blue-200 text-[10px]">Twist + Cantilever + Extrude</div>
+                            </div>
+                          </div>
+                          <p className="text-center text-xs font-bold text-blue-600 uppercase">Output: Massing Study</p>
+                        </div>
+                      </div>
+                      <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 text-blue-800 text-sm leading-relaxed">
+                        <p>
+                          <strong>Why use Ideation?</strong><br />
+                          Instead of just prompting "modern building", use <strong>Spatial Verbs</strong> to act like a digital sculptor.
+                          Combine <em>"Twist"</em>, <em>"Cantilever"</em>, and <em>"Subtract"</em> to generate specific, architecturally rigorous forms from a simple block sketch.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                      <button
+                        onClick={() => setShowIdeationExample(false)}
+                        className="px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-lg hover:bg-slate-800 transition-colors"
+                      >
+                        Got it
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Innovation Level */}
               <div className="space-y-3">

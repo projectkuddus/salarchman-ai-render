@@ -274,7 +274,7 @@ export const IDEATION_MATERIALS: Record<string, string> = {
   'White Card': 'clean white museum board, architectural maquette style, pristine white cardboard texture, minimal detailing.',
   'Blue Foam': 'blue modeling foam (styrofoam), porous texture, architectural study model aesthetic.',
   'Wood Block': 'solid light basswood, balsa wood texture, warm timber tones, physical model style.',
-  'Wireframe': 'digital wireframe, glowing vector lines, holographic blueprint aesthetic, semi-transparent volumes.',
+  'Cardboard': 'corrugated cardboard, layered paper texture, physical architectural model aesthetic, warm beige tones.',
   'Translucent': 'frosted acrylic or resin, semi-transparent, diffuse light transmission, ethereal massing.'
 };
 
