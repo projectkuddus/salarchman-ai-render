@@ -117,7 +117,7 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
     return (
         <div
             className={`w-full h-full absolute inset-0 z-0 opacity-80 ${className}`}
-            style={getStyleFilter(styleName)}
+            style={style}
         />
     );
 };
