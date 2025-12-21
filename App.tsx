@@ -1390,6 +1390,7 @@ function App() {
                   </div>
                   <p className="text-xs text-slate-500 ml-9">Explore operative massing variations using spatial verbs.</p>
                 </div>
+
                 <div className="flex bg-slate-100 p-0.5 rounded-lg">
                   <button
                     onClick={() => setIdeationMode('2D')}
@@ -1412,10 +1413,13 @@ function App() {
                   <div className="w-full h-full flex flex-col">
                     <Ideation3D onRender={(image) => {
                       setUploadedImage(image);
-                      // Optionally switch to 2D mode or show success
+                      setIdeationMode('2D'); // Switch back to see the result or stay? 
+                      // Better: Switch to Render tab or show it in 2D input?
+                      // Let's put it in uploadedImage and maybe switch to 2D to show it's there.
                     }} />
                   </div>
                 ) : (
+
                   <>
                     {/* Left Column */}
                     <div className="w-1/3 flex flex-col gap-4">
@@ -1484,29 +1488,34 @@ function App() {
                         </div>
                       )}
                     </div>
+
                   </>
                 )}
               </div>
 
               {/* Bottom Bar */}
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
-                  <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
-                </div>
-                <Button
-                  onClick={handleGenerate}
-                  disabled={!uploadedImage || isGenerating}
-                  className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
-                >
-                  {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                  {isGenerating ? 'Rendering...' : 'Generate'}
-                </Button>
-              </div>
-              {apiKeyError && (
-                <div className="mt-2 bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
-                  <AlertCircle size={14} /> {apiKeyError}
-                </div>
+              {ideationMode === '2D' && (
+                <>
+                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                      <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
+                    </div>
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={!uploadedImage || isGenerating}
+                      className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
+                    >
+                      {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                      {isGenerating ? 'Rendering...' : 'Generate'}
+                    </Button>
+                  </div>
+                  {apiKeyError && (
+                    <div className="mt-2 bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
+                      <AlertCircle size={14} /> {apiKeyError}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ) : (
@@ -1684,8 +1693,8 @@ function App() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }
 

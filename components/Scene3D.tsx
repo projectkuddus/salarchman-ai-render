@@ -1,17 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
-import { OrbitControls, TransformControls, Grid, Environment, ContactShadows, useCursor } from '@react-three/drei';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
+import { OrbitControls, TransformControls, Grid, Environment, ContactShadows, GizmoHelper, GizmoViewcube, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { SUBTRACTION, ADDITION, INTERSECTION, Brush, Evaluator } from 'three-bvh-csg';
+import { SUBTRACTION, ADDITION, Brush, Evaluator } from 'three-bvh-csg';
 
 export interface SceneObject {
     id: string;
-    type: 'cube' | 'sphere' | 'cylinder' | 'model';
+    type: 'cube' | 'sphere' | 'cylinder' | 'cone';
     position: [number, number, number];
     rotation: [number, number, number];
     scale: [number, number, number];
     color: string;
-    url?: string; // For uploaded models
+    operation?: 'add' | 'subtract'; // For CSG
 }
 
 interface Scene3DProps {
@@ -21,89 +21,10 @@ interface Scene3DProps {
     onUpdateObject: (id: string, updates: Partial<SceneObject>) => void;
     transformMode: 'translate' | 'rotate' | 'scale';
     onCapture?: (dataUrl: string) => void;
-    captureTrigger?: number; // Increment to trigger capture
+    captureTrigger?: number;
+    siteImage?: string | null;
 }
 
-const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, onUpdateObject, transformMode, onCapture, captureTrigger }) => {
-    const { gl, scene, camera } = useThree();
-    const transformRef = useRef<any>(null);
-
-    useEffect(() => {
-        if (captureTrigger && captureTrigger > 0) {
-            gl.render(scene, camera);
-            const dataUrl = gl.domElement.toDataURL('image/png');
-            if (onCapture) onCapture(dataUrl);
-        }
-    }, [captureTrigger, gl, scene, camera, onCapture]);
-
-    const selectedObject = objects.find(obj => obj.id === selectedId);
-
-    return (
-        <>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-            <Environment preset="city" />
-
-            <Grid infiniteGrid fadeDistance={50} sectionColor="#4a5568" cellColor="#cbd5e1" />
-
-            <group>
-                {objects.map((obj) => (
-                    <mesh
-                        key={obj.id}
-                        position={obj.position}
-                        rotation={obj.rotation}
-                        scale={obj.scale}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onSelect(obj.id);
-                        }}
-                    >
-                        {obj.type === 'cube' && <boxGeometry />}
-                        {obj.type === 'sphere' && <sphereGeometry />}
-                        {obj.type === 'cylinder' && <cylinderGeometry />}
-                        <meshStandardMaterial color={obj.id === selectedId ? '#3b82f6' : obj.color} />
-                    </mesh>
-                ))}
-            </group>
-
-            {selectedObject && (
-                <TransformControls
-                    object={scene.getObjectByProperty('uuid', selectedObject.id) as any} // This might be tricky, better to attach to the mesh directly if possible, but we are mapping. 
-                    // Actually, TransformControls works best when wrapping the object or passed an object ref.
-                    // Let's try a different approach for TransformControls: Render it separately and attach to the selected mesh ref?
-                    // Or simpler: Just wrap the selected mesh in TransformControls? No, that changes the scene graph structure.
-                    // We will use the `position`, `rotation`, `scale` props of the mesh to drive it, and `onChange` to update state.
-                    mode={transformMode}
-                    onObjectChange={(e: any) => {
-                        if (transformRef.current) {
-                            const o = transformRef.current.object;
-                            if (o) {
-                                onUpdateObject(selectedId, {
-                                    position: [o.position.x, o.position.y, o.position.z],
-                                    rotation: [o.rotation.x, o.rotation.y, o.rotation.z],
-                                    scale: [o.scale.x, o.scale.y, o.scale.z]
-                                });
-                            }
-                        }
-                    }}
-                    ref={transformRef}
-                >
-                    {/* We need a proxy object here or attach to the real mesh. 
-                For simplicity in this list-based approach, let's just re-render the selected object INSIDE TransformControls? 
-                No, that duplicates it. 
-                
-                Correct way with list: 
-                The list renders meshes. The selected mesh gets a ref. TransformControls attaches to that ref.
-            */}
-                </TransformControls>
-            )}
-
-            {/* Re-implementing rendering loop to handle TransformControls properly */}
-        </>
-    );
-};
-
-// Let's rewrite the component to handle refs properly
 const SceneObjectComponent = ({ obj, isSelected, onSelect, onUpdate, transformMode }: { obj: SceneObject, isSelected: boolean, onSelect: () => void, onUpdate: (updates: Partial<SceneObject>) => void, transformMode: 'translate' | 'rotate' | 'scale' }) => {
     const meshRef = useRef<THREE.Mesh>(null);
 
@@ -133,29 +54,26 @@ const SceneObjectComponent = ({ obj, isSelected, onSelect, onUpdate, transformMo
                     e.stopPropagation();
                     onSelect();
                 }}
+                castShadow
+                receiveShadow
             >
                 {obj.type === 'cube' && <boxGeometry />}
                 {obj.type === 'sphere' && <sphereGeometry />}
                 {obj.type === 'cylinder' && <cylinderGeometry />}
-                <meshStandardMaterial color={isSelected ? '#60a5fa' : obj.color} />
+                {obj.type === 'cone' && <coneGeometry />}
+
+                <meshStandardMaterial
+                    color={isSelected ? '#60a5fa' : obj.color}
+                    transparent={obj.operation === 'subtract'}
+                    opacity={obj.operation === 'subtract' ? 0.5 : 1}
+                    wireframe={obj.operation === 'subtract'}
+                />
             </mesh>
         </>
     );
 }
 
-export const Scene3D: React.FC<Scene3DProps> = (props) => {
-    return (
-        <div className="w-full h-full bg-slate-900 rounded-xl overflow-hidden relative">
-            <Canvas shadows camera={{ position: [5, 5, 5], fov: 50 }} gl={{ preserveDrawingBuffer: true }}>
-                <SceneContent {...props} />
-                <OrbitControls makeDefault />
-            </Canvas>
-        </div>
-    );
-};
-
-// Override SceneContent to use the new component structure
-const SceneContentFixed: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, onUpdateObject, transformMode, onCapture, captureTrigger }) => {
+const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, onUpdateObject, transformMode, onCapture, captureTrigger, siteImage }) => {
     const { gl, scene, camera } = useThree();
 
     useEffect(() => {
@@ -166,12 +84,39 @@ const SceneContentFixed: React.FC<Scene3DProps> = ({ objects, selectedId, onSele
         }
     }, [captureTrigger, gl, scene, camera, onCapture]);
 
+    // CSG Result Calculation
+    // This is a simplified CSG implementation. Real-time CSG with many objects can be heavy.
+    // We will render the result SEPARATELY if needed, or just let users arrange objects for now.
+    // For "Operative Massing", we ideally want to show the boolean result.
+    // Let's keep it simple: Render objects as is. If we implement "Merge", we create a new mesh.
+
     return (
         <>
             <ambientLight intensity={0.6} />
-            <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
+            <directionalLight position={[10, 10, 5]} intensity={1} castShadow shadow-mapSize={[1024, 1024]} />
             <Environment preset="city" />
-            <Grid infiniteGrid fadeDistance={50} sectionColor="#4a5568" cellColor="#1e293b" />
+
+            <Grid infiniteGrid fadeDistance={50} sectionColor="#4a5568" cellColor="#334155" position={[0, -0.01, 0]} />
+
+            {/* Ground Plane for Shadows */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow>
+                <planeGeometry args={[100, 100]} />
+                <shadowMaterial opacity={0.4} />
+            </mesh>
+
+            {/* Site Image Overlay */}
+            {siteImage && (
+                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+                    <planeGeometry args={[20, 20]} />
+                    <meshBasicMaterial transparent opacity={0.8}>
+                        <canvasTexture attach="map" image={(() => {
+                            const img = new Image();
+                            img.src = siteImage;
+                            return img;
+                        })()} />
+                    </meshBasicMaterial>
+                </mesh>
+            )}
 
             {objects.map((obj) => (
                 <SceneObjectComponent
@@ -183,6 +128,10 @@ const SceneContentFixed: React.FC<Scene3DProps> = ({ objects, selectedId, onSele
                     transformMode={transformMode}
                 />
             ))}
+
+            <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+                <GizmoViewcube />
+            </GizmoHelper>
         </>
     );
 };
@@ -191,7 +140,7 @@ export default function Scene3DWrapper(props: Scene3DProps) {
     return (
         <div className="w-full h-full bg-slate-900 rounded-xl overflow-hidden relative">
             <Canvas shadows camera={{ position: [8, 8, 8], fov: 45 }} gl={{ preserveDrawingBuffer: true }}>
-                <SceneContentFixed {...props} />
+                <SceneContent {...props} />
                 <OrbitControls makeDefault />
             </Canvas>
         </div>

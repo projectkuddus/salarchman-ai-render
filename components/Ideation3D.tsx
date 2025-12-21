@@ -1,8 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { Box, Circle, Cylinder, Move, RotateCw, Maximize, Plus, Minus, Combine, Image as ImageIcon, Download, Trash2, MousePointer2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Box, Circle, Cylinder, Triangle, Move, RotateCw, Maximize, Image as ImageIcon, Download, Trash2, Upload, Send, Layers } from 'lucide-react';
 import Scene3DWrapper, { SceneObject } from './Scene3D';
-import * as THREE from 'three';
-import { SUBTRACTION, ADDITION, INTERSECTION, Brush, Evaluator } from 'three-bvh-csg';
 
 interface Ideation3DProps {
     onRender: (image: string) => void;
@@ -13,8 +11,10 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [transformMode, setTransformMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
     const [captureTrigger, setCaptureTrigger] = useState(0);
+    const [siteImage, setSiteImage] = useState<string | null>(null);
+    const siteInputRef = useRef<HTMLInputElement>(null);
 
-    const addObject = (type: 'cube' | 'sphere' | 'cylinder') => {
+    const addObject = (type: 'cube' | 'sphere' | 'cylinder' | 'cone') => {
         const newObj: SceneObject = {
             id: crypto.randomUUID(),
             type,
@@ -38,110 +38,65 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
         }
     };
 
-    const handleRenderClick = () => {
-        setCaptureTrigger(prev => prev + 1);
+    const handleSiteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (event.target?.result && typeof event.target.result === 'string') {
+                    setSiteImage(event.target.result);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleCapture = (dataUrl: string) => {
         onRender(dataUrl);
     };
 
-    // Placeholder for CSG operations
-    const performBoolean = (op: 'union' | 'subtract' | 'intersect') => {
-        // This would require more complex logic:
-        // 1. Convert SceneObjects to THREE.Meshes (Brushes)
-        // 2. Perform operation using Evaluator
-        // 3. Convert result back to a geometry/mesh
-        // 4. Update scene objects
-        console.log(`Perform ${op} - Not fully implemented yet`);
-        alert("Boolean operations are experimental and require multi-selection (coming soon). For now, please arrange shapes manually.");
+    const handleSendToRenderer = () => {
+        setCaptureTrigger(prev => prev + 1);
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-50 rounded-xl overflow-hidden border border-slate-200">
-            {/* Toolbar */}
-            <div className="h-14 bg-white border-b border-slate-200 flex items-center px-4 justify-between">
-                <div className="flex items-center gap-2">
-                    <div className="flex items-center bg-slate-100 rounded-lg p-1 gap-1">
-                        <button
-                            onClick={() => addObject('cube')}
-                            className="p-2 hover:bg-white hover:shadow-sm rounded-md text-slate-600 transition-all"
-                            title="Add Cube"
-                        >
-                            <Box size={18} />
-                        </button>
-                        <button
-                            onClick={() => addObject('sphere')}
-                            className="p-2 hover:bg-white hover:shadow-sm rounded-md text-slate-600 transition-all"
-                            title="Add Sphere"
-                        >
-                            <Circle size={18} />
-                        </button>
-                        <button
-                            onClick={() => addObject('cylinder')}
-                            className="p-2 hover:bg-white hover:shadow-sm rounded-md text-slate-600 transition-all"
-                            title="Add Cylinder"
-                        >
-                            <Cylinder size={18} />
-                        </button>
-                    </div>
-
-                    <div className="w-px h-8 bg-slate-200 mx-2" />
-
-                    <div className="flex items-center bg-slate-100 rounded-lg p-1 gap-1">
-                        <button
-                            onClick={() => setTransformMode('translate')}
-                            className={`p-2 rounded-md transition-all ${transformMode === 'translate' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
-                            title="Move"
-                        >
-                            <Move size={18} />
-                        </button>
-                        <button
-                            onClick={() => setTransformMode('rotate')}
-                            className={`p-2 rounded-md transition-all ${transformMode === 'rotate' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
-                            title="Rotate"
-                        >
-                            <RotateCw size={18} />
-                        </button>
-                        <button
-                            onClick={() => setTransformMode('scale')}
-                            className={`p-2 rounded-md transition-all ${transformMode === 'scale' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
-                            title="Scale"
-                        >
-                            <Maximize size={18} />
-                        </button>
-                    </div>
-
-                    <div className="w-px h-8 bg-slate-200 mx-2" />
-
-                    <div className="flex items-center gap-1">
-                        <button
-                            onClick={() => performBoolean('union')}
-                            className="p-2 hover:bg-slate-100 rounded-md text-slate-400 hover:text-slate-600 transition-all"
-                            title="Union (Experimental)"
-                        >
-                            <Combine size={18} />
-                        </button>
-                        <button
-                            onClick={deleteSelected}
-                            className="p-2 hover:bg-red-50 hover:text-red-600 rounded-md text-slate-400 transition-all"
-                            title="Delete Selected"
-                            disabled={!selectedId}
-                        >
-                            <Trash2 size={18} />
-                        </button>
-                    </div>
+        <div className="flex flex-col h-full bg-slate-50 rounded-xl overflow-hidden border border-slate-200 relative">
+            {/* Floating Toolbar */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg border border-slate-200">
+                {/* Shapes */}
+                <div className="flex items-center gap-1 border-r border-slate-200 pr-2">
+                    <button onClick={() => addObject('cube')} className="p-2 hover:bg-slate-100 rounded-lg text-slate-600" title="Add Cube"><Box size={20} /></button>
+                    <button onClick={() => addObject('sphere')} className="p-2 hover:bg-slate-100 rounded-lg text-slate-600" title="Add Sphere"><Circle size={20} /></button>
+                    <button onClick={() => addObject('cylinder')} className="p-2 hover:bg-slate-100 rounded-lg text-slate-600" title="Add Cylinder"><Cylinder size={20} /></button>
+                    <button onClick={() => addObject('cone')} className="p-2 hover:bg-slate-100 rounded-lg text-slate-600" title="Add Cone"><Triangle size={20} /></button>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <button
-                        onClick={handleRenderClick}
-                        className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black transition-colors shadow-lg shadow-slate-900/20"
-                    >
-                        <ImageIcon size={16} />
-                        Render View
+                {/* Transforms */}
+                <div className="flex items-center gap-1 border-r border-slate-200 pr-2 pl-2">
+                    <button onClick={() => setTransformMode('translate')} className={`p-2 rounded-lg transition-colors ${transformMode === 'translate' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'}`} title="Move"><Move size={20} /></button>
+                    <button onClick={() => setTransformMode('rotate')} className={`p-2 rounded-lg transition-colors ${transformMode === 'rotate' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'}`} title="Rotate"><RotateCw size={20} /></button>
+                    <button onClick={() => setTransformMode('scale')} className={`p-2 rounded-lg transition-colors ${transformMode === 'scale' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'}`} title="Scale"><Maximize size={20} /></button>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-1 pl-2">
+                    <button onClick={() => siteInputRef.current?.click()} className={`p-2 hover:bg-slate-100 rounded-lg transition-colors ${siteImage ? 'text-blue-600' : 'text-slate-600'}`} title="Upload Site Plan">
+                        <Upload size={20} />
+                        <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="hidden" accept="image/*" />
                     </button>
+                    <button onClick={deleteSelected} disabled={!selectedId} className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg disabled:opacity-50" title="Delete Selected"><Trash2 size={20} /></button>
                 </div>
+            </div>
+
+            {/* Send to Renderer Button */}
+            <div className="absolute bottom-6 right-6 z-10">
+                <button
+                    onClick={handleSendToRenderer}
+                    className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-medium shadow-xl hover:bg-black transition-transform hover:scale-105 active:scale-95"
+                >
+                    <Send size={18} />
+                    Send to Renderer
+                </button>
             </div>
 
             {/* 3D Viewport */}
@@ -154,15 +109,16 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
                     transformMode={transformMode}
                     onCapture={handleCapture}
                     captureTrigger={captureTrigger}
+                    siteImage={siteImage}
                 />
 
-                {/* Overlay Instructions */}
-                {objects.length === 0 && (
+                {/* Empty State Overlay */}
+                {objects.length === 0 && !siteImage && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="text-center text-slate-500 bg-slate-900/80 p-6 rounded-xl backdrop-blur-sm border border-slate-800">
-                            <Box size={48} className="mx-auto mb-4 opacity-50" />
-                            <h3 className="text-lg font-medium text-slate-300">3D Massing Editor</h3>
-                            <p className="text-sm mt-2 max-w-xs">Add shapes from the toolbar to start building your massing model. Click 'Render View' to generate a photorealistic render.</p>
+                            <Layers size={48} className="mx-auto mb-4 opacity-50" />
+                            <h3 className="text-lg font-medium text-slate-300">Start Massing</h3>
+                            <p className="text-sm mt-2 max-w-xs">Add shapes from the toolbar or upload a site plan to begin.</p>
                         </div>
                     </div>
                 )}
