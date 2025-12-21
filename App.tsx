@@ -13,6 +13,7 @@ import { HelpModal } from './components/HelpModal';
 import { indexedDBService } from './services/indexedDBService';
 import { historyService } from './services/historyService';
 import { IdeationButton } from './components/IdeationButton';
+import { LiveIdeationPreview } from './components/LiveIdeationPreview';
 import {
   ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, CardboardGraphic, TranslucentGraphic,
   OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
@@ -1527,12 +1528,22 @@ function App() {
                     <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
                   </div>
                   {!generatedImage ? (
-                    <div className="text-center text-slate-300">
-                      <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <ImageIcon size={32} className="opacity-50" />
+                    uploadedImage ? (
+                      <LiveIdeationPreview
+                        imageSrc={uploadedImage}
+                        verbs={selectedVerbs}
+                        material={ideationMaterial}
+                        form={ideationForm}
+                        timeOfDay={timeOfDay}
+                      />
+                    ) : (
+                      <div className="text-center text-slate-300">
+                        <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <ImageIcon size={32} className="opacity-50" />
+                        </div>
+                        <p className="text-sm font-medium">Ready to Render</p>
                       </div>
-                      <p className="text-sm font-medium">Ready to Render</p>
-                    </div>
+                    )
                   ) : (
                     <div className="relative w-full h-full group">
                       <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
