@@ -7,16 +7,27 @@ interface Ideation3DProps {
 }
 
 export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
-    const [objects, setObjects] = useState<SceneObject[]>([]);
-    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [objects, setObjects] = useState<SceneObject[]>([
+        {
+            id: 'default-cube',
+            type: 'cube',
+            position: [0, 0.5, 0],
+            rotation: [0, 0, 0],
+            scale: [1, 1, 1],
+            color: '#e2e8f0'
+        }
+    ]);
+    const [selectedId, setSelectedId] = useState<string | null>('default-cube');
     const [transformMode, setTransformMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
     const [captureTrigger, setCaptureTrigger] = useState(0);
     const [siteImage, setSiteImage] = useState<string | null>(null);
     const siteInputRef = useRef<HTMLInputElement>(null);
 
+    const generateId = () => Math.random().toString(36).substr(2, 9);
+
     const addObject = (type: 'cube' | 'sphere' | 'cylinder' | 'cone') => {
         const newObj: SceneObject = {
-            id: crypto.randomUUID(),
+            id: generateId(),
             type,
             position: [Math.random() * 2 - 1, 0.5, Math.random() * 2 - 1],
             rotation: [0, 0, 0],
