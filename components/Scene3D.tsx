@@ -109,11 +109,11 @@ const SceneContent: React.FC<Scene3DProps> = ({ objects, selectedId, onSelect, o
                 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
                     <planeGeometry args={[20, 20]} />
                     <meshBasicMaterial transparent opacity={0.8}>
-                        <canvasTexture attach="map" image={(() => {
+                        <canvasTexture attach="map" image={useMemo(() => {
                             const img = new Image();
                             img.src = siteImage;
                             return img;
-                        })()} />
+                        }, [siteImage])} />
                     </meshBasicMaterial>
                 </mesh>
             )}

@@ -18,7 +18,7 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
         const newObj: SceneObject = {
             id: crypto.randomUUID(),
             type,
-            position: [0, 0.5, 0],
+            position: [Math.random() * 2 - 1, 0.5, Math.random() * 2 - 1],
             rotation: [0, 0, 0],
             scale: [1, 1, 1],
             color: '#e2e8f0'
@@ -36,6 +36,12 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
             setObjects(objects.filter(obj => obj.id !== selectedId));
             setSelectedId(null);
         }
+    };
+
+    const clearAll = () => {
+        setObjects([]);
+        setSelectedId(null);
+        setSiteImage(null);
     };
 
     const handleSiteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,11 +86,12 @@ export const Ideation3D: React.FC<Ideation3DProps> = ({ onRender }) => {
 
                 {/* Actions */}
                 <div className="flex items-center gap-1 pl-2">
-                    <button onClick={() => siteInputRef.current?.click()} className={`p-2 hover:bg-slate-100 rounded-lg transition-colors ${siteImage ? 'text-blue-600' : 'text-slate-600'}`} title="Upload Site Plan">
+                    <button onClick={() => siteInputRef.current?.click()} className={`p-2 hover:bg-slate-100 rounded-lg transition-colors ${siteImage ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`} title={siteImage ? "Change Site Plan" : "Upload Site Plan"}>
                         <Upload size={20} />
                         <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="hidden" accept="image/*" />
                     </button>
                     <button onClick={deleteSelected} disabled={!selectedId} className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg disabled:opacity-50" title="Delete Selected"><Trash2 size={20} /></button>
+                    <button onClick={clearAll} className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg" title="Clear All"><Layers size={20} /></button>
                 </div>
             </div>
 
