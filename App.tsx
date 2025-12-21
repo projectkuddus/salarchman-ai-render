@@ -23,6 +23,8 @@ import {
 } from './components/IdeationGraphics';
 
 
+import { TemplateGallery } from './components/TemplateGallery';
+
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>({
     id: 'dev-user',
@@ -34,7 +36,7 @@ function App() {
   const [loadingAuth, setLoadingAuth] = useState(true);
 
   const [credits, setCredits] = useState<UserCredits>({ available: INITIAL_CREDITS, totalUsed: 0 });
-  const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'profile'>('render');
+  const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'template' | 'profile'>('render');
   const [showHelp, setShowHelp] = useState(false);
   const [showIdeationExample, setShowIdeationExample] = useState(false);
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
@@ -782,7 +784,24 @@ function App() {
           <div className="flex bg-slate-100 p-1 rounded-xl">
             <button onClick={() => setActiveTab('render')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'render' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Render</button>
             <button onClick={() => setActiveTab('ideation')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'ideation' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Ideation</button>
-            <button onClick={() => setActiveTab('diagram')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Diagram</button>
+            <button
+              onClick={() => setActiveTab('diagram')}
+              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500'
+                }`}
+            >
+              Diagram
+            </button>
+            <button
+              onClick={() => setActiveTab('template')}
+              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'template'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500'
+                }`}
+            >
+              Template
+            </button>
           </div>
 
           {/* RENDER TAB CONTROLS */}
@@ -1335,6 +1354,10 @@ function App() {
 
         {/* Canvas Area */}
         <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${(activeTab === 'diagram' || activeTab === 'render') ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
+          {activeTab === 'template' && (
+            <TemplateGallery />
+          )}
+
           {activeTab === 'profile' ? (
             <ProfileView
               user={currentUser}
