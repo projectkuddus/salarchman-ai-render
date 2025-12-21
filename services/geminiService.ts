@@ -120,6 +120,8 @@ export const generateArchitecturalRender = async (
                 viewInstruction = `2D Orthographic Elevation, strictly from the ${elevationSide} side. Flat projection, no perspective.`;
             } else if (viewType === ViewType.SIMILAR_TO_REF) {
                 viewInstruction = `Match the exact camera angle, perspective, and composition of the provided Style Reference image.`;
+            } else if (viewType === ViewType.SIMILAR_TO_INPUT) {
+                viewInstruction = `Match the exact camera angle, perspective, and composition of the provided Base Geometry (Image #1).`;
             }
 
             prompt = `
@@ -169,6 +171,8 @@ export const generateArchitecturalRender = async (
         ${atmosphereInstruction}
         Context: ${additionalPrompt}.
         ${viewType === ViewType.AXONOMETRIC ? "CRITICAL: The output MUST be an axonometric/isometric view. Do not output a perspective view." : ""}
+        ${aspectRatio === 'Similar to Input' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Input Image." : ""}
+        ${aspectRatio === 'Similar to Reference' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Reference Image." : ""}
         `;
 
             if (siteBase64Image) {

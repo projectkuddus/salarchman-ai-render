@@ -74,6 +74,7 @@ export enum ViewType {
   AXONOMETRIC = 'Axonometric',
   TOPSHOT = 'Top Shot (Bird\'s Eye)',
   DETAILS = 'Architectural Details',
+  SIMILAR_TO_INPUT = 'Similar to Input Image',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
@@ -92,7 +93,7 @@ export enum DiagramType {
   LIVING_COLLAGE = 'Living Collage Cutaway'
 }
 
-export type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4';
+export type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | 'Similar to Input' | 'Similar to Reference';
 export type ImageSize = '1K' | '2K' | '4K';
 export type ElevationSide = 'Front' | 'Back' | 'Left' | 'Right';
 

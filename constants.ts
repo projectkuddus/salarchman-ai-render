@@ -204,6 +204,7 @@ export const VIEW_PROMPTS: Record<ViewType, string> = {
   [ViewType.AXONOMETRIC]: "Strictly render in isometric or axonometric projection. Do NOT render in perspective. Transform the view to be parallel projection.",
   [ViewType.TOPSHOT]: "aerial top-down view, bird's eye perspective, site context, landscaping layout",
   [ViewType.DETAILS]: "close-up architectural detail, construction joint, material transition, macro photography style",
+  [ViewType.SIMILAR_TO_INPUT]: "match the exact camera angle, perspective, and composition of the provided input image",
   [ViewType.SIMILAR_TO_REF]: "match the exact camera angle, perspective, and composition of the provided reference image"
 };
 

@@ -95,7 +95,11 @@ function App() {
 
   const currentCost = CREDIT_COSTS[selectedImageSize];
 
-  const availableViews = activeTab === 'ideation' ? IDEATION_ALLOWED_VIEWS : Object.values(ViewType);
+  const availableViews = activeTab === 'ideation' ? IDEATION_ALLOWED_VIEWS : [
+    ViewType.SIMILAR_TO_INPUT,
+    ViewType.SIMILAR_TO_REF,
+    ...Object.values(ViewType).filter(v => v !== ViewType.SIMILAR_TO_INPUT && v !== ViewType.SIMILAR_TO_REF)
+  ];
 
   useEffect(() => {
     if (createMode === 'Interior') {
@@ -104,6 +108,7 @@ function App() {
       setSelectedAtmospheres([]);
     } else {
       setSelectedStyle(RenderStyle.SIMILAR_TO_REF);
+      setSelectedView(ViewType.SIMILAR_TO_INPUT);
     }
   }, [createMode]);
 
@@ -1193,6 +1198,8 @@ function App() {
                     <option value="4:3">Standard (4:3)</option>
                     <option value="1:1">Square (1:1)</option>
                     <option value="9:16">Portrait (9:16)</option>
+                    <option value="Similar to Input">Similar to Input</option>
+                    <option value="Similar to Reference">Similar to Reference</option>
                   </select>
                   <div className="grid grid-cols-3 gap-2">
                     {['1K', '2K', '4K'].map((size) => (
