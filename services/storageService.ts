@@ -29,6 +29,41 @@ export const storageService = {
   },
 
   /**
+   * Loads user data and resolves any offloaded images from IndexedDB
+   */
+  loadHistoryWithImages: async (email: string): Promise<GenerationResult[]> => {
+    const userData = storageService.loadUserData(email);
+    const history = userData.history || [];
+
+    if (history.length === 0) return [];
+
+    // Resolve images
+    const resolvedHistory = await Promise.all(history.map(async (item) => {
+      const newItem = { ...item };
+
+      const resolveField = async (field: keyof GenerationResult) => {
+        const value = newItem[field];
+        if (typeof value === 'string' && value.startsWith('indexeddb:')) {
+          const imageId = value.replace('indexeddb:', '');
+          const data = await indexedDBService.getImage(imageId);
+          if (data) {
+            (newItem as any)[field] = data;
+          }
+        }
+      };
+
+      await resolveField('generatedImage');
+      await resolveField('originalImage');
+      if (newItem.siteImage) await resolveField('siteImage');
+      if (newItem.referenceImage) await resolveField('referenceImage');
+
+      return newItem;
+    }));
+
+    return resolvedHistory;
+  },
+
+  /**
    * Saves data specific to a user email with Quota Exceeded handling
    * Offloads large images to IndexedDB
    */

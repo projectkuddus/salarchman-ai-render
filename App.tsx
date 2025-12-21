@@ -166,18 +166,20 @@ function App() {
         setCredits(prev => ({ ...prev, available: INITIAL_CREDITS }));
       }
 
-      // 1. Fetch Cloud History
+      // 1. Fetch History (Cloud or Local)
       const fetchHistory = async () => {
-        const cloudHistory = await historyService.getUserHistory(currentUser.id);
-        if (cloudHistory && cloudHistory.length > 0) {
-          setHistory(cloudHistory);
+        if (currentUser.id === 'dev-user') {
+          // For dev-user, load from local storage with resolved images
+          const localHistory = await storageService.loadHistoryWithImages(currentUser.email);
+          setHistory(localHistory);
         } else {
-          // Fallback to local if cloud is empty (or migration needed)
-          // For now, we just start fresh or show what's there.
-          // If we want to keep local history visible, we could merge, 
-          // but let's prioritize cloud to avoid duplicates.
-          // Let's just show cloud history to be clean.
-          setHistory([]);
+          // For real users, load from Supabase
+          const cloudHistory = await historyService.getUserHistory(currentUser.id);
+          if (cloudHistory && cloudHistory.length > 0) {
+            setHistory(cloudHistory);
+          } else {
+            setHistory([]);
+          }
         }
       };
       fetchHistory();
@@ -195,7 +197,7 @@ function App() {
             setCredits(prev => ({ ...prev, available: data.credits }));
             // Update local storage with synced credits
             storageService.saveUserData(currentUser.email, {
-              history: [], // We don't need to save history to local anymore
+              history: [], // We don't save cloud history to local to avoid duplication
               customStyles: userData.customStyles || [],
               userProfile: { name: currentUser.name, avatar: currentUser.avatar },
               credits: { ...credits, available: data.credits }
@@ -527,24 +529,23 @@ function App() {
       setCredits(newCredits);
 
       // Save to Cloud History (Supabase)
-      if (currentUser) {
-        // We don't await this so the UI is responsive immediately
+      // Save History
+      if (currentUser && currentUser.id !== 'dev-user') {
+        // Save to Cloud History (Supabase) for real users
         historyService.saveGeneration(currentUser.id, newHistoryItem)
           .then((publicUrl) => {
             console.log('Saved to cloud history:', publicUrl);
-            // Optionally update the item in state with the real URL if needed, 
-            // but for now the base64 is fine for the current session.
           })
           .catch(err => console.error('Failed to save to cloud history:', err));
       } else {
-        // Fallback to local storage for guest (or just in memory)
-        // We can keep using storageService for guests if we want, 
-        // but the requirement is for logged in users.
-        const updatedHistory = [newHistoryItem, ...history];
+        // Save to Local Storage for dev-user or guest
+        // We need to reload the latest data first to avoid overwriting
+        const currentData = storageService.loadUserData(currentUser?.email || 'guest');
+        const updatedHistory = [newHistoryItem, ...(currentData.history || [])];
+
         storageService.saveUserData(currentUser?.email || 'guest', {
+          ...currentData,
           history: updatedHistory,
-          customStyles,
-          userProfile: currentUser || undefined,
           credits: newCredits
         });
       }
