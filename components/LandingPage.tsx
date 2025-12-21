@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Sparkles, Search, X } from 'lucide-react';
+import { Box, Sparkles, Search, X, ArrowRight } from 'lucide-react';
+import { BeforeAfterSlider } from './BeforeAfterSlider';
 
 interface LandingPageProps {
     onGetStarted: () => void;
@@ -79,6 +80,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed mx-auto">
                         Upload your architectural sketches and let our AI generate stunning visualizations in seconds.
                     </p>
+
+                    {/* Before/After Slider Demo */}
+                    <div className="w-full max-w-3xl mx-auto mt-12 h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 relative group">
+                        <BeforeAfterSlider
+                            beforeImage="/gallery/animan-sketch-to-render.jpg"
+                            afterImage="/gallery/animan-sketch-to-render.jpg"
+                        />
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-medium text-slate-600 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            Drag slider to compare
+                        </div>
+                    </div>
                 </div>
 
 
@@ -100,7 +112,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                 <img
                                     src={img}
                                     alt={`Showcase ${index + 1}`}
-                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                                    loading="lazy"
+                                    width="400"
+                                    height="300"
+                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
                                     onError={(e) => {
                                         const target = e.target as HTMLImageElement;
                                         target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
