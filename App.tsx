@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye } from 'lucide-react';
+import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2 } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -19,6 +19,7 @@ import {
   MorningGraphic, NoonGraphic, SunsetGraphic,
   ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic
 } from './components/IdeationGraphics';
+import { Ideation3D } from './components/Ideation3D';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>({
@@ -35,6 +36,7 @@ function App() {
   const [showHelp, setShowHelp] = useState(false);
   const [showIdeationExample, setShowIdeationExample] = useState(false);
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
+  const [ideationMode, setIdeationMode] = useState<'2D' | '3D'>('2D');
 
   const [selectedStyle, setSelectedStyle] = useState<string>(RenderStyle.SIMILAR_TO_REF);
   const [selectedAtmospheres, setSelectedAtmospheres] = useState<Atmosphere[]>([]);
@@ -1380,83 +1382,110 @@ function App() {
           ) : activeTab === 'ideation' ? (
             <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
               {/* Ideation Header */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 mb-1">
-                  <Shapes size={24} className="text-slate-900" />
-                  <h2 className="text-xl font-light text-slate-900">Volumetric Ideation</h2>
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <Shapes size={24} className="text-slate-900" />
+                    <h2 className="text-xl font-light text-slate-900">Volumetric Ideation</h2>
+                  </div>
+                  <p className="text-xs text-slate-500 ml-9">Explore operative massing variations using spatial verbs.</p>
                 </div>
-                <p className="text-xs text-slate-500 ml-9">Explore operative massing variations using spatial verbs.</p>
+                <div className="flex bg-slate-100 p-0.5 rounded-lg">
+                  <button
+                    onClick={() => setIdeationMode('2D')}
+                    className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${ideationMode === '2D' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    2D Sketch
+                  </button>
+                  <button
+                    onClick={() => setIdeationMode('3D')}
+                    className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${ideationMode === '3D' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    3D Editor
+                  </button>
+                </div>
               </div>
 
               {/* Ideation Workspace */}
               <div className="flex-1 flex gap-6 min-h-0 mb-6">
-                {/* Left Column */}
-                <div className="w-1/3 flex flex-col gap-4">
-                  {/* Base Geometry */}
-                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
-                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      <Box size={12} /> Base Geometry
-                    </div>
-                    {!uploadedImage ? (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                        <Upload size={32} className="mb-3 opacity-50" />
-                        <p className="text-sm font-medium text-slate-900">Upload Sketch</p>
-                        <p className="text-[10px] opacity-60 mt-1">PNG, JPG (MAX 10MB)</p>
-                        <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                      </div>
-                    ) : (
-                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <img src={uploadedImage} alt="Base Geometry" className="w-full h-full object-cover" />
-                        <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
-                      </div>
-                    )}
+                {ideationMode === '3D' ? (
+                  <div className="w-full h-full flex flex-col">
+                    <Ideation3D onRender={(image) => {
+                      setUploadedImage(image);
+                      // Optionally switch to 2D mode or show success
+                    }} />
                   </div>
+                ) : (
+                  <>
+                    {/* Left Column */}
+                    <div className="w-1/3 flex flex-col gap-4">
+                      {/* Base Geometry */}
+                      <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
+                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          <Box size={12} /> Base Geometry
+                        </div>
+                        {!uploadedImage ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                            <Upload size={32} className="mb-3 opacity-50" />
+                            <p className="text-sm font-medium text-slate-900">Upload Sketch</p>
+                            <p className="text-[10px] opacity-60 mt-1">PNG, JPG (MAX 10MB)</p>
+                            <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                            <img src={uploadedImage} alt="Base Geometry" className="w-full h-full object-cover" />
+                            <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                          </div>
+                        )}
+                      </div>
 
-                  {/* Massing Reference */}
-                  <div className="h-48 bg-white rounded-2xl border border-dashed border-slate-300 relative group">
-                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      <Sparkles size={12} /> Massing Reference
+                      {/* Massing Reference */}
+                      <div className="h-48 bg-white rounded-2xl border border-dashed border-slate-300 relative group">
+                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          <Sparkles size={12} /> Massing Reference
+                        </div>
+                        {!referenceImage ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                            <Sparkles size={24} className="mb-2 opacity-50" />
+                            <p className="text-xs font-medium">Add Style</p>
+                            <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                            <img src={referenceImage} alt="Style Ref" className="w-full h-full object-cover" />
+                            <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    {!referenceImage ? (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                        <Sparkles size={24} className="mb-2 opacity-50" />
-                        <p className="text-xs font-medium">Add Style</p>
-                        <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                      </div>
-                    ) : (
-                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <img src={referenceImage} alt="Style Ref" className="w-full h-full object-cover" />
-                        <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                      </div>
-                    )}
-                  </div>
-                </div>
 
-                {/* Right Column (Output) */}
-                <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
-                  <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                    Operative Massing
-                  </div>
-                  <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                    <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedImageSize}</span>
-                    <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
-                  </div>
-                  {!generatedImage ? (
-                    <div className="text-center text-slate-300">
-                      <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <ImageIcon size={32} className="opacity-50" />
+                    {/* Right Column (Output) */}
+                    <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
+                      <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                        Operative Massing
                       </div>
-                      <p className="text-sm font-medium">Ready to Render</p>
-                    </div>
-                  ) : (
-                    <div className="relative w-full h-full group">
-                      <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
-                      <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
+                      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                        <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedImageSize}</span>
+                        <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
                       </div>
+                      {!generatedImage ? (
+                        <div className="text-center text-slate-300">
+                          <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <ImageIcon size={32} className="opacity-50" />
+                          </div>
+                          <p className="text-sm font-medium">Ready to Render</p>
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full group">
+                          <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
+                          <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </>
+                )}
               </div>
 
               {/* Bottom Bar */}
