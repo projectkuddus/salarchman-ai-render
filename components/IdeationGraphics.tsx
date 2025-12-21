@@ -278,6 +278,41 @@ export const BendGraphic = () => (
     </div>
 );
 
+export const ShiftGraphic = () => (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-0.5">
+        <div className="w-6 h-3 bg-slate-400 transform -translate-x-1"></div>
+        <div className="w-6 h-3 bg-slate-600 transform translate-x-1"></div>
+    </div>
+);
+
+export const RotateGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center relative">
+        <div className="w-6 h-6 border-2 border-slate-400 rounded-full border-t-transparent animate-spin-slow"></div>
+        <div className="absolute w-3 h-3 bg-slate-600"></div>
+    </div>
+);
+
+export const OffsetGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-slate-600 flex items-center justify-center">
+            <div className="w-4 h-4 border-2 border-slate-400"></div>
+        </div>
+    </div>
+);
+
+export const TaperGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[16px] border-b-slate-600"></div>
+    </div>
+);
+
+export const InterlockGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center relative">
+        <div className="w-5 h-5 border-2 border-slate-600 absolute top-2 left-2 bg-white z-10"></div>
+        <div className="w-5 h-5 bg-slate-400 absolute bottom-2 right-2"></div>
+    </div>
+);
+
 export const DefaultGraphic = () => (
     <div className="w-full h-full bg-slate-100 flex items-center justify-center">
         <div className="w-4 h-4 bg-slate-300 rounded-full"></div>

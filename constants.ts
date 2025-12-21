@@ -265,7 +265,12 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Cantilever': { category: 'Displacement', prompt: "CANTILEVER: Extend a portion of the volume horizontally with no support underneath, creating tension." },
   'Lift': { category: 'Displacement', prompt: "LIFT: Raise the mass off the ground on pilotis or a reduced base." },
   'Terrace': { category: 'Displacement', prompt: "TERRACE: Create stepped setbacks on the roof or facade, forming inhabitable platforms." },
-  'Bend': { category: 'Displacement', prompt: "BEND: Curve the entire linear volume along an arc." }
+  'Bend': { category: 'Displacement', prompt: "BEND: Curve the entire linear volume along an arc." },
+  'Shift': { category: 'Displacement', prompt: "SHIFT: Slide a portion of the volume horizontally to create misalignment or overhangs." },
+  'Rotate': { category: 'Displacement', prompt: "ROTATE: Rotate a specific section of the volume around an axis to create dynamic movement." },
+  'Offset': { category: 'Displacement', prompt: "OFFSET: Create a parallel shell or inner volume, establishing a layered depth." },
+  'Taper': { category: 'Displacement', prompt: "TAPER: Gradually reduce the cross-section of the volume towards the top or one end." },
+  'Interlock': { category: 'Additive', prompt: "INTERLOCK: Fit two distinct volumes together like a puzzle, creating a complex intersection." }
 };
 
 // Ideation Options

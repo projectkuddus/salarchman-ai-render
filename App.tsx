@@ -17,7 +17,7 @@ import {
   ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, CardboardGraphic, TranslucentGraphic,
   OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
   MorningGraphic, NoonGraphic, SunsetGraphic,
-  ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, DefaultGraphic
+  ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic
 } from './components/IdeationGraphics';
 
 function App() {
@@ -636,6 +636,11 @@ function App() {
       case 'Lift': return <ArrowUpFromLine size={12} />;
       case 'Terrace': return <Signal size={12} />;
       case 'Bend': return <CornerUpRight size={12} />;
+      case 'Shift': return <MoveDiagonal size={12} />;
+      case 'Rotate': return <RotateCw size={12} />;
+      case 'Offset': return <Expand size={12} />;
+      case 'Taper': return <Minimize2 size={12} />;
+      case 'Interlock': return <Puzzle size={12} />;
       default: return <Sparkles size={12} />;
     }
   };
@@ -694,6 +699,11 @@ function App() {
       case 'Lift': return <LiftGraphic />;
       case 'Terrace': return <TerraceGraphic />;
       case 'Bend': return <BendGraphic />;
+      case 'Shift': return <ShiftGraphic />;
+      case 'Rotate': return <RotateGraphic />;
+      case 'Offset': return <OffsetGraphic />;
+      case 'Taper': return <TaperGraphic />;
+      case 'Interlock': return <InterlockGraphic />;
       default: return <DefaultGraphic />;
     }
   };
