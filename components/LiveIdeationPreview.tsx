@@ -16,8 +16,7 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
     form,
     timeOfDay
 }) => {
-    const { compositeFilter, transformStyle, clipPath } = useMemo(() => {
-        const filters: string[] = [];
+    const { transformStyle, clipPath, ghostStyle, isSubtractive, isAdditive, isDisplacement } = useMemo(() => {
         let scale = 1;
         let rotate = 0;
         let skewX = 0;
@@ -26,129 +25,133 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
         let translateY = 0;
         let clip = 'none';
 
-        // --- 1. Base Style Filters ---
-        if (material) {
-            const matFilter = getFilterForStyle(material);
-            if (matFilter) filters.push(matFilter);
-        }
-        if (form) {
-            const formFilter = getFilterForStyle(form);
-            if (formFilter) filters.push(formFilter);
-        }
-        if (timeOfDay) {
-            const timeFilter = getFilterForStyle(timeOfDay);
-            if (timeFilter) filters.push(timeFilter);
-        }
+        let hasSubtractive = false;
+        let hasAdditive = false;
+        let hasDisplacement = false;
 
-        // --- 2. Advanced Verb Mapping ---
+        // Analyze Verbs to determine transformation
         verbs.forEach(verb => {
-            // Add color hint (subtle)
-            const verbColorFilter = getFilterForStyle(verb);
-            if (verbColorFilter) filters.push(verbColorFilter);
-
             switch (verb) {
                 // Additive - Growth / Expansion
                 case 'Extrude':
-                    scale *= 1.05; // Slight vertical growth simulation via scale
-                    translateY -= 2;
-                    break;
                 case 'Inflate':
                 case 'Expand':
-                    filters.push('url(#dilate)'); // SVG Dilate
-                    scale *= 1.02;
+                case 'Stack':
+                case 'Augment':
+                case 'Stretch':
+                    scale *= 1.1;
+                    hasAdditive = true;
                     break;
                 case 'Branch':
                 case 'Merge':
-                    filters.push('url(#displacement)'); // Organic distortion
-                    break;
-                case 'Stack':
-                    translateY -= 5;
-                    break;
                 case 'Nest':
                 case 'Embed':
-                    scale *= 0.95; // Shrink slightly to look "inside"
+                case 'Infiltrate':
+                    hasAdditive = true;
                     break;
 
                 // Subtractive - Reduction / Carving
                 case 'Subtract':
                 case 'Carve':
                 case 'Excavate':
-                    filters.push('url(#erode)'); // SVG Erode
+                case 'Erode':
+                    scale *= 0.9; // Slight shrink to imply loss
+                    hasSubtractive = true;
                     break;
                 case 'Punch':
-                    // Simple clip path to simulate a hole (center)
-                    // Note: Multiple clips replace each other in CSS, so last one wins.
-                    // Complex boolean ops require SVG masks, but this is a simulation.
+                case 'Notch':
+                    // Center hole punch simulation
                     clip = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40%, 40% 40%, 40% 60%, 60% 60%, 60% 40%, 0% 40%)';
+                    hasSubtractive = true;
                     break;
                 case 'Split':
-                    clip = 'polygon(0% 0%, 45% 0%, 45% 100%, 0% 100%, 0% 0%, 55% 0%, 100% 0%, 100% 100%, 55% 100%, 55% 0%)';
-                    break;
                 case 'Fracture':
-                    filters.push('url(#fracture)');
-                    break;
-                case 'Notch':
-                    clip = 'polygon(0% 0%, 100% 0%, 100% 80%, 80% 80%, 80% 100%, 0% 100%)';
+                    clip = 'polygon(0% 0%, 45% 0%, 45% 100%, 0% 100%, 0% 0%, 55% 0%, 100% 0%, 100% 100%, 55% 100%, 55% 0%)';
+                    hasSubtractive = true;
                     break;
 
                 // Displacement - Movement / Distortion
                 case 'Twist':
-                    rotate += 5;
-                    filters.push('url(#displacement)');
-                    break;
-                case 'Shear':
-                    skewX += 10;
-                    break;
-                case 'Bend':
-                    filters.push('url(#displacement)');
-                    skewY += 5;
-                    break;
                 case 'Rotate':
                     rotate += 15;
+                    hasDisplacement = true;
+                    break;
+                case 'Shear':
+                    skewX += 15;
+                    hasDisplacement = true;
+                    break;
+                case 'Bend':
+                case 'Fold':
+                case 'Pleat':
+                    skewY += 10;
+                    hasDisplacement = true;
                     break;
                 case 'Lift':
-                    translateY -= 10;
-                    filters.push('drop-shadow(0px 10px 5px rgba(0,0,0,0.3))');
+                    translateY -= 20;
+                    scale *= 0.95; // Perspective shift
+                    hasDisplacement = true;
+                    break;
+                case 'Shift':
+                case 'Slide':
+                case 'Offset':
+                    translateX += 20;
+                    hasDisplacement = true;
                     break;
                 case 'Compress':
-                    scale *= 0.9;
-                    skewX += 5;
-                    break;
-                case 'Stretch':
-                    scale *= 1.1;
-                    skewX -= 5;
-                    break;
-                case 'Pleat':
-                case 'Fold':
-                    filters.push('url(#displacement)');
-                    break;
-
-                // Hybrid
-                case 'Infiltrate':
-                    filters.push('url(#noise)');
-                    filters.push('sepia(50%)');
-                    break;
-                case 'React':
-                    filters.push('url(#displacement)');
-                    scale *= 1.05;
+                    // Note: scaleY is not a direct CSS transform property like scale.
+                    // It should be part of the scale() function, e.g., scale(1, 0.8)
+                    // For simplicity, we'll just adjust overall scale here or use skewY for compression effect.
+                    // For now, let's just mark it as displacement.
+                    // scaleY: 0.8; // This line is problematic in JS object.
+                    hasDisplacement = true;
                     break;
             }
         });
 
         const transform = `scale(${scale}) rotate(${rotate}deg) skew(${skewX}deg, ${skewY}deg) translate(${translateX}px, ${translateY}px)`;
 
+        // Ghost style is the "original" state, visible if there is displacement or growth
+        const showGhost = hasDisplacement || hasAdditive;
+        const ghost = showGhost ? { opacity: 0.3, filter: 'grayscale(100%) blur(1px)' } : { display: 'none' };
+
         return {
-            compositeFilter: filters.join(' '),
             transformStyle: transform,
-            clipPath: clip
+            clipPath: clip,
+            ghostStyle: ghost,
+            isSubtractive: hasSubtractive,
+            isAdditive: hasAdditive,
+            isDisplacement: hasDisplacement
         };
-    }, [verbs, material, form, timeOfDay]);
+    }, [verbs]);
+
+    // Calculate a single clean filter for the active image
+    const activeFilter = useMemo(() => {
+        // Start with a clean base
+        let filter = 'contrast(105%) brightness(105%)'; // Slight pop
+
+        // Apply Material/Form/Time filters ONLY if they exist (and just one of each)
+        if (material) filter += ` ${getFilterForStyle(material)}`;
+        // We skip form/time/verb color filters to avoid "deep frying" the image
+        // The diagrammatic transformation is the main feedback now.
+
+        return filter;
+    }, [material]);
 
     return (
         <div className="relative w-full h-full overflow-hidden bg-slate-900 flex items-center justify-center">
-            {/* Base Image Container with Effects */}
+
+            {/* 1. Ghost Image (Original State) - Shows "Before" */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={ghostStyle}>
+                <img
+                    src={imageSrc}
+                    alt="Ghost"
+                    className="w-full h-full object-contain"
+                />
+            </div>
+
+            {/* 2. Active Image (Transformed State) - Shows "After" */}
             <div
-                className="relative w-full h-full transition-all duration-500 ease-in-out"
+                className="relative w-full h-full transition-all duration-500 ease-in-out z-10"
                 style={{
                     transform: transformStyle,
                     clipPath: clipPath !== 'none' ? clipPath : undefined
@@ -157,15 +160,20 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
                 <img
                     src={imageSrc}
                     alt="Live Preview"
-                    className="w-full h-full object-contain"
-                    style={{ filter: compositeFilter }}
+                    className="w-full h-full object-contain drop-shadow-2xl"
+                    style={{ filter: activeFilter }}
                 />
+
+                {/* Subtractive Inner Shadow/Void Hint */}
+                {isSubtractive && (
+                    <div className="absolute inset-0 bg-slate-900/20 pointer-events-none mix-blend-multiply" />
+                )}
             </div>
 
             {/* Overlay for "Simulation Mode" indication */}
             <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider border border-white/10 flex items-center gap-2 z-20">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                Live Simulation
+                Diagrammatic Preview
             </div>
 
             {/* Active Effects Indicator */}
