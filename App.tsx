@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize, FoldVertical, ScissorsLineDashed, Scaling, GitMerge, PlusSquare, Activity } from 'lucide-react';
+import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize, FoldVertical, ScissorsLineDashed, Scaling, GitMerge, PlusSquare, Activity, Layout } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -9,6 +9,7 @@ import { LandingPage } from './components/LandingPage';
 import { ProfileView } from './components/ProfileView';
 import { storageService } from './services/storageService';
 import { supabase } from './services/supabaseClient';
+import { TemplateGallery, TEMPLATES } from './components/TemplateGallery';
 import { HelpModal } from './components/HelpModal';
 import { indexedDBService } from './services/indexedDBService';
 import { historyService } from './services/historyService';
@@ -22,8 +23,6 @@ import {
   ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic
 } from './components/IdeationGraphics';
 
-
-import { TemplateGallery } from './components/TemplateGallery';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>({
@@ -58,7 +57,8 @@ function App() {
   const [material1Image, setMaterial1Image] = useState<string | null>(null);
   const [material2Image, setMaterial2Image] = useState<string | null>(null);
 
-  const [selectedDiagramType, setSelectedDiagramType] = useState<DiagramType>(DiagramType.CONCEPT);
+  const [selectedDiagramType, setSelectedDiagramType] = useState<DiagramType>('Concept / Schematic');
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(TEMPLATES[0].id);
 
   const [newStyleName, setNewStyleName] = useState('');
   const [newStylePrompt, setNewStylePrompt] = useState('');
@@ -1318,6 +1318,55 @@ function App() {
             </div>
           )}
 
+          {/* TEMPLATE TAB SIDEBAR */}
+          {activeTab === 'template' && (
+            <div className="space-y-6">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Layout size={14} className="text-slate-900" />
+                  <h4 className="text-sm font-bold text-slate-900">Design Templates</h4>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Select a starting point for your project.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                {TEMPLATES.map(template => (
+                  <button
+                    key={template.id}
+                    onClick={() => setSelectedTemplateId(template.id)}
+                    className={`group relative flex flex-col rounded-xl border overflow-hidden transition-all text-left ${selectedTemplateId === template.id
+                      ? 'border-slate-900 ring-1 ring-slate-900 shadow-md'
+                      : 'border-slate-200 hover:border-slate-300 hover:shadow-sm bg-white'
+                      }`}
+                  >
+                    <div className="aspect-square w-full bg-slate-200 relative">
+                      <img
+                        src={template.outputImage}
+                        alt={template.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {selectedTemplateId === template.id && (
+                        <div className="absolute inset-0 bg-slate-900/10 flex items-center justify-center">
+                          <div className="bg-slate-900 text-white p-1 rounded-full">
+                            <Sparkles size={12} />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-2 bg-white">
+                      <h3 className={`text-[10px] font-bold truncate ${selectedTemplateId === template.id ? 'text-slate-900' : 'text-slate-700'}`}>
+                        {template.title}
+                      </h3>
+                      <p className="text-[9px] text-slate-500 truncate">{template.category}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
         <div className="px-4 pb-2">
           <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
@@ -1355,7 +1404,7 @@ function App() {
         {/* Canvas Area */}
         <div className={`flex-1 overflow-y-auto p-6 bg-slate-50 ${activeTab !== 'profile' ? 'flex items-center justify-center' : ''} ${(activeTab === 'diagram' || activeTab === 'render' || activeTab === 'template') ? 'bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px]' : ''}`}>
           {activeTab === 'template' ? (
-            <TemplateGallery />
+            <TemplateGallery selectedTemplateId={selectedTemplateId} />
           ) : activeTab === 'profile' ? (
             <ProfileView
               user={currentUser}
