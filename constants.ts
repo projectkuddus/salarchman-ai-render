@@ -163,6 +163,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
 };
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
+  [InteriorStyle.SIMILAR_TO_REF]: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=80", // Reusing exterior ref image
   [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=80", // Missing file
   [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior/dhaka-luxury.jpg",
   [InteriorStyle.ART_DECO]: "/thumbnails/interior/art-deco.jpg",
@@ -179,6 +180,7 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
+  [InteriorStyle.SIMILAR_TO_REF]: "Match the exact interior design style, furniture, lighting, and mood of the provided Style Reference image.",
   [InteriorStyle.PHOTOREALISTIC]: "High-end interior design photography, 8k resolution, architectural digest style, raytracing, perfect lighting balance, luxurious textures, ultra-realistic.",
   [InteriorStyle.DHAKA_LUXURY]: "Dhaka Luxury style. Opulent Bangladeshi high-end interior. Polished marble floors, intricate false ceilings with warm cove lighting, golden accents, premium teak wood furniture, rich velvet upholstery. Elegant, sophisticated, status symbol aesthetic.",
   [InteriorStyle.ART_DECO]: "Art Deco style. Geometric patterns, bold symmetry, rich colors (emerald green, navy, gold), brass and chrome accents, fluted glass, velvet textures, glamorous 1920s revival.",

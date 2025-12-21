@@ -58,7 +58,8 @@ export enum InteriorStyle {
   POST_MODERN = 'Post Modern',
   DOODLE_ART = 'Doodle Art',
   SCANDINAVIAN = 'Scandinavian',
-  INDUSTRIAL = 'Industrial'
+  INDUSTRIAL = 'Industrial',
+  SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
 export type Atmosphere = 'High-key' | 'Golden Hour' | 'Blue Hour' | 'Night' | 'Fog/Rain/Snow' | 'Brutal Contrast';

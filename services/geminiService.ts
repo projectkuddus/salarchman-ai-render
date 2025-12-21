@@ -105,7 +105,11 @@ export const generateArchitecturalRender = async (
         `;
 
             if (referenceBase64Image) {
-                prompt += `\nREFERENCE IMAGE INSTRUCTION: Extract the color palette, furniture style, and material choices from the Reference Image and apply them to the Base Space.`;
+                if (styleName === 'Similar to Reference Image') {
+                    prompt += `\nREFERENCE IMAGE INSTRUCTION: STRICTLY match the interior style, furniture, lighting, and mood of the Reference Image. The output must look like it belongs to the same project as the reference.`;
+                } else {
+                    prompt += `\nREFERENCE IMAGE INSTRUCTION: Extract the color palette, furniture style, and material choices from the Reference Image and apply them to the Base Space.`;
+                }
             }
 
         } else {
