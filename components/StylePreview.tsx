@@ -88,7 +88,6 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
             case 'Rotate':
             case 'Offset':
             case 'Taper':
-            case 'Interlock':
             case 'Wrap':
             case 'Weave':
             case 'Hinge':
@@ -96,7 +95,17 @@ export const StylePreview: React.FC<StylePreviewProps> = ({ imageSrc, styleName,
             case 'Slide':
             case 'Compress':
             case 'Expand':
+            case 'Pleat':
+            case 'Seam':
+            case 'Stretch':
+            case 'React':
                 return { ...baseStyle, filter: 'sepia(20%) hue-rotate(180deg) saturate(150%) contrast(110%) blur(0.2px)' };
+
+            // Spatial Verbs - Hybrid (Complex/Multi-colored hint)
+            case 'Infiltrate':
+            case 'Augment':
+            case 'Interlock':
+                return { ...baseStyle, filter: 'sepia(40%) hue-rotate(220deg) saturate(180%) contrast(130%) brightness(105%)' };
 
             default:
                 return baseStyle;

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize } from 'lucide-react';
+import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize, FoldVertical, ScissorsLineDashed, Scaling, GitMerge, PlusSquare, Activity } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -665,6 +665,12 @@ function App() {
       case 'Slide': return <MoveHorizontal size={12} />;
       case 'Compress': return <Shrink size={12} />;
       case 'Expand': return <Maximize size={12} />;
+      case 'Pleat': return <FoldVertical size={12} />;
+      case 'Seam': return <ScissorsLineDashed size={12} />;
+      case 'Stretch': return <Scaling size={12} />;
+      case 'Infiltrate': return <GitMerge size={12} />;
+      case 'Augment': return <PlusSquare size={12} />;
+      case 'React': return <Activity size={12} />;
       default: return <Sparkles size={12} />;
     }
   };
@@ -740,6 +746,12 @@ function App() {
       case 'Slide': return <DefaultGraphic />;
       case 'Compress': return <DefaultGraphic />;
       case 'Expand': return <DefaultGraphic />;
+      case 'Pleat': return <DefaultGraphic />;
+      case 'Seam': return <DefaultGraphic />;
+      case 'Stretch': return <DefaultGraphic />;
+      case 'Infiltrate': return <DefaultGraphic />;
+      case 'Augment': return <DefaultGraphic />;
+      case 'React': return <DefaultGraphic />;
       default: return <DefaultGraphic />;
     }
   };
@@ -1080,7 +1092,7 @@ function App() {
 
               {/* Spatial Verbs */}
               <div className="space-y-4 pt-2 border-t border-slate-100">
-                {['Additive', 'Subtractive', 'Displacement'].map(category => (
+                {['Additive', 'Subtractive', 'Displacement', 'Hybrid'].map(category => (
                   <div key={category} className="space-y-2">
                     <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{category} Operations</h5>
                     <div className="grid grid-cols-3 gap-2">

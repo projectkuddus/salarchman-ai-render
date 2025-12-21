@@ -243,7 +243,7 @@ export const IDEATION_ALLOWED_VIEWS = [
 ];
 
 // Operative Design - Catalogue of Spatial Verbs
-export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive' | 'Displacement', prompt: string }> = {
+export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive' | 'Displacement' | 'Hybrid', prompt: string }> = {
   // Additive
   'Extrude': { category: 'Additive', prompt: "EXTRUDE: Extend the base profile vertically or horizontally to create a linear volume." },
   'Branch': { category: 'Additive', prompt: "BRANCH: Split the volume into multiple diverging arms or directions, creating a tree-like structure." },
@@ -283,7 +283,15 @@ export const SPATIAL_VERBS: Record<string, { category: 'Additive' | 'Subtractive
   'Slide': { category: 'Displacement', prompt: "SLIDE: Shift a layer or section horizontally, creating a shearing effect." },
   'Compress': { category: 'Displacement', prompt: "COMPRESS: Squeeze the volume, reducing its height or width and creating bulging sides." },
   'Expand': { category: 'Displacement', prompt: "EXPAND: Pull the volume outwards from the center, creating a sense of internal pressure." },
-  'Interlock': { category: 'Additive', prompt: "INTERLOCK: Fit two distinct volumes together like a puzzle, creating a complex intersection." }
+  'Pleat': { category: 'Displacement', prompt: "PLEAT: Fold the surface back on itself multiple times, creating a rhythmic, textured depth." },
+  'Seam': { category: 'Displacement', prompt: "SEAM: Join two surfaces or volumes with a visible, articulated line or ridge." },
+  'Stretch': { category: 'Displacement', prompt: "STRETCH: Elongate the volume or surface along one axis, distorting its proportions." },
+
+  // Hybrid
+  'Interlock': { category: 'Hybrid', prompt: "INTERLOCK: Fit two distinct volumes together like a puzzle, creating a complex intersection." },
+  'Infiltrate': { category: 'Hybrid', prompt: "INFILTRATE: A foreign volume penetrates and spreads within the main mass, changing its character." },
+  'Augment': { category: 'Hybrid', prompt: "AUGMENT: Add a new element to the volume specifically to enhance or strengthen a part of it." },
+  'React': { category: 'Hybrid', prompt: "REACT: The volume deforms or changes shape in response to an external force or context." }
 };
 
 // Ideation Options
