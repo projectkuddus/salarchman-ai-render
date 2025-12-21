@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Sparkles, Search, X, ArrowRight } from 'lucide-react';
-import { BeforeAfterSlider } from './BeforeAfterSlider';
 
 interface LandingPageProps {
     onGetStarted: () => void;
@@ -81,16 +80,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         Upload your architectural sketches and let our AI generate stunning visualizations in seconds.
                     </p>
 
-                    {/* Before/After Slider Demo */}
-                    <div className="w-full max-w-3xl mx-auto mt-12 h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 relative group">
-                        <BeforeAfterSlider
-                            beforeImage="/gallery/animan-sketch-to-render.jpg"
-                            afterImage="/gallery/animan-sketch-to-render.jpg"
-                        />
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-medium text-slate-600 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                            Drag slider to compare
-                        </div>
-                    </div>
+
                 </div>
 
 
