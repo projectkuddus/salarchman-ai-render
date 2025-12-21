@@ -12,9 +12,21 @@ import { supabase } from './services/supabaseClient';
 import { HelpModal } from './components/HelpModal';
 import { indexedDBService } from './services/indexedDBService';
 import { historyService } from './services/historyService';
+import { IdeationButton } from './components/IdeationButton';
+import {
+  ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, WireframeGraphic, TranslucentGraphic,
+  OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
+  MorningGraphic, NoonGraphic, SunsetGraphic,
+  ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, DefaultGraphic
+} from './components/IdeationGraphics';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>({
+    id: 'dev-user',
+    email: 'dev@example.com',
+    name: 'Dev Architect',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+  });
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [loadingAuth, setLoadingAuth] = useState(true);
 
@@ -627,6 +639,64 @@ function App() {
     }
   };
 
+  const getMaterialGraphic = (name: string) => {
+    switch (name) {
+      case 'Concrete': return <ConcreteGraphic />;
+      case 'White Card': return <WhiteCardGraphic />;
+      case 'Blue Foam': return <BlueFoamGraphic />;
+      case 'Wood Block': return <WoodBlockGraphic />;
+      case 'Wireframe': return <WireframeGraphic />;
+      case 'Translucent': return <TranslucentGraphic />;
+      default: return <DefaultGraphic />;
+    }
+  };
+
+  const getFormGraphic = (name: string) => {
+    switch (name) {
+      case 'Orthogonal': return <OrthogonalGraphic />;
+      case 'Organic': return <OrganicGraphic />;
+      case 'Curvilinear': return <CurvilinearGraphic />;
+      case 'Faceted': return <FacetedGraphic />;
+      case 'Crystalline': return <CrystallineGraphic />;
+      case 'Parametric': return <ParametricGraphic />;
+      case 'Deconstructivist': return <DeconstructivistGraphic />;
+      default: return <DefaultGraphic />;
+    }
+  };
+
+  const getSunGraphic = (name: string) => {
+    switch (name) {
+      case 'Morning': return <MorningGraphic />;
+      case 'Noon': return <NoonGraphic />;
+      case 'Sunset': return <SunsetGraphic />;
+      default: return <DefaultGraphic />;
+    }
+  };
+
+  const getVerbGraphic = (name: string) => {
+    switch (name) {
+      case 'Extrude': return <ExtrudeGraphic />;
+      case 'Branch': return <BranchGraphic />;
+      case 'Merge': return <MergeGraphic />;
+      case 'Nest': return <NestGraphic />;
+      case 'Inflate': return <InflateGraphic />;
+      case 'Stack': return <StackGraphic />;
+      case 'Subtract': return <SubtractGraphic />;
+      case 'Punch': return <PunchGraphic />;
+      case 'Split': return <SplitGraphic />;
+      case 'Carve': return <CarveGraphic />;
+      case 'Notch': return <NotchGraphic />;
+      case 'Twist': return <TwistGraphic />;
+      case 'Fold': return <FoldGraphic />;
+      case 'Shear': return <ShearGraphic />;
+      case 'Cantilever': return <CantileverGraphic />;
+      case 'Lift': return <LiftGraphic />;
+      case 'Terrace': return <TerraceGraphic />;
+      case 'Bend': return <BendGraphic />;
+      default: return <DefaultGraphic />;
+    }
+  };
+
   if (loadingAuth) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-2 border-slate-300 border-t-slate-800 rounded-full animate-spin"></div></div>;
   if (!currentUser) {
     if (showLogin) return <LoginScreen onLogin={handleLogin} onBack={() => setShowLogin(false)} />;
@@ -829,16 +899,15 @@ function App() {
                 <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <Cuboid size={10} /> Materiality
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {Object.keys(IDEATION_MATERIALS).map(m => (
-                    <button
+                    <IdeationButton
                       key={m}
+                      label={m}
+                      active={ideationMaterial === m}
                       onClick={() => setIdeationMaterial(m)}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium border transition-all ${ideationMaterial === m ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
-                    >
-                      {getMaterialIcon(m)}
-                      {m}
-                    </button>
+                      graphic={getMaterialGraphic(m)}
+                    />
                   ))}
                 </div>
               </div>
@@ -850,16 +919,13 @@ function App() {
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   {['Morning', 'Noon', 'Sunset'].map(t => (
-                    <button
+                    <IdeationButton
                       key={t}
+                      label={t}
+                      active={timeOfDay === t}
                       onClick={() => setTimeOfDay(t)}
-                      className={`flex flex-col items-center justify-center gap-1 py-2 rounded-lg text-[10px] font-medium border transition-all ${timeOfDay === t ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
-                    >
-                      {t === 'Morning' && <Sunrise size={14} />}
-                      {t === 'Noon' && <Sun size={14} />}
-                      {t === 'Sunset' && <Sunset size={14} />}
-                      {t}
-                    </button>
+                      graphic={getSunGraphic(t)}
+                    />
                   ))}
                 </div>
               </div>
@@ -869,16 +935,15 @@ function App() {
                 <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <Component size={10} /> Form Language
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {Object.keys(IDEATION_FORMS).map(f => (
-                    <button
+                    <IdeationButton
                       key={f}
+                      label={f}
+                      active={ideationForm === f}
                       onClick={() => setIdeationForm(f)}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium border transition-all ${ideationForm === f ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
-                    >
-                      {getFormIcon(f)}
-                      {f}
-                    </button>
+                      graphic={getFormGraphic(f)}
+                    />
                   ))}
                 </div>
               </div>
@@ -888,18 +953,17 @@ function App() {
                 {['Additive', 'Subtractive', 'Displacement'].map(category => (
                   <div key={category} className="space-y-2">
                     <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{category} Operations</h5>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                       {Object.entries(SPATIAL_VERBS)
                         .filter(([_, data]) => data.category === category)
                         .map(([verb, _]) => (
-                          <button
+                          <IdeationButton
                             key={verb}
+                            label={verb}
+                            active={selectedVerbs.includes(verb)}
                             onClick={() => toggleVerb(verb)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-medium border transition-all ${selectedVerbs.includes(verb) ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
-                          >
-                            {getVerbIcon(verb)}
-                            {verb}
-                          </button>
+                            graphic={getVerbGraphic(verb)}
+                          />
                         ))}
                     </div>
                   </div>
