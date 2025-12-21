@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { getFilterForStyle } from './StylePreview';
+import { VerbOverlays } from './VerbOverlays';
 
 interface LiveIdeationPreviewProps {
     imageSrc: string;
@@ -16,20 +17,18 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
     form,
     timeOfDay
 }) => {
-    const { transformStyle, clipPath, ghostStyle, isSubtractive, isAdditive, isDisplacement } = useMemo(() => {
+    const { transformStyle, ghostStyle } = useMemo(() => {
         let scale = 1;
         let rotate = 0;
         let skewX = 0;
         let skewY = 0;
         let translateX = 0;
         let translateY = 0;
-        let clip = 'none';
 
-        let hasSubtractive = false;
-        let hasAdditive = false;
         let hasDisplacement = false;
+        let hasAdditive = false;
 
-        // Analyze Verbs to determine transformation
+        // Analyze Verbs to determine transformation (Subtle only)
         verbs.forEach(verb => {
             switch (verb) {
                 // Additive - Growth / Expansion
@@ -39,14 +38,7 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
                 case 'Stack':
                 case 'Augment':
                 case 'Stretch':
-                    scale *= 1.1;
-                    hasAdditive = true;
-                    break;
-                case 'Branch':
-                case 'Merge':
-                case 'Nest':
-                case 'Embed':
-                case 'Infiltrate':
+                    scale *= 1.05;
                     hasAdditive = true;
                     break;
 
@@ -55,54 +47,33 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
                 case 'Carve':
                 case 'Excavate':
                 case 'Erode':
-                    scale *= 0.9; // Slight shrink to imply loss
-                    hasSubtractive = true;
-                    break;
-                case 'Punch':
-                case 'Notch':
-                    // Center hole punch simulation
-                    clip = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40%, 40% 40%, 40% 60%, 60% 60%, 60% 40%, 0% 40%)';
-                    hasSubtractive = true;
-                    break;
-                case 'Split':
-                case 'Fracture':
-                    clip = 'polygon(0% 0%, 45% 0%, 45% 100%, 0% 100%, 0% 0%, 55% 0%, 100% 0%, 100% 100%, 55% 100%, 55% 0%)';
-                    hasSubtractive = true;
+                    scale *= 0.95;
                     break;
 
                 // Displacement - Movement / Distortion
                 case 'Twist':
                 case 'Rotate':
-                    rotate += 15;
+                    rotate += 5;
                     hasDisplacement = true;
                     break;
                 case 'Shear':
-                    skewX += 15;
+                    skewX += 5;
                     hasDisplacement = true;
                     break;
                 case 'Bend':
                 case 'Fold':
                 case 'Pleat':
-                    skewY += 10;
+                    skewY += 5;
                     hasDisplacement = true;
                     break;
                 case 'Lift':
-                    translateY -= 20;
-                    scale *= 0.95; // Perspective shift
+                    translateY -= 10;
                     hasDisplacement = true;
                     break;
                 case 'Shift':
                 case 'Slide':
                 case 'Offset':
-                    translateX += 20;
-                    hasDisplacement = true;
-                    break;
-                case 'Compress':
-                    // Note: scaleY is not a direct CSS transform property like scale.
-                    // It should be part of the scale() function, e.g., scale(1, 0.8)
-                    // For simplicity, we'll just adjust overall scale here or use skewY for compression effect.
-                    // For now, let's just mark it as displacement.
-                    // scaleY: 0.8; // This line is problematic in JS object.
+                    translateX += 10;
                     hasDisplacement = true;
                     break;
             }
@@ -116,26 +87,22 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
 
         return {
             transformStyle: transform,
-            clipPath: clip,
-            ghostStyle: ghost,
-            isSubtractive: hasSubtractive,
-            isAdditive: hasAdditive,
-            isDisplacement: hasDisplacement
+            ghostStyle: ghost
         };
     }, [verbs]);
 
     // Calculate a single clean filter for the active image
     const activeFilter = useMemo(() => {
-        // Start with a clean base
-        let filter = 'contrast(105%) brightness(105%)'; // Slight pop
+        // Start with a clean base - NO aggressive contrast/saturation
+        let filter = '';
 
-        // Apply Material/Form/Time filters ONLY if they exist (and just one of each)
+        // Apply Material/Form/Time filters ONLY if they exist
         if (material) filter += ` ${getFilterForStyle(material)}`;
-        // We skip form/time/verb color filters to avoid "deep frying" the image
-        // The diagrammatic transformation is the main feedback now.
+        if (form) filter += ` ${getFilterForStyle(form)}`;
+        if (timeOfDay) filter += ` ${getFilterForStyle(timeOfDay)}`;
 
-        return filter;
-    }, [material]);
+        return filter.trim();
+    }, [material, form, timeOfDay]);
 
     return (
         <div className="relative w-full h-full overflow-hidden bg-slate-900 flex items-center justify-center">
@@ -152,10 +119,7 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
             {/* 2. Active Image (Transformed State) - Shows "After" */}
             <div
                 className="relative w-full h-full transition-all duration-500 ease-in-out z-10"
-                style={{
-                    transform: transformStyle,
-                    clipPath: clipPath !== 'none' ? clipPath : undefined
-                }}
+                style={{ transform: transformStyle }}
             >
                 <img
                     src={imageSrc}
@@ -163,22 +127,20 @@ export const LiveIdeationPreview: React.FC<LiveIdeationPreviewProps> = ({
                     className="w-full h-full object-contain drop-shadow-2xl"
                     style={{ filter: activeFilter }}
                 />
-
-                {/* Subtractive Inner Shadow/Void Hint */}
-                {isSubtractive && (
-                    <div className="absolute inset-0 bg-slate-900/20 pointer-events-none mix-blend-multiply" />
-                )}
             </div>
 
+            {/* 3. Schematic Overlays (Arrows, Cuts, etc.) */}
+            <VerbOverlays verbs={verbs} />
+
             {/* Overlay for "Simulation Mode" indication */}
-            <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider border border-white/10 flex items-center gap-2 z-20">
+            <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider border border-white/10 flex items-center gap-2 z-30">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                Diagrammatic Preview
+                Schematic Preview
             </div>
 
             {/* Active Effects Indicator */}
             {verbs.length > 0 && (
-                <div className="absolute bottom-4 left-4 flex gap-1 flex-wrap max-w-[80%] z-20">
+                <div className="absolute bottom-4 left-4 flex gap-1 flex-wrap max-w-[80%] z-30">
                     {verbs.map(v => (
                         <span key={v} className="bg-black/50 text-white text-[9px] px-2 py-1 rounded backdrop-blur-sm border border-white/5">
                             {v}
