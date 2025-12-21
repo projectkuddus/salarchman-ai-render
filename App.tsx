@@ -1010,6 +1010,7 @@ function App() {
                       active={ideationMaterial === m}
                       onClick={() => setIdeationMaterial(m)}
                       graphic={getMaterialGraphic(m)}
+                      imageSrc={uploadedImage}
                     />
                   ))}
                 </div>
@@ -1028,6 +1029,7 @@ function App() {
                       active={timeOfDay === t}
                       onClick={() => setTimeOfDay(t)}
                       graphic={getSunGraphic(t)}
+                      imageSrc={uploadedImage}
                     />
                   ))}
                 </div>
@@ -1046,6 +1048,7 @@ function App() {
                       active={ideationForm === f}
                       onClick={() => setIdeationForm(f)}
                       graphic={getFormGraphic(f)}
+                      imageSrc={uploadedImage}
                     />
                   ))}
                 </div>

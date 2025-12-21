@@ -1,14 +1,16 @@
 import React from 'react';
 import { Check } from 'lucide-react';
+import { StylePreview } from './StylePreview';
 
 interface IdeationButtonProps {
     label: string;
     active: boolean;
     onClick: () => void;
     graphic: React.ReactNode;
+    imageSrc?: string | null;
 }
 
-export const IdeationButton: React.FC<IdeationButtonProps> = ({ label, active, onClick, graphic }) => {
+export const IdeationButton: React.FC<IdeationButtonProps> = ({ label, active, onClick, graphic, imageSrc }) => {
     return (
         <button
             onClick={onClick}
@@ -19,8 +21,12 @@ export const IdeationButton: React.FC<IdeationButtonProps> = ({ label, active, o
                 }`}
         >
             <div className="w-full flex-1 flex items-center justify-center p-1">
-                <div className="w-full h-full rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                    {graphic}
+                <div className="w-full h-full rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105 relative">
+                    {imageSrc ? (
+                        <StylePreview imageSrc={imageSrc} styleName={label} />
+                    ) : (
+                        graphic
+                    )}
                 </div>
             </div>
 
