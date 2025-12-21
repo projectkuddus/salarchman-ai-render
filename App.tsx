@@ -776,7 +776,15 @@ function App() {
                             onClick={() => setSelectedStyle(style)}
                             className={`group relative overflow-hidden rounded-lg aspect-video border transition-all ${selectedStyle === style ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-200 hover:border-slate-300'}`}
                           >
-                            <img src={EXTERIOR_STYLE_THUMBNAILS[style]} alt={style} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110" />
+                            <img
+                              src={EXTERIOR_STYLE_THUMBNAILS[style]}
+                              alt={style}
+                              loading="lazy"
+                              decoding="async"
+                              width="160"
+                              height="90"
+                              className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110"
+                            />
                             <div className={`absolute inset-0 flex items-end p-2 ${selectedStyle === style ? 'bg-black/40' : 'bg-black/20 group-hover:bg-black/30'}`}>
                               <span className="text-[10px] font-medium text-white leading-tight shadow-sm">{style}</span>
                             </div>
@@ -798,7 +806,15 @@ function App() {
                           onClick={() => setSelectedStyle(style)}
                           className={`group relative overflow-hidden rounded-lg aspect-video border transition-all ${selectedStyle === style ? 'border-slate-900 ring-1 ring-slate-900' : 'border-slate-200 hover:border-slate-300'}`}
                         >
-                          <img src={INTERIOR_STYLE_THUMBNAILS[style]} alt={style} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110" />
+                          <img
+                            src={INTERIOR_STYLE_THUMBNAILS[style]}
+                            alt={style}
+                            loading="lazy"
+                            decoding="async"
+                            width="160"
+                            height="90"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110"
+                          />
                           <div className={`absolute inset-0 flex items-end p-2 ${selectedStyle === style ? 'bg-black/40' : 'bg-black/20 group-hover:bg-black/30'}`}>
                             <span className="text-[10px] font-medium text-white leading-tight shadow-sm">{style}</span>
                           </div>
@@ -922,6 +938,7 @@ function App() {
                             <img
                               src="/ideation_examples/input.png"
                               alt="Input Sketch"
+                              loading="lazy"
                               className="w-full h-full object-contain p-4"
                             />
                           </div>
@@ -930,10 +947,10 @@ function App() {
                         <div className="space-y-2">
                           <div className="aspect-square bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-center relative overflow-hidden shadow-xl">
                             <div className="grid grid-cols-2 grid-rows-2 w-full h-full">
-                              <img src="/ideation_examples/output_1.png" className="w-full h-full object-cover border-r border-b border-slate-800/50" alt="Variation 1" />
-                              <img src="/ideation_examples/output_2.png" className="w-full h-full object-cover border-b border-slate-800/50" alt="Variation 2" />
-                              <img src="/ideation_examples/output_3.png" className="w-full h-full object-cover border-r border-slate-800/50" alt="Variation 3" />
-                              <img src="/ideation_examples/output_4.png" className="w-full h-full object-cover" alt="Variation 4" />
+                              <img src="/ideation_examples/output_1.png" loading="lazy" className="w-full h-full object-cover border-r border-b border-slate-800/50" alt="Variation 1" />
+                              <img src="/ideation_examples/output_2.png" loading="lazy" className="w-full h-full object-cover border-b border-slate-800/50" alt="Variation 2" />
+                              <img src="/ideation_examples/output_3.png" loading="lazy" className="w-full h-full object-cover border-r border-slate-800/50" alt="Variation 3" />
+                              <img src="/ideation_examples/output_4.png" loading="lazy" className="w-full h-full object-cover" alt="Variation 4" />
                             </div>
                           </div>
                           <p className="text-center text-xs font-bold text-blue-600 uppercase">Output: AI-Generated Massing Variations</p>

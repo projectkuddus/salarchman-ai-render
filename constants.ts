@@ -82,7 +82,7 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   // Realism Spectrum
   [RenderStyle.PHOTOREALISTIC]: '/thumbnails/photorealistic.jpg',
-  [RenderStyle.SIMILAR_TO_REF]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=80',
+  [RenderStyle.SIMILAR_TO_REF]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
   [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
@@ -115,14 +115,14 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
 
   // Legacy Fallbacks
-  [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=80",
-  [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=80",
-  [RenderStyle.WATERCOLOR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=80",
-  [RenderStyle.RAW_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=80",
-  [RenderStyle.CARTOONISH]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=80",
-  [RenderStyle.COMIC_BOOK]: "https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=80",
-  [RenderStyle.ULTRA_RENDER]: "https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=80",
-  [RenderStyle.CONCEPT_SKETCH]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=80"
+  [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
+  [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=60&fm=webp",
+  [RenderStyle.WATERCOLOR]: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp",
+  [RenderStyle.RAW_SKETCH]: "https://images.unsplash.com/photo-1594813583279-7dd252c8032f?w=150&q=60&fm=webp",
+  [RenderStyle.CARTOONISH]: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=150&q=60&fm=webp",
+  [RenderStyle.COMIC_BOOK]: "https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=60&fm=webp",
+  [RenderStyle.ULTRA_RENDER]: "https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=60&fm=webp",
+  [RenderStyle.CONCEPT_SKETCH]: "https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=60&fm=webp"
 };
 
 export const STYLE_PROMPTS: Record<string, string> = {
@@ -163,8 +163,8 @@ export const STYLE_PROMPTS: Record<string, string> = {
 };
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
-  [InteriorStyle.SIMILAR_TO_REF]: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=80", // Reusing exterior ref image
-  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=80", // Missing file
+  [InteriorStyle.SIMILAR_TO_REF]: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp", // Reusing exterior ref image
+  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=60&fm=webp", // Missing file
   [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior/dhaka-luxury.jpg",
   [InteriorStyle.ART_DECO]: "/thumbnails/interior/art-deco.jpg",
   [InteriorStyle.FUTURISTIC_INT]: "/thumbnails/interior/futuristic.jpg",
