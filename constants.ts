@@ -81,38 +81,38 @@ export const ATMOSPHERE_PROMPTS: Record<Atmosphere, string> = {
 // Mapping styles to Unsplash thumbnail images for preview
 export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   // Realism Spectrum
-  [RenderStyle.PHOTOREALISTIC]: 'https://images.unsplash.com/photo-1600596542815-2a4d04760252?w=150&q=60&fm=webp',
+  [RenderStyle.PHOTOREALISTIC]: '/thumbnails/photorealistic.jpg',
   [RenderStyle.SIMILAR_TO_REF]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
-  [RenderStyle.HYPERREAL]: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=150&q=60&fm=webp',
-  [RenderStyle.SEMI_REALISTIC]: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp',
-  [RenderStyle.CONCEPTUAL]: 'https://images.unsplash.com/photo-1565514020176-db79339a6a57?w=150&q=60&fm=webp',
-  [RenderStyle.SATELLITE_DRONE]: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=150&q=60&fm=webp',
+  [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
+  [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
+  [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
+  [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite.jpg',
 
   // 3D Model
-  [RenderStyle.WIREFRAME]: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=150&q=60&fm=webp',
-  [RenderStyle.CLAY]: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=150&q=60&fm=webp',
-  [RenderStyle.WHITE_MODEL]: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=150&q=60&fm=webp',
-  [RenderStyle.AMBIENT_OCCLUSION]: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=150&q=60&fm=webp',
+  [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
+  [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
+  [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
+  [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
-  [RenderStyle.MATERIAL_STUDY]: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=60&fm=webp',
-  [RenderStyle.LIGHTING_STUDY]: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=150&q=60&fm=webp',
+  [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
+  [RenderStyle.LIGHTING_STUDY]: '/thumbnails/lighting-study.jpg',
 
   // Stylized
-  [RenderStyle.TOON_CEL]: 'https://images.unsplash.com/photo-1560696950-68d71243765e?w=150&q=60&fm=webp',
-  [RenderStyle.SKETCHY_NPR]: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=60&fm=webp',
-  [RenderStyle.WATERCOLOR_NPR]: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp',
-  [RenderStyle.MINIATURE]: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=150&q=60&fm=webp',
-  [RenderStyle.LOW_POLY]: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp',
+  [RenderStyle.TOON_CEL]: '/thumbnails/toon.jpg',
+  [RenderStyle.SKETCHY_NPR]: '/thumbnails/sketchy-npr.jpg',
+  [RenderStyle.WATERCOLOR_NPR]: '/thumbnails/watercolor-npr.jpg',
+  [RenderStyle.MINIATURE]: '/thumbnails/miniature.jpg',
+  [RenderStyle.LOW_POLY]: '/thumbnails/low-poly.jpg',
 
   // Hand-Drawn
-  [RenderStyle.PENCIL_SKETCH]: 'https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=150&q=60&fm=webp',
-  [RenderStyle.INK_LINE]: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&q=60&fm=webp',
-  [RenderStyle.MARKER_RENDERING]: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp',
-  [RenderStyle.CHARCOAL]: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=60&fm=webp',
-  [RenderStyle.PASTEL]: 'https://images.unsplash.com/photo-1522771753035-4a50423a5a63?w=150&q=60&fm=webp',
-  [RenderStyle.WATERCOLOR_WASH]: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp',
-  [RenderStyle.TECHNICAL_PEN]: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&q=60&fm=webp',
-  [RenderStyle.BLUEPRINT]: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=150&q=60&fm=webp',
+  [RenderStyle.PENCIL_SKETCH]: '/thumbnails/pencil-sketch.jpg',
+  [RenderStyle.INK_LINE]: '/thumbnails/ink-line.jpg',
+  [RenderStyle.MARKER_RENDERING]: '/thumbnails/marker.jpg',
+  [RenderStyle.CHARCOAL]: '/thumbnails/charcoal.jpg',
+  [RenderStyle.PASTEL]: '/thumbnails/pastel.jpg',
+  [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
+  [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
+  [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -164,19 +164,19 @@ export const STYLE_PROMPTS: Record<string, string> = {
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.SIMILAR_TO_REF]: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp", // Reusing exterior ref image
-  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=60&fm=webp",
-  [InteriorStyle.DHAKA_LUXURY]: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=150&q=60&fm=webp",
-  [InteriorStyle.ART_DECO]: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=150&q=60&fm=webp",
-  [InteriorStyle.FUTURISTIC_INT]: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=150&q=60&fm=webp",
-  [InteriorStyle.PARAMETRIC]: "https://images.unsplash.com/photo-1511818966892-d7d6657c5f2b?w=150&q=60&fm=webp",
-  [InteriorStyle.MINIMALIST]: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=150&q=60&fm=webp",
-  [InteriorStyle.BRUTALIST]: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=150&q=60&fm=webp",
-  [InteriorStyle.BOHO]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=60&fm=webp",
-  [InteriorStyle.CLASSICAL]: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=150&q=60&fm=webp",
-  [InteriorStyle.POST_MODERN]: "https://images.unsplash.com/photo-1522771753035-4a50423a5a63?w=150&q=60&fm=webp",
-  [InteriorStyle.DOODLE_ART]: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=150&q=60&fm=webp",
-  [InteriorStyle.SCANDINAVIAN]: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=150&q=60&fm=webp",
-  [InteriorStyle.INDUSTRIAL]: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=150&q=60&fm=webp"
+  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=60&fm=webp", // Missing file
+  [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior/dhaka-luxury.jpg",
+  [InteriorStyle.ART_DECO]: "/thumbnails/interior/art-deco.jpg",
+  [InteriorStyle.FUTURISTIC_INT]: "/thumbnails/interior/futuristic.jpg",
+  [InteriorStyle.PARAMETRIC]: "/thumbnails/interior/parametric.jpg",
+  [InteriorStyle.MINIMALIST]: "/thumbnails/interior/minimalist.jpg",
+  [InteriorStyle.BRUTALIST]: "/thumbnails/interior/brutalist.jpg",
+  [InteriorStyle.BOHO]: "/thumbnails/interior/boho.jpg",
+  [InteriorStyle.CLASSICAL]: "/thumbnails/interior/classical.jpg",
+  [InteriorStyle.POST_MODERN]: "/thumbnails/interior/post-modern.jpg",
+  [InteriorStyle.DOODLE_ART]: "/thumbnails/interior/doodle-art.jpg",
+  [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior/scandinavian.jpg",
+  [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
