@@ -905,34 +905,30 @@ function App() {
                       <div className="grid grid-cols-2 gap-8">
                         <div className="space-y-2">
                           <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center relative overflow-hidden group">
-                            <div className="absolute inset-0 flex items-center justify-center text-slate-300">
-                              <span className="text-xs font-medium">Base Sketch</span>
-                            </div>
-                            {/* Placeholder for Sketch */}
-                            <svg className="w-32 h-32 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                              <rect x="4" y="4" width="16" height="16" rx="2" />
-                              <path d="M4 12h16M12 4v16" />
-                            </svg>
+                            <img
+                              src="/ideation_examples/input.png"
+                              alt="Input Sketch"
+                              className="w-full h-full object-contain p-4"
+                            />
                           </div>
-                          <p className="text-center text-xs font-bold text-slate-500 uppercase">Input: Simple Sketch</p>
+                          <p className="text-center text-xs font-bold text-slate-500 uppercase">Input: Simple SketchUp Model</p>
                         </div>
                         <div className="space-y-2">
                           <div className="aspect-square bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-center relative overflow-hidden shadow-xl">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20"></div>
-                            {/* Placeholder for Result */}
-                            <div className="relative z-10 text-center space-y-1">
-                              <div className="text-white font-bold text-lg">Complex Form</div>
-                              <div className="text-blue-200 text-[10px]">Twist + Cantilever + Extrude</div>
+                            <div className="grid grid-cols-2 grid-rows-2 w-full h-full">
+                              <img src="/ideation_examples/output_1.png" className="w-full h-full object-cover border-r border-b border-slate-800/50" alt="Variation 1" />
+                              <img src="/ideation_examples/output_2.png" className="w-full h-full object-cover border-b border-slate-800/50" alt="Variation 2" />
+                              <img src="/ideation_examples/output_3.png" className="w-full h-full object-cover border-r border-slate-800/50" alt="Variation 3" />
+                              <img src="/ideation_examples/output_4.png" className="w-full h-full object-cover" alt="Variation 4" />
                             </div>
                           </div>
-                          <p className="text-center text-xs font-bold text-blue-600 uppercase">Output: Massing Study</p>
+                          <p className="text-center text-xs font-bold text-blue-600 uppercase">Output: AI-Generated Massing Variations</p>
                         </div>
                       </div>
                       <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 text-blue-800 text-sm leading-relaxed">
                         <p>
                           <strong>Why use Ideation?</strong><br />
-                          Instead of just prompting "modern building", use <strong>Spatial Verbs</strong> to act like a digital sculptor.
-                          Combine <em>"Twist"</em>, <em>"Cantilever"</em>, and <em>"Subtract"</em> to generate specific, architecturally rigorous forms from a simple block sketch.
+                          Transform a simple block model into a bundle of architectural variations. Use <strong>Spatial Verbs</strong> to explore form, massing, and geometry instantly.
                         </p>
                       </div>
                     </div>
