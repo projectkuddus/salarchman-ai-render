@@ -6,6 +6,7 @@ interface LandingPageProps {
 }
 
 const DEVELOPER_GALLERY = [
+    "/gallery/animan-sketch-to-render.jpg?v=1",
     "/gallery/renderman-ai-1766242446688.jpg?v=1",
     "/gallery/archivision-1765932433653.jpg?v=1",
     "/gallery/renderman-ai-1766253232402.jpg?v=1",
