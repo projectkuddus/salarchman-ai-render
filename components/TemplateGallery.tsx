@@ -39,14 +39,14 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'paper-1',
-        title: 'Satellite to Paper Model',
-        description: 'Convert satellite imagery into a clean, architectural white paper model.',
+        title: 'Image/Render to Paper Model',
+        description: 'Convert any architectural image into a clean white paper model.',
         category: 'Urban',
-        baseImage: '/paper-base.jpg',
-        outputImage: '/paper-output.jpg',
-        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.',
+        baseImage: '/curzon-hall-base.jpg',
+        outputImage: '/curzon-hall-paper.jpg',
+        prompt: "Architectural white paper model, pure white matte texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.",
         style: 'Paper Model',
-        instructions: 'Upload a satellite image or site plan. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations.'
+        instructions: "Upload a photo, render, or sketch. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations."
     }
 ];
 
