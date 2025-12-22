@@ -34,6 +34,10 @@ export enum RenderStyle {
   TECHNICAL_PEN = 'Technical Pen',
   BLUEPRINT = 'Blueprint',
 
+  // Architectural Model Photography
+  METAL_MODEL = 'Metal Model',
+  CONCRETE_MODEL = 'Concrete Model',
+
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
   SKETCHY = 'Sketchy',

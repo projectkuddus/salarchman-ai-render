@@ -58,6 +58,13 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.TECHNICAL_PEN,
       RenderStyle.BLUEPRINT
     ]
+  },
+  {
+    title: "Architectural Model Photography",
+    styles: [
+      RenderStyle.METAL_MODEL,
+      RenderStyle.CONCRETE_MODEL
+    ]
   }
 ];
 
@@ -116,6 +123,10 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
 
+  // Architectural Model Photography
+  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-output.png',
+  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-output.png',
+
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
   [RenderStyle.SKETCHY]: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=60&fm=webp",
@@ -155,6 +166,10 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.PASTEL]: "Pastel drawing, soft chalky textures, gentle colors, artistic impression.",
   [RenderStyle.TECHNICAL_PEN]: "Technical pen drawing, precise lines, stippling, clean architectural detail.",
   [RenderStyle.BLUEPRINT]: "Blueprint style, white technical lines on blue background, construction document look.",
+
+  // Architectural Model Photography
+  [RenderStyle.METAL_MODEL]: "Physical architectural model made of brushed aluminum and stainless steel. Monochromatic silver metal texture, precision laser cut edges, industrial aesthetic. Studio lighting with soft shadows, clean grey background. High-end craftsmanship, museum quality model photography.",
+  [RenderStyle.CONCRETE_MODEL]: "Physical architectural model made of raw cast concrete. Brutalist aesthetic, heavy massing, textured cement finish, visible formwork lines. Studio lighting with dramatic shadows, neutral grey background. High-end craftsmanship, museum quality model photography.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",
