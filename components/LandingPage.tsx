@@ -5,26 +5,31 @@ interface LandingPageProps {
     onGetStarted: () => void;
 }
 
-const DEVELOPER_GALLERY = [
-    "/gallery/animan-sketch-to-render.jpg?v=1",
-    "/gallery/renderman-ai-1766242446688.jpg?v=1",
-    "/gallery/archivision-1765932433653.jpg?v=1",
-    "/gallery/renderman-ai-1766253232402.jpg?v=1",
-    "/gallery/salARCHman-1765976559982.jpg?v=1",
-    "/gallery/archivision-1765932651101.jpg?v=1",
-    "/gallery/archivision-1765933707253.jpg?v=1",
-    "/gallery/salARCHman-1765956698737.jpg?v=1",
-    "/gallery/salARCHman-1765987075282.jpg?v=1",
-    "/gallery/salARCHman-1765985641048.jpg?v=1",
-    "/gallery/renderman-ai-1766242067169.jpg?v=1",
-    "/gallery/salARCHman-1765944744165.jpg?v=1",
-    "/gallery/salARCHman-1765987283493.jpg?v=1",
-    "/gallery/renderman-ai-1766242074715.jpg?v=1",
-    "/gallery/renderman-ai-1766253727085.jpg?v=1"
-];
+interface GalleryItem {
+    id: number;
+    image: string;
+    style: string;
+    type: string;
+    category: string;
+    user: string;
+    prompt: string;
+    aspectRatio: string;
+}
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+    const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+        fetch('/gallery/gallery-data.json')
+            .then(res => res.json())
+            .then((data: GalleryItem[]) => {
+                // Shuffle array to show random mix or just reverse to show newest first
+                const images = data.reverse().map(item => item.image);
+                setGalleryImages(images);
+            })
+            .catch(err => console.error("Failed to load gallery", err));
+    }, []);
 
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-500/20 relative">
@@ -93,7 +98,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     </div>
 
                     <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                        {DEVELOPER_GALLERY.map((img, index) => (
+                        {galleryImages.map((img, index) => (
                             <div
                                 key={index}
                                 className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
