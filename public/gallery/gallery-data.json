@@ -70,16 +70,6 @@
         "aspectRatio": "1:1"
     },
     {
-        "id": 8,
-        "image": "/gallery/4 models.jpg",
-        "style": "Photorealistic",
-        "type": "Exterior",
-        "category": "render",
-        "user": "Guest",
-        "prompt": "Architectural visualization",
-        "aspectRatio": "16:9"
-    },
-    {
         "id": 9,
         "image": "/gallery/archivision-1765932651101.jpg",
         "style": "Photorealistic",
