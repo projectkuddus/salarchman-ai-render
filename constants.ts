@@ -29,6 +29,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.WIREFRAME,
       RenderStyle.CLAY,
       RenderStyle.WHITE_MODEL,
+      RenderStyle.PAPER_MODEL,
       RenderStyle.AMBIENT_OCCLUSION,
 
       RenderStyle.MATERIAL_STUDY,
@@ -92,6 +93,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
   [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
   [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
+  [RenderStyle.PAPER_MODEL]: '/paper-model-output.jpg',
   [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
   [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
@@ -135,6 +137,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.WIREFRAME]: "Wireframe render, structural lines, blueprint aesthetic, technical view.",
   [RenderStyle.CLAY]: "Clay render, matte white material, ambient occlusion, focus on light and shadow volume.",
   [RenderStyle.WHITE_MODEL]: "White physical model look, clean materials, soft studio lighting, architectural scale model.",
+  [RenderStyle.PAPER_MODEL]: "Architectural white paper model, pure white matte texture, clean cuts, soft ambient occlusion shadows, studio lighting, minimalist, abstract, high key, no colors, isometric or high-angle view.",
   [RenderStyle.AMBIENT_OCCLUSION]: "Ambient occlusion pass, greyscale, soft shadows showing geometry contacts.",
 
   [RenderStyle.MATERIAL_STUDY]: "Material study, focus on specific textures (wood, concrete, glass), close-up details.",
@@ -176,7 +179,8 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.POST_MODERN]: "/thumbnails/interior/post-modern.jpg",
   [InteriorStyle.DOODLE_ART]: "/thumbnails/interior/doodle-art.jpg",
   [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior/scandinavian.jpg",
-  [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg"
+  [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg",
+  [InteriorStyle.PAPER_MODEL]: "/paper-model-output.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
@@ -193,7 +197,8 @@ export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
   [InteriorStyle.POST_MODERN]: "Post Modern interior. Playful geometry, pastel colors mixed with bold primary colors, terrazzo floors, Memphis group influence, quirky furniture shapes, ironic and bold.",
   [InteriorStyle.DOODLE_ART]: "Experimental Doodle Art style. The room is rendered as a 3D space but textures are replaced with black and white hand-drawn doodles, cartoon scribbles, and artistic markers. Playful, creative, sketch-like 3D environment.",
   [InteriorStyle.SCANDINAVIAN]: "Scandinavian design. Bright, airy, white walls, light wood floors, cozy textiles (hygge), simple functional furniture, pops of muted color.",
-  [InteriorStyle.INDUSTRIAL]: "Industrial loft style. Exposed brick walls, ductwork, metal framed windows, concrete floors, vintage leather furniture, Edison bulbs, warehouse aesthetic."
+  [InteriorStyle.INDUSTRIAL]: "Industrial loft style. Exposed brick walls, ductwork, metal framed windows, concrete floors, vintage leather furniture, Edison bulbs, warehouse aesthetic.",
+  [InteriorStyle.PAPER_MODEL]: "Interior white paper model. Pure white matte paper texture, clean cuts, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry."
 };
 
 export const VIEW_PROMPTS: Record<ViewType, string> = {

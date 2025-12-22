@@ -36,6 +36,17 @@ export const TEMPLATES: Template[] = [
         prompt: 'Transform this architectural sketch/massing into a professional, high-end photorealistic rendering. Interpret the lines and volumes as a completed building with realistic materials (glass, concrete, metal). Lighting: Natural daylight with soft shadows. Context: Urban or landscaped setting appropriate to the building. Style: Architectural photography, 8k, highly detailed, sharp focus.',
         style: 'Photorealistic',
         instructions: 'Upload a raw sketch, line drawing, or 3D massing screenshot. This template converts it into a polished, professional architectural photograph. After selecting this template, replace the demo image with your own, then choose any Style from the library and optionally add a Reference Image.'
+    },
+    {
+        id: 'paper-1',
+        title: 'Satellite to Paper Model',
+        description: 'Convert satellite imagery into a clean, architectural white paper model.',
+        category: 'Urban',
+        baseImage: '/satellite-base.jpg',
+        outputImage: '/paper-model-output.jpg',
+        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture, clean cuts, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry. Isometric or high-angle view.',
+        style: 'Paper Model',
+        instructions: 'Upload a satellite image or site plan. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations.'
     }
 ];
 

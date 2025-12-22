@@ -11,6 +11,7 @@ export enum RenderStyle {
   WIREFRAME = 'Wireframe',
   CLAY = 'Clay Render',
   WHITE_MODEL = 'White Model',
+  PAPER_MODEL = 'Paper Model',
   AMBIENT_OCCLUSION = 'Ambient Occlusion',
 
   MATERIAL_STUDY = 'Material Study',
@@ -59,6 +60,7 @@ export enum InteriorStyle {
   DOODLE_ART = 'Doodle Art',
   SCANDINAVIAN = 'Scandinavian',
   INDUSTRIAL = 'Industrial',
+  PAPER_MODEL = 'Paper Model',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
