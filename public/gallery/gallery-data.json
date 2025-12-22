@@ -1,6 +1,16 @@
 [
     {
         "id": 1,
+        "image": "/gallery/renderman-ai-1766407771011.png",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 2,
         "image": "/gallery/animan-sketch-to-render.jpg",
         "style": "Sketch to Render",
         "type": "Transformation",
@@ -10,7 +20,7 @@
         "aspectRatio": "16:9"
     },
     {
-        "id": 2,
+        "id": 3,
         "image": "/gallery/renderman-ai-1766242446688.jpg",
         "style": "Photorealistic",
         "type": "Exterior Render",
@@ -20,7 +30,7 @@
         "aspectRatio": "16:9"
     },
     {
-        "id": 3,
+        "id": 4,
         "image": "/gallery/salARCHman-1765944744165.jpg",
         "style": "Architectural Design",
         "type": "Exterior",
@@ -30,7 +40,7 @@
         "aspectRatio": "4:3"
     },
     {
-        "id": 4,
+        "id": 5,
         "image": "/gallery/archivision-1765932433653.jpg",
         "style": "Visualization",
         "type": "Concept",
@@ -40,7 +50,7 @@
         "aspectRatio": "16:9"
     },
     {
-        "id": 5,
+        "id": 6,
         "image": "/gallery/renderman-ai-1766253232402.jpg",
         "style": "Modern",
         "type": "Interior",
@@ -50,7 +60,7 @@
         "aspectRatio": "3:4"
     },
     {
-        "id": 6,
+        "id": 7,
         "image": "/gallery/salARCHman-1765987075282.jpg",
         "style": "Detail",
         "type": "Close-up",
@@ -58,5 +68,245 @@
         "user": "salARCHman",
         "prompt": "Architectural detail shot",
         "aspectRatio": "1:1"
+    },
+    {
+        "id": 8,
+        "image": "/gallery/4 models.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "Guest",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 9,
+        "image": "/gallery/archivision-1765932651101.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "archivision",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 10,
+        "image": "/gallery/archivision-1765933707253.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "archivision",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 11,
+        "image": "/gallery/renderman-ai-1766242067169.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 12,
+        "image": "/gallery/renderman-ai-1766242074715.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 13,
+        "image": "/gallery/renderman-ai-1766242081988.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 14,
+        "image": "/gallery/renderman-ai-1766243299550.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 15,
+        "image": "/gallery/renderman-ai-1766243372092.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 16,
+        "image": "/gallery/renderman-ai-1766253727085.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 17,
+        "image": "/gallery/renderman-ai-1766326906596.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 18,
+        "image": "/gallery/renderman-ai-1766327051908.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 19,
+        "image": "/gallery/renderman-ai-1766337697790.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 20,
+        "image": "/gallery/renderman-ai-1766380312309.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 21,
+        "image": "/gallery/renderman-ai-1766400462341.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 22,
+        "image": "/gallery/renderman-ai-1766400559685.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 23,
+        "image": "/gallery/renderman-ai-1766401401412.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 24,
+        "image": "/gallery/renderman-ai-1766401940977.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 25,
+        "image": "/gallery/renderman-ai-1766401947192.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 26,
+        "image": "/gallery/renderman-ai-1766402344070.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 27,
+        "image": "/gallery/renderman-ai-1766406117699.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 28,
+        "image": "/gallery/salARCHman-1765956698737.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "salARCHman",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 29,
+        "image": "/gallery/salARCHman-1765976559982.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "salARCHman",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 30,
+        "image": "/gallery/salARCHman-1765985641048.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "salARCHman",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 31,
+        "image": "/gallery/salARCHman-1765987283493.jpg",
+        "style": "Photorealistic",
+        "type": "Exterior",
+        "category": "render",
+        "user": "salARCHman",
+        "prompt": "Architectural visualization",
+        "aspectRatio": "16:9"
     }
 ]
