@@ -1,15 +1,5 @@
 [
     {
-        "id": 1,
-        "image": "/gallery/renderman-ai-1766407771011.png",
-        "style": "Photorealistic",
-        "type": "Exterior",
-        "category": "render",
-        "user": "renderman-ai",
-        "prompt": "Architectural visualization",
-        "aspectRatio": "16:9"
-    },
-    {
         "id": 2,
         "image": "/gallery/animan-sketch-to-render.jpg",
         "style": "Sketch to Render",
