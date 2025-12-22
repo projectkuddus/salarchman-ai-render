@@ -42,9 +42,9 @@ export const TEMPLATES: Template[] = [
         title: 'Satellite to Paper Model',
         description: 'Convert satellite imagery into a clean, architectural white paper model.',
         category: 'Urban',
-        baseImage: '/satellite-base.jpg',
-        outputImage: '/paper-model-output.jpg',
-        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture, clean cuts, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry. Isometric or high-angle view.',
+        baseImage: '/paper-base.jpg',
+        outputImage: '/paper-output.jpg',
+        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture with slight translucency and subsurface scattering. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry. Isometric or high-angle view.',
         style: 'Paper Model',
         instructions: 'Upload a satellite image or site plan. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations.'
     }
