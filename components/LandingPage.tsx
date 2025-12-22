@@ -5,6 +5,8 @@ interface LandingPageProps {
     onGetStarted: () => void;
 }
 
+import { TriviaStrip } from './TriviaStrip';
+
 interface GalleryItem {
     id: number;
     image: string;
@@ -79,10 +81,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </nav>
 
             {/* Main Content */}
-            <main className="relative z-10 pt-32 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
+            <main className="relative z-10 pt-32 pb-12 px-0 max-w-full">
 
                 {/* Header / Intro */}
-                <div className="flex flex-col items-center justify-center py-12 text-center space-y-6 mb-8">
+                <div className="flex flex-col items-center justify-center py-12 text-center space-y-6 mb-0 px-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs font-bold text-blue-600 mb-2 uppercase tracking-wide">
                         <Sparkles size={12} className="text-blue-600" /> AI Powered Rendering
                     </div>
@@ -92,63 +94,67 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed mx-auto">
                         Upload your architectural sketches and let our AI generate stunning visualizations in seconds.
                     </p>
-
-
                 </div>
 
+                {/* Trivia Strip */}
+                <div className="mb-12">
+                    <TriviaStrip />
+                </div>
 
-                {/* Developer Gallery Section */}
-                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="flex items-center justify-center">
-                        <h2 className="text-2xl font-light text-slate-900 flex items-center gap-2">
-                            <Box size={20} /> Showcase Gallery
-                        </h2>
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                    {/* Developer Gallery Section */}
+                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="flex items-center justify-center">
+                            <h2 className="text-2xl font-light text-slate-900 flex items-center gap-2">
+                                <Box size={20} /> Showcase Gallery
+                            </h2>
+                        </div>
+
+                        {isLoading ? (
+                            <div className="flex justify-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                                    {galleryImages.slice(0, visibleCount).map((img, index) => (
+                                        <div
+                                            key={index}
+                                            className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                                            onClick={() => setSelectedImage(img)}
+                                        >
+                                            <img
+                                                src={img}
+                                                alt={`Showcase ${index + 1}`}
+                                                loading="lazy"
+                                                width="400"
+                                                height="300"
+                                                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                                                }}
+                                            />
+                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {visibleCount < galleryImages.length && (
+                                    <div className="flex justify-center pt-4">
+                                        <button
+                                            onClick={handleLoadMore}
+                                            className="group flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all shadow-sm hover:shadow"
+                                        >
+                                            Load More <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
 
-                    {isLoading ? (
-                        <div className="flex justify-center py-12">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
-                        </div>
-                    ) : (
-                        <>
-                            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                                {galleryImages.slice(0, visibleCount).map((img, index) => (
-                                    <div
-                                        key={index}
-                                        className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
-                                        onClick={() => setSelectedImage(img)}
-                                    >
-                                        <img
-                                            src={img}
-                                            alt={`Showcase ${index + 1}`}
-                                            loading="lazy"
-                                            width="400"
-                                            height="300"
-                                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
-                                            onError={(e) => {
-                                                const target = e.target as HTMLImageElement;
-                                                target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                                            }}
-                                        />
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                                    </div>
-                                ))}
-                            </div>
-
-                            {visibleCount < galleryImages.length && (
-                                <div className="flex justify-center pt-4">
-                                    <button
-                                        onClick={handleLoadMore}
-                                        className="group flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all shadow-sm hover:shadow"
-                                    >
-                                        Load More <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-                                    </button>
-                                </div>
-                            )}
-                        </>
-                    )}
                 </div>
-
             </main>
 
             {/* Lightbox Modal */}
