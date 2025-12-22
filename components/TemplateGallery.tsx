@@ -49,6 +49,17 @@ export const TEMPLATES: Template[] = [
         instructions: "Upload a photo, render, or sketch. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations."
     },
     {
+        id: 'model-metal',
+        title: 'Metal Architectural Model',
+        description: 'Convert designs into a physical aluminum/metal architectural model.',
+        category: 'Exterior',
+        baseImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop', // Generic modern house base
+        outputImage: '/gallery/metal-model-output.png',
+        prompt: 'Physical architectural model made of brushed aluminum and stainless steel. Monochromatic silver metal texture, precision laser cut edges, industrial aesthetic. Studio lighting with soft shadows, clean grey background. High-end craftsmanship, museum quality model photography.',
+        style: 'Metal Model',
+        instructions: 'Upload a design to see it transformed into a premium metal architectural model.'
+    },
+    {
         id: 'material-swap',
         title: 'Material Swap',
         description: 'Instantly swap materials on existing surfaces.',
