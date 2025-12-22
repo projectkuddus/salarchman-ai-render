@@ -1345,12 +1345,12 @@ function App() {
           {/* TEMPLATE TAB SIDEBAR */}
           {activeTab === 'template' && (
             <div className="space-y-6">
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <Layout size={14} className="text-slate-900" />
-                  <h4 className="text-sm font-bold text-slate-900">Design Templates</h4>
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 mb-1">
+                  <Layout size={12} className="text-slate-900" />
+                  <h4 className="text-xs font-bold text-slate-900">Design Templates</h4>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
+                <p className="text-[10px] text-slate-500 leading-relaxed">
                   Select a starting point for your project.
                 </p>
               </div>
