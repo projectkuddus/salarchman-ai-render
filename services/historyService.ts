@@ -5,7 +5,12 @@ export const historyService = {
     /**
      * Uploads a base64 image to Supabase Storage and returns the public URL
      */
+    /**
+     * Uploads a base64 image to Supabase Storage and returns the public URL
+     */
     uploadImage: async (userId: string, imageId: string, base64Data: string): Promise<string | null> => {
+        if (!base64Data || !base64Data.startsWith('data:image')) return null;
+
         try {
             // Convert base64 to Blob
             const base64Response = await fetch(base64Data);
@@ -48,16 +53,25 @@ export const historyService = {
                 throw new Error('Failed to upload generated image');
             }
 
-            // 2. Prepare metadata (store other images as base64 in metadata for now, or upload them too if needed)
-            // For a robust solution, we should ideally upload all images, but to save bandwidth/storage, 
-            // we might just store the main one in the cloud for the history view.
-            // Let's store the main image URL in the row, and keep the rest in metadata if they fit, 
-            // or just omit them for the history list view (which usually only needs the result).
+            // 2. Upload input images if they exist
+            // We use a suffix for the ID to distinguish them
+            const originalImageUrl = generation.originalImage
+                ? await historyService.uploadImage(userId, `${generation.id}_original`, generation.originalImage)
+                : null;
+
+            const siteImageUrl = generation.siteImage
+                ? await historyService.uploadImage(userId, `${generation.id}_site`, generation.siteImage)
+                : null;
+
+            const referenceImageUrl = generation.referenceImage
+                ? await historyService.uploadImage(userId, `${generation.id}_reference`, generation.referenceImage)
+                : null;
 
             const metadata = {
-                originalImage: generation.originalImage ? 'stored_in_idb' : null, // Don't bloat DB with base64
-                siteImage: generation.siteImage ? 'stored_in_idb' : null,
-                referenceImage: generation.referenceImage ? 'stored_in_idb' : null,
+                // Store the URLs in metadata if we have them, otherwise null
+                originalImage: originalImageUrl,
+                siteImage: siteImageUrl,
+                referenceImage: referenceImageUrl,
                 timestamp: generation.timestamp,
                 selectedVerbs: generation.selectedVerbs,
                 ideationConfig: generation.ideationConfig,
@@ -106,8 +120,11 @@ export const historyService = {
 
             return (data || []).map(row => ({
                 id: row.id,
-                generatedImage: row.image_url, // This is now a URL, not base64
-                originalImage: '', // We don't fetch the inputs for the history list view to save data
+                generatedImage: row.image_url, // Main image URL
+                // If metadata has the URL, use it. Otherwise empty string (fallback)
+                originalImage: row.metadata?.originalImage || '',
+                siteImage: row.metadata?.siteImage || null,
+                referenceImage: row.metadata?.referenceImage || null,
                 prompt: row.prompt,
                 style: row.style,
                 viewType: row.view_type,

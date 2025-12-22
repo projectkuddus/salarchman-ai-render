@@ -236,5 +236,42 @@ export const storageService = {
         });
       }, 1500); // Simulate network delay
     });
+  },
+
+  /**
+   * Merges local and cloud history, preferring cloud for metadata but keeping local images if available
+   */
+  mergeHistory: (localHistory: GenerationResult[], cloudHistory: GenerationResult[]): GenerationResult[] => {
+    const mergedMap = new Map<string, GenerationResult>();
+
+    // 1. Add all local items first
+    localHistory.forEach(item => {
+      mergedMap.set(item.id, item);
+    });
+
+    // 2. Merge cloud items
+    cloudHistory.forEach(cloudItem => {
+      if (mergedMap.has(cloudItem.id)) {
+        // If exists locally, we might want to keep the local one if it has base64 images (faster)
+        // But cloud might have better metadata. 
+        // For now, let's assume local is "better" because it might have the full base64 data immediately available
+        // without needing a network fetch.
+        // However, if local is missing something, we could fill it in.
+        const localItem = mergedMap.get(cloudItem.id)!;
+
+        // If local item is missing images (e.g. it was just a stub), use cloud
+        if (!localItem.generatedImage && cloudItem.generatedImage) {
+          mergedMap.set(cloudItem.id, { ...localItem, ...cloudItem });
+        }
+      } else {
+        // If not in local, add it
+        mergedMap.set(cloudItem.id, cloudItem);
+      }
+    });
+
+    // Convert to array and sort by timestamp (newest first)
+    return Array.from(mergedMap.values()).sort((a, b) => {
+      return (b.timestamp || 0) - (a.timestamp || 0);
+    });
   }
 };
