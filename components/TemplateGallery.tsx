@@ -15,46 +15,6 @@ export interface Template {
 
 export const TEMPLATES: Template[] = [
     {
-        id: 'res-1',
-        title: 'Modern Minimalist Villa',
-        description: 'Clean geometric lines with large glass facades.',
-        category: 'Residential',
-        baseImage: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1600596542815-2495db969cf7?q=80&w=800&auto=format&fit=crop',
-        prompt: 'Modern minimalist villa, concrete and glass, sunset',
-        style: 'Photorealistic'
-    },
-    {
-        id: 'res-2',
-        title: 'Sustainable Eco-Cabin',
-        description: 'Wooden cabin integrated with nature.',
-        category: 'Residential',
-        baseImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800&auto=format&fit=crop',
-        prompt: 'Eco-friendly wooden cabin, forest setting, morning light',
-        style: 'Realistic'
-    },
-    {
-        id: 'com-1',
-        title: 'Tech Office HQ',
-        description: 'Glass and steel office complex.',
-        category: 'Commercial',
-        baseImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
-        prompt: 'High-tech office building, glass facade, urban context',
-        style: 'Futuristic'
-    },
-    {
-        id: 'mat-1',
-        title: 'Material & Finish Swap',
-        description: 'Test different materials on an existing render in seconds.',
-        category: 'Commercial',
-        baseImage: '/templates/material-swap-example.png',
-        outputImage: '/templates/material-swap-example.png',
-        prompt: 'Change the timber cladding to reflective zinc panels. Keep everything else exactly the same.',
-        style: 'Realistic'
-    },
-    {
         id: 'sat-1',
         title: 'Satellite to Drone Shot',
         description: 'Convert flat satellite imagery into realistic 3D drone photography.',
