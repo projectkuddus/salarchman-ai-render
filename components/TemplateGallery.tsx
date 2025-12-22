@@ -11,6 +11,7 @@ export interface Template {
     outputImage: string;
     prompt: string;
     style: string;
+    instructions: string;
 }
 
 export const TEMPLATES: Template[] = [
@@ -21,8 +22,9 @@ export const TEMPLATES: Template[] = [
         category: 'Urban',
         baseImage: '/satellite-base.jpg',
         outputImage: '/satellite-output.jpg',
-        prompt: 'A hyper-realistic, cinematic drone photograph based strictly on the geography and layout of the provided satellite image. Transform the flat, top-down satellite view into a slight oblique angle (high-angle shot) to create three-dimensional depth. The ground must show realistic elevation changes and topography. Apply dramatic Golden Hour lighting with a low sun angle casting long, distinct, directional shadows from every tree, building, and hill. Warm, rich lighting with atmospheric haze and aerial perspective. Enhance environmental textures: volumetric trees with individual leaves, reflective water surfaces, and realistic weathering on roads and buildings. Shot on a high-resolution aerial cinema camera (Phase One IQ4). Incredible detail, sharp focus, natural cinematic color grading. 8k resolution, architectural visualization masterpiece. Remove all text and labels.',
-        style: 'Realistic'
+        prompt: 'A masterpiece architectural visualization drone shot, transforming the provided satellite imagery into a hyper-realistic 3D environment. Capture the scene from a high-angle oblique perspective to reveal building heights and terrain topography. Lighting: Golden hour cinematic illumination with long, dramatic shadows casting depth across the landscape. Atmosphere: volumetric haze, warm sunlight, and aerial perspective. Details: 3D volumetric trees, realistic water reflections, textured road surfaces, and detailed roofscapes. Camera: Phase One IQ4 150MP, 80mm lens, f/5.6, sharp focus. Style: Photorealistic, 8k resolution, high dynamic range, no text or labels.',
+        style: 'Realistic',
+        instructions: 'This template transforms flat satellite imagery into realistic 3D drone photography. It adds depth, lighting, and environmental details to create a cinematic aerial shot.'
     }
 ];
 
@@ -91,17 +93,14 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     {/* Controls Card */}
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">
-                            <RefreshCw size={12} /> Template Settings
+                            <RefreshCw size={12} /> Instructions
                         </div>
 
                         <div className="space-y-4">
-                            <div>
-                                <label className="block text-xs font-medium text-slate-700 mb-1">Prompt</label>
-                                <textarea
-                                    value={currentPrompt}
-                                    onChange={(e) => setCurrentPrompt(e.target.value)}
-                                    className="w-full h-24 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-900 focus:border-transparent resize-none"
-                                />
+                            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                                <p className="text-sm text-slate-600 leading-relaxed">
+                                    {selectedTemplate?.instructions}
+                                </p>
                             </div>
                             <Button
                                 onClick={handleUseTemplate}
