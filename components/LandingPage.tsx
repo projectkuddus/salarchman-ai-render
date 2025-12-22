@@ -19,8 +19,11 @@ interface GalleryItem {
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
     const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
+    const [visibleCount, setVisibleCount] = React.useState(12);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
+        setIsLoading(true);
         fetch('/gallery/gallery-data.json')
             .then(res => res.json())
             .then((data: GalleryItem[]) => {
@@ -28,8 +31,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 const images = data.reverse().map(item => item.image);
                 setGalleryImages(images);
             })
-            .catch(err => console.error("Failed to load gallery", err));
+            .catch(err => console.error("Failed to load gallery", err))
+            .finally(() => setIsLoading(false));
     }, []);
+
+    const handleLoadMore = () => {
+        setVisibleCount(prev => prev + 12);
+    };
 
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-500/20 relative">
@@ -90,36 +98,55 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
 
                 {/* Developer Gallery Section */}
-                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="flex items-center justify-center">
                         <h2 className="text-2xl font-light text-slate-900 flex items-center gap-2">
                             <Box size={20} /> Showcase Gallery
                         </h2>
                     </div>
 
-                    <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                        {galleryImages.map((img, index) => (
-                            <div
-                                key={index}
-                                className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
-                                onClick={() => setSelectedImage(img)}
-                            >
-                                <img
-                                    src={img}
-                                    alt={`Showcase ${index + 1}`}
-                                    loading="lazy"
-                                    width="400"
-                                    height="300"
-                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
-                                    onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                    {isLoading ? (
+                        <div className="flex justify-center py-12">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                                {galleryImages.slice(0, visibleCount).map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                                        onClick={() => setSelectedImage(img)}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt={`Showcase ${index + 1}`}
+                                            loading="lazy"
+                                            width="400"
+                                            height="300"
+                                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
+                                            onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                                            }}
+                                        />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+
+                            {visibleCount < galleryImages.length && (
+                                <div className="flex justify-center pt-4">
+                                    <button
+                                        onClick={handleLoadMore}
+                                        className="group flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all shadow-sm hover:shadow"
+                                    >
+                                        Load More <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
 
             </main>

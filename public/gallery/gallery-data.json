@@ -308,35 +308,5 @@
         "user": "salARCHman",
         "prompt": "Architectural visualization",
         "aspectRatio": "16:9"
-    },
-    {
-        "id": 32,
-        "image": "/gallery/renderman-ai-1766410236657-0.png",
-        "style": "Photorealistic",
-        "type": "Exterior",
-        "category": "render",
-        "user": "renderman-ai",
-        "prompt": "Architectural visualization",
-        "aspectRatio": "16:9"
-    },
-    {
-        "id": 33,
-        "image": "/gallery/renderman-ai-1766410236657-1.png",
-        "style": "Photorealistic",
-        "type": "Exterior",
-        "category": "render",
-        "user": "renderman-ai",
-        "prompt": "Architectural visualization",
-        "aspectRatio": "16:9"
-    },
-    {
-        "id": 34,
-        "image": "/gallery/renderman-ai-1766410236657-2.png",
-        "style": "Photorealistic",
-        "type": "Exterior",
-        "category": "render",
-        "user": "renderman-ai",
-        "prompt": "Architectural visualization",
-        "aspectRatio": "16:9"
     }
 ]
