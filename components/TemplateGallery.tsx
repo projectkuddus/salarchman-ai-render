@@ -28,8 +28,8 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'sketch-1',
-        title: 'Sketch to Professional Render',
-        description: 'Turn sketches or massing models into high-end architectural photography.',
+        title: 'Sketch to Professional Model Photography',
+        description: 'Turn sketches or massing models into high-end architectural model photography.',
         category: 'Commercial',
         baseImage: 'https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop',
         outputImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
