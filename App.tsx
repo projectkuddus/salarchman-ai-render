@@ -805,26 +805,30 @@ function App() {
         </div>
         <div className="p-6 flex-1 space-y-8">
           {/* Navigation */}
-          <div className="flex bg-slate-100 p-1 rounded-xl">
-            <button onClick={() => setActiveTab('render')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'render' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Render</button>
-            <button onClick={() => setActiveTab('ideation')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'ideation' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Ideation</button>
-            <button
-              onClick={() => setActiveTab('diagram')}
-              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-500'
-                }`}
-            >
-              Diagram
-            </button>
+          <div className="space-y-2">
+            <div className="flex bg-slate-100 p-1 rounded-xl">
+              <button onClick={() => setActiveTab('render')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'render' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Render</button>
+              <button onClick={() => setActiveTab('ideation')} className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'ideation' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>Ideation</button>
+              <button
+                onClick={() => setActiveTab('diagram')}
+                className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'diagram'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500'
+                  }`}
+              >
+                Diagram
+              </button>
+            </div>
+
             <button
               onClick={() => setActiveTab('template')}
-              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'template'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-500'
+              className={`w-full py-2 text-xs rounded-xl transition-all border flex items-center justify-center gap-1 ${activeTab === 'template'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}
             >
-              Template
+              <span className="font-light">start with a</span>
+              <span className="font-bold">Template!</span>
             </button>
           </div>
 
