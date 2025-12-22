@@ -60,6 +60,17 @@ export const TEMPLATES: Template[] = [
         instructions: 'Upload a design to see it transformed into a premium metal architectural model.'
     },
     {
+        id: 'model-concrete',
+        title: 'Concrete Architectural Model',
+        description: 'Convert designs into a raw concrete/brutalist architectural model.',
+        category: 'Exterior',
+        baseImage: 'https://images.unsplash.com/photo-1628611225249-6c0c73d279a6?q=80&w=800&auto=format&fit=crop', // Generic brutalist base
+        outputImage: '/gallery/concrete-model-output.png',
+        prompt: 'Physical architectural model made of raw cast concrete. Brutalist aesthetic, heavy massing, textured cement finish, visible formwork lines. Studio lighting with dramatic shadows, neutral grey background. High-end craftsmanship, museum quality model photography.',
+        style: 'Concrete Model',
+        instructions: 'Upload a design to see it transformed into a raw concrete architectural model.'
+    },
+    {
         id: 'material-swap',
         title: 'Material Swap',
         description: 'Instantly swap materials on existing surfaces.',
