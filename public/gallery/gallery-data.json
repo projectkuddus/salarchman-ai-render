@@ -308,5 +308,25 @@
         "user": "salARCHman",
         "prompt": "Architectural visualization",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 35,
+        "image": "/gallery/Curzon Hall Paper Model.jpg",
+        "style": "Paper Model",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Paper model architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 36,
+        "image": "/gallery/Curzon Hall Paper Model 2.jpg",
+        "style": "Paper Model",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Paper model architectural visualization",
+        "aspectRatio": "16:9"
     }
 ]
