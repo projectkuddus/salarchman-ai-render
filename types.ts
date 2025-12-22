@@ -33,6 +33,7 @@ export enum RenderStyle {
   PASTEL = 'Pastel / Chalk',
   TECHNICAL_PEN = 'Technical Pen',
   BLUEPRINT = 'Blueprint',
+  ARCH_DOODLE = 'Architectural Doodle',
 
   // Architectural Model Photography
   METAL_MODEL = 'Metal Model',

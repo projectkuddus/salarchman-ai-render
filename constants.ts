@@ -56,7 +56,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.CHARCOAL,
       RenderStyle.PASTEL,
       RenderStyle.TECHNICAL_PEN,
-      RenderStyle.BLUEPRINT
+      RenderStyle.BLUEPRINT,
+      RenderStyle.ARCH_DOODLE
     ]
   },
   {
@@ -122,6 +123,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
+  [RenderStyle.ARCH_DOODLE]: '/gallery/doodle-model-after.png',
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: '/gallery/metal-model-output.png',
@@ -166,6 +168,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.PASTEL]: "Pastel drawing, soft chalky textures, gentle colors, artistic impression.",
   [RenderStyle.TECHNICAL_PEN]: "Technical pen drawing, precise lines, stippling, clean architectural detail.",
   [RenderStyle.BLUEPRINT]: "Blueprint style, white technical lines on blue background, construction document look.",
+  [RenderStyle.ARCH_DOODLE]: "Architectural illustration, loose naive hand-drawn style, thin black ink pen on white paper, tremulous jittery linework, corner overshoots, no grey washes, purely linework. Densely populated with small scale figures, abstract scalloped vegetation, spontaneous hand-lettering annotations, charming napkin sketch aesthetic.",
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: "Physical architectural model made of brushed aluminum and stainless steel. Monochromatic silver metal texture, precision laser cut edges, industrial aesthetic. Studio lighting with soft shadows, clean grey background. High-end craftsmanship, museum quality model photography.",
