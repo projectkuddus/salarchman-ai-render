@@ -38,6 +38,17 @@ export const TEMPLATES: Template[] = [
         instructions: 'Upload a photo of a rough model, a massing screenshot, or a sketch. This template converts it into a polished, professional architectural model photograph.'
     },
     {
+        id: 'model-doodle',
+        title: 'Model to Architectural Doodle',
+        description: 'Convert physical models or 3D views into charming, hand-drawn architectural doodles.',
+        category: 'Exterior',
+        baseImage: '/gallery/doodle-model-before.jpg',
+        outputImage: '/gallery/doodle-model-after.png',
+        prompt: 'An architectural illustration of the image. The scene is presented as an isometric aerial view, looking down onto the entire development to show its massing and context. The image must be rendered in a loose, naive, hand-drawn style using a thin black ink pen on white paper. The linework should be tremulous and jittery, avoiding any straight ruler lines. Incorporate corner overshoots where vertical and horizontal lines meet to emphasize the speed of the sketch. There are no grey washes, shadows, colors, or digital rendering effects; it is purely linework. The drawing must be densely populated with linework for entourage elements, including small scale figures, abundant vegetation on rooftops and ground levels, and street furniture. The vegetation should be depicted as abstract, scalloped cloud-shapes without internal detail. The people should be rendered as tiny, amorphous blobs and gestural outlines, lacking distinct limbs or faces. No hatches or textures. The image must include several text annotations that blend seamlessly with the drawing style. The text should not look like a digital font. It must appear as spontaneous, hurried hand-lettering written with the exact same shakiness and ink flow as the architectural lines. The letters should be slightly irregular, naive all-caps doodles and describe different parts of the design use and elements. The final result should feel like a charming, spontaneous "napkin sketch" or "doodle" that celebrates irregularity and imperfection, strictly in black and white.',
+        style: 'Doodle',
+        instructions: 'Upload a photo of your model or a 3D screenshot. This template converts it into a loose, hand-drawn architectural doodle with annotations.'
+    },
+    {
         id: 'paper-1',
         title: 'Image/Render to Paper Model',
         description: 'Convert any architectural image into a clean white paper model.',
