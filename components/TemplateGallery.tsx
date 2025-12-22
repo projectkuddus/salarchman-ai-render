@@ -6,7 +6,7 @@ export interface Template {
     id: string;
     title: string;
     description: string;
-    category: 'Residential' | 'Commercial' | 'Interior' | 'Landscape' | 'Urban';
+    category: 'Residential' | 'Commercial' | 'Interior' | 'Landscape' | 'Urban' | 'Exterior';
     baseImage: string;
     outputImage: string;
     prompt: string;
@@ -47,6 +47,72 @@ export const TEMPLATES: Template[] = [
         prompt: "Architectural white paper model, pure white matte texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.",
         style: 'Paper Model',
         instructions: "Upload a photo, render, or sketch. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations."
+    },
+    {
+        id: 'material-swap',
+        title: 'Material Swap',
+        description: 'Instantly swap materials on existing surfaces.',
+        category: 'Interior',
+        baseImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=800&auto=format&fit=crop',
+        prompt: 'Architectural visualization, material study. Change the specific material to [TARGET_MATERIAL]. Maintain lighting and geometry.',
+        style: 'Realistic',
+        instructions: 'Select a surface and choose a new material to apply. (Coming Soon)'
+    },
+    {
+        id: 'site-analysis',
+        title: 'Site Analysis Diagram',
+        description: 'Generate site analysis diagrams from satellite or plan views.',
+        category: 'Urban',
+        baseImage: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop',
+        prompt: 'Architectural site analysis diagram, vector style, colorful arrows indicating sun path, wind direction, and traffic flow. Minimalist, clean graphics.',
+        style: 'Diagram',
+        instructions: 'Upload a site plan or satellite image to generate a comprehensive analysis diagram. (Coming Soon)'
+    },
+    {
+        id: 'design-insertion',
+        title: 'Design Insertion',
+        description: 'Insert your design into an existing site photo.',
+        category: 'Exterior',
+        baseImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=800&auto=format&fit=crop',
+        prompt: 'Photorealistic architectural montage. Insert modern building design into the provided site context. Match lighting, shadows, and perspective.',
+        style: 'Realistic',
+        instructions: 'Upload a site photo and your 3D model view to merge them seamlessly. (Coming Soon)'
+    },
+    {
+        id: 'floor-plan-iso',
+        title: 'Floor Plan to Isometric',
+        description: 'Convert 2D floor plans into 3D isometric renders.',
+        category: 'Interior',
+        baseImage: 'https://images.unsplash.com/photo-1593604340977-2b6f00c5643b?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=800&auto=format&fit=crop',
+        prompt: '3D isometric floor plan render, cutaway view. Realistic textures, furniture, and lighting. Clean white background.',
+        style: 'Isometric',
+        instructions: 'Upload a 2D floor plan to generate a detailed 3D isometric view. (Coming Soon)'
+    },
+    {
+        id: 'restoration',
+        title: 'Building Restoration',
+        description: 'Visualize restoration of old or damaged buildings.',
+        category: 'Exterior',
+        baseImage: 'https://images.unsplash.com/photo-1599695665288-6625272c72b8?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1599695665288-6625272c72b8?q=80&w=800&auto=format&fit=crop', // Placeholder
+        prompt: 'Architectural restoration visualization. Restore the building to its original glory. Clean facade, repaired details, fresh paint. Photorealistic.',
+        style: 'Restoration',
+        instructions: 'Upload a photo of an old building to see it restored. (Coming Soon)'
+    },
+    {
+        id: 'cad-render',
+        title: 'CAD to Plan/Section Render',
+        description: 'Turn CAD line drawings into textured renders.',
+        category: 'Interior',
+        baseImage: 'https://images.unsplash.com/photo-1631557348938-1a52994f7963?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1631557348938-1a52994f7963?q=80&w=800&auto=format&fit=crop', // Placeholder
+        prompt: 'Architectural plan render, top-down view. Realistic textures, flooring, furniture, and shadows. Professional presentation style.',
+        style: 'Plan Render',
+        instructions: 'Upload a CAD file or line drawing to generate a textured plan or section render. (Coming Soon)'
     }
 ];
 
