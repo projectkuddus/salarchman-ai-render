@@ -20,7 +20,7 @@ export const TEMPLATES: Template[] = [
         description: 'Convert flat satellite imagery into realistic 3D drone photography.',
         category: 'Urban',
         baseImage: '/satellite-base.jpg',
-        outputImage: '/satellite-base.jpg',
+        outputImage: '/satellite-output.jpg',
         prompt: 'A hyper-realistic, cinematic drone photograph based strictly on the geography and layout of the provided satellite image. Transform the flat, top-down satellite view into a slight oblique angle (high-angle shot) to create three-dimensional depth. The ground must show realistic elevation changes and topography. Apply dramatic Golden Hour lighting with a low sun angle casting long, distinct, directional shadows from every tree, building, and hill. Warm, rich lighting with atmospheric haze and aerial perspective. Enhance environmental textures: volumetric trees with individual leaves, reflective water surfaces, and realistic weathering on roads and buildings. Shot on a high-resolution aerial cinema camera (Phase One IQ4). Incredible detail, sharp focus, natural cinematic color grading. 8k resolution, architectural visualization masterpiece. Remove all text and labels.',
         style: 'Realistic'
     }
