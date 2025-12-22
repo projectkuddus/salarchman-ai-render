@@ -25,6 +25,17 @@ export const TEMPLATES: Template[] = [
         prompt: 'A masterpiece architectural visualization drone shot, transforming the provided satellite imagery into a hyper-realistic 3D environment. Capture the scene from a high-angle oblique perspective to reveal building heights and terrain topography. Lighting: Golden hour cinematic illumination with long, dramatic shadows casting depth across the landscape. Atmosphere: volumetric haze, warm sunlight, and aerial perspective. Details: 3D volumetric trees, realistic water reflections, textured road surfaces, and detailed roofscapes. Camera: Phase One IQ4 150MP, 80mm lens, f/5.6, sharp focus. Style: Photorealistic, 8k resolution, high dynamic range, no text or labels.',
         style: 'Realistic',
         instructions: 'This template transforms flat satellite imagery into realistic 3D drone photography. It adds depth, lighting, and environmental details to create a cinematic aerial shot.'
+    },
+    {
+        id: 'sketch-1',
+        title: 'Sketch to Professional Render',
+        description: 'Turn sketches or massing models into high-end architectural photography.',
+        category: 'Commercial',
+        baseImage: 'https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop',
+        outputImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
+        prompt: 'Transform this architectural sketch/massing into a professional, high-end photorealistic rendering. Interpret the lines and volumes as a completed building with realistic materials (glass, concrete, metal). Lighting: Natural daylight with soft shadows. Context: Urban or landscaped setting appropriate to the building. Style: Architectural photography, 8k, highly detailed, sharp focus.',
+        style: 'Photorealistic',
+        instructions: 'Upload a raw sketch, line drawing, or 3D massing screenshot. This template converts it into a polished, professional architectural photograph. After selecting this template, replace the demo image with your own, then choose any Style from the library and optionally add a Reference Image.'
     }
 ];
 
