@@ -28,11 +28,11 @@ export const TEMPLATES: Template[] = [
 
 interface TemplateGalleryProps {
     selectedTemplateId: string;
+    onUseTemplate: (template: Template, modifiedPrompt: string) => void;
 }
 
-export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTemplateId }) => {
+export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTemplateId, onUseTemplate }) => {
     const [currentPrompt, setCurrentPrompt] = useState<string>('');
-    const [isGenerating, setIsGenerating] = useState(false);
     const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
     // Load template data when selection changes
@@ -46,12 +46,10 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
 
     const selectedTemplate = TEMPLATES.find(t => t.id === selectedTemplateId);
 
-    const handleGenerate = () => {
-        setIsGenerating(true);
-        setTimeout(() => {
-            setIsGenerating(false);
-            alert("This is a template demo. In the full version, this would generate a new image based on your modified prompt!");
-        }, 1500);
+    const handleUseTemplate = () => {
+        if (selectedTemplate) {
+            onUseTemplate(selectedTemplate, currentPrompt);
+        }
     };
 
     return (
@@ -63,8 +61,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     <p className="text-xs text-slate-500">Interactive Template Workspace</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div className="px-3 py-1.5 bg-slate-100 rounded-lg text-xs font-medium text-slate-600">
-                        Read-Only Mode (Demo)
+                    <div className="px-3 py-1.5 bg-green-50 text-green-700 rounded-lg text-xs font-medium border border-green-100">
+                        Ready to Use
                     </div>
                 </div>
             </div>
@@ -106,11 +104,11 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                                 />
                             </div>
                             <Button
-                                onClick={handleGenerate}
-                                disabled={isGenerating}
-                                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                                onClick={handleUseTemplate}
+                                className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2"
                             >
-                                {isGenerating ? 'Updating...' : 'Update Generation'}
+                                <Sparkles size={16} />
+                                Use This Template
                             </Button>
                         </div>
                     </div>

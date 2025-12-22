@@ -418,6 +418,40 @@ function App() {
     setActiveTab('render'); // Switch back to workspace to see restored state
   };
 
+  const handleUseTemplate = (template: any, modifiedPrompt: string) => {
+    // 1. Load the base image
+    // Since template.baseImage is a URL/path, we need to fetch it and convert to base64 
+    // or just use the path if our generate function supports it (it expects base64 usually)
+    // For now, let's try to fetch and convert to base64 to be safe and consistent with upload
+
+    const loadTemplateImage = async () => {
+      try {
+        const response = await fetch(template.baseImage);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setUploadedImage(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+      } catch (e) {
+        console.error("Failed to load template image", e);
+        // Fallback: just set the URL and hope the backend handles it or it displays
+        setUploadedImage(template.baseImage);
+      }
+    };
+    loadTemplateImage();
+
+    // 2. Set other state
+    setPrompt(modifiedPrompt);
+    setSelectedStyle(template.style);
+    setGeneratedImage(null); // Clear previous result
+    setSiteImage(null);
+    setReferenceImage(null);
+
+    // 3. Switch tab
+    setActiveTab('render');
+  };
+
   const handlePurchase = (amount: number) => {
     setIsGenerating(true);
     setTimeout(() => {
