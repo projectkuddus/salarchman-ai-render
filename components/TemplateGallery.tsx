@@ -44,7 +44,7 @@ export const TEMPLATES: Template[] = [
         category: 'Urban',
         baseImage: '/paper-base.jpg',
         outputImage: '/paper-output.jpg',
-        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture with slight translucency and subsurface scattering. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry. Isometric or high-angle view.',
+        prompt: 'A hyper-realistic architectural white paper model of a city/site. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.',
         style: 'Paper Model',
         instructions: 'Upload a satellite image or site plan. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations.'
     }
