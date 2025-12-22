@@ -124,26 +124,24 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                         <img
                             src={generatedImage || ''}
                             alt="Output"
-                            className={`w-full h-full object-contain bg-slate-50 transition-opacity duration-500 ${isGenerating ? 'opacity-50 blur-sm' : 'opacity-100'}`}
+                            className="w-full h-full object-contain bg-slate-50"
                         />
 
-                        {!isGenerating && (
-                            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    onClick={() => window.open(generatedImage || '', '_blank')}
-                                    className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
-                                    title="Open full size"
-                                >
-                                    <Maximize size={20} />
-                                </button>
-                                <button
-                                    className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
-                                    title="Download"
-                                >
-                                    <Download size={20} />
-                                </button>
-                            </div>
-                        )}
+                        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                                onClick={() => window.open(generatedImage || '', '_blank')}
+                                className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
+                                title="Open full size"
+                            >
+                                <Maximize size={20} />
+                            </button>
+                            <button
+                                className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
+                                title="Download"
+                            >
+                                <Download size={20} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
