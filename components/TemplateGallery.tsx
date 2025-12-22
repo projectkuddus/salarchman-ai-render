@@ -28,14 +28,14 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'sketch-1',
-        title: 'Sketch to Professional Model Photography',
-        description: 'Turn sketches or massing models into high-end architectural model photography.',
+        title: 'Image to Professional Model Photography',
+        description: 'Turn any image or massing model into high-end architectural model photography.',
         category: 'Commercial',
-        baseImage: 'https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
-        prompt: 'Transform this architectural sketch/massing into a professional, high-end photorealistic rendering. Interpret the lines and volumes as a completed building with realistic materials (glass, concrete, metal). Lighting: Natural daylight with soft shadows. Context: Urban or landscaped setting appropriate to the building. Style: Architectural photography, 8k, highly detailed, sharp focus.',
+        baseImage: '/gallery/model-photo-before.jpg',
+        outputImage: '/gallery/model-photo-after.jpg',
+        prompt: 'Transform this architectural image/massing into a professional, high-end architectural model photograph. Physical model aesthetic, clean materials, studio lighting, museum quality. Interpret the volumes as a precise physical model made of high-quality materials (wood, acrylic, metal).',
         style: 'Photorealistic',
-        instructions: 'Upload a raw sketch, line drawing, or 3D massing screenshot. This template converts it into a polished, professional architectural photograph. After selecting this template, replace the demo image with your own, then choose any Style from the library and optionally add a Reference Image.'
+        instructions: 'Upload a photo of a rough model, a massing screenshot, or a sketch. This template converts it into a polished, professional architectural model photograph.'
     },
     {
         id: 'paper-1',
