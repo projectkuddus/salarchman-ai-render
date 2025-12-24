@@ -40,8 +40,14 @@ export const MaterialSwapWorkspace: React.FC<MaterialSwapWorkspaceProps> = ({ te
         setError(null);
 
         try {
-            // Construct a specific prompt for material swapping
-            const fullPrompt = `Material Swap Task. ${prompt}. Maintain the exact geometry and lighting of the base image, but replace the specified material.`;
+            // Construct a specific prompt for material swapping with emphasis on scale
+            const fullPrompt = `Material Swap Task. ${prompt}. 
+            CRITICAL INSTRUCTION: INTELLIGENTLY SCALE THE TEXTURE. 
+            - Analyze the scale of the building/surface in the Base Image.
+            - Apply the new material with correct architectural proportions and UV mapping.
+            - Do NOT stretch the texture. Tile it seamlessly if necessary to match the real-world scale of the building elements.
+            - Ensure the grain/pattern size is realistic for the distance of the camera.
+            - Maintain the exact geometry and lighting of the base image.`;
 
             const result = await generateArchitecturalRender(
                 baseImage,
