@@ -39,30 +39,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         const ai = new GoogleGenAI({ apiKey });
 
+        const getMimeType = (dataUri: string) => {
+            const match = dataUri.match(/^data:(image\/[a-zA-Z]+);base64,/);
+            return match ? match[1] : 'image/png'; // Default to png if not found, but usually it will be there
+        };
+
         const parts: any[] = [
             { text: additionalPrompt },
             {
                 inlineData: {
                     data: base64Image.split(',')[1] || base64Image,
-                    mimeType: 'image/png',
+                    mimeType: getMimeType(base64Image),
                 },
             }
         ];
 
         if (siteBase64Image) {
-            parts.push({ inlineData: { data: siteBase64Image.split(',')[1] || siteBase64Image, mimeType: 'image/png' } });
+            parts.push({ inlineData: { data: siteBase64Image.split(',')[1] || siteBase64Image, mimeType: getMimeType(siteBase64Image) } });
         }
 
         if (referenceBase64Image) {
-            parts.push({ inlineData: { data: referenceBase64Image.split(',')[1] || referenceBase64Image, mimeType: 'image/png' } });
+            parts.push({ inlineData: { data: referenceBase64Image.split(',')[1] || referenceBase64Image, mimeType: getMimeType(referenceBase64Image) } });
         }
 
         if (req.body.material1Image) {
-            parts.push({ inlineData: { data: req.body.material1Image.split(',')[1] || req.body.material1Image, mimeType: 'image/png' } });
+            parts.push({ inlineData: { data: req.body.material1Image.split(',')[1] || req.body.material1Image, mimeType: getMimeType(req.body.material1Image) } });
         }
 
         if (req.body.material2Image) {
-            parts.push({ inlineData: { data: req.body.material2Image.split(',')[1] || req.body.material2Image, mimeType: 'image/png' } });
+            parts.push({ inlineData: { data: req.body.material2Image.split(',')[1] || req.body.material2Image, mimeType: getMimeType(req.body.material2Image) } });
         }
 
         const validAspectRatios = ['1:1', '2:3', '3:2', '3:4', '4:3', '4:5', '5:4', '9:16', '16:9', '21:9'];
