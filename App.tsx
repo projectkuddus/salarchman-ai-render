@@ -81,7 +81,8 @@ function App() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
-  const [animationPrompt, setAnimationPrompt] = useState('');
+  const [animationPrompt, setAnimationPrompt] = useState('Construction timelapse: From site preparation to final building output.');
+  const [animationResolution, setAnimationResolution] = useState<'1080p' | '4K'>('1080p');
   const [isAnimating, setIsAnimating] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
 
@@ -612,13 +613,39 @@ function App() {
 
   const handleGenerateAnimation = async () => {
     if (!uploadedImage) return;
+
+    const cost = animationResolution === '4K' ? 50 : 20;
+    if (credits.available < cost) {
+      setApiKeyError(`Insufficient credits. You need ${cost} but have ${credits.available}.`);
+      return;
+    }
+
     setIsAnimating(true);
     try {
       const videoUrl = await generateAnimation(uploadedImage, {
-        duration: 5,
+        duration: 10, // Timelapse usually longer
         motionStrength: 5,
-        prompt: animationPrompt
+        prompt: animationPrompt,
+        resolution: animationResolution
       });
+
+      // Deduct credits
+      const newAvailable = credits.available - cost;
+      const newTotalUsed = credits.totalUsed + cost;
+      const newCredits = { available: newAvailable, totalUsed: newTotalUsed };
+      setCredits(newCredits);
+
+      // Update Supabase
+      if (currentUser) {
+        supabase
+          .from('profiles')
+          .update({ credits: newAvailable })
+          .eq('id', currentUser.id)
+          .then(({ error }) => {
+            if (error) console.error('Error updating credits in Supabase:', error);
+          });
+      }
+
       setGeneratedVideo(videoUrl);
     } catch (error) {
       console.error("Animation generation failed:", error);
@@ -1384,23 +1411,31 @@ function App() {
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                 <div className="flex items-center gap-2 mb-2">
                   <Video size={14} className="text-slate-900" />
-                  <h4 className="text-sm font-bold text-slate-900">Veo3 Animation</h4>
+                  <h4 className="text-sm font-bold text-slate-900">Construction Timelapse <span className="text-[10px] font-normal text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded-full ml-1">TEST</span></h4>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Turn your still images into 4K cinematic animations.
+                  Generate a construction timelapse from site preparation to final output.
                 </p>
               </div>
 
               {/* Animation Settings */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sliders size={10} /> Prompt</label>
-                  <textarea
-                    placeholder="Describe the motion (e.g., 'Slow pan, leaves rustling in the wind')..."
-                    value={animationPrompt}
-                    onChange={(e) => setAnimationPrompt(e.target.value)}
-                    className="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
-                  />
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Monitor size={10} /> Resolution</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setAnimationResolution('1080p')}
+                      className={`py-2 px-3 rounded-lg border text-xs font-medium transition-all ${animationResolution === '1080p' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      1080p (20c)
+                    </button>
+                    <button
+                      onClick={() => setAnimationResolution('4K')}
+                      className={`py-2 px-3 rounded-lg border text-xs font-medium transition-all ${animationResolution === '4K' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    >
+                      4K (50c)
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1522,9 +1557,9 @@ function App() {
               <div className="mb-6">
                 <div className="flex items-center gap-3 mb-1">
                   <Video size={24} className="text-slate-900" />
-                  <h2 className="text-xl font-light text-slate-900">Veo3 Animation</h2>
+                  <h2 className="text-xl font-light text-slate-900">Construction Timelapse <span className="text-sm font-normal text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full ml-2 align-middle">TEST VERSION</span></h2>
                 </div>
-                <p className="text-xs text-slate-500 ml-9">Generate 4K animations from your designs.</p>
+                <p className="text-xs text-slate-500 ml-9">Visualize the construction process from site prep to final building.</p>
               </div>
 
               {/* Animation Workspace */}
@@ -1554,7 +1589,7 @@ function App() {
                 {/* Right Column (Output) */}
                 <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
                   <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                    Animation &bull; 4K
+                    Timelapse &bull; {animationResolution}
                   </div>
                   {!generatedVideo ? (
                     <div className="text-center text-slate-300">
@@ -1575,7 +1610,7 @@ function App() {
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
-                  <span className="text-sm font-medium text-slate-900">Est. Cost 20 Credits</span>
+                  <span className="text-sm font-medium text-slate-900">Est. Cost {animationResolution === '4K' ? 50 : 20} Credits</span>
                 </div>
                 <Button
                   onClick={handleGenerateAnimation}
@@ -1583,7 +1618,7 @@ function App() {
                   className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
                 >
                   {isAnimating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                  {isAnimating ? 'Animating...' : 'Generate Animation'}
+                  {isAnimating ? 'Generating Timelapse...' : 'Generate Timelapse'}
                 </Button>
               </div>
             </div>

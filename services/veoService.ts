@@ -4,6 +4,7 @@ export interface AnimationConfig {
     duration: number; // in seconds
     motionStrength: number; // 1-10
     prompt: string;
+    resolution?: '1080p' | '4K';
 }
 
 export const generateAnimation = async (
