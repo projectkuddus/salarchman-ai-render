@@ -13,6 +13,7 @@ export interface Template {
     prompt: string;
     style: string;
     instructions: string;
+    materialImage?: string;
 }
 
 export const TEMPLATES: Template[] = [
@@ -68,6 +69,7 @@ export const TEMPLATES: Template[] = [
         category: 'Interior',
         baseImage: '/gallery/material-swap-base.jpg',
         outputImage: '/gallery/material-swap-output.jpg',
+        materialImage: '/gallery/material-swap-texture.jpg',
         prompt: 'Architectural visualization, material study. Change the specific material to [TARGET_MATERIAL]. Maintain lighting and geometry.',
         style: 'Realistic',
         instructions: 'Select a surface and choose a new material to apply. (Coming Soon)'

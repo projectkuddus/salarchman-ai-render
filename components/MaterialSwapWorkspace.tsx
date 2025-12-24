@@ -11,7 +11,7 @@ interface MaterialSwapWorkspaceProps {
 
 export const MaterialSwapWorkspace: React.FC<MaterialSwapWorkspaceProps> = ({ template }) => {
     const [baseImage, setBaseImage] = useState<string | null>(template.baseImage);
-    const [materialImage, setMaterialImage] = useState<string | null>(null);
+    const [materialImage, setMaterialImage] = useState<string | null>(template.materialImage || null);
     const [prompt, setPrompt] = useState<string>('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedImage, setGeneratedImage] = useState<string | null>(null);
