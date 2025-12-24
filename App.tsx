@@ -22,6 +22,7 @@ import {
   MorningGraphic, NoonGraphic, SunsetGraphic,
   ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic
 } from './components/IdeationGraphics';
+import { generateAnimation } from './services/veoService';
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
   const [loadingAuth, setLoadingAuth] = useState(true);
 
   const [credits, setCredits] = useState<UserCredits>({ available: INITIAL_CREDITS, totalUsed: 0 });
-  const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'template' | 'profile'>('render');
+  const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'template' | 'profile' | 'animation'>('render');
   const [showHelp, setShowHelp] = useState(false);
   const [showIdeationExample, setShowIdeationExample] = useState(false);
   const [createMode, setCreateMode] = useState<CreateMode>('Exterior');
@@ -79,6 +80,10 @@ function App() {
 
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+
+  const [animationPrompt, setAnimationPrompt] = useState('');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
 
 
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
@@ -605,6 +610,24 @@ function App() {
     }
   };
 
+  const handleGenerateAnimation = async () => {
+    if (!uploadedImage) return;
+    setIsAnimating(true);
+    try {
+      const videoUrl = await generateAnimation(uploadedImage, {
+        duration: 5,
+        motionStrength: 5,
+        prompt: animationPrompt
+      });
+      setGeneratedVideo(videoUrl);
+    } catch (error) {
+      console.error("Animation generation failed:", error);
+      setApiKeyError("Animation generation failed. Please try again.");
+    } finally {
+      setIsAnimating(false);
+    }
+  };
+
   const handleDownload = () => {
     if (generatedImage) {
       const link = document.createElement('a');
@@ -817,6 +840,15 @@ function App() {
                   }`}
               >
                 Diagram
+              </button>
+              <button
+                onClick={() => setActiveTab('animation')}
+                className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'animation'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500'
+                  }`}
+              >
+                Animation
               </button>
             </div>
 
@@ -1346,6 +1378,34 @@ function App() {
             </div>
           )}
 
+          {/* ANIMATION TAB CONTROLS */}
+          {activeTab === 'animation' && (
+            <div className="space-y-6">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Video size={14} className="text-slate-900" />
+                  <h4 className="text-sm font-bold text-slate-900">Veo3 Animation</h4>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Turn your still images into 4K cinematic animations.
+                </p>
+              </div>
+
+              {/* Animation Settings */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sliders size={10} /> Prompt</label>
+                  <textarea
+                    placeholder="Describe the motion (e.g., 'Slow pan, leaves rustling in the wind')..."
+                    value={animationPrompt}
+                    onChange={(e) => setAnimationPrompt(e.target.value)}
+                    className="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 resize-none"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* TEMPLATE TAB SIDEBAR */}
           {activeTab === 'template' && (
             <div className="space-y-6">
@@ -1398,7 +1458,7 @@ function App() {
         </div>
         <div className="px-4 pb-2">
           <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
-            <p className="text-[10px] text-slate-400 font-medium text-center leading-tight">(image to video animation is coming soon)</p>
+
             <p className="text-[10px] text-slate-400 font-medium text-center leading-tight mt-1">(image to 3D model is coming soon)</p>
           </div>
         </div>
@@ -1456,6 +1516,77 @@ function App() {
                 alert(`Recovery complete. Found ${recovered.length} items.`);
               }}
             />
+          ) : activeTab === 'animation' ? (
+            <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
+              {/* Animation Header */}
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-1">
+                  <Video size={24} className="text-slate-900" />
+                  <h2 className="text-xl font-light text-slate-900">Veo3 Animation</h2>
+                </div>
+                <p className="text-xs text-slate-500 ml-9">Generate 4K animations from your designs.</p>
+              </div>
+
+              {/* Animation Workspace */}
+              <div className="flex-1 flex gap-6 min-h-0 mb-6">
+                {/* Left Column (Input) */}
+                <div className="w-1/3 flex flex-col gap-4">
+                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
+                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <Box size={12} /> Base Image
+                    </div>
+                    {!uploadedImage ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                        <Upload size={32} className="mb-3 opacity-50" />
+                        <p className="text-sm font-medium text-slate-900">Upload Image</p>
+                        <p className="text-[10px] opacity-60 mt-1">PNG, JPG (MAX 10MB)</p>
+                        <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                        <img src={uploadedImage} alt="Base" className="w-full h-full object-cover" />
+                        <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right Column (Output) */}
+                <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                    Animation &bull; 4K
+                  </div>
+                  {!generatedVideo ? (
+                    <div className="text-center text-slate-300">
+                      <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Video size={32} className="opacity-50" />
+                      </div>
+                      <p className="text-sm font-medium">Ready to Animate</p>
+                    </div>
+                  ) : (
+                    <div className="relative w-full h-full group">
+                      <video src={generatedVideo} controls className="w-full h-full object-contain bg-slate-50" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom Bar */}
+              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                  <span className="text-sm font-medium text-slate-900">Est. Cost 20 Credits</span>
+                </div>
+                <Button
+                  onClick={handleGenerateAnimation}
+                  disabled={!uploadedImage || isAnimating}
+                  className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
+                >
+                  {isAnimating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                  {isAnimating ? 'Animating...' : 'Generate Animation'}
+                </Button>
+              </div>
+            </div>
           ) : activeTab === 'diagram' ? (
             <div className="w-full max-w-6xl h-full flex flex-col relative z-10">
               {/* Diagram Header */}
