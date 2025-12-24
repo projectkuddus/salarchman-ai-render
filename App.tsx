@@ -597,10 +597,10 @@ function App() {
       console.error("Generation Error:", error);
       let errorMessage = String(error).toLowerCase();
       if (errorMessage.includes("403") || errorMessage.includes("permission")) {
-        setApiKeyError("Authorization failed. Please check server configuration.");
       } else {
         setApiKeyError(`Generation failed: ${error.message || "Unknown error"}`);
       }
+    } finally {
       setIsGenerating(false);
     }
   };
