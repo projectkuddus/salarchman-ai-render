@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Home, Building2, Trees, Sofa, ArrowRight, Star, Copy, Box, Sparkles, Download, RefreshCw, Maximize, X, Upload, ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
+import { MaterialSwapWorkspace } from './MaterialSwapWorkspace';
 
 export interface Template {
     id: string;
@@ -171,78 +172,84 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
 
             {/* Content Area */}
             <div className="flex-1 p-6 flex gap-6 overflow-y-auto bg-slate-50/50">
-                {/* Left Column of Workspace: Inputs */}
-                <div className="w-1/3 flex flex-col gap-4">
-                    {/* Base Geometry Card */}
-                    <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px] flex flex-col overflow-hidden">
-                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-900 bg-white/90 px-2 py-1 rounded shadow-sm uppercase tracking-wider">
-                            <Box size={12} /> Base Geometry
-                        </div>
-                        <div className="flex-1 relative">
-                            <img
-                                src={selectedTemplate?.baseImage}
-                                alt="Base"
-                                className="w-full h-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-black/0 hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 hover:opacity-100 cursor-not-allowed">
-                                <span className="bg-black/70 text-white text-xs px-3 py-1 rounded-full">Preset (Locked)</span>
+                {selectedTemplateId === 'material-swap' ? (
+                    <MaterialSwapWorkspace template={selectedTemplate} />
+                ) : (
+                    <>
+                        {/* Left Column of Workspace: Inputs */}
+                        <div className="w-1/3 flex flex-col gap-4">
+                            {/* Base Geometry Card */}
+                            <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px] flex flex-col overflow-hidden">
+                                <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-900 bg-white/90 px-2 py-1 rounded shadow-sm uppercase tracking-wider">
+                                    <Box size={12} /> Base Geometry
+                                </div>
+                                <div className="flex-1 relative">
+                                    <img
+                                        src={selectedTemplate?.baseImage}
+                                        alt="Base"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 hover:opacity-100 cursor-not-allowed">
+                                        <span className="bg-black/70 text-white text-xs px-3 py-1 rounded-full">Preset (Locked)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Controls Card */}
+                            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">
+                                    <RefreshCw size={12} /> Instructions
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                                        <p className="text-sm text-slate-600 leading-relaxed">
+                                            {selectedTemplate?.instructions}
+                                        </p>
+                                    </div>
+                                    <Button
+                                        onClick={handleUseTemplate}
+                                        className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2"
+                                    >
+                                        <Sparkles size={16} />
+                                        Use This Template
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Controls Card */}
-                    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">
-                            <RefreshCw size={12} /> Instructions
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                                <p className="text-sm text-slate-600 leading-relaxed">
-                                    {selectedTemplate?.instructions}
-                                </p>
+                        {/* Right Column of Workspace: Output */}
+                        <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
+                            <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                                Final Output
                             </div>
-                            <Button
-                                onClick={handleUseTemplate}
-                                className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2"
-                            >
-                                <Sparkles size={16} />
-                                Use This Template
-                            </Button>
+
+                            <div className="relative w-full h-full group">
+                                <img
+                                    src={generatedImage || ''}
+                                    alt="Output"
+                                    className="w-full h-full object-contain bg-slate-50"
+                                />
+
+                                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        onClick={() => window.open(generatedImage || '', '_blank')}
+                                        className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
+                                        title="Open full size"
+                                    >
+                                        <Maximize size={20} />
+                                    </button>
+                                    <button
+                                        className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
+                                        title="Download"
+                                    >
+                                        <Download size={20} />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                {/* Right Column of Workspace: Output */}
-                <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
-                    <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                        Final Output
-                    </div>
-
-                    <div className="relative w-full h-full group">
-                        <img
-                            src={generatedImage || ''}
-                            alt="Output"
-                            className="w-full h-full object-contain bg-slate-50"
-                        />
-
-                        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button
-                                onClick={() => window.open(generatedImage || '', '_blank')}
-                                className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
-                                title="Open full size"
-                            >
-                                <Maximize size={20} />
-                            </button>
-                            <button
-                                className="p-2 bg-white/90 backdrop-blur rounded-lg hover:bg-white text-slate-700 shadow-sm"
-                                title="Download"
-                            >
-                                <Download size={20} />
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    </>
+                )}
             </div>
         </div>
     );
