@@ -66,8 +66,8 @@ export const TEMPLATES: Template[] = [
         title: 'Material Swap',
         description: 'Instantly swap materials on existing surfaces.',
         category: 'Interior',
-        baseImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=800&auto=format&fit=crop',
+        baseImage: '/gallery/material-swap-base.jpg',
+        outputImage: '/gallery/material-swap-output.jpg',
         prompt: 'Architectural visualization, material study. Change the specific material to [TARGET_MATERIAL]. Maintain lighting and geometry.',
         style: 'Realistic',
         instructions: 'Select a surface and choose a new material to apply. (Coming Soon)'
