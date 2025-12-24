@@ -49,6 +49,35 @@ export const MaterialSwapWorkspace: React.FC<MaterialSwapWorkspaceProps> = ({ te
             - Ensure the grain/pattern size is realistic for the distance of the camera.
             - Maintain the exact geometry and lighting of the base image.`;
 
+            // Calculate aspect ratio
+            let selectedAspectRatio: any = '1:1';
+            if (baseImage) {
+                const img = new Image();
+                img.src = baseImage;
+                await new Promise((resolve) => { img.onload = resolve; });
+                const ratio = img.width / img.height;
+
+                // Snap to closest supported ratio
+                const ratios = [
+                    { id: '1:1', value: 1 },
+                    { id: '16:9', value: 16 / 9 },
+                    { id: '9:16', value: 9 / 16 },
+                    { id: '4:3', value: 4 / 3 },
+                    { id: '3:4', value: 3 / 4 },
+                    { id: '3:2', value: 3 / 2 },
+                    { id: '2:3', value: 2 / 3 },
+                    { id: '5:4', value: 5 / 4 },
+                    { id: '4:5', value: 4 / 5 },
+                    { id: '21:9', value: 21 / 9 },
+                ];
+
+                const closest = ratios.reduce((prev, curr) => {
+                    return (Math.abs(curr.value - ratio) < Math.abs(prev.value - ratio) ? curr : prev);
+                });
+                selectedAspectRatio = closest.id;
+                console.log(`Calculated aspect ratio: ${ratio}, snapped to: ${selectedAspectRatio}`);
+            }
+
             const result = await generateArchitecturalRender(
                 baseImage,
                 'Realistic', // Style
@@ -57,7 +86,7 @@ export const MaterialSwapWorkspace: React.FC<MaterialSwapWorkspaceProps> = ({ te
                 fullPrompt, // Additional Prompt
                 null, // Site
                 null, // Reference (could use material image here if we wanted, but passing it as material1Image is better)
-                'Similar to Input', // Aspect Ratio
+                selectedAspectRatio, // Aspect Ratio
                 '1K', // Image Size
                 [], // Verbs
                 undefined, // Ideation Config
