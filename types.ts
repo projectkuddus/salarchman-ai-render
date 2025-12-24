@@ -65,6 +65,7 @@ export enum InteriorStyle {
   DOODLE_ART = 'Doodle Art',
   SCANDINAVIAN = 'Scandinavian',
   INDUSTRIAL = 'Industrial',
+  AMBER_TEXTURED = 'Amber Textured',
   PAPER_MODEL = 'Paper Model',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
