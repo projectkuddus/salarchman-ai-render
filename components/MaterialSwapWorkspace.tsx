@@ -14,7 +14,7 @@ export const MaterialSwapWorkspace: React.FC<MaterialSwapWorkspaceProps> = ({ te
     const [materialImage, setMaterialImage] = useState<string | null>(template.materialImage || null);
     const [prompt, setPrompt] = useState<string>('');
     const [isGenerating, setIsGenerating] = useState(false);
-    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+    const [generatedImage, setGeneratedImage] = useState<string | null>(template.outputImage || null);
     const [error, setError] = useState<string | null>(null);
 
     const baseInputRef = useRef<HTMLInputElement>(null);
