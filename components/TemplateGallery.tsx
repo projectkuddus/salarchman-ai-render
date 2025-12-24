@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Home, Building2, Trees, Sofa, ArrowRight, Star, Copy, Box, Sparkles, Download, RefreshCw, Maximize, X, Upload, ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
 import { MaterialSwapWorkspace } from './MaterialSwapWorkspace';
+import { SiteAnalysisWorkspace } from './SiteAnalysisWorkspace';
 
 export interface Template {
     id: string;
@@ -79,11 +80,11 @@ export const TEMPLATES: Template[] = [
         title: 'Site Analysis Diagram',
         description: 'Generate site analysis diagrams from satellite or plan views.',
         category: 'Urban',
-        baseImage: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop',
+        baseImage: '/gallery/site-analysis-base.png',
+        outputImage: '/gallery/site-analysis-output.png',
         prompt: 'Architectural site analysis diagram, vector style, colorful arrows indicating sun path, wind direction, and traffic flow. Minimalist, clean graphics.',
         style: 'Diagram',
-        instructions: 'Upload a site plan or satellite image to generate a comprehensive analysis diagram. (Coming Soon)'
+        instructions: 'Upload a site plan or satellite image to generate a comprehensive analysis diagram. Add details about your site to customize the analysis.'
     },
     {
         id: 'design-insertion',
@@ -176,6 +177,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
             <div className="flex-1 p-6 flex gap-6 overflow-y-auto bg-slate-50/50">
                 {selectedTemplateId === 'material-swap' ? (
                     <MaterialSwapWorkspace template={selectedTemplate} />
+                ) : selectedTemplateId === 'site-analysis' ? (
+                    <SiteAnalysisWorkspace template={selectedTemplate} />
                 ) : (
                     <>
                         {/* Left Column of Workspace: Inputs */}
