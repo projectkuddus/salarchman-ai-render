@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, User as UserIcon, CreditCard, Shield, Save, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Search, User as UserIcon, CreditCard, Shield, Save, X, CheckCircle, AlertCircle, Loader2, Users, TrendingUp, Crown, Edit2, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../services/supabaseClient';
 import { UserTier } from '../types';
 
@@ -22,90 +22,89 @@ interface UserData {
 const ADMIN_EMAILS = [
     'renderman.arch@gmail.com',
     'salarchman@gmail.com',
-    'projectkuddus@gmail.com' // Adding likely dev emails, can be edited
+    'projectkuddus@gmail.com'
 ];
 
 export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashboardProps) {
-    const [searchTerm, setSearchTerm] = useState('');
+    // View State
+    const [view, setView] = useState<'list' | 'edit'>('list');
     const [loading, setLoading] = useState(false);
-    const [searching, setSearching] = useState(false);
-    const [foundUser, setFoundUser] = useState<UserData | null>(null);
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const [users, setUsers] = useState<UserData[]>([]);
+    const [stats, setStats] = useState({ total: 0, pro: 0, studio: 0, credits: 0 });
 
-    // Edit states
+    // Search & Filter
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterTier, setFilterTier] = useState<string>('all');
+
+    // Edit State
+    const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
     const [editTier, setEditTier] = useState<UserTier | ''>('');
     const [creditAdjustment, setCreditAdjustment] = useState<string>('');
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
     // Verify admin access
     if (!isOpen) return null;
-    if (!ADMIN_EMAILS.includes(currentUserEmail)) {
-        return (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-                <div className="bg-white p-8 rounded-2xl max-w-md text-center">
-                    <Shield className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                    <h2 className="text-xl font-bold text-black mb-2">Access Denied</h2>
-                    <p className="text-slate-600 mb-6">You do not have permission to view this area.</p>
-                    <button onClick={onClose} className="px-6 py-2 bg-black text-white rounded-lg">Close</button>
-                </div>
-            </div>
-        );
-    }
+    if (!ADMIN_EMAILS.includes(currentUserEmail)) return null;
 
-    const handleSearch = async (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-        if (!searchTerm.trim()) return;
+    // Fetch Users on Mount
+    useEffect(() => {
+        fetchUsers();
+    }, []);
 
-        setSearching(true);
-        setMessage(null);
-        setFoundUser(null);
-
+    const fetchUsers = async () => {
+        setLoading(true);
         try {
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
-                .ilike('email', searchTerm)
-                .single();
+                .order('created_at', { ascending: false })
+                .limit(100); // Fetch last 100 users for now
 
-            if (error) {
-                if (error.code === 'PGRST116') {
-                    setMessage({ type: 'error', text: 'User not found.' });
-                } else {
-                    setMessage({ type: 'error', text: 'Error searching user.' });
-                    console.error(error);
-                }
-            } else {
-                setFoundUser(data as UserData);
-                setEditTier(data.tier as UserTier);
-                setCreditAdjustment('');
-            }
+            if (error) throw error;
+
+            const userList = data as UserData[];
+            setUsers(userList);
+
+            // Calculate Stats
+            const newStats = {
+                total: userList.length,
+                pro: userList.filter(u => u.tier === UserTier.PRO).length,
+                studio: userList.filter(u => u.tier === UserTier.STUDIO).length,
+                credits: userList.reduce((acc, curr) => acc + (curr.credits || 0), 0)
+            };
+            setStats(newStats);
+
         } catch (err) {
-            console.error(err);
-            setMessage({ type: 'error', text: 'An unexpected error occurred.' });
+            console.error('Error fetching users:', err);
         } finally {
-            setSearching(false);
+            setLoading(false);
         }
     };
 
+    const handleEditUser = (user: UserData) => {
+        setSelectedUser(user);
+        setEditTier(user.tier);
+        setCreditAdjustment('');
+        setMessage(null);
+        setView('edit');
+    };
+
     const handleUpdate = async () => {
-        if (!foundUser) return;
+        if (!selectedUser) return;
         setLoading(true);
         setMessage(null);
 
         try {
             const updates: any = {};
-            let creditChange = 0;
 
-            // Update Tier if changed
-            if (editTier && editTier !== foundUser.tier) {
+            if (editTier && editTier !== selectedUser.tier) {
                 updates.tier = editTier;
             }
 
-            // Update Credits if entered
             if (creditAdjustment) {
                 const amount = parseInt(creditAdjustment);
                 if (!isNaN(amount)) {
-                    creditChange = amount;
-                    updates.credits = foundUser.credits + amount;
+                    updates.credits = (selectedUser.credits || 0) + amount;
                 }
             }
 
@@ -118,31 +117,27 @@ export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashb
             const { error: profileError } = await supabase
                 .from('profiles')
                 .update(updates)
-                .eq('id', foundUser.id);
+                .eq('id', selectedUser.id);
 
             if (profileError) throw profileError;
 
-            // 2. Update User Credits Table (sync)
+            // 2. Sync User Credits
             if (updates.credits !== undefined) {
-                const { error: creditsError } = await supabase
-                    .from('user_credits')
-                    .upsert({
-                        user_id: foundUser.id,
-                        credits_available: updates.credits,
-                        credits_used: 0 // We don't track used here strictly, just available
-                    });
-
-                if (creditsError) console.error('Error syncing user_credits:', creditsError);
+                await supabase.from('user_credits').upsert({
+                    user_id: selectedUser.id,
+                    credits_available: updates.credits,
+                    credits_used: 0
+                });
             }
 
-            // 3. Log Admin Action (Optional but good practice)
-            // We could insert into 'transactions' or a new 'admin_logs' table
-            // For now, we'll just log to console
-
-            // Refresh local state
-            setFoundUser(prev => prev ? { ...prev, ...updates } : null);
-            setCreditAdjustment('');
+            // Update Local State
+            const updatedUser = { ...selectedUser, ...updates };
+            setUsers(users.map(u => u.id === selectedUser.id ? updatedUser : u));
+            setSelectedUser(updatedUser);
             setMessage({ type: 'success', text: 'User updated successfully!' });
+
+            // Refresh stats
+            fetchUsers();
 
         } catch (err: any) {
             console.error(err);
@@ -152,149 +147,235 @@ export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashb
         }
     };
 
+    // Filtered Users
+    const filteredUsers = users.filter(user => {
+        const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (user.full_name && user.full_name.toLowerCase().includes(searchTerm.toLowerCase()));
+        const matchesFilter = filterTier === 'all' || user.tier === filterTier;
+        return matchesSearch && matchesFilter;
+    });
+
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-            <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl my-8 border border-slate-200 flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md overflow-hidden">
+            <div className="relative w-full max-w-6xl h-[90vh] bg-slate-50 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
 
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-black text-white rounded-lg">
+                <div className="flex items-center justify-between p-6 bg-white border-b border-slate-200">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-slate-900 text-white rounded-xl shadow-lg shadow-slate-900/20">
                             <Shield className="w-6 h-6" />
                         </div>
                         <div>
-                            <h2 className="text-xl font-bold text-black">Admin Dashboard</h2>
-                            <p className="text-slate-500 text-sm">Manage Users & Credits</p>
+                            <h2 className="text-2xl font-bold text-slate-900">Admin Command Center</h2>
+                            <p className="text-slate-500 text-sm font-medium">Platform Management System</p>
                         </div>
                     </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 text-slate-400 hover:text-black hover:bg-slate-200 rounded-full transition-colors"
-                    >
-                        <X className="w-5 h-5" />
+                    <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                        <X className="w-6 h-6 text-slate-400 hover:text-slate-900" />
                     </button>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 overflow-y-auto flex-1">
+                {/* Main Content */}
+                <div className="flex-1 overflow-hidden flex">
 
-                    {/* Search */}
-                    <form onSubmit={handleSearch} className="flex gap-2 mb-8">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                            <input
-                                type="email"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Search user by email..."
-                                className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black"
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            disabled={searching || !searchTerm}
-                            className="px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-slate-800 transition-colors disabled:opacity-50"
-                        >
-                            {searching ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Search'}
-                        </button>
-                    </form>
+                    {/* Sidebar / Stats (Desktop) */}
+                    <div className="w-64 bg-white border-r border-slate-200 p-6 hidden md:flex flex-col gap-6">
+                        <div className="space-y-4">
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Overview</h3>
 
-                    {/* Messages */}
-                    {message && (
-                        <div className={`p-4 rounded-xl mb-6 flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'
-                            }`}>
-                            {message.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
-                            {message.text}
-                        </div>
-                    )}
-
-                    {/* User Details & Edit */}
-                    {foundUser && (
-                        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
-
-                            {/* User Info Card */}
-                            <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <UserIcon className="w-6 h-6" />
+                            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <div className="flex items-center gap-3 mb-2 text-slate-500">
+                                    <Users size={16} /> <span className="text-xs font-medium">Total Users</span>
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-lg text-black">{foundUser.full_name || 'No Name'}</h3>
-                                    <p className="text-slate-500">{foundUser.email}</p>
-                                    <div className="flex gap-2 mt-2">
-                                        <span className="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs font-medium text-slate-600">
-                                            ID: {foundUser.id.slice(0, 8)}...
-                                        </span>
-                                        <span className="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs font-medium text-slate-600">
-                                            Joined: {new Date(foundUser.created_at).toLocaleDateString()}
-                                        </span>
-                                    </div>
-                                </div>
+                                <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <div className="flex items-center gap-3 mb-2 text-blue-600">
+                                    <Crown size={16} /> <span className="text-xs font-medium">Pro / Studio</span>
+                                </div>
+                                <p className="text-2xl font-bold text-blue-900">{stats.pro + stats.studio}</p>
+                            </div>
 
-                                {/* Tier Management */}
-                                <div className="p-5 border border-slate-200 rounded-xl">
-                                    <label className="block text-sm font-medium text-slate-700 mb-3">Account Tier</label>
-                                    <div className="space-y-3">
+                            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                                <div className="flex items-center gap-3 mb-2 text-amber-600">
+                                    <CreditCard size={16} /> <span className="text-xs font-medium">Total Credits</span>
+                                </div>
+                                <p className="text-2xl font-bold text-amber-900">{stats.credits.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="flex-1 flex flex-col overflow-hidden bg-slate-50/50">
+
+                        {view === 'list' ? (
+                            <>
+                                {/* Toolbar */}
+                                <div className="p-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                                    <div className="relative w-full md:w-96">
+                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                        <input
+                                            type="text"
+                                            placeholder="Search users..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                                        />
+                                    </div>
+                                    <div className="flex items-center gap-2 w-full md:w-auto">
+                                        <Filter size={16} className="text-slate-400" />
                                         <select
-                                            value={editTier}
-                                            onChange={(e) => setEditTier(e.target.value as UserTier)}
-                                            className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                            value={filterTier}
+                                            onChange={(e) => setFilterTier(e.target.value)}
+                                            className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
                                         >
-                                            {Object.values(UserTier).map((tier) => (
-                                                <option key={tier} value={tier}>{tier}</option>
-                                            ))}
+                                            <option value="all">All Tiers</option>
+                                            <option value="Free">Free</option>
+                                            <option value="Pro">Pro</option>
+                                            <option value="Studio">Studio</option>
                                         </select>
-                                        <p className="text-xs text-slate-500">
-                                            Current: <span className="font-semibold text-black">{foundUser.tier}</span>
-                                        </p>
+                                        <button onClick={fetchUsers} className="p-2.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50">
+                                            <Loader2 size={16} className={`text-slate-600 ${loading ? 'animate-spin' : ''}`} />
+                                        </button>
                                     </div>
                                 </div>
 
-                                {/* Credit Management */}
-                                <div className="p-5 border border-slate-200 rounded-xl">
-                                    <label className="block text-sm font-medium text-slate-700 mb-3">Add/Remove Credits</label>
-                                    <div className="space-y-3">
-                                        <div className="flex gap-2">
-                                            <input
-                                                type="number"
-                                                value={creditAdjustment}
-                                                onChange={(e) => setCreditAdjustment(e.target.value)}
-                                                placeholder="+/- Amount"
-                                                className="flex-1 p-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                                            />
+                                {/* Table */}
+                                <div className="flex-1 overflow-y-auto px-6 pb-6">
+                                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                                        <table className="w-full text-left border-collapse">
+                                            <thead>
+                                                <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                    <th className="p-4">User</th>
+                                                    <th className="p-4">Tier</th>
+                                                    <th className="p-4">Credits</th>
+                                                    <th className="p-4">Joined</th>
+                                                    <th className="p-4 text-right">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-slate-100">
+                                                {filteredUsers.map(user => (
+                                                    <tr key={user.id} className="hover:bg-slate-50/80 transition-colors group">
+                                                        <td className="p-4">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                                                                    {user.full_name?.[0] || user.email[0].toUpperCase()}
+                                                                </div>
+                                                                <div>
+                                                                    <p className="font-medium text-slate-900 text-sm">{user.full_name || 'No Name'}</p>
+                                                                    <p className="text-xs text-slate-500">{user.email}</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td className="p-4">
+                                                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${user.tier === 'Studio' ? 'bg-purple-100 text-purple-700' :
+                                                                    user.tier === 'Pro' ? 'bg-blue-100 text-blue-700' :
+                                                                        'bg-slate-100 text-slate-600'
+                                                                }`}>
+                                                                {user.tier}
+                                                            </span>
+                                                        </td>
+                                                        <td className="p-4">
+                                                            <span className="font-mono text-sm font-medium text-slate-700">{user.credits}</span>
+                                                        </td>
+                                                        <td className="p-4">
+                                                            <span className="text-xs text-slate-500">{new Date(user.created_at).toLocaleDateString()}</span>
+                                                        </td>
+                                                        <td className="p-4 text-right">
+                                                            <button
+                                                                onClick={() => handleEditUser(user)}
+                                                                className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                            >
+                                                                <Edit2 size={16} />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                        {filteredUsers.length === 0 && (
+                                            <div className="p-12 text-center text-slate-400">
+                                                <p>No users found matching your criteria.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            /* Edit View */
+                            <div className="flex-1 p-8 flex flex-col items-center justify-center bg-slate-50">
+                                <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+                                    <button
+                                        onClick={() => setView('list')}
+                                        className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
+                                    >
+                                        <ChevronLeft size={16} /> Back to List
+                                    </button>
+
+                                    <div className="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
+                                        <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 text-xl font-bold">
+                                            {selectedUser?.full_name?.[0] || selectedUser?.email[0].toUpperCase()}
                                         </div>
-                                        <p className="text-xs text-slate-500">
-                                            Current Balance: <span className="font-semibold text-black">{foundUser.credits}</span>
-                                        </p>
+                                        <div>
+                                            <h2 className="text-xl font-bold text-slate-900">{selectedUser?.full_name || 'No Name'}</h2>
+                                            <p className="text-slate-500">{selectedUser?.email}</p>
+                                            <p className="text-xs text-slate-400 mt-1">ID: {selectedUser?.id}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Account Tier</label>
+                                            <select
+                                                value={editTier}
+                                                onChange={(e) => setEditTier(e.target.value as UserTier)}
+                                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                                            >
+                                                {Object.values(UserTier).map((tier) => (
+                                                    <option key={tier} value={tier}>{tier}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Adjust Credits</label>
+                                            <div className="flex gap-4">
+                                                <div className="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                                                    <span className="text-sm text-slate-500">Current Balance</span>
+                                                    <span className="font-bold text-slate-900">{selectedUser?.credits}</span>
+                                                </div>
+                                                <input
+                                                    type="number"
+                                                    value={creditAdjustment}
+                                                    onChange={(e) => setCreditAdjustment(e.target.value)}
+                                                    placeholder="+/-"
+                                                    className="w-32 p-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {message && (
+                                            <div className={`p-4 rounded-xl flex items-center gap-3 text-sm font-medium ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                                                }`}>
+                                                {message.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                                                {message.text}
+                                            </div>
+                                        )}
+
+                                        <button
+                                            onClick={handleUpdate}
+                                            disabled={loading}
+                                            className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                        >
+                                            {loading ? <Loader2 className="animate-spin" /> : <Save size={18} />}
+                                            Save Changes
+                                        </button>
                                     </div>
                                 </div>
-
                             </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex justify-end pt-4 border-t border-slate-100">
-                                <button
-                                    onClick={handleUpdate}
-                                    disabled={loading}
-                                    className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-xl font-bold hover:bg-slate-800 transition-colors disabled:opacity-50"
-                                >
-                                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                                    Save Changes
-                                </button>
-                            </div>
-
-                        </div>
-                    )}
-
-                    {!foundUser && !searching && !message && (
-                        <div className="text-center py-12 text-slate-400">
-                            <Search className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                            <p>Search for a user to manage their account</p>
-                        </div>
-                    )}
-
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
