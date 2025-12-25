@@ -1851,100 +1851,6 @@ function App() {
                     )}
                   </div>
 
-                  {/* Secondary Inputs Grid (Only for Render Tab) */}
-                  {activeTab === 'render' && (
-                    <div className="grid grid-cols-2 gap-4">
-                      {/* Box 1: Context / Satellite */}
-                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
-                        {!siteImage ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
-                            <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload site image or satellite screenshot (e.g. Google Maps)</p>
-                            <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                          </div>
-                        ) : (
-                          <div className="relative w-full h-full">
-                            <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
-                            <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Box 2: Style Reference */}
-                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
-                        {!referenceImage ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
-                            <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload reference image for materials, lighting, and mood</p>
-                            <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                          </div>
-                        ) : (
-                          <div className="relative w-full h-full">
-                            <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
-                            <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Box 3: Material 1 */}
-                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 1</div>
-                        {!material1Image ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
-                            <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload primary material texture (e.g. brick, wood)</p>
-                            <input type="file" ref={material1InputRef} onChange={handleMaterial1Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                          </div>
-                        ) : (
-                          <div className="relative w-full h-full">
-                            <img src={material1Image} alt="Material 1" className="w-full h-full object-cover" />
-                            <button onClick={() => setMaterial1Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Box 4: Material 2 */}
-                      <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
-                        <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 2</div>
-                        {!material2Image ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
-                            <Plus size={24} className="mb-2 opacity-50" />
-                            <p className="text-xs font-medium">Upload secondary material texture</p>
-                            <input type="file" ref={material2InputRef} onChange={handleMaterial2Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                          </div>
-                        ) : (
-                          <div className="relative w-full h-full">
-                            <img src={material2Image} alt="Material 2" className="w-full h-full object-cover" />
-                            <button onClick={() => setMaterial2Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Generate Button Area (Simplified as controls are in sidebar) */}
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
-                      <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
-                    </div>
-                    <Button
-                      onClick={handleGenerate}
-                      disabled={!uploadedImage || isGenerating}
-                      className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
-                    >
-                      {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                      {isGenerating ? 'Rendering...' : 'Generate'}
-                    </Button>
-                  </div>
-
-                  {apiKeyError && (
-                    <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
-                      <AlertCircle size={14} /> {apiKeyError}
-                    </div>
-                  )}
                 </div>
 
                 {/* Output Card */}
@@ -2008,6 +1914,104 @@ function App() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Secondary Inputs & Controls (Moved Below) */}
+              <div className="w-full max-w-6xl mx-auto mb-12 space-y-6">
+                {/* Secondary Inputs Grid (Only for Render Tab) */}
+                {activeTab === 'render' && (
+                  <div className="grid grid-cols-4 gap-4">
+                    {/* Box 1: Context / Satellite */}
+                    <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><MapPin size={10} /> Context / Satellite</div>
+                      {!siteImage ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Upload site image or satellite screenshot (e.g. Google Maps)</p>
+                          <input type="file" ref={siteInputRef} onChange={handleSiteUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={siteImage} alt="Site" className="w-full h-full object-cover" />
+                          <button onClick={() => setSiteImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Box 2: Style Reference */}
+                    <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Sparkles size={10} /> Style Reference</div>
+                      {!referenceImage ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Upload reference image for materials, lighting, and mood</p>
+                          <input type="file" ref={referenceInputRef} onChange={handleReferenceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
+                          <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Box 3: Material 1 */}
+                    <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 1</div>
+                      {!material1Image ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Upload primary material texture (e.g. brick, wood)</p>
+                          <input type="file" ref={material1InputRef} onChange={handleMaterial1Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={material1Image} alt="Material 1" className="w-full h-full object-cover" />
+                          <button onClick={() => setMaterial1Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Box 4: Material 2 */}
+                    <div className="h-48 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative group border-dashed">
+                      <div className="absolute top-3 left-3 z-10 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1"><Layers size={10} /> Material 2</div>
+                      {!material2Image ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 hover:text-slate-400 transition-colors p-4 text-center">
+                          <Plus size={24} className="mb-2 opacity-50" />
+                          <p className="text-xs font-medium">Upload secondary material texture</p>
+                          <input type="file" ref={material2InputRef} onChange={handleMaterial2Upload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <img src={material2Image} alt="Material 2" className="w-full h-full object-cover" />
+                          <button onClick={() => setMaterial2Image(null)} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full"><X size={12} /></button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Generate Button Area */}
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
+                    <span className="text-sm font-medium text-slate-900">Est. Cost {currentCost} Credits</span>
+                  </div>
+                  <Button
+                    onClick={handleGenerate}
+                    disabled={!uploadedImage || isGenerating}
+                    className="px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-slate-900/20"
+                  >
+                    {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                    {isGenerating ? 'Rendering...' : 'Generate'}
+                  </Button>
+                </div>
+
+                {apiKeyError && (
+                  <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg flex items-center gap-2">
+                    <AlertCircle size={14} /> {apiKeyError}
+                  </div>
+                )}
               </div>
             </div>
           )}
