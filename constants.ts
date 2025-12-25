@@ -72,7 +72,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.CONCRETE_PLANS_MODEL,
       RenderStyle.WOOD_VEGETATION_MODEL,
       RenderStyle.WOOD_WHITE_MODEL,
-      RenderStyle.DARK_BRUTALIST_MODEL
+      RenderStyle.DARK_BRUTALIST_MODEL,
+      RenderStyle.GREY_CARDBOARD_MODEL
     ]
   }
 ];
@@ -144,6 +145,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WOOD_VEGETATION_MODEL]: '/gallery/wood-vegetation-model-thumb.jpg',
   [RenderStyle.WOOD_WHITE_MODEL]: '/gallery/wood-white-model-thumb.jpg',
   [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb.jpg',
+  [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -197,6 +199,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.WOOD_VEGETATION_MODEL]: "Physical architectural model made of light balsa wood and basswood. Clean, precise laser-cut details. Vegetation represented by dried moss or small model plants on balconies and rooftops. Studio lighting with a neutral grey background. High-end craftsmanship, museum quality model photography. Minimalist and elegant.",
   [RenderStyle.WOOD_WHITE_MODEL]: "Physical architectural model made of light wood (facade screens, details) and smooth white matte material (structure, context). High contrast studio lighting, dark or neutral background. Stylized white trees and simple white cars in the surroundings. Warm interior lighting glowing from within the model. Clean, modern, museum quality architectural photography.",
   [RenderStyle.DARK_BRUTALIST_MODEL]: "Physical architectural model made of rough, dark grey concrete. Brutalist aesthetic with heavy textures and visible aggregate. Dramatic chiaroscuro lighting with a pitch-black background. Strong shadows, moody atmosphere, and a focus on the raw materiality of the concrete. High-end architectural model photography.",
+  [RenderStyle.GREY_CARDBOARD_MODEL]: "Physical architectural model made of grey cardboard or chipboard. Monochromatic matte grey texture with visible paper grain. Includes small scale figures for context. Soft, diffuse studio lighting. Clean, minimalist, and professional architectural study model aesthetic.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",
