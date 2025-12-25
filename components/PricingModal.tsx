@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Zap, Building2, Crown, Package, Rocket, Code2 } from 'lucide-react';
-import { Button } from './Button';
+import { X, Check, Zap, Building2, Crown, Package, Rocket, Code2, Copy, Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 import { UserTier } from '../types';
 
 interface CreditBundle {
@@ -77,18 +76,138 @@ interface PricingModalProps {
     onClose: () => void;
     currentTier: UserTier;
     onUpgrade: (tier: UserTier, credits?: number) => void;
+    userEmail?: string;
 }
 
-export function PricingModal({ isOpen, onClose, currentTier, onUpgrade }: PricingModalProps) {
-    const [selectedBundle, setSelectedBundle] = useState<string | null>(null);
+export function PricingModal({ isOpen, onClose, currentTier, onUpgrade, userEmail }: PricingModalProps) {
+    const [selectedBundle, setSelectedBundle] = useState<CreditBundle | null>(null);
+    const [copied, setCopied] = useState(false);
 
     if (!isOpen) return null;
 
-    const handlePurchase = (bundle: CreditBundle) => {
-        setSelectedBundle(bundle.id);
-        onUpgrade(UserTier.PRO, bundle.credits);
+    const BKASH_NUMBER = '01409989900';
+    const SUPPORT_EMAIL = 'renderman.arch@gmail.com';
+
+    const handleSelectBundle = (bundle: CreditBundle) => {
+        setSelectedBundle(bundle);
     };
 
+    const handleCopyNumber = () => {
+        navigator.clipboard.writeText(BKASH_NUMBER);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    const handleBack = () => {
+        setSelectedBundle(null);
+    };
+
+    const generateEmailBody = () => {
+        if (!selectedBundle) return '';
+        return encodeURIComponent(
+            `Hi Renderman Team,\n\nI have purchased the ${selectedBundle.name} bundle (${selectedBundle.credits} credits) for ৳${selectedBundle.price}.\n\nTransaction Details:\n- bKash Transaction ID: [PASTE YOUR TRANSACTION ID HERE]\n- My Account Email: ${userEmail || '[YOUR EMAIL]'}\n- Bundle: ${selectedBundle.name} (${selectedBundle.credits} credits)\n- Amount Paid: ৳${selectedBundle.price}\n\nPlease add the credits to my account.\n\nThank you!`
+        );
+    };
+
+    // Payment Instructions View
+    if (selectedBundle) {
+        return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
+                <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl my-8 border border-slate-200">
+                    {/* Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={handleBack}
+                                className="p-2 text-slate-400 hover:text-black hover:bg-slate-100 rounded-full transition-colors"
+                            >
+                                <ArrowLeft className="w-5 h-5" />
+                            </button>
+                            <div>
+                                <h2 className="text-xl font-bold text-black">Complete Payment</h2>
+                                <p className="text-slate-500 text-sm">{selectedBundle.name} • {selectedBundle.credits} Credits</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={onClose}
+                            className="p-2 text-slate-400 hover:text-black hover:bg-slate-100 rounded-full transition-colors"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 space-y-6">
+                        {/* Amount */}
+                        <div className="text-center py-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p className="text-slate-500 text-sm mb-1">Amount to Pay</p>
+                            <p className="text-4xl font-bold text-black">৳{selectedBundle.price.toLocaleString()}</p>
+                        </div>
+
+                        {/* Step 1: Send Payment */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">1</div>
+                                <h3 className="font-semibold text-black">Send Payment via bKash</h3>
+                            </div>
+                            <div className="ml-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <p className="text-slate-600 text-sm mb-3">Send <strong>৳{selectedBundle.price}</strong> to this bKash Merchant number:</p>
+                                <div className="flex items-center justify-between bg-white rounded-lg border border-slate-200 p-3">
+                                    <span className="text-lg font-mono font-bold text-black">{BKASH_NUMBER}</span>
+                                    <button
+                                        onClick={handleCopyNumber}
+                                        className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-medium transition-colors"
+                                    >
+                                        {copied ? <CheckCircle className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                                        {copied ? 'Copied!' : 'Copy'}
+                                    </button>
+                                </div>
+                                <p className="text-xs text-slate-400 mt-2">Use bKash "Send Money" or "Payment" option</p>
+                            </div>
+                        </div>
+
+                        {/* Step 2: Email Transaction */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">2</div>
+                                <h3 className="font-semibold text-black">Email Your Transaction ID</h3>
+                            </div>
+                            <div className="ml-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <p className="text-slate-600 text-sm mb-3">After payment, email us your <strong>bKash Transaction ID</strong> and account email.</p>
+                                <a
+                                    href={`mailto:${SUPPORT_EMAIL}?subject=Credit Purchase - ${selectedBundle.name} Bundle&body=${generateEmailBody()}`}
+                                    className="flex items-center justify-center gap-2 w-full py-3 bg-black text-white rounded-xl font-medium hover:bg-slate-800 transition-colors"
+                                >
+                                    <Mail className="w-5 h-5" />
+                                    Send Email with Transaction ID
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Step 3: Get Credits */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">3</div>
+                                <h3 className="font-semibold text-black">Receive Your Credits</h3>
+                            </div>
+                            <div className="ml-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <p className="text-slate-600 text-sm">We'll verify your payment and add <strong>{selectedBundle.credits} credits</strong> to your account within 1-2 hours (usually much faster!).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="p-6 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+                        <p className="text-xs text-slate-500 text-center">
+                            Questions? Email us at <a href={`mailto:${SUPPORT_EMAIL}`} className="text-black font-medium hover:underline">{SUPPORT_EMAIL}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Bundle Selection View
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
             <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl my-8 border border-slate-200">
@@ -130,7 +249,7 @@ export function PricingModal({ isOpen, onClose, currentTier, onUpgrade }: Pricin
                                     ? 'border-black bg-slate-50 shadow-md'
                                     : 'border-slate-200 bg-white hover:border-slate-300'
                                 }`}
-                            onClick={() => handlePurchase(bundle)}
+                            onClick={() => handleSelectBundle(bundle)}
                         >
                             {bundle.popular && (
                                 <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs font-bold px-3 py-0.5 rounded-full">
@@ -191,7 +310,7 @@ export function PricingModal({ isOpen, onClose, currentTier, onUpgrade }: Pricin
                             <p className="text-slate-500 text-sm">Contact us for enterprise solutions and bulk discounts</p>
                         </div>
                         <a
-                            href="mailto:renderman.arch@gmail.com?subject=Custom%20Plan%20Inquiry"
+                            href={`mailto:${SUPPORT_EMAIL}?subject=Custom%20Plan%20Inquiry`}
                             className="shrink-0"
                         >
                             <button className="px-5 py-2.5 border border-slate-300 text-black rounded-xl font-medium hover:bg-white transition-colors">

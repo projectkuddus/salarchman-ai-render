@@ -2059,6 +2059,7 @@ function App() {
           onClose={() => setShowPricing(false)}
           currentTier={currentUser.tier}
           onUpgrade={handleUpgrade}
+          userEmail={currentUser.email}
         />
       )}
     </div>
