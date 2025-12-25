@@ -143,24 +143,24 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
                 </div>
 
-                {/* Contact for Credits */}
-                <div className="md:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm flex flex-col justify-center items-start space-y-4">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
-                        <Mail size={24} />
+                {/* Buy Credits Section */}
+                <div className="md:col-span-2 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-2xl border border-yellow-500/20 p-8 shadow-sm flex flex-col justify-center items-start space-y-4">
+                    <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center text-yellow-600">
+                        <CreditCard size={24} />
                     </div>
                     <div>
                         <h3 className="text-lg font-medium text-slate-900">Need more credits?</h3>
                         <p className="text-sm text-slate-500 mt-1">
-                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly at <span className="font-medium text-slate-900">renderman.arch@gmail.com</span>.
+                            Purchase credit bundles to remove watermarks and unlock professional features. Credits never expire!
                         </p>
                     </div>
-                    <a
-                        href="mailto:renderman.arch@gmail.com?subject=Credit Purchase Request"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-colors"
+                    <button
+                        onClick={() => onPurchase(0)}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-black rounded-xl font-bold hover:from-yellow-400 hover:to-orange-400 transition-all shadow-lg shadow-yellow-500/20"
                     >
-                        <Mail size={18} />
-                        <span>Contact Sales</span>
-                    </a>
+                        <CreditCard size={18} />
+                        <span>Buy Credits</span>
+                    </button>
                 </div>
             </div>
 

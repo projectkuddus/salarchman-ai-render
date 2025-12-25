@@ -487,6 +487,12 @@ function App() {
   };
 
   const handlePurchase = (amount: number) => {
+    // If amount is 0, open the pricing modal (triggered by UPGRADE button)
+    if (amount === 0) {
+      setShowPricing(true);
+      return;
+    }
+
     setIsGenerating(true);
     setTimeout(() => {
       const newAvailable = credits.available + amount;
