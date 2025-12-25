@@ -40,6 +40,7 @@ export enum RenderStyle {
   CONCRETE_MODEL = 'Concrete Model',
   WOOD_MODEL = 'Wood Model',
   RED_BRICK_MODEL = 'Red Brick Model',
+  BRONZE_MODEL = 'Bronze Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
