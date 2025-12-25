@@ -145,10 +145,10 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.RED_CONCRETE_MODEL]: '/gallery/red-concrete-model-thumb-v2.jpg',
   [RenderStyle.CONCRETE_PLANS_MODEL]: '/gallery/concrete-plans-model-thumb-v2.jpg',
   [RenderStyle.WOOD_VEGETATION_MODEL]: '/gallery/wood-vegetation-model-thumb-v2.jpg',
-  [RenderStyle.WOOD_WHITE_MODEL]: '/gallery/wood-white-model-thumb.jpg',
-  [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb.jpg',
-  [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb.jpg',
-  [RenderStyle.LEGO_MODEL]: '/gallery/lego-model-thumb.jpg',
+  [RenderStyle.WOOD_WHITE_MODEL]: '/gallery/wood-white-model-thumb-v2.jpg',
+  [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb-v2.jpg',
+  [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb-v2.jpg',
+  [RenderStyle.LEGO_MODEL]: '/gallery/lego-model-thumb-v2.jpg',
   [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb.jpg',
 
   // Legacy Fallbacks
