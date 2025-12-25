@@ -24,7 +24,7 @@ import {
 } from './components/IdeationGraphics';
 import { generateAnimation } from './services/veoService';
 import { AnimationView } from './components/AnimationView';
-import { LightControl } from './components/LightControl';
+import { LightDirectionTool } from './components/LightDirectionTool';
 
 
 function App() {
@@ -1713,51 +1713,53 @@ function App() {
                   </div>
                 </div>
 
-                {/* Right Column (Output) */}
-                <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
-                  <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                    Operative Massing
+                {/* Output Card */}
+                <div className="space-y-2">
+                  {/* Tool Tab / Toolbar */}
+                  <div className="flex items-center gap-2">
+                    <LightDirectionTool value={lightDirection} onChange={setLightDirection} />
                   </div>
-                  <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                    <div className="bg-white/90 backdrop-blur-sm border border-slate-200 rounded-full p-1 shadow-sm">
-                      <LightControl value={lightDirection} onChange={setLightDirection} size={40} />
-                    </div>
-                    <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedImageSize}</span>
-                    <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
-                  </div>
-                  {!generatedImage ? (
-                    uploadedImage ? (
-                      <LiveIdeationPreview
-                        imageSrc={uploadedImage}
-                        verbs={selectedVerbs}
-                        material={ideationMaterial}
-                        form={ideationForm}
-                        timeOfDay={timeOfDay}
-                      />
-                    ) : (
-                      <div className="text-center text-slate-300">
-                        <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <ImageIcon size={32} className="opacity-50" />
+
+                  <div className="bg-white rounded-2xl border border-slate-200 p-1 shadow-sm relative group">
+                    <div className="aspect-video bg-slate-100 rounded-xl overflow-hidden relative">
+                      {/* Output Header Info */}
+                      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                        <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedImageSize}</span>
+                        <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
+                      </div>
+                      {!generatedImage ? (
+                        uploadedImage ? (
+                          <LiveIdeationPreview
+                            imageSrc={uploadedImage}
+                            verbs={selectedVerbs}
+                            material={ideationMaterial}
+                            form={ideationForm}
+                            timeOfDay={timeOfDay}
+                          />
+                        ) : (
+                          <div className="text-center text-slate-300">
+                            <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <ImageIcon size={32} className="opacity-50" />
+                            </div>
+                            <p className="text-sm font-medium">Ready to Render</p>
+                          </div>
+                        )
+                      ) : (
+                        <div className="relative w-full h-full group">
+                          <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
+                          <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
+                          </div>
                         </div>
-                        <p className="text-sm font-medium">Ready to Render</p>
-                      </div>
-                    )
-                  ) : (
-                    <div className="relative w-full h-full group">
-                      <img src={generatedImage} alt="Generated" className="w-full h-full object-contain bg-slate-900" />
-                      <div className="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={handleDownload} className="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-lg font-medium text-sm flex items-center gap-2 hover:bg-slate-50"><Download size={16} /> Download</button>
-                      </div>
+                      )}
                     </div>
-                  )}
+
+
+                  </div>
                 </div>
-
-
               </div>
 
               {/* Bottom Bar */}
-
-
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-mono text-xs">CR</span>
@@ -1945,48 +1947,73 @@ function App() {
                   )}
                 </div>
 
-                {/* Right Column: Output */}
-                <div className="w-1/2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative flex flex-col h-full">
-                  {/* Output Header Tags */}
-                  <div className="h-14 border-b border-slate-100 flex items-center justify-between px-6">
-                    <div className="flex items-center gap-2">
-                      <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{selectedStyle}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="scale-75 origin-right">
-                        <LightControl value={lightDirection} onChange={setLightDirection} size={40} />
-                      </div>
-                      <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-medium px-2 py-1 rounded uppercase tracking-wider">{selectedImageSize} &bull; {selectedAspectRatio}</span>
-                      {generatedImage && (
-                        <button onClick={handleDownload} className="bg-slate-900 text-white px-3 py-1 rounded-lg shadow-sm font-medium text-xs flex items-center gap-1 hover:bg-slate-800 transition-colors">
-                          <Download size={12} /> Download
-                        </button>
-                      )}
-                    </div>
+                {/* Output Card */}
+                <div className="w-1/2 space-y-2">
+                  {/* Tool Tab / Toolbar */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <LightDirectionTool value={lightDirection} onChange={setLightDirection} />
+
+                    {/* Placeholder Tools from Sketch */}
+                    {[1, 2, 3].map((i) => (
+                      <button key={i} className="w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-400 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                        <div className="w-3 h-3 rounded-sm bg-slate-200" />
+                      </button>
+                    ))}
                   </div>
 
-                  {/* Output Canvas */}
-                  <div className="flex-1 relative flex items-center justify-center bg-slate-50/50">
-                    {!generatedImage ? (
-                      <div className="text-center text-slate-300">
-                        <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
-                          <ImageIcon size={32} className="opacity-30" />
+                  <div className="bg-white rounded-2xl border border-slate-200 p-1 shadow-sm relative group h-[calc(100vh-140px)]">
+                    <div className="w-full h-full bg-slate-100 rounded-xl overflow-hidden relative flex items-center justify-center">
+                      {generatedImage ? (
+                        <img src={generatedImage} alt="Generated Render" className="max-w-full max-h-full object-contain" />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center text-slate-400">
+                          <ImageIcon size={64} className="mb-4 opacity-20" />
+                          <span className="text-sm font-medium">Generated render will appear here</span>
                         </div>
-                        <p className="text-sm font-medium text-slate-400">Ready to Render</p>
+                      )}
+
+                      {/* Output Header */}
+                      <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+                        <div className="flex flex-col gap-2">
+                          <span className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 shadow-sm border border-slate-200/50 w-fit">
+                            {createMode} Visualization
+                          </span>
+                          <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider w-fit">{selectedStyle}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-medium px-2 py-1 rounded uppercase tracking-wider">{selectedImageSize} &bull; {selectedAspectRatio}</span>
+                          {generatedImage && (
+                            <button onClick={handleDownload} className="bg-slate-900 text-white px-3 py-1 rounded-lg shadow-sm font-medium text-xs flex items-center gap-1 hover:bg-slate-800 transition-colors">
+                              <Download size={12} /> Download
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    ) : (
-                      <div className="relative w-full h-full group p-4 flex items-center justify-center">
-                        <img src={generatedImage} alt="Generated" className="max-w-full max-h-full object-contain rounded-lg shadow-sm bg-white" />
+
+                      {/* Output Canvas */}
+                      <div className="flex-1 relative flex items-center justify-center bg-slate-50/50">
+                        {!generatedImage ? (
+                          <div className="text-center text-slate-300">
+                            <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                              <ImageIcon size={32} className="opacity-30" />
+                            </div>
+                            <p className="text-sm font-medium text-slate-400">Ready to Render</p>
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full group p-4 flex items-center justify-center">
+                            <img src={generatedImage} alt="Generated" className="max-w-full max-h-full object-contain rounded-lg shadow-sm bg-white" />
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           )}
         </div>
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }
 

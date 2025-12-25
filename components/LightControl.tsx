@@ -7,7 +7,7 @@ interface LightControlProps {
     size?: number;
 }
 
-export const LightControl: React.FC<LightControlProps> = ({ value, onChange, size = 120 }) => {
+export const LightControl: React.FC<LightControlProps> = ({ value, onChange, size = 200 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
 
@@ -62,29 +62,46 @@ export const LightControl: React.FC<LightControlProps> = ({ value, onChange, siz
 
     // Calculate Sun Position for rendering
     // 0 = North (Top)
-    const radius = size / 2 - 16; // Padding for sun icon
+    const radius = size / 2 - 24; // Padding
     const angleRad = (value - 90) * (Math.PI / 180);
     const sunX = Math.cos(angleRad) * radius + size / 2;
     const sunY = Math.sin(angleRad) * radius + size / 2;
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-3 bg-slate-950 p-4 rounded-2xl shadow-2xl border border-slate-800">
+            <div className="flex items-center justify-between w-full px-2 mb-1">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sun Path</span>
+                <span className="text-xs font-mono font-bold text-amber-400">{value}°</span>
+            </div>
+
             <div
                 ref={containerRef}
-                className="relative rounded-full bg-slate-50 border border-slate-200 shadow-inner cursor-pointer select-none group"
+                className="relative rounded-full bg-slate-900 border border-slate-800 shadow-inner cursor-pointer select-none group"
                 style={{ width: size, height: size }}
                 onMouseDown={handleMouseDown}
             >
-                {/* Cardinal Markers */}
-                <div className="absolute top-1 left-1/2 -translate-x-1/2 w-0.5 h-2 bg-slate-300" /> {/* N */}
-                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0.5 h-2 bg-slate-300" /> {/* S */}
-                <div className="absolute left-1 top-1/2 -translate-y-1/2 w-2 h-0.5 bg-slate-300" /> {/* W */}
-                <div className="absolute right-1 top-1/2 -translate-y-1/2 w-2 h-0.5 bg-slate-300" /> {/* E */}
+                {/* Grid Lines / Compass Rose */}
+                <div className="absolute inset-0 rounded-full border border-slate-800/50" />
+                <div className="absolute inset-4 rounded-full border border-slate-800/50" />
+                <div className="absolute inset-8 rounded-full border border-slate-800/50" />
 
-                {/* Center Object (Square as per sketch) */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 border-2 border-slate-300 rounded-sm flex items-center justify-center bg-white">
-                    <div className="w-1 h-1 bg-slate-400 rounded-full" />
-                </div>
+                {/* Crosshairs */}
+                <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-slate-800" />
+                <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-slate-800" />
+
+                {/* Cardinal Labels */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-500">N</div>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-500">S</div>
+                <div className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500">W</div>
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500">E</div>
+
+                {/* Sun Path Arc (Decorative - showing the path) */}
+                <svg className="absolute inset-0 pointer-events-none" width={size} height={size}>
+                    <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#fbbf24" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+                </svg>
+
+                {/* Center Object */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-slate-800 rounded-full border border-slate-600 z-10" />
 
                 {/* Ray Line */}
                 <svg className="absolute inset-0 pointer-events-none" width={size} height={size}>
@@ -93,23 +110,22 @@ export const LightControl: React.FC<LightControlProps> = ({ value, onChange, siz
                         y1={size / 2}
                         x2={sunX}
                         y2={sunY}
-                        stroke="currentColor"
-                        className="text-slate-300"
-                        strokeWidth="1.5"
-                        strokeDasharray="4 2"
+                        stroke="#fbbf24"
+                        strokeWidth="2"
                     />
                 </svg>
 
                 {/* Sun Icon */}
                 <div
-                    className="absolute w-6 h-6 bg-amber-400 rounded-full shadow-md flex items-center justify-center text-amber-900 transform -translate-x-1/2 -translate-y-1/2 transition-transform hover:scale-110 active:scale-95 z-10"
+                    className="absolute w-8 h-8 bg-amber-400 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.5)] flex items-center justify-center text-amber-900 transform -translate-x-1/2 -translate-y-1/2 transition-transform hover:scale-110 active:scale-95 z-20 border-2 border-white"
                     style={{ left: sunX, top: sunY }}
                 >
-                    <Sun size={14} fill="currentColor" />
+                    <Sun size={16} fill="currentColor" strokeWidth={2.5} />
                 </div>
             </div>
-            <div className="text-[10px] font-mono text-slate-400 font-medium bg-slate-100 px-2 py-0.5 rounded-full">
-                {value}°
+
+            <div className="text-[10px] text-slate-500 text-center max-w-[180px]">
+                Drag the sun to adjust lighting direction
             </div>
         </div>
     );
