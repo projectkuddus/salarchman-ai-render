@@ -75,6 +75,7 @@ function App() {
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<AspectRatio>("16:9");
   const [selectedImageSize, setSelectedImageSize] = useState<ImageSize>("1K");
   const [lightDirection, setLightDirection] = useState<number>(315);
+  const [isLightDirectionEnabled, setIsLightDirectionEnabled] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>('');
 
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -1857,14 +1858,12 @@ function App() {
                 <div className="w-1/2 flex flex-col gap-2">
                   {/* Tool Tab / Toolbar */}
                   <div className="flex items-center gap-1 mb-2 bg-white p-1 rounded-xl border border-slate-200 w-fit shadow-sm">
-                    <LightDirectionTool value={lightDirection} onChange={setLightDirection} />
-
-                    {/* Placeholder Tools from Sketch */}
-                    {[1, 2, 3].map((i) => (
-                      <button key={i} className="w-8 h-8 rounded-lg border border-transparent hover:border-slate-200 bg-transparent text-slate-400 flex items-center justify-center hover:bg-slate-50 transition-all">
-                        <div className="w-3 h-3 rounded-sm bg-slate-200" />
-                      </button>
-                    ))}
+                    <LightDirectionTool
+                      value={lightDirection}
+                      onChange={setLightDirection}
+                      enabled={isLightDirectionEnabled}
+                      onToggle={() => setIsLightDirectionEnabled(!isLightDirectionEnabled)}
+                    />
                   </div>
 
                   <div className="flex-1 bg-white rounded-2xl border border-slate-200 p-1 shadow-sm relative group min-h-0">
