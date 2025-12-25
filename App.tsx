@@ -24,6 +24,7 @@ import {
 } from './components/IdeationGraphics';
 import { generateAnimation } from './services/veoService';
 import { AnimationView } from './components/AnimationView';
+import { LightControl } from './components/LightControl';
 
 
 function App() {
@@ -1003,25 +1004,6 @@ function App() {
                     <option value="4K">4K (20c)</option>
                   </select>
                 </div>
-                {/* Light Direction */}
-                <div className="mt-2 pt-2 border-t border-slate-100">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 mb-2"><Sun size={10} /> Light Direction: {lightDirection}°</label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="360"
-                    value={lightDirection}
-                    onChange={(e) => setLightDirection(parseInt(e.target.value))}
-                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
-                  />
-                  <div className="flex justify-between text-[8px] text-slate-400 mt-1 font-mono">
-                    <span>0°</span>
-                    <span>90°</span>
-                    <span>180°</span>
-                    <span>270°</span>
-                    <span>360°</span>
-                  </div>
-                </div>
               </div>
 
               {/* Refine / Prompt */}
@@ -1381,25 +1363,6 @@ function App() {
                       </button>
                     ))}
                   </div>
-                  {/* Light Direction */}
-                  <div className="mt-2 pt-2 border-t border-slate-100">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 mb-2"><Sun size={10} /> Light Direction: {lightDirection}°</label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="360"
-                      value={lightDirection}
-                      onChange={(e) => setLightDirection(parseInt(e.target.value))}
-                      className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
-                    />
-                    <div className="flex justify-between text-[8px] text-slate-400 mt-1 font-mono">
-                      <span>0°</span>
-                      <span>90°</span>
-                      <span>180°</span>
-                      <span>270°</span>
-                      <span>360°</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -1756,6 +1719,9 @@ function App() {
                     Operative Massing
                   </div>
                   <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                    <div className="bg-white/90 backdrop-blur-sm border border-slate-200 rounded-full p-1 shadow-sm">
+                      <LightControl value={lightDirection} onChange={setLightDirection} size={40} />
+                    </div>
                     <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedImageSize}</span>
                     <span className="bg-white border border-slate-200 text-slate-600 text-[10px] font-medium px-2 py-1 rounded">{selectedAspectRatio}</span>
                   </div>
@@ -1987,6 +1953,9 @@ function App() {
                       <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{selectedStyle}</span>
                     </div>
                     <div className="flex items-center gap-2">
+                      <div className="scale-75 origin-right">
+                        <LightControl value={lightDirection} onChange={setLightDirection} size={40} />
+                      </div>
                       <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-medium px-2 py-1 rounded uppercase tracking-wider">{selectedImageSize} &bull; {selectedAspectRatio}</span>
                       {generatedImage && (
                         <button onClick={handleDownload} className="bg-slate-900 text-white px-3 py-1 rounded-lg shadow-sm font-medium text-xs flex items-center gap-1 hover:bg-slate-800 transition-colors">
