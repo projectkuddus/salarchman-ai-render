@@ -128,11 +128,15 @@ export const generateArchitecturalRender = async (
             let viewInstruction = VIEW_PROMPTS[viewType];
 
             if (viewType === ViewType.ELEVATION && elevationSide) {
-                viewInstruction = `2D Orthographic Elevation, strictly from the ${elevationSide} side. Flat projection, no perspective.`;
+                viewInstruction = `CRITICAL: Generate a 2D Orthographic Elevation, strictly from the ${elevationSide} side. Flat projection, NO perspective.`;
             } else if (viewType === ViewType.SIMILAR_TO_REF) {
-                viewInstruction = `Match the exact camera angle, perspective, and composition of the provided Style Reference image.`;
+                viewInstruction = `CRITICAL: Match the exact camera angle, perspective, and composition of the provided Style Reference image.`;
             } else if (viewType === ViewType.SIMILAR_TO_INPUT) {
-                viewInstruction = `Match the exact camera angle, perspective, and composition of the provided Base Geometry (Image #1).`;
+                viewInstruction = `CRITICAL: Match the exact camera angle, perspective, and composition of the provided Base Geometry (Image #1).`;
+            } else if (viewType === ViewType.PLAN) {
+                viewInstruction = `CRITICAL: Generate a STRICTLY 2D Floor Plan. Top-down view. Flat projection. NO perspective.`;
+            } else if (viewType === ViewType.SECTION) {
+                viewInstruction = `CRITICAL: Generate a STRICTLY 2D Section Cut. Vertical cut. Flat projection. NO perspective.`;
             }
 
             prompt = `

@@ -255,15 +255,15 @@ export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
 };
 
 export const VIEW_PROMPTS: Record<ViewType, string> = {
-  [ViewType.PERSPECTIVE]: "eye-level perspective view, showing the building in its environment",
-  [ViewType.PLAN]: "2D architectural floor plan, top-down view, clear wall definitions, room layout, black and white or technical colors",
-  [ViewType.ELEVATION]: "2D orthographic facade elevation, flat view, material details, no perspective distortion",
-  [ViewType.SECTION]: "architectural section cut, showing interior structure, floor levels, and vertical relationships, technical shading",
-  [ViewType.AXONOMETRIC]: "Strictly render in isometric or axonometric projection. Do NOT render in perspective. Transform the view to be parallel projection.",
-  [ViewType.TOPSHOT]: "aerial top-down view, bird's eye perspective, site context, landscaping layout",
-  [ViewType.DETAILS]: "close-up architectural detail, construction joint, material transition, macro photography style",
-  [ViewType.SIMILAR_TO_INPUT]: "match the exact camera angle, perspective, and composition of the provided input image",
-  [ViewType.SIMILAR_TO_REF]: "match the exact camera angle, perspective, and composition of the provided reference image"
+  [ViewType.PERSPECTIVE]: "Eye-level perspective view. 3D depth. Show the building in its environment.",
+  [ViewType.PLAN]: "STRICTLY 2D architectural floor plan. Top-down view. Flat projection. Clear wall definitions, room layout. NO perspective.",
+  [ViewType.ELEVATION]: "STRICTLY 2D orthographic facade elevation. Flat view. NO perspective distortion. Material details.",
+  [ViewType.SECTION]: "STRICTLY 2D architectural section cut. Vertical cut through the building. Show interior structure and floor levels. Technical shading. NO perspective.",
+  [ViewType.AXONOMETRIC]: "STRICTLY isometric or axonometric projection. Parallel projection. 30-degree angle. NO perspective distortion.",
+  [ViewType.TOPSHOT]: "STRICTLY aerial top-down view. Bird's eye perspective. 90-degree look down. Site context and landscaping layout.",
+  [ViewType.DETAILS]: "Close-up architectural detail. Macro photography style. Focus on construction joints and material transitions.",
+  [ViewType.SIMILAR_TO_INPUT]: "STRICTLY MATCH the exact camera angle, perspective, and composition of the provided Base Geometry (Image #1). Do not change the view.",
+  [ViewType.SIMILAR_TO_REF]: "STRICTLY MATCH the exact camera angle, perspective, and composition of the provided Style Reference image. Do not change the view."
 };
 
 // Diagram Prompts - Enhanced for Professional Portfolio styles
