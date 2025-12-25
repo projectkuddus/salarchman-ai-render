@@ -126,8 +126,8 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.ARCH_DOODLE]: '/gallery/doodle-model-after.png',
 
   // Architectural Model Photography
-  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-output.png',
-  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-output.png',
+  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb.jpg',
+  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
