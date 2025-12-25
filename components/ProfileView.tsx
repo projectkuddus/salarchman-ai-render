@@ -151,11 +151,11 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     <div>
                         <h3 className="text-lg font-medium text-slate-900">Need more credits?</h3>
                         <p className="text-sm text-slate-500 mt-1">
-                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly at <span className="font-medium text-slate-900">salarchman@gmail.com</span>.
+                            We are currently in beta. For credit top-ups and enterprise plans, please contact our sales team directly at <span className="font-medium text-slate-900">renderman.arch@gmail.com</span>.
                         </p>
                     </div>
                     <a
-                        href="mailto:salarchman@gmail.com?subject=Credit Purchase Request"
+                        href="mailto:renderman.arch@gmail.com?subject=Credit Purchase Request"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-colors"
                     >
                         <Mail size={18} />

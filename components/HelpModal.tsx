@@ -110,10 +110,16 @@ export const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
                             <MessageCircle size={20} />
                             <h3 className="font-semibold text-sm uppercase tracking-wider">Support</h3>
                         </div>
-                        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center">
-                            <p className="text-sm text-slate-600">
-                                Need help or have feedback? Contact us at <a href="mailto:support@renderman.ai" className="text-blue-600 hover:underline font-medium">support@renderman.ai</a>
+                        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
+                            <p className="text-sm text-slate-600 text-center">
+                                Need help or have feedback? Contact us at <a href="mailto:renderman.arch@gmail.com" className="text-blue-600 hover:underline font-medium">renderman.arch@gmail.com</a>
                             </p>
+                            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                                <p className="text-xs text-amber-800">
+                                    <strong>Facing an issue?</strong> Please take a screenshot of the problem and email it to us.
+                                    Don't forget to mention your <strong>username/email</strong> so we can assist you faster!
+                                </p>
+                            </div>
                         </div>
                     </section>
 
