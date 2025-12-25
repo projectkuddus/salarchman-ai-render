@@ -123,7 +123,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
-  [RenderStyle.ARCH_DOODLE]: '/gallery/doodle-model-after.png',
+  [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb.jpg',
