@@ -1950,12 +1950,12 @@ function App() {
                 {/* Output Card */}
                 <div className="w-1/2 space-y-2">
                   {/* Tool Tab / Toolbar */}
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-1 mb-2 bg-white p-1 rounded-xl border border-slate-200 w-fit shadow-sm">
                     <LightDirectionTool value={lightDirection} onChange={setLightDirection} />
 
                     {/* Placeholder Tools from Sketch */}
                     {[1, 2, 3].map((i) => (
-                      <button key={i} className="w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-400 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                      <button key={i} className="w-8 h-8 rounded-lg border border-transparent hover:border-slate-200 bg-transparent text-slate-400 flex items-center justify-center hover:bg-slate-50 transition-all">
                         <div className="w-3 h-3 rounded-sm bg-slate-200" />
                       </button>
                     ))}

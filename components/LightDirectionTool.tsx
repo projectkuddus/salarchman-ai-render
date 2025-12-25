@@ -33,7 +33,7 @@ export const LightDirectionTool: React.FC<LightDirectionToolProps> = ({ value, o
                 onClick={() => setIsOpen(!isOpen)}
                 className={`w-8 h-8 rounded-lg border transition-all flex items-center justify-center ${isOpen
                     ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-                    : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                    : 'bg-transparent text-slate-400 border-transparent hover:border-slate-200 hover:bg-slate-50'
                     }`}
                 title={`Light Direction: ${value}°`}
             >
