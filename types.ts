@@ -48,6 +48,7 @@ export enum RenderStyle {
   DARK_BRUTALIST_MODEL = 'Dark Brutalist Model',
   GREY_CARDBOARD_MODEL = 'Grey Cardboard Model',
   LEGO_MODEL = 'Lego Model',
+  CITY_MODEL_3D_PRINT = '3D Printed City Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',

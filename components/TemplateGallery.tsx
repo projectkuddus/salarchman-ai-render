@@ -62,6 +62,17 @@ export const TEMPLATES: Template[] = [
         style: 'Paper Model',
         instructions: "Upload a photo, render, or sketch. This template converts it into a clean, white architectural paper model style. Perfect for massing studies and conceptual presentations."
     },
+    {
+        id: 'city-model-3d-print',
+        title: '3D Printed City Model',
+        description: 'Convert urban shots or maps into a white 3D printed city model in a wooden frame.',
+        category: 'Urban',
+        baseImage: '/satellite-base.jpg',
+        outputImage: '/gallery/city-model-3d-print-thumb.jpg',
+        prompt: "Physical 3D printed city model, pure white PLA plastic material. Framed in a high-quality dark walnut wood frame. The model shows a dense urban cityscape with varying building heights. Clean, minimalist aesthetic. Soft, natural sunlight casting diagonal shadows across the white geometry. High-angle or top-down view. Museum quality presentation.",
+        style: '3D Printed City Model',
+        instructions: "Upload a screenshot of a map, drone shot, or urban view. This template converts it into a clean, white 3D printed city model framed in wood."
+    },
 
     {
         id: 'material-swap',

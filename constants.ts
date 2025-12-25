@@ -74,7 +74,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.WOOD_WHITE_MODEL,
       RenderStyle.DARK_BRUTALIST_MODEL,
       RenderStyle.GREY_CARDBOARD_MODEL,
-      RenderStyle.LEGO_MODEL
+      RenderStyle.LEGO_MODEL,
+      RenderStyle.CITY_MODEL_3D_PRINT
     ]
   }
 ];
@@ -148,6 +149,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb.jpg',
   [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb.jpg',
   [RenderStyle.LEGO_MODEL]: '/gallery/lego-model-thumb.jpg',
+  [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -203,6 +205,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.DARK_BRUTALIST_MODEL]: "Physical architectural model made of rough, dark grey concrete. Brutalist aesthetic with heavy textures and visible aggregate. Dramatic chiaroscuro lighting with a pitch-black background. Strong shadows, moody atmosphere, and a focus on the raw materiality of the concrete. High-end architectural model photography.",
   [RenderStyle.GREY_CARDBOARD_MODEL]: "Physical architectural model made of grey cardboard or chipboard. Monochromatic matte grey texture with visible paper grain. Includes small scale figures for context. Soft, diffuse studio lighting. Clean, minimalist, and professional architectural study model aesthetic.",
   [RenderStyle.LEGO_MODEL]: "Architectural model built entirely from white LEGO bricks. Modernist style (resembling Villa Savoye). Features primary color accents (Red, Blue, Yellow) in a Mondrian style. Sits on a bright green LEGO baseplate representing grass. Visible studs on surfaces, plastic glossy texture, toy-like scale. Clean studio lighting on a white background.",
+  [RenderStyle.CITY_MODEL_3D_PRINT]: "Physical 3D printed city model, pure white PLA plastic material. Framed in a high-quality dark walnut wood frame. The model shows a dense urban cityscape with varying building heights. Clean, minimalist aesthetic. Soft, natural sunlight casting diagonal shadows across the white geometry. High-angle or top-down view. Museum quality presentation.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",
