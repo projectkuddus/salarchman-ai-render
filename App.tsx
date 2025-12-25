@@ -595,13 +595,24 @@ function App() {
         lightDirection
       );
 
+      // Apply watermark for FREE tier users
+      let finalImage = resultImage;
+      if (currentUser?.tier === UserTier.FREE) {
+        try {
+          finalImage = await watermarkService.applyWatermark(resultImage);
+          console.log('Watermark applied for Free tier user');
+        } catch (err) {
+          console.error('Failed to apply watermark:', err);
+        }
+      }
+
       // Create history item
       const newHistoryItem: GenerationResult = {
         id: crypto.randomUUID(), // Use crypto.randomUUID for unique IDs
         originalImage: uploadedImage, // Use uploadedImage directly
         siteImage: createMode === 'Exterior' ? siteImage : null,
         referenceImage: referenceImage,
-        generatedImage: resultImage, // Use resultImage directly
+        generatedImage: finalImage, // Use watermarked image
         style: activeTab === 'ideation' ? 'Operative Massing' : (activeTab === 'diagram' ? 'Diagram' : selectedStyle),
         viewType: viewToUse,
         diagramType: diagramTypeToUse,
@@ -625,7 +636,7 @@ function App() {
 
       // Optimistic update for UI
       setHistory(prev => [newHistoryItem, ...prev]);
-      setGeneratedImage(resultImage); // Use resultImage directly
+      setGeneratedImage(finalImage); // Use watermarked image
 
       const newAvailable = credits.available - currentCost;
       const newTotalUsed = credits.totalUsed + currentCost;
