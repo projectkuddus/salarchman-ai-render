@@ -45,6 +45,7 @@ export enum RenderStyle {
   CONCRETE_PLANS_MODEL = 'Concrete & Plans Model',
   WOOD_VEGETATION_MODEL = 'Wood & Vegetation Model',
   WOOD_WHITE_MODEL = 'Wood & White Model',
+  DARK_BRUTALIST_MODEL = 'Dark Brutalist Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
