@@ -1948,7 +1948,7 @@ function App() {
                 </div>
 
                 {/* Output Card */}
-                <div className="w-1/2 space-y-2">
+                <div className="w-1/2 flex flex-col gap-2">
                   {/* Tool Tab / Toolbar */}
                   <div className="flex items-center gap-1 mb-2 bg-white p-1 rounded-xl border border-slate-200 w-fit shadow-sm">
                     <LightDirectionTool value={lightDirection} onChange={setLightDirection} />
@@ -1961,7 +1961,7 @@ function App() {
                     ))}
                   </div>
 
-                  <div className="bg-white rounded-2xl border border-slate-200 p-1 shadow-sm relative group h-[calc(100vh-140px)]">
+                  <div className="flex-1 bg-white rounded-2xl border border-slate-200 p-1 shadow-sm relative group min-h-0">
                     <div className="w-full h-full bg-slate-100 rounded-xl overflow-hidden relative flex items-center justify-center">
                       {generatedImage ? (
                         <img src={generatedImage} alt="Generated Render" className="max-w-full max-h-full object-contain" />
