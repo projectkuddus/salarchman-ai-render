@@ -80,6 +80,7 @@ export enum InteriorStyle {
   SCANDINAVIAN = 'Scandinavian',
   INDUSTRIAL = 'Industrial',
   AMBER_TEXTURED = 'Amber Textured',
+  AMBER_NOIR = 'Amber Noir',
   PAPER_MODEL = 'Paper Model',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }

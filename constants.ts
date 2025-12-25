@@ -241,6 +241,7 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior/scandinavian.jpg",
   [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg",
   [InteriorStyle.AMBER_TEXTURED]: "/thumbnails/interior/amber-textured.jpg",
+  [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp", // Placeholder moody orange
   [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg"
 };
 
@@ -260,6 +261,7 @@ export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
   [InteriorStyle.SCANDINAVIAN]: "Scandinavian design. Bright, airy, white walls, light wood floors, cozy textiles (hygge), simple functional furniture, pops of muted color.",
   [InteriorStyle.INDUSTRIAL]: "Industrial loft style. Exposed brick walls, ductwork, metal framed windows, concrete floors, vintage leather furniture, Edison bulbs, warehouse aesthetic.",
   [InteriorStyle.AMBER_TEXTURED]: "Amber Textured Minimalist style. PRIMARY LIGHT SOURCE: The scene must be lit primarily by the glowing windows. All windows/light-panels must be CLEAN, SMOOTH, FROSTED AMBER GLASS with NO CRACKS, NO TEXTURE, and NO VEINS. It must be a flat, uniform, glowing orange surface. The REST of the room (walls, floor, ceiling) MUST remain ROUGH, TEXTURED, and RAW (plaster/concrete). The contrast is key: perfectly smooth glowing amber rectangles against rough, dark, moody walls. Do not glow TVs.",
+  [InteriorStyle.AMBER_NOIR]: "Amber Noir style. Cinematic, moody interior with strong orange/amber lighting. Large grid windows with a hazy, dystopian city view outside. Silhouette of a figure sitting by the window. Minimalist furniture, deep shadows, warm atmospheric glow. Blade Runner 2049 aesthetic. High contrast, emotional, dramatic.",
   [InteriorStyle.PAPER_MODEL]: "Interior white paper model. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry."
 };
 
