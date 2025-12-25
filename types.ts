@@ -47,6 +47,7 @@ export enum RenderStyle {
   WOOD_WHITE_MODEL = 'Wood & White Model',
   DARK_BRUTALIST_MODEL = 'Dark Brutalist Model',
   GREY_CARDBOARD_MODEL = 'Grey Cardboard Model',
+  LEGO_MODEL = 'Lego Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
