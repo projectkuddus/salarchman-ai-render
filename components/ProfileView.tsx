@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserCredits, GenerationResult } from '../types';
+import { LogOut, CreditCard, Clock, Download, Trash2, Shield, Save, User as UserIcon, Mail, Key, History, Maximize2, X } from 'lucide-react';
 import { Button } from './Button';
-import { Save, CreditCard, User as UserIcon, Shield, Mail, Key, History, Maximize2, X, Download } from 'lucide-react';
 
 interface ProfileViewProps {
     user: User;
@@ -9,11 +9,12 @@ interface ProfileViewProps {
     history: GenerationResult[];
     onUpdateProfile: (name: string, password?: string) => void;
     onPurchase: (amount: number) => void;
+    onOpenAdmin: () => void;
     onRestore: (item: GenerationResult) => void;
     onRecoverHistory: () => void;
 }
 
-export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history, onUpdateProfile, onPurchase, onRestore, onRecoverHistory }) => {
+export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history, onUpdateProfile, onPurchase, onOpenAdmin, onRestore, onRecoverHistory }) => {
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
