@@ -49,6 +49,7 @@ export enum RenderStyle {
   GREY_CARDBOARD_MODEL = 'Grey Cardboard Model',
   LEGO_MODEL = 'Lego Model',
   CITY_MODEL_3D_PRINT = '3D Printed City Model',
+  WIREFRAME_GLASS_MODEL = 'Wireframe & Glass Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
