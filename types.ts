@@ -38,6 +38,7 @@ export enum RenderStyle {
   // Architectural Model Photography
   METAL_MODEL = 'Metal Model',
   CONCRETE_MODEL = 'Concrete Model',
+  WOOD_MODEL = 'Wood Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
