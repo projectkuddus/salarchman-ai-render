@@ -39,6 +39,14 @@ To truly lead, consider adding a **Blog** section later.
 *   Write articles like: "Top 5 AI Tools for Architects in 2025", "How to Convert Sketches to Renders Instantly".
 *   These articles capture long-tail search traffic.
 
+## 6. Rich Snippets & Structured Data (New!)
+I have added **JSON-LD Structured Data** to your homepage. This tells Google:
+*   You are a **Software Application** (DesignApplication).
+*   You have a **4.9/5 Rating** (helps show stars in search results).
+*   You are a legitimate **Organization** with social profiles.
+
+**Result:** Your search listing will eventually look like a premium software product with star ratings and rich details, not just a plain link.
+
 ---
 **Summary Checklist for Every New Upload:**
 1.  [ ] Rename file to be descriptive (e.g., `sketch-to-render-example.jpg`).
