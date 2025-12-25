@@ -21,7 +21,8 @@ export const generateArchitecturalRender = async (
     elevationSide?: ElevationSide,
     material1Image?: string | null,
     material2Image?: string | null,
-    additionalBaseImages: string[] = []
+    additionalBaseImages: string[] = [],
+    lightDirection?: number
 ): Promise<string> => {
     try {
         // --- COMPRESSION ---
@@ -184,6 +185,7 @@ export const generateArchitecturalRender = async (
         ${viewType === ViewType.AXONOMETRIC ? "CRITICAL: The output MUST be an axonometric/isometric view. Do not output a perspective view." : ""}
         ${aspectRatio === 'Similar to Input' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Input Image." : ""}
         ${aspectRatio === 'Similar to Reference' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Reference Image." : ""}
+        ${lightDirection !== undefined ? `LIGHTING DIRECTION: The light should come from ${lightDirection} degrees (0=North/Front, 90=East/Right, 180=South/Back, 270=West/Left). Ensure shadows fall accordingly.` : ""}
         `;
 
             if (siteBase64Image) {

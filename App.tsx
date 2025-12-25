@@ -73,6 +73,7 @@ function App() {
   const [selectedView, setSelectedView] = useState<ViewType>(ViewType.PERSPECTIVE);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<AspectRatio>("16:9");
   const [selectedImageSize, setSelectedImageSize] = useState<ImageSize>("1K");
+  const [lightDirection, setLightDirection] = useState<number>(315);
   const [prompt, setPrompt] = useState<string>('');
 
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -555,7 +556,8 @@ function App() {
         (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
         createMode === 'Exterior' ? material1Image : null,
         createMode === 'Exterior' ? material2Image : null,
-        additionalUploadedImages
+        additionalUploadedImages,
+        lightDirection
       );
 
       // Create history item
@@ -1001,6 +1003,25 @@ function App() {
                     <option value="4K">4K (20c)</option>
                   </select>
                 </div>
+                {/* Light Direction */}
+                <div className="mt-2 pt-2 border-t border-slate-100">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 mb-2"><Sun size={10} /> Light Direction: {lightDirection}°</label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="360"
+                    value={lightDirection}
+                    onChange={(e) => setLightDirection(parseInt(e.target.value))}
+                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
+                  />
+                  <div className="flex justify-between text-[8px] text-slate-400 mt-1 font-mono">
+                    <span>0°</span>
+                    <span>90°</span>
+                    <span>180°</span>
+                    <span>270°</span>
+                    <span>360°</span>
+                  </div>
+                </div>
               </div>
 
               {/* Refine / Prompt */}
@@ -1359,6 +1380,25 @@ function App() {
                         <span className={`text-[9px] ${selectedImageSize === size ? 'text-slate-300' : 'text-slate-400'}`}>{CREDIT_COSTS[size as ImageSize]} Cr</span>
                       </button>
                     ))}
+                  </div>
+                  {/* Light Direction */}
+                  <div className="mt-2 pt-2 border-t border-slate-100">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 mb-2"><Sun size={10} /> Light Direction: {lightDirection}°</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="360"
+                      value={lightDirection}
+                      onChange={(e) => setLightDirection(parseInt(e.target.value))}
+                      className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900"
+                    />
+                    <div className="flex justify-between text-[8px] text-slate-400 mt-1 font-mono">
+                      <span>0°</span>
+                      <span>90°</span>
+                      <span>180°</span>
+                      <span>270°</span>
+                      <span>360°</span>
+                    </div>
                   </div>
                 </div>
               </div>
