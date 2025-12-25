@@ -1896,21 +1896,7 @@ function App() {
                         </div>
                       </div>
 
-                      {/* Output Canvas */}
-                      <div className="flex-1 relative flex items-center justify-center bg-slate-50/50">
-                        {!generatedImage ? (
-                          <div className="text-center text-slate-300">
-                            <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
-                              <ImageIcon size={32} className="opacity-30" />
-                            </div>
-                            <p className="text-sm font-medium text-slate-400">Ready to Render</p>
-                          </div>
-                        ) : (
-                          <div className="relative w-full h-full group p-4 flex items-center justify-center">
-                            <img src={generatedImage} alt="Generated" className="max-w-full max-h-full object-contain rounded-lg shadow-sm bg-white" />
-                          </div>
-                        )}
-                      </div>
+
                     </div>
                   </div>
                 </div>
