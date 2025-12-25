@@ -51,6 +51,7 @@ export enum RenderStyle {
   CITY_MODEL_3D_PRINT = '3D Printed City Model',
   WIREFRAME_GLASS_MODEL = 'Wireframe & Glass Model',
   WOODEN_STRUCTURE_TERRACOTTA_MODEL = 'Wooden Structure & Terracotta Model',
+  PASTEL_WOOD_GREEN_MODEL = 'Pastel Wood & Green Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',

@@ -77,7 +77,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.LEGO_MODEL,
       RenderStyle.CITY_MODEL_3D_PRINT,
       RenderStyle.WIREFRAME_GLASS_MODEL,
-      RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL
+      RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL,
+      RenderStyle.PASTEL_WOOD_GREEN_MODEL
     ]
   }
 ];
@@ -154,6 +155,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb.jpg',
   [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-glass-model-thumb.jpg',
   [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/gallery/wooden-structure-terracotta-model-thumb.jpg',
+  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -212,6 +214,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.CITY_MODEL_3D_PRINT]: "Physical 3D printed city model, pure white PLA plastic material. Framed in a high-quality dark walnut wood frame. The model shows a dense urban cityscape with varying building heights. Clean, minimalist aesthetic. Soft, natural sunlight casting diagonal shadows across the white geometry. High-angle or top-down view. Museum quality presentation.",
   [RenderStyle.WIREFRAME_GLASS_MODEL]: "Physical architectural model made of etched acrylic and silver wireframe. Translucent frosted glass panels with a grid-like metal structure. High-tech, precise, and detailed. Dark studio background with dramatic lighting highlighting the edges and structure. Clean white base. Museum quality architectural presentation.",
   [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: "Physical architectural model featuring light wood framing and prominent terracotta/red clay elements (conical shapes or walls). Sits on a grey grooved base. Includes scale figures for context. Soft, clean studio lighting with a neutral background. Minimalist, professional architectural study model aesthetic.",
+  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: "Physical architectural model style. Isometric view of small pavilion structures. Materials: light balsa wood, pastel pink painted surfaces, and soft sage green structural elements. Background is a seamless matte sage green color. Clean, minimalist, playful but precise. Soft, even studio lighting. High-end architectural presentation.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",
