@@ -101,7 +101,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
   [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
   [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
-  [RenderStyle.PAPER_MODEL]: '/paper-output.jpg',
+  [RenderStyle.PAPER_MODEL]: '/gallery/paper-model-thumb.jpg',
   [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
   [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
