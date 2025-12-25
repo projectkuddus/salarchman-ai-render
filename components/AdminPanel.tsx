@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Search, User as UserIcon, CreditCard, Shield, Save, X, CheckCircle, AlertCircle, Loader2, Users, TrendingUp, Crown, Edit2, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Shield, Save, X, CheckCircle, AlertCircle, Loader2, Users, CreditCard, Crown, Edit2, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../services/supabaseClient';
 import { UserTier } from '../types';
 
-interface AdminDashboardProps {
+interface AdminPanelProps {
     isOpen: boolean;
     onClose: () => void;
     currentUserEmail: string;
@@ -25,14 +25,18 @@ const ADMIN_EMAILS = [
     'projectkuddus@gmail.com'
 ];
 
-export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashboardProps) {
+export function AdminPanel({ isOpen, onClose, currentUserEmail }: AdminPanelProps) {
+    // ============================================================================
+    // 1. HOOKS (MUST BE AT THE TOP - NO EARLY RETURNS BEFORE THIS)
+    // ============================================================================
+
     // View State
     const [view, setView] = useState<'list' | 'edit'>('list');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState<UserData[]>([]);
     const [stats, setStats] = useState({ total: 0, pro: 0, studio: 0, credits: 0 });
 
-    // Search & Filter
+    // Search & Filter State
     const [searchTerm, setSearchTerm] = useState('');
     const [filterTier, setFilterTier] = useState<string>('all');
 
@@ -42,14 +46,17 @@ export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashb
     const [creditAdjustment, setCreditAdjustment] = useState<string>('');
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-    // Verify admin access
-    if (!isOpen) return null;
-    if (!ADMIN_EMAILS.includes(currentUserEmail)) return null;
-
-    // Fetch Users on Mount
+    // Data Fetching Effect
     useEffect(() => {
-        fetchUsers();
-    }, []);
+        // Only fetch if open and authorized, but the hook itself must always run
+        if (isOpen && ADMIN_EMAILS.includes(currentUserEmail)) {
+            fetchUsers();
+        }
+    }, [isOpen, currentUserEmail]);
+
+    // ============================================================================
+    // 2. HELPER FUNCTIONS
+    // ============================================================================
 
     const fetchUsers = async () => {
         setLoading(true);
@@ -147,13 +154,23 @@ export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashb
         }
     };
 
-    // Filtered Users
+    // ============================================================================
+    // 3. RENDER LOGIC & EARLY RETURNS
+    // ============================================================================
+
+    // Filtered Users Logic
     const filteredUsers = users.filter(user => {
         const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (user.full_name && user.full_name.toLowerCase().includes(searchTerm.toLowerCase()));
         const matchesFilter = filterTier === 'all' || user.tier === filterTier;
         return matchesSearch && matchesFilter;
     });
+
+    // NOW it is safe to return null if not open
+    if (!isOpen) return null;
+
+    // Security check
+    if (!ADMIN_EMAILS.includes(currentUserEmail)) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md overflow-hidden">
@@ -166,7 +183,7 @@ export function AdminDashboard({ isOpen, onClose, currentUserEmail }: AdminDashb
                             <Shield className="w-6 h-6" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold text-slate-900">Admin Command Center</h2>
+                            <h2 className="text-2xl font-bold text-slate-900">Admin Command Center <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full ml-2">v3.0 Stable</span></h2>
                             <p className="text-slate-500 text-sm font-medium">Platform Management System</p>
                         </div>
                     </div>

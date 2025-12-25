@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize, FoldVertical, ScissorsLineDashed, Scaling, GitMerge, PlusSquare, Activity, Layout } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
 import { PricingModal } from './components/PricingModal';
-import { AdminDashboard } from './components/AdminDashboard';
+import { AdminPanel } from './components/AdminPanel';
 import { watermarkService } from './services/watermarkService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere, UserTier } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
@@ -2104,7 +2104,7 @@ function App() {
 
       {/* Admin Dashboard */}
       {currentUser && (
-        <AdminDashboard
+        <AdminPanel
           isOpen={showAdmin}
           onClose={() => setShowAdmin(false)}
           currentUserEmail={currentUser.email}
