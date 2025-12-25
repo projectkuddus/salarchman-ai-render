@@ -38,28 +38,44 @@ export const LightDirectionTool: React.FC<LightDirectionToolProps> = ({ value, o
 
     return (
         <div className="relative" ref={containerRef}>
-            <div className={`flex items-center gap-3 px-3 py-1.5 rounded-lg border transition-all ${enabled ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-50 border-transparent'
-                }`}>
+            <div
+                className={`flex items-center gap-3 px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${enabled ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-50 border-transparent'
+                    }`}
+                onClick={(e) => {
+                    // Allow clicking the container to toggle, unless clicking the sun button
+                    if (!(e.target as HTMLElement).closest('button[title^="Light Direction"]')) {
+                        onToggle();
+                    }
+                }}
+            >
                 {/* Toggle Switch */}
                 <button
-                    onClick={onToggle}
+                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onToggle();
+                    }}
                     className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-slate-900' : 'bg-slate-300'}`}
                 >
                     <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform shadow-sm ${enabled ? 'left-4.5 translate-x-0.5' : 'left-0.5'}`} />
                 </button>
 
-                <span className={`text-xs font-medium transition-colors ${enabled ? 'text-slate-700' : 'text-slate-400'}`}>
+                <span className={`text-xs font-medium transition-colors select-none ${enabled ? 'text-slate-700' : 'text-slate-400'}`}>
                     Change Light Direction
                 </span>
 
                 <div className="h-4 w-px bg-slate-200 mx-1" />
 
                 <button
-                    onClick={() => enabled && setIsOpen(!isOpen)}
+                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (enabled) setIsOpen(!isOpen);
+                    }}
                     disabled={!enabled}
                     className={`w-6 h-6 rounded flex items-center justify-center transition-all ${enabled
-                            ? (isOpen ? 'bg-slate-100 text-amber-500' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50')
-                            : 'text-slate-300 cursor-not-allowed'
+                        ? (isOpen ? 'bg-slate-100 text-amber-500' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50')
+                        : 'text-slate-300 cursor-not-allowed'
                         }`}
                     title={enabled ? `Light Direction: ${value}°` : 'Enable to change direction'}
                 >
