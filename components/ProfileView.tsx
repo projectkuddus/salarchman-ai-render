@@ -39,6 +39,15 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                     <h2 className="text-2xl font-light text-slate-900">User Profile</h2>
                     <p className="text-sm text-slate-500">Manage your account settings and credits</p>
                 </div>
+                {['renderman.arch@gmail.com', 'salarchman@gmail.com', 'projectkuddus@gmail.com'].includes(user.email) && (
+                    <button
+                        onClick={onOpenAdmin}
+                        className="ml-auto flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors shadow-lg"
+                    >
+                        <Shield size={16} />
+                        <span className="font-medium text-sm">Admin Panel</span>
+                    </button>
+                )}
             </div>
 
             {/* Account Details */}
