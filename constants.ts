@@ -137,8 +137,8 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
 
   // Architectural Model Photography
-  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb.jpg',
-  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-thumb.jpg',
+  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb-v2.jpg',
+  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-thumb-v2.jpg',
   [RenderStyle.WOOD_MODEL]: '/gallery/wood-model-thumb-v2.jpg',
   [RenderStyle.RED_BRICK_MODEL]: '/gallery/red-brick-model-thumb-v2.jpg',
   [RenderStyle.BRONZE_MODEL]: '/gallery/bronze-model-thumb-v2.jpg',
