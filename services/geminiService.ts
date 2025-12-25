@@ -20,12 +20,19 @@ export const generateArchitecturalRender = async (
     atmospheres: Atmosphere[] = [],
     elevationSide?: ElevationSide,
     material1Image?: string | null,
-    material2Image?: string | null
+    material2Image?: string | null,
+    additionalBaseImages: string[] = []
 ): Promise<string> => {
     try {
         // --- COMPRESSION ---
         // Compress images to ensure they are within Vercel's payload limits (4.5MB)
         const compressedBase64Image = await compressImage(base64Image);
+
+        // Compress additional images
+        const compressedAdditionalImages = await Promise.all(
+            additionalBaseImages.map(img => compressImage(img))
+        );
+
         const compressedSiteImage = siteBase64Image ? await compressImage(siteBase64Image) : null;
         const compressedReferenceImage = referenceBase64Image ? await compressImage(referenceBase64Image) : null;
         const compressedMaterial1Image = material1Image ? await compressImage(material1Image) : null;
@@ -52,6 +59,7 @@ export const generateArchitecturalRender = async (
             prompt = `
         Act as a professional architectural illustrator.
         INPUT: First image is the base geometry.
+        ${additionalBaseImages.length > 0 ? `ADDITIONAL INPUTS: The next ${additionalBaseImages.length} images are additional views of the Base Geometry.` : ''}
         TASK: Create a "${diagramType}" diagram.
         SPECIFICS: ${diagramInstruction}
         STYLE: High contrast, vector-like quality, clean lines, architectural portfolio style.
@@ -72,6 +80,7 @@ export const generateArchitecturalRender = async (
             prompt = `
         Act as a lead design architect performing a conceptual massing study.
         INPUT: Base Volume/Sketch.
+        ${additionalBaseImages.length > 0 ? `ADDITIONAL INPUTS: The next ${additionalBaseImages.length} images are additional views of the Base Volume.` : ''}
         PARAMETERS: Innovation: ${innovationLevel}/100. Form: ${formPrompt}. View: ${viewInstruction}.
         OPERATIONS: ${selectedVerbs.map(verb => `- ${SPATIAL_VERBS[verb]?.prompt || verb}`).join('\n')}
         AESTHETIC: ${materialPrompt}, ${timeOfDay || 'Neutral'} lighting.
@@ -85,7 +94,8 @@ export const generateArchitecturalRender = async (
 
         INPUTS:
         1. First Image: The **Base Room/Space** (Sketch or Photo).
-        ${referenceBase64Image ? '2. Second Image: **Style Reference**.' : ''}
+        ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Space.` : ''}
+        ${referenceBase64Image ? `${2 + additionalBaseImages.length}. Style Reference.` : ''}
 
         TASK:
         Transform the Base Space into a high-end interior design render.
@@ -127,9 +137,10 @@ export const generateArchitecturalRender = async (
             prompt = `
         Act as a world-class architectural visualizer. 
         INPUTS: 1. Base Geometry (Sketch/Model).
+        ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Geometry.` : ''}
         `;
 
-            let imageIndex = 2;
+            let imageIndex = 2 + additionalBaseImages.length;
             let siteImageIndex = -1;
             let refImageIndex = -1;
             let mat1ImageIndex = -1;
@@ -210,6 +221,7 @@ export const generateArchitecturalRender = async (
             },
             body: JSON.stringify({
                 base64Image: compressedBase64Image,
+                additionalBaseImages: compressedAdditionalImages,
                 siteBase64Image: compressedSiteImage,
                 referenceBase64Image: compressedReferenceImage,
                 material1Image: compressedMaterial1Image,

@@ -29,7 +29,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             diagramType,
             createMode,
             atmospheres,
-            elevationSide
+            elevationSide,
+            additionalBaseImages
         } = req.body;
 
         const apiKey = process.env.GOOGLE_API_KEY;
@@ -53,6 +54,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 },
             }
         ];
+
+        if (additionalBaseImages && Array.isArray(additionalBaseImages)) {
+            additionalBaseImages.forEach((img: string) => {
+                parts.push({
+                    inlineData: {
+                        data: img.split(',')[1] || img,
+                        mimeType: getMimeType(img),
+                    },
+                });
+            });
+        }
 
         if (siteBase64Image) {
             parts.push({ inlineData: { data: siteBase64Image.split(',')[1] || siteBase64Image, mimeType: getMimeType(siteBase64Image) } });

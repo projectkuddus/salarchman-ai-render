@@ -278,6 +278,7 @@ function App() {
 
   const [baseImageKey, setBaseImageKey] = useState(0);
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
+  const [additionalUploadedImages, setAdditionalUploadedImages] = useState<string[]>([]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -299,10 +300,32 @@ function App() {
     }
   };
 
+  const handleAdditionalFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const newImages: string[] = [];
+      Array.from(files).forEach((file: File) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result && typeof event.target.result === 'string') {
+            setAdditionalUploadedImages(prev => [...prev, event.target!.result as string].slice(0, 4)); // Limit to 4 additional images (total 5)
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const handleRemoveAdditionalImage = (e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+    setAdditionalUploadedImages(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleRemoveBaseImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setUploadedImage(null);
     setUploadedImagePreview(null);
+    setAdditionalUploadedImages([]); // Clear additional images too if main is removed
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -389,6 +412,7 @@ function App() {
     if (item.selectedVerbs) setSelectedVerbs(item.selectedVerbs);
     if (item.atmospheres) setSelectedAtmospheres(item.atmospheres);
     if (item.elevationSide) setElevationSide(item.elevationSide);
+    if (item.additionalBaseImages) setAdditionalUploadedImages(item.additionalBaseImages);
 
     if (item.createMode) {
       setCreateMode(item.createMode);
@@ -530,7 +554,8 @@ function App() {
         activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : [],
         (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
         createMode === 'Exterior' ? material1Image : null,
-        createMode === 'Exterior' ? material2Image : null
+        createMode === 'Exterior' ? material2Image : null,
+        additionalUploadedImages
       );
 
       // Create history item
@@ -557,7 +582,8 @@ function App() {
         } : undefined,
         createMode: activeTab === 'render' ? createMode : 'Exterior', // Ensure createMode is set correctly
         atmospheres: activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : undefined,
-        elevationSide: (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined
+        elevationSide: (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
+        additionalBaseImages: additionalUploadedImages
       };
 
       // Optimistic update for UI
@@ -624,6 +650,7 @@ function App() {
     setPrompt('');
     setApiKeyError(null);
     setSelectedVerbs([]);
+    setAdditionalUploadedImages([]);
     if (fileInputRef.current) fileInputRef.current.value = '';
     if (siteInputRef.current) siteInputRef.current.value = '';
     if (referenceInputRef.current) referenceInputRef.current.value = '';
@@ -1480,7 +1507,7 @@ function App() {
                 {/* Left Column */}
                 <div className="w-1/3 flex flex-col gap-4">
                   {/* Base Geometry */}
-                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
+                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px] flex flex-col">
                     <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                       <Box size={12} /> Base Geometry
                     </div>
@@ -1492,9 +1519,38 @@ function App() {
                         <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                       </div>
                     ) : (
-                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                      <div className="relative w-full flex-1 rounded-2xl overflow-hidden">
                         <img src={uploadedImage} alt="Base Geometry" className="w-full h-full object-cover" />
                         <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                      </div>
+                    )}
+                    {/* Additional Base Images (Diagram Tab) */}
+                    {uploadedImage && (
+                      <div className="px-2 pb-2 grid grid-cols-5 gap-2 mt-2">
+                        {additionalUploadedImages.map((img, idx) => (
+                          <div key={idx} className="aspect-square rounded-lg border border-slate-200 relative overflow-hidden group bg-slate-50">
+                            <img src={img} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
+                            <button
+                              onClick={(e) => handleRemoveAdditionalImage(e, idx)}
+                              className="absolute top-0.5 right-0.5 bg-black/50 text-white p-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <X size={10} />
+                            </button>
+                          </div>
+                        ))}
+                        {additionalUploadedImages.length < 4 && (
+                          <label className="aspect-square rounded-lg border border-dashed border-slate-300 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors bg-white">
+                            <Plus size={16} className="text-slate-400" />
+                            <span className="text-[8px] text-slate-400 font-medium mt-1">Add View</span>
+                            <input
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              onChange={handleAdditionalFileUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1586,7 +1642,7 @@ function App() {
                 {/* Left Column */}
                 <div className="w-1/3 flex flex-col gap-4">
                   {/* Base Geometry */}
-                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px]">
+                  <div className="flex-1 bg-white rounded-2xl border border-dashed border-slate-300 relative group min-h-[200px] flex flex-col">
                     <div className="absolute top-4 left-4 z-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                       <Box size={12} /> Base Geometry
                     </div>
@@ -1598,9 +1654,38 @@ function App() {
                         <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                       </div>
                     ) : (
-                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                      <div className="relative w-full flex-1 rounded-2xl overflow-hidden">
                         <img src={uploadedImage} alt="Base Geometry" className="w-full h-full object-cover" />
                         <button onClick={handleClear} className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors"><X size={16} /></button>
+                      </div>
+                    )}
+                    {/* Additional Base Images (Ideation Tab) */}
+                    {uploadedImage && (
+                      <div className="px-2 pb-2 grid grid-cols-5 gap-2 mt-2">
+                        {additionalUploadedImages.map((img, idx) => (
+                          <div key={idx} className="aspect-square rounded-lg border border-slate-200 relative overflow-hidden group bg-slate-50">
+                            <img src={img} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
+                            <button
+                              onClick={(e) => handleRemoveAdditionalImage(e, idx)}
+                              className="absolute top-0.5 right-0.5 bg-black/50 text-white p-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <X size={10} />
+                            </button>
+                          </div>
+                        ))}
+                        {additionalUploadedImages.length < 4 && (
+                          <label className="aspect-square rounded-lg border border-dashed border-slate-300 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors bg-white">
+                            <Plus size={16} className="text-slate-400" />
+                            <span className="text-[8px] text-slate-400 font-medium mt-1">Add View</span>
+                            <input
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              onChange={handleAdditionalFileUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1725,6 +1810,35 @@ function App() {
                           />
                           <button onClick={handleRemoveBaseImage} className="absolute top-4 right-4 bg-white text-slate-900 p-2 rounded-lg shadow-lg hover:bg-slate-50 transition-colors z-20"><X size={16} /></button>
                         </div>
+                      </div>
+                    )}
+                    {/* Additional Base Images (Render Tab) */}
+                    {uploadedImage && (
+                      <div className="px-2 pb-2 grid grid-cols-5 gap-2 mt-auto">
+                        {additionalUploadedImages.map((img, idx) => (
+                          <div key={idx} className="aspect-square rounded-lg border border-slate-200 relative overflow-hidden group bg-slate-50">
+                            <img src={img} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
+                            <button
+                              onClick={(e) => handleRemoveAdditionalImage(e, idx)}
+                              className="absolute top-0.5 right-0.5 bg-black/50 text-white p-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <X size={10} />
+                            </button>
+                          </div>
+                        ))}
+                        {additionalUploadedImages.length < 4 && (
+                          <label className="aspect-square rounded-lg border border-dashed border-slate-300 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors bg-white">
+                            <Plus size={16} className="text-slate-400" />
+                            <span className="text-[8px] text-slate-400 font-medium mt-1">Add View</span>
+                            <input
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              onChange={handleAdditionalFileUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
                       </div>
                     )}
                   </div>

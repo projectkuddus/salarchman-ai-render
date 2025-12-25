@@ -129,6 +129,7 @@ export interface IdeationConfig {
 export interface GenerationResult {
   id: string;
   originalImage: string; // Base64
+  additionalBaseImages?: string[]; // Base64[] (Optional additional angles)
   siteImage?: string | null; // Base64 (Optional context)
   referenceImage?: string | null; // Base64 (Optional style/material reference)
   generatedImage: string; // Base64 or URL
