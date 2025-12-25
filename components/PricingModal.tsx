@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Zap, Building2, Crown, Package, Rocket, Code2, Copy, Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { X, Check, Zap, Building2, Crown, Package, Rocket, Code2, Copy, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import { UserTier } from '../types';
 
 interface CreditBundle {
@@ -75,21 +75,27 @@ interface PricingModalProps {
     isOpen: boolean;
     onClose: () => void;
     currentTier: UserTier;
-    onUpgrade: (tier: UserTier, credits?: number) => void;
+    onPurchaseComplete: (credits: number, transactionId: string, bundleName: string, amount: number) => Promise<boolean>;
     userEmail?: string;
 }
 
-export function PricingModal({ isOpen, onClose, currentTier, onUpgrade, userEmail }: PricingModalProps) {
+export function PricingModal({ isOpen, onClose, currentTier, onPurchaseComplete, userEmail }: PricingModalProps) {
     const [selectedBundle, setSelectedBundle] = useState<CreditBundle | null>(null);
     const [copied, setCopied] = useState(false);
+    const [transactionId, setTransactionId] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
 
     if (!isOpen) return null;
 
     const BKASH_NUMBER = '01409989900';
-    const SUPPORT_EMAIL = 'renderman.arch@gmail.com';
 
     const handleSelectBundle = (bundle: CreditBundle) => {
         setSelectedBundle(bundle);
+        setTransactionId('');
+        setError('');
+        setSuccess(false);
     };
 
     const handleCopyNumber = () => {
@@ -100,14 +106,72 @@ export function PricingModal({ isOpen, onClose, currentTier, onUpgrade, userEmai
 
     const handleBack = () => {
         setSelectedBundle(null);
+        setTransactionId('');
+        setError('');
+        setSuccess(false);
     };
 
-    const generateEmailBody = () => {
-        if (!selectedBundle) return '';
-        return encodeURIComponent(
-            `Hi Renderman Team,\n\nI have purchased the ${selectedBundle.name} bundle (${selectedBundle.credits} credits) for ৳${selectedBundle.price}.\n\nTransaction Details:\n- bKash Transaction ID: [PASTE YOUR TRANSACTION ID HERE]\n- My Account Email: ${userEmail || '[YOUR EMAIL]'}\n- Bundle: ${selectedBundle.name} (${selectedBundle.credits} credits)\n- Amount Paid: ৳${selectedBundle.price}\n\nPlease add the credits to my account.\n\nThank you!`
-        );
+    const handleSubmit = async () => {
+        if (!selectedBundle) return;
+
+        // Validate transaction ID
+        if (!transactionId.trim()) {
+            setError('Please enter your bKash Transaction ID');
+            return;
+        }
+
+        if (transactionId.trim().length < 8) {
+            setError('Transaction ID seems too short. Please check and try again.');
+            return;
+        }
+
+        setIsSubmitting(true);
+        setError('');
+
+        try {
+            const result = await onPurchaseComplete(
+                selectedBundle.credits,
+                transactionId.trim(),
+                selectedBundle.name,
+                selectedBundle.price
+            );
+
+            if (result) {
+                setSuccess(true);
+                // Close modal after showing success
+                setTimeout(() => {
+                    onClose();
+                    setSelectedBundle(null);
+                    setTransactionId('');
+                    setSuccess(false);
+                }, 2000);
+            } else {
+                setError('Failed to process payment. Please try again or contact support.');
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    // Success View
+    if (success && selectedBundle) {
+        return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+                <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                        <CheckCircle className="w-8 h-8 text-green-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-black mb-2">Payment Received!</h2>
+                    <p className="text-slate-600 mb-4">
+                        <strong>{selectedBundle.credits} credits</strong> have been added to your account.
+                    </p>
+                    <p className="text-sm text-slate-400">Transaction ID: {transactionId}</p>
+                </div>
+            </div>
+        );
+    }
 
     // Payment Instructions View
     if (selectedBundle) {
@@ -166,40 +230,48 @@ export function PricingModal({ isOpen, onClose, currentTier, onUpgrade, userEmai
                             </div>
                         </div>
 
-                        {/* Step 2: Email Transaction */}
+                        {/* Step 2: Enter Transaction ID */}
                         <div className="space-y-3">
                             <div className="flex items-center gap-2">
                                 <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">2</div>
-                                <h3 className="font-semibold text-black">Email Your Transaction ID</h3>
+                                <h3 className="font-semibold text-black">Enter Transaction ID</h3>
                             </div>
-                            <div className="ml-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                                <p className="text-slate-600 text-sm mb-3">After payment, email us your <strong>bKash Transaction ID</strong> and account email.</p>
-                                <a
-                                    href={`mailto:${SUPPORT_EMAIL}?subject=Credit Purchase - ${selectedBundle.name} Bundle&body=${generateEmailBody()}`}
-                                    className="flex items-center justify-center gap-2 w-full py-3 bg-black text-white rounded-xl font-medium hover:bg-slate-800 transition-colors"
-                                >
-                                    <Mail className="w-5 h-5" />
-                                    Send Email with Transaction ID
-                                </a>
+                            <div className="ml-8 space-y-3">
+                                <p className="text-slate-600 text-sm">After payment, enter your bKash Transaction ID below:</p>
+                                <input
+                                    type="text"
+                                    value={transactionId}
+                                    onChange={(e) => setTransactionId(e.target.value)}
+                                    placeholder="e.g., TRX123456789"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black placeholder:text-slate-400"
+                                />
+                                {error && (
+                                    <p className="text-red-500 text-sm">{error}</p>
+                                )}
                             </div>
                         </div>
 
-                        {/* Step 3: Get Credits */}
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">3</div>
-                                <h3 className="font-semibold text-black">Receive Your Credits</h3>
-                            </div>
-                            <div className="ml-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                                <p className="text-slate-600 text-sm">We'll verify your payment and add <strong>{selectedBundle.credits} credits</strong> to your account within 1-2 hours (usually much faster!).</p>
-                            </div>
-                        </div>
-                    </div>
+                        {/* Submit Button */}
+                        <button
+                            onClick={handleSubmit}
+                            disabled={isSubmitting || !transactionId.trim()}
+                            className="w-full py-4 bg-black text-white rounded-xl font-bold hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                    Processing...
+                                </>
+                            ) : (
+                                <>
+                                    <CheckCircle className="w-5 h-5" />
+                                    Verify & Add {selectedBundle.credits} Credits
+                                </>
+                            )}
+                        </button>
 
-                    {/* Footer */}
-                    <div className="p-6 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
-                        <p className="text-xs text-slate-500 text-center">
-                            Questions? Email us at <a href={`mailto:${SUPPORT_EMAIL}`} className="text-black font-medium hover:underline">{SUPPORT_EMAIL}</a>
+                        <p className="text-xs text-slate-400 text-center">
+                            Your transaction will be recorded for verification. Credits are added instantly.
                         </p>
                     </div>
                 </div>
@@ -310,7 +382,7 @@ export function PricingModal({ isOpen, onClose, currentTier, onUpgrade, userEmai
                             <p className="text-slate-500 text-sm">Contact us for enterprise solutions and bulk discounts</p>
                         </div>
                         <a
-                            href={`mailto:${SUPPORT_EMAIL}?subject=Custom%20Plan%20Inquiry`}
+                            href="mailto:renderman.arch@gmail.com?subject=Custom%20Plan%20Inquiry"
                             className="shrink-0"
                         >
                             <button className="px-5 py-2.5 border border-slate-300 text-black rounded-xl font-medium hover:bg-white transition-colors">

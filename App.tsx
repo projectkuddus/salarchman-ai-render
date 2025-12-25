@@ -527,30 +527,66 @@ function App() {
     );
   };
 
-  const handleUpgrade = (tier: UserTier) => {
-    if (tier === UserTier.PRO) {
-      // Simulate purchase - add 100 credits
+  // Handle credit purchase with Transaction ID - stores in Supabase for audit
+  const handlePurchaseComplete = async (
+    creditsToAdd: number,
+    transactionId: string,
+    bundleName: string,
+    amount: number
+  ): Promise<boolean> => {
+    if (!currentUser) return false;
+
+    try {
+      // 1. Store transaction in Supabase for audit
+      const { error: transactionError } = await supabase
+        .from('transactions')
+        .insert({
+          user_id: currentUser.id,
+          user_email: currentUser.email,
+          bundle_name: bundleName,
+          credits_purchased: creditsToAdd,
+          amount_bdt: amount,
+          bkash_transaction_id: transactionId,
+          created_at: new Date().toISOString(),
+          status: 'pending_verification'
+        });
+
+      if (transactionError) {
+        console.error('Error storing transaction:', transactionError);
+        // Continue anyway - we'll add credits even if logging fails
+      }
+
+      // 2. Update credits locally
       const newCredits = {
-        available: credits.available + 100,
+        available: credits.available + creditsToAdd,
         totalUsed: credits.totalUsed
       };
       setCredits(newCredits);
 
-      if (currentUser) {
-        const updatedUser = { ...currentUser, tier: UserTier.PRO };
-        setCurrentUser(updatedUser);
+      // 3. Update user tier to PRO (removes watermark)
+      const updatedUser = { ...currentUser, tier: UserTier.PRO };
+      setCurrentUser(updatedUser);
 
-        // Update in DB
-        supabase
-          .from('user_credits')
-          .upsert({
-            user_id: currentUser.id,
-            credits_available: newCredits.available,
-            credits_used: newCredits.totalUsed
-          });
-      }
-      setShowPricing(false);
-      alert('Successfully upgraded to Pro! 100 credits added.');
+      // 4. Update credits in Supabase
+      await supabase
+        .from('user_credits')
+        .upsert({
+          user_id: currentUser.id,
+          credits_available: newCredits.available,
+          credits_used: newCredits.totalUsed
+        });
+
+      // 5. Update user tier in profiles
+      await supabase
+        .from('profiles')
+        .update({ tier: 'PRO', credits: newCredits.available })
+        .eq('id', currentUser.id);
+
+      console.log(`Purchase complete: ${creditsToAdd} credits added. Transaction ID: ${transactionId}`);
+      return true;
+    } catch (err) {
+      console.error('Purchase error:', err);
+      return false;
     }
   };
 
@@ -2058,7 +2094,7 @@ function App() {
           isOpen={showPricing}
           onClose={() => setShowPricing(false)}
           currentTier={currentUser.tier}
-          onUpgrade={handleUpgrade}
+          onPurchaseComplete={handlePurchaseComplete}
           userEmail={currentUser.email}
         />
       )}
