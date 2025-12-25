@@ -1801,7 +1801,7 @@ function App() {
                         <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
                       </div>
                     ) : (
-                      <div className="relative w-full h-full p-2">
+                      <div className="relative w-full flex-1 min-h-0 p-2">
                         <div className="w-full h-full rounded-xl overflow-hidden relative bg-slate-100 border border-slate-100">
                           <img
                             src={uploadedImagePreview || uploadedImage || ''}
