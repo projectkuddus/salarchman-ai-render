@@ -125,11 +125,18 @@ export interface CustomStyle {
   prompt: string;
 }
 
+export enum UserTier {
+  FREE = 'Free',
+  PRO = 'Pro',
+  STUDIO = 'Studio'
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
   avatar: string;
+  tier: UserTier;
 }
 
 export interface IdeationConfig {

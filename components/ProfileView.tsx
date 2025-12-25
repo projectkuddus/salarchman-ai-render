@@ -121,7 +121,17 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, credits, history
                         <div className="flex justify-between items-end text-xs text-slate-500 border-t border-white/10 pt-4">
                             <div>
                                 <p className="uppercase tracking-wider mb-1">Plan</p>
-                                <p className="text-white font-medium">Free Tier</p>
+                                <div className="flex items-center gap-2">
+                                    <p className="text-white font-medium">{user.tier}</p>
+                                    {user.tier === 'Free' && (
+                                        <button
+                                            onClick={() => onPurchase(0)} // Trigger pricing modal
+                                            className="text-xs bg-yellow-500 text-black px-2 py-0.5 rounded font-bold hover:bg-yellow-400 transition-colors"
+                                        >
+                                            UPGRADE
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                             <div className="text-right">
                                 <p className="uppercase tracking-wider mb-1">Total Used</p>

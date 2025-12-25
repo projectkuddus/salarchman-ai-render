@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Image as ImageIcon, Sparkles, Layers, Box, Settings, Download, X, History, CreditCard, Video, Key, MapPin, Monitor, Plus, Trash2, Edit2, Save, Palette, Cuboid, LogOut, User as UserIcon, AlertCircle, RefreshCw, Lightbulb, Shapes, Camera, Shield, Mail, Sliders, Sun, Compass, Filter, Calendar, ChevronDown, SortDesc, Grid, Spline, ArrowUpRight, Wind, Users, GitBranch, Ruler, Map, Leaf, BrickWall, Square, Package, TreeDeciduous, Grid3x3, Droplets, LayoutGrid, Waves, Gem, Scissors, ArrowUpSquare, Merge, BoxSelect, Expand, MinusSquare, Target, Split, Eraser, Puzzle, RotateCw, Scroll, MoveDiagonal, ArrowRightFromLine, ArrowUpFromLine, Signal, CornerUpRight, Sunrise, Sunset, Home, Sofa, Armchair, Hexagon, Component, Archive, Warehouse, Crown, CloudRain, Zap, Cloud, Moon, Check, Cpu, Eye, Minimize2, Copy, TrendingUp, ArrowDownToLine, Shovel, WrapText, Network, DoorOpen, Disc, MoveHorizontal, Shrink, Maximize, FoldVertical, ScissorsLineDashed, Scaling, GitMerge, PlusSquare, Activity, Layout } from 'lucide-react';
 import { generateArchitecturalRender } from './services/geminiService';
-import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere } from './types';
+import { PricingModal } from './components/PricingModal';
+import { watermarkService } from './services/watermarkService';
+import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere, UserTier } from './types';
 import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
 import { Button } from './components/Button';
 import { LoginScreen } from './components/LoginScreen';
@@ -32,10 +34,12 @@ function App() {
     id: 'dev-user',
     email: 'dev@example.com',
     name: 'Dev Architect',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    tier: UserTier.FREE
   });
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const [showPricing, setShowPricing] = useState(false);
 
   const [credits, setCredits] = useState<UserCredits>({ available: INITIAL_CREDITS, totalUsed: 0 });
   const [activeTab, setActiveTab] = useState<'render' | 'ideation' | 'diagram' | 'template' | 'profile'>('render');
@@ -138,7 +142,8 @@ function App() {
           id: session.user.id,
           email: session.user.email || '',
           name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Architect',
-          avatar: session.user.user_metadata.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+          avatar: session.user.user_metadata.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+          tier: UserTier.FREE
         };
         setCurrentUser(user);
         setShowLogin(false);
@@ -152,7 +157,8 @@ function App() {
           id: session.user.id,
           email: session.user.email || '',
           name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Architect',
-          avatar: session.user.user_metadata.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+          avatar: session.user.user_metadata.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+          tier: UserTier.FREE
         };
         setCurrentUser(user);
         setShowLogin(false);
@@ -513,6 +519,33 @@ function App() {
     setSelectedAtmospheres(prev =>
       prev.includes(atmosphere) ? prev.filter(a => a !== atmosphere) : [...prev, atmosphere]
     );
+  };
+
+  const handleUpgrade = (tier: UserTier) => {
+    if (tier === UserTier.PRO) {
+      // Simulate purchase - add 100 credits
+      const newCredits = {
+        available: credits.available + 100,
+        totalUsed: credits.totalUsed
+      };
+      setCredits(newCredits);
+
+      if (currentUser) {
+        const updatedUser = { ...currentUser, tier: UserTier.PRO };
+        setCurrentUser(updatedUser);
+
+        // Update in DB
+        supabase
+          .from('user_credits')
+          .upsert({
+            user_id: currentUser.id,
+            credits_available: newCredits.available,
+            credits_used: newCredits.totalUsed
+          });
+      }
+      setShowPricing(false);
+      alert('Successfully upgraded to Pro! 100 credits added.');
+    }
   };
 
   const handleGenerate = async () => {
@@ -2002,6 +2035,15 @@ function App() {
           )}
         </div>
       </main>
+      {/* Pricing Modal */}
+      {currentUser && (
+        <PricingModal
+          isOpen={showPricing}
+          onClose={() => setShowPricing(false)}
+          currentTier={currentUser.tier}
+          onUpgrade={handleUpgrade}
+        />
+      )}
     </div>
   );
 }
