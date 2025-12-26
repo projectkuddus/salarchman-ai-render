@@ -143,6 +143,8 @@ export const generateArchitecturalRender = async (
         Act as a world-class architectural visualizer. 
         INPUTS: 1. Base Geometry (Sketch/Model).
         ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Geometry.` : ''}
+        
+        CRITICAL GLOBAL INSTRUCTION: Never change any 'object or shape' from the input image. Just convert it into the desired style. Maintain the exact geometry.
         `;
 
             let imageIndex = 2 + additionalBaseImages.length;
@@ -186,7 +188,7 @@ export const generateArchitecturalRender = async (
         View: ${viewInstruction}.
         ${atmosphereInstruction}
         Context: ${additionalPrompt}.
-        ${viewType === ViewType.AXONOMETRIC ? "CRITICAL: The output MUST be an axonometric/isometric view. Do not output a perspective view." : ""}
+        ${viewType === ViewType.AXONOMETRIC || viewType === ViewType.ISOMETRIC ? "CRITICAL: The output MUST be an axonometric/isometric view. Do not output a perspective view." : ""}
         ${aspectRatio === 'Similar to Input' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Input Image." : ""}
         ${aspectRatio === 'Similar to Reference' ? "ASPECT RATIO: Strictly maintain the aspect ratio of the Reference Image." : ""}
         ${lightDirection !== undefined ? `LIGHTING DIRECTION: The light should come from ${lightDirection} degrees (0=North/Front, 90=East/Right, 180=South/Back, 270=West/Left). Ensure shadows fall accordingly.` : ""}

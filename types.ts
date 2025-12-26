@@ -95,6 +95,7 @@ export enum ViewType {
   ELEVATION = 'Elevation',
   SECTION = 'Section',
   AXONOMETRIC = 'Axonometric',
+  ISOMETRIC = 'Isometric',
   TOPSHOT = 'Top Shot (Bird\'s Eye)',
   DETAILS = 'Architectural Details',
   SIMILAR_TO_INPUT = 'Similar to Input Image',

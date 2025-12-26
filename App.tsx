@@ -978,6 +978,15 @@ function App() {
                         {category.title}
                         <ChevronDown size={12} className={`transition-transform duration-200 ${collapsedCategories.includes(category.title) ? '-rotate-90' : ''}`} />
                       </button>
+
+                      {/* Suggestion Text */}
+                      {!collapsedCategories.includes(category.title) && (category as any).suggestion && (
+                        <div className="mb-3 p-3 bg-blue-50 border border-blue-100 rounded-lg text-[10px] text-blue-700 leading-relaxed flex gap-2">
+                          <Lightbulb size={12} className="flex-shrink-0 mt-0.5" />
+                          <span>{(category as any).suggestion}</span>
+                        </div>
+                      )}
+
                       <div className={`grid grid-cols-2 gap-2 transition-all duration-300 ${collapsedCategories.includes(category.title) ? 'hidden' : 'block'}`}>
                         {category.styles.map(style => (
                           <button

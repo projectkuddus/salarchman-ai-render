@@ -62,6 +62,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
   },
   {
     title: "Architectural Model Photography",
+    suggestion: "make sure there is a proper base with landscape under the model.",
     styles: [
       RenderStyle.METAL_MODEL,
       RenderStyle.CONCRETE_MODEL,
@@ -271,6 +272,7 @@ export const VIEW_PROMPTS: Record<ViewType, string> = {
   [ViewType.ELEVATION]: "STRICTLY 2D orthographic facade elevation. Flat view. NO perspective distortion. Material details.",
   [ViewType.SECTION]: "STRICTLY 2D architectural section cut. Vertical cut through the building. Show interior structure and floor levels. Technical shading. NO perspective.",
   [ViewType.AXONOMETRIC]: "STRICTLY isometric or axonometric projection. Parallel projection. 30-degree angle. NO perspective distortion.",
+  [ViewType.ISOMETRIC]: "STRICTLY Isometric projection. Parallel lines, 30-degree angles. NO perspective distortion.",
   [ViewType.TOPSHOT]: "STRICTLY aerial top-down view. Bird's eye perspective. 90-degree look down. Site context and landscaping layout.",
   [ViewType.DETAILS]: "Close-up architectural detail. Macro photography style. Focus on construction joints and material transitions.",
   [ViewType.SIMILAR_TO_INPUT]: "STRICTLY MATCH the exact camera angle, perspective, and composition of the provided Base Geometry (Image #1). Do not change the view.",
