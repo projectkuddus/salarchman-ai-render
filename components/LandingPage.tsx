@@ -100,6 +100,27 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     <TriviaStrip />
                 </div>
 
+                {/* The Renderman Manifesto */}
+                <div className="max-w-3xl mx-auto px-6 mb-24 text-center">
+                    <div className="inline-block mb-6 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-bold tracking-widest uppercase text-slate-500">
+                        The Renderman Manifesto
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-light leading-relaxed text-slate-800 mb-8">
+                        We believe creatives shouldn’t become <span className="font-medium text-slate-900">software operators.</span>
+                    </h3>
+                    <div className="space-y-6 text-base md:text-lg text-slate-600 leading-relaxed font-light">
+                        <p>
+                            Architects and designers are paid for taste, insight, and problem-solving—not for suffering through tools.
+                        </p>
+                        <p>
+                            <span className="font-medium text-slate-900">renderman.ai</span> exists to remove friction between imagination and output, so you can spend your best energy on thinking, seeing, and making decisions that matter.
+                        </p>
+                        <p className="text-xl md:text-2xl font-normal text-slate-900 pt-4">
+                            Less struggle. More clarity. Better work.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
                     {/* Developer Gallery Section */}
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
