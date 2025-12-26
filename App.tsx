@@ -1418,70 +1418,70 @@ function App() {
                           const getDiagramDetails = (t: string) => {
                             switch (t) {
                               // Core Drawing Set
-                              case 'Master Plan / Site Plan': return { icon: <Map size={24} />, desc: "Context & Proposal", color: "text-slate-600" };
-                              case 'Floor Plan': return { icon: <LayoutGrid size={24} />, desc: "Clean Key Levels", color: "text-slate-600" };
-                              case 'Section': return { icon: <Split size={24} />, desc: "Storytelling Sections", color: "text-slate-600" };
-                              case 'Elevation': return { icon: <ArrowUpFromLine size={24} />, desc: "Key Facade", color: "text-slate-600" };
-                              case 'Roof Plan': return { icon: <Umbrella size={24} />, desc: "Roof & Drainage", color: "text-slate-600" };
+                              case 'Master Plan / Site Plan': return { icon: <Map size={20} />, desc: "Context & Proposal", color: "text-emerald-600" };
+                              case 'Floor Plan': return { icon: <LayoutGrid size={20} />, desc: "Clean Key Levels", color: "text-blue-600" };
+                              case 'Section': return { icon: <Split size={20} />, desc: "Storytelling Sections", color: "text-orange-600" };
+                              case 'Elevation': return { icon: <ArrowUpFromLine size={20} />, desc: "Key Facade", color: "text-purple-600" };
+                              case 'Roof Plan': return { icon: <Umbrella size={20} />, desc: "Roof & Drainage", color: "text-cyan-600" };
 
                               // Concept
-                              case 'Concept / Schematic': return { icon: <Lightbulb size={24} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
-                              case 'Parti Drawing': return { icon: <PenTool size={24} />, desc: "Gestural Sketch", color: "text-amber-500" };
-                              case 'Key Principles': return { icon: <Target size={24} />, desc: "Core Rules", color: "text-amber-600" };
-                              case 'Form Evolution': return { icon: <GitBranch size={24} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
+                              case 'Concept / Schematic': return { icon: <Lightbulb size={20} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
+                              case 'Parti Drawing': return { icon: <PenTool size={20} />, desc: "Gestural Sketch", color: "text-amber-500" };
+                              case 'Key Principles': return { icon: <Target size={20} />, desc: "Core Rules", color: "text-amber-600" };
+                              case 'Form Evolution': return { icon: <GitBranch size={20} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
 
                               // Arsenal
-                              case 'Climate & Environmental': return { icon: <Wind size={24} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
-                              case 'Sun Path & Shading': return { icon: <Sun size={24} />, desc: "Solar Arc & Shadows", color: "text-yellow-500" };
-                              case 'Wind Flow & Ventilation': return { icon: <Wind size={24} />, desc: "Air Movement", color: "text-blue-400" };
-                              case 'Views & Privacy': return { icon: <Eye size={24} />, desc: "Visual Cones", color: "text-purple-400" };
-                              case 'Noise Map': return { icon: <Volume2 size={24} />, desc: "Acoustic Analysis", color: "text-red-400" };
-                              case 'Slope & Drainage': return { icon: <Mountain size={24} />, desc: "Terrain & Flow", color: "text-stone-500" };
-                              case 'Landscape & Trees': return { icon: <Trees size={24} />, desc: "Vegetation Strategy", color: "text-green-600" };
-                              case 'Access & Drop-off': return { icon: <Car size={24} />, desc: "Vehicular Entry", color: "text-slate-500" };
+                              case 'Climate & Environmental': return { icon: <Wind size={20} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
+                              case 'Sun Path & Shading': return { icon: <Sun size={20} />, desc: "Solar Arc & Shadows", color: "text-yellow-500" };
+                              case 'Wind Flow & Ventilation': return { icon: <Wind size={20} />, desc: "Air Movement", color: "text-blue-400" };
+                              case 'Views & Privacy': return { icon: <Eye size={20} />, desc: "Visual Cones", color: "text-purple-400" };
+                              case 'Noise Map': return { icon: <Volume2 size={20} />, desc: "Acoustic Analysis", color: "text-red-400" };
+                              case 'Slope & Drainage': return { icon: <Mountain size={20} />, desc: "Terrain & Flow", color: "text-stone-500" };
+                              case 'Landscape & Trees': return { icon: <Trees size={20} />, desc: "Vegetation Strategy", color: "text-green-600" };
+                              case 'Access & Drop-off': return { icon: <Car size={20} />, desc: "Vehicular Entry", color: "text-slate-500" };
 
-                              case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
-                              case 'Zoning Diagram': return { icon: <Layout size={24} />, desc: "Functional Zones", color: "text-rose-600" };
-                              case 'Adjacency / Bubble': return { icon: <Network size={24} />, desc: "Program Relations", color: "text-pink-400" };
-                              case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
-                              case 'Processional Sequence': return { icon: <Footprints size={24} />, desc: "User Journey", color: "text-orange-400" };
-                              case 'Time-of-Day Use': return { icon: <Clock size={24} />, desc: "Temporal Usage", color: "text-indigo-400" };
-                              case 'Activity & Usage': return { icon: <Users size={24} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
+                              case 'Programmatic & Zoning': return { icon: <Cuboid size={20} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
+                              case 'Zoning Diagram': return { icon: <Layout size={20} />, desc: "Functional Zones", color: "text-rose-600" };
+                              case 'Adjacency / Bubble': return { icon: <Network size={20} />, desc: "Program Relations", color: "text-pink-400" };
+                              case 'Circulation & Flow': return { icon: <ArrowUpRight size={20} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
+                              case 'Processional Sequence': return { icon: <Footprints size={20} />, desc: "User Journey", color: "text-orange-400" };
+                              case 'Time-of-Day Use': return { icon: <Clock size={20} />, desc: "Temporal Usage", color: "text-indigo-400" };
+                              case 'Activity & Usage': return { icon: <Users size={20} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
 
-                              case 'Structural Tectonics': return { icon: <Grid3x3 size={24} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
-                              case 'Envelope & Shading': return { icon: <Shield size={24} />, desc: "Facade System", color: "text-teal-500" };
-                              case 'Passive Cooling': return { icon: <Thermometer size={24} />, desc: "Thermal Strategy", color: "text-cyan-400" };
-                              case 'Water Strategy': return { icon: <Droplet size={24} />, desc: "Rainwater & Reuse", color: "text-blue-600" };
-                              case 'Sustainability Scorecard': return { icon: <Leaf size={24} />, desc: "Green Features", color: "text-green-500" };
+                              case 'Structural Tectonics': return { icon: <Grid3x3 size={20} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
+                              case 'Envelope & Shading': return { icon: <Shield size={20} />, desc: "Facade System", color: "text-teal-500" };
+                              case 'Passive Cooling': return { icon: <Thermometer size={20} />, desc: "Thermal Strategy", color: "text-cyan-400" };
+                              case 'Water Strategy': return { icon: <Droplet size={20} />, desc: "Rainwater & Reuse", color: "text-blue-600" };
+                              case 'Sustainability Scorecard': return { icon: <Leaf size={20} />, desc: "Green Features", color: "text-green-500" };
 
-                              case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
-                              case 'Urban Context & Mapping': return { icon: <MapPin size={24} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
+                              case 'Geometric Analysis': return { icon: <Ruler size={20} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
+                              case 'Urban Context & Mapping': return { icon: <MapPin size={20} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
 
                               // Signature
-                              case 'Iconic Diagram': return { icon: <Star size={24} />, desc: "The 'Logo' Idea", color: "text-yellow-400" };
-                              case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
-                              case 'Exploded Perspective': return { icon: <Maximize2 size={24} />, desc: "Human Scale Parts", color: "text-blue-600" };
-                              case 'Sectional Perspective': return { icon: <BoxSelect size={24} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
-                              case 'Storyboard Strip': return { icon: <Film size={24} />, desc: "Narrative Frames", color: "text-slate-700" };
-                              case 'Cinematic Sequence': return { icon: <Video size={24} />, desc: "Film-like Views", color: "text-slate-800" };
-                              case 'Material Palette': return { icon: <Palette size={24} />, desc: "Textures & Tones", color: "text-stone-600" };
-                              case 'Living Collage Cutaway': return { icon: <Leaf size={24} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
+                              case 'Iconic Diagram': return { icon: <Star size={20} />, desc: "The 'Logo' Idea", color: "text-yellow-400" };
+                              case 'Exploded Axonometric': return { icon: <Layers size={20} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
+                              case 'Exploded Perspective': return { icon: <Maximize2 size={20} />, desc: "Human Scale Parts", color: "text-blue-600" };
+                              case 'Sectional Perspective': return { icon: <BoxSelect size={20} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
+                              case 'Storyboard Strip': return { icon: <Film size={20} />, desc: "Narrative Frames", color: "text-slate-700" };
+                              case 'Cinematic Sequence': return { icon: <Video size={20} />, desc: "Film-like Views", color: "text-slate-800" };
+                              case 'Material Palette': return { icon: <Palette size={20} />, desc: "Textures & Tones", color: "text-stone-600" };
+                              case 'Living Collage Cutaway': return { icon: <Leaf size={20} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
 
                               // Advanced
-                              case 'Data-Driven Diagram': return { icon: <BarChart3 size={24} />, desc: "Metrics & Graphs", color: "text-cyan-600" };
-                              case 'Parametric Growth': return { icon: <Workflow size={24} />, desc: "Algorithmic Form", color: "text-indigo-600" };
-                              case 'Assembly Sequence': return { icon: <Construction size={24} />, desc: "Construction Steps", color: "text-orange-600" };
-                              case 'Phasing Diagram': return { icon: <TrendingUp size={24} />, desc: "Growth Stages", color: "text-green-500" };
-                              case 'Cost Logic': return { icon: <DollarSign size={24} />, desc: "Efficiency & Cost", color: "text-emerald-600" };
-                              case 'Accessibility Strategy': return { icon: <Accessibility size={24} />, desc: "Universal Design", color: "text-blue-500" };
-                              case 'Fire Strategy': return { icon: <Flame size={24} />, desc: "Egress & Safety", color: "text-red-500" };
+                              case 'Data-Driven Diagram': return { icon: <BarChart3 size={20} />, desc: "Metrics & Graphs", color: "text-cyan-600" };
+                              case 'Parametric Growth': return { icon: <Workflow size={20} />, desc: "Algorithmic Form", color: "text-indigo-600" };
+                              case 'Assembly Sequence': return { icon: <Construction size={20} />, desc: "Construction Steps", color: "text-orange-600" };
+                              case 'Phasing Diagram': return { icon: <TrendingUp size={20} />, desc: "Growth Stages", color: "text-green-500" };
+                              case 'Cost Logic': return { icon: <DollarSign size={20} />, desc: "Efficiency & Cost", color: "text-emerald-600" };
+                              case 'Accessibility Strategy': return { icon: <Accessibility size={20} />, desc: "Universal Design", color: "text-blue-500" };
+                              case 'Fire Strategy': return { icon: <Flame size={20} />, desc: "Egress & Safety", color: "text-red-500" };
 
                               // Motion
-                              case '60-120s Film': return { icon: <Film size={24} />, desc: "Cinematic Movie", color: "text-purple-600" };
-                              case 'Animated Diagram': return { icon: <Play size={24} />, desc: "Dynamic Motion", color: "text-pink-600" };
-                              case '3D Walkthrough': return { icon: <Camera size={24} />, desc: "Immersive Tour", color: "text-blue-500" };
+                              case '60-120s Film': return { icon: <Film size={20} />, desc: "Cinematic Movie", color: "text-purple-600" };
+                              case 'Animated Diagram': return { icon: <Play size={20} />, desc: "Dynamic Motion", color: "text-pink-600" };
+                              case '3D Walkthrough': return { icon: <Camera size={20} />, desc: "Immersive Tour", color: "text-blue-500" };
 
-                              default: return { icon: <Shapes size={24} />, desc: "Architectural diagram style", color: "text-slate-500" };
+                              default: return { icon: <Shapes size={20} />, desc: "Architectural diagram style", color: "text-slate-500" };
                             }
                           };
 
@@ -1491,25 +1491,25 @@ function App() {
                             <button
                               key={type}
                               onClick={() => setSelectedDiagramType(type as DiagramType)}
-                              className={`relative p-3 rounded-xl border text-left transition-all duration-200 flex flex-col gap-2 group hover:shadow-md ${isSelected
+                              className={`relative p-2 rounded-xl border text-left transition-all duration-200 flex flex-col gap-1.5 group hover:shadow-md ${isSelected
                                 ? 'bg-slate-900 border-slate-900 ring-1 ring-slate-900'
                                 : 'bg-white border-slate-200 hover:border-slate-300'
                                 }`}
                             >
-                              <div className={`p-2 rounded-lg w-fit transition-colors ${isSelected ? 'bg-slate-800 text-white' : `bg-slate-50 ${details.color}`}`}>
+                              <div className={`p-1.5 rounded-lg w-fit transition-colors ${isSelected ? 'bg-slate-800 text-white' : `bg-slate-50 ${details.color}`}`}>
                                 {details.icon}
                               </div>
                               <div>
-                                <h5 className={`text-xs font-bold mb-0.5 ${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                                <h5 className={`text-[10px] font-bold mb-0.5 ${isSelected ? 'text-white' : 'text-slate-900'}`}>
                                   {type}
                                 </h5>
-                                <p className={`text-[10px] leading-tight ${isSelected ? 'text-slate-400' : 'text-slate-500'}`}>
+                                <p className={`text-[9px] leading-tight ${isSelected ? 'text-slate-400' : 'text-slate-500'}`}>
                                   {details.desc}
                                 </p>
                               </div>
                               {isSelected && (
-                                <div className="absolute top-3 right-3 text-white">
-                                  <Check size={14} />
+                                <div className="absolute top-2 right-2 text-white">
+                                  <Check size={12} />
                                 </div>
                               )}
                             </button>
@@ -1768,7 +1768,7 @@ function App() {
                 {/* Right Column (Output) */}
                 <div className="w-2/3 bg-white rounded-2xl border border-slate-200 shadow-sm relative flex items-center justify-center overflow-hidden">
                   <div className="absolute top-4 left-4 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                    Diagram &bull; {selectedImageSize} &bull; {selectedAspectRatio}
+                    Diagram &bull; {selectedDiagramType} &bull; {selectedImageSize} &bull; {selectedAspectRatio}
                   </div>
                   {!generatedImage ? (
                     <div className="text-center text-slate-300">
