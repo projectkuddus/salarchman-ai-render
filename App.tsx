@@ -981,8 +981,8 @@ function App() {
 
                       {/* Suggestion Text */}
                       {!collapsedCategories.includes(category.title) && (category as any).suggestion && (
-                        <div className="mb-3 p-3 bg-blue-50 border border-blue-100 rounded-lg text-[10px] text-blue-700 leading-relaxed flex gap-2">
-                          <Lightbulb size={12} className="flex-shrink-0 mt-0.5" />
+                        <div className="mb-2 p-2 bg-slate-50 border border-slate-200 rounded-md text-[9px] text-slate-500 leading-relaxed flex gap-1.5 items-start">
+                          <Lightbulb size={10} className="flex-shrink-0 mt-0.5" />
                           <span>{(category as any).suggestion}</span>
                         </div>
                       )}

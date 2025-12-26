@@ -62,7 +62,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
   },
   {
     title: "Architectural Model Photography",
-    suggestion: "make sure there is a proper base with landscape under the model.",
+    suggestion: "Note: If you want the model with a specific base or landscape, please mention that in the 'Refine' box below.",
     styles: [
       RenderStyle.METAL_MODEL,
       RenderStyle.CONCRETE_MODEL,
