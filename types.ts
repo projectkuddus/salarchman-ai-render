@@ -84,6 +84,7 @@ export enum InteriorStyle {
   AMBER_NOIR = 'Amber Noir',
   PAPER_MODEL = 'Paper Model',
   GAZIR_POT = 'Gazir Pot',
+  BLUE_AMBIENCE = 'Blue Ambience',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 
