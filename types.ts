@@ -85,6 +85,7 @@ export enum InteriorStyle {
   PAPER_MODEL = 'Paper Model',
   GAZIR_POT = 'Gazir Pot',
   BLUE_AMBIENCE = 'Blue Ambience',
+  SOFT_BRUTALIST = 'Soft Brutalist',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 

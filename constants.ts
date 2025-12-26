@@ -249,7 +249,8 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp", // Placeholder moody orange
   [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg",
   [InteriorStyle.GAZIR_POT]: "/gallery/gazir-pot-thumb-v2.png",
-  [InteriorStyle.BLUE_AMBIENCE]: "/gallery/blue-ambience-thumb.png"
+  [InteriorStyle.BLUE_AMBIENCE]: "/gallery/blue-ambience-thumb.png",
+  [InteriorStyle.SOFT_BRUTALIST]: "/gallery/soft-brutalist-thumb.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
@@ -271,7 +272,8 @@ export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
   [InteriorStyle.AMBER_NOIR]: "Amber Noir style. Cinematic, moody interior with strong orange/amber lighting. Large grid windows with a hazy, dystopian city view outside. Silhouette of a figure sitting by the window. Minimalist furniture, deep shadows, warm atmospheric glow. Blade Runner 2049 aesthetic. High contrast, emotional, dramatic.",
   [InteriorStyle.PAPER_MODEL]: "Interior white paper model. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.",
   [InteriorStyle.GAZIR_POT]: "Gazir Pot style interior. Traditional Bengali scroll painting folk art. Flat 2D perspective, bold primary colors (red, yellow, blue, green), distinct black outlines, no 3D shading. Furniture and decor depicted in a stylized, flat manner. Terracotta and earthy tones mixed with vibrant hues. The room should look like a painted scene in a Gazir Pot scroll.",
-  [InteriorStyle.BLUE_AMBIENCE]: "Blue Ambience style. Cinematic, moody interior with deep dark blue atmospheric lighting. 'Blue Hour' aesthetic. High contrast with warm accent lights (orange/red neon or warm lamps) glowing against the cool blue environment. Foggy/hazy depth. Cyberpunk or Noir aesthetic but grounded in reality. STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the blue atmospheric lighting style."
+  [InteriorStyle.BLUE_AMBIENCE]: "Blue Ambience style. Cinematic, moody interior with deep dark blue atmospheric lighting. 'Blue Hour' aesthetic. High contrast with warm accent lights (orange/red neon or warm lamps) glowing against the cool blue environment. Foggy/hazy depth. Cyberpunk or Noir aesthetic but grounded in reality. STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the blue atmospheric lighting style.",
+  [InteriorStyle.SOFT_BRUTALIST]: "Soft Brutalist style. Raw exposed concrete walls with visible formwork holes. Minimalist stainless steel furniture. Large warm paper spherical pendant light. Soft, diffuse studio lighting. High-end architectural photography. Neutral tones (grey, silver, warm white). STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the material and lighting style."
 };
 
 export const VIEW_PROMPTS: Record<ViewType, string> = {
