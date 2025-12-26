@@ -1,4 +1,3 @@
-
 export enum RenderStyle {
   // Realism Spectrum
   CONCEPTUAL = 'Conceptual',
@@ -24,6 +23,7 @@ export enum RenderStyle {
   WATERCOLOR_NPR = 'Watercolor NPR',
   MINIATURE = 'Miniature / Tilt-Shift',
   LOW_POLY = 'Low Poly',
+  DESERT_RUIN = 'Desert Ruin',
 
   // Hand-Drawn / Analog
   PENCIL_SKETCH = 'Pencil Sketch',

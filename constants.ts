@@ -44,7 +44,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.SKETCHY_NPR,
       RenderStyle.WATERCOLOR_NPR,
       RenderStyle.MINIATURE,
-      RenderStyle.LOW_POLY
+      RenderStyle.LOW_POLY,
+      RenderStyle.DESERT_RUIN
     ]
   },
   {
@@ -132,6 +133,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_NPR]: '/thumbnails/watercolor-npr.jpg',
   [RenderStyle.MINIATURE]: '/thumbnails/miniature.jpg',
   [RenderStyle.LOW_POLY]: '/thumbnails/low-poly.jpg',
+  [RenderStyle.DESERT_RUIN]: '/gallery/desert-ruin-thumb.jpg',
 
   // Hand-Drawn
   [RenderStyle.PENCIL_SKETCH]: '/thumbnails/pencil-sketch.jpg',
@@ -195,6 +197,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_NPR]: "Watercolor NPR, soft edges, paint wash effects, artistic and fluid.",
   [RenderStyle.MINIATURE]: "Miniature tilt-shift effect, depth of field blur, toy-like scale model appearance.",
   [RenderStyle.LOW_POLY]: "Low poly art style, faceted geometry, vibrant colors, digital art aesthetic.",
+  [RenderStyle.DESERT_RUIN]: "Desert Ruin style. The building is rendered as an abandoned, weathered structure in a desert environment. Cracked beige plaster, exposed bricks, sand accumulation, worn textures. Post-apocalyptic but beautiful decay. Warm sunlight, harsh shadows. STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the weathered material and desert atmosphere.",
   [RenderStyle.PENCIL_SKETCH]: "Pencil sketch style, graphite texture, rough hand-drawn lines on paper.",
   [RenderStyle.INK_LINE]: "Ink line drawing, sharp black lines on white, technical illustration quality.",
   [RenderStyle.MARKER_RENDERING]: "Marker rendering, alcohol marker textures, vibrant architectural sketch style.",
