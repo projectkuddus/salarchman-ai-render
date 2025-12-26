@@ -34,6 +34,7 @@ export enum RenderStyle {
   TECHNICAL_PEN = 'Technical Pen',
   BLUEPRINT = 'Blueprint',
   ARCH_DOODLE = 'Architectural Doodle',
+  GAZIR_POT = 'Gazir Pot',
 
   // Architectural Model Photography
   METAL_MODEL = 'Metal Model',
@@ -82,6 +83,7 @@ export enum InteriorStyle {
   AMBER_TEXTURED = 'Amber Textured',
   AMBER_NOIR = 'Amber Noir',
   PAPER_MODEL = 'Paper Model',
+  GAZIR_POT = 'Gazir Pot',
   SIMILAR_TO_REF = 'Similar to Reference Image'
 }
 

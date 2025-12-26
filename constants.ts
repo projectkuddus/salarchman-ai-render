@@ -57,7 +57,9 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.PASTEL,
       RenderStyle.TECHNICAL_PEN,
       RenderStyle.BLUEPRINT,
-      RenderStyle.ARCH_DOODLE
+      RenderStyle.BLUEPRINT,
+      RenderStyle.ARCH_DOODLE,
+      RenderStyle.GAZIR_POT
     ]
   },
   {
@@ -139,6 +141,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
   [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
+  [RenderStyle.GAZIR_POT]: '/gallery/gazir-pot-thumb.jpg',
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb-v2.jpg',
@@ -198,6 +201,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.TECHNICAL_PEN]: "Technical pen drawing, precise lines, stippling, clean architectural detail.",
   [RenderStyle.BLUEPRINT]: "Blueprint style, white technical lines on blue background, construction document look.",
   [RenderStyle.ARCH_DOODLE]: "Architectural illustration, loose naive hand-drawn style, thin black ink pen on white paper, tremulous jittery linework, corner overshoots, no grey washes, purely linework. Densely populated with small scale figures, abstract scalloped vegetation, spontaneous hand-lettering annotations, charming napkin sketch aesthetic.",
+  [RenderStyle.GAZIR_POT]: "Gazir Pot style. Traditional Bengali scroll painting folk art. Flat 2D perspective, bold primary colors (red, yellow, blue, green), distinct black outlines, no 3D shading. Figures and elements are depicted in a stylized, flat manner. Terracotta and earthy tones mixed with vibrant hues. The architecture should look like a painted backdrop in a Gazir Pot scroll. Maintain the exact geometry of the input but render it as a flat folk art painting.",
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: "Physical architectural model made of brushed aluminum and stainless steel. Monochromatic silver metal texture, precision laser cut edges, industrial aesthetic. Studio lighting with soft shadows, clean grey background. High-end craftsmanship, museum quality model photography.",
@@ -243,7 +247,8 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg",
   [InteriorStyle.AMBER_TEXTURED]: "/thumbnails/interior/amber-textured.jpg",
   [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp", // Placeholder moody orange
-  [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg"
+  [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg",
+  [InteriorStyle.GAZIR_POT]: "/gallery/gazir-pot-thumb.jpg"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
@@ -263,7 +268,8 @@ export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
   [InteriorStyle.INDUSTRIAL]: "Industrial loft style. Exposed brick walls, ductwork, metal framed windows, concrete floors, vintage leather furniture, Edison bulbs, warehouse aesthetic.",
   [InteriorStyle.AMBER_TEXTURED]: "Amber Textured Minimalist style. STRICTLY MATCH REFERENCE: The ONLY light source is the window/glass panels. All windows must be SOLID, GLOWING AMBER/ORANGE FROSTED GLASS (like backlit onyx). No outside view, just pure warm amber light. The rest of the room (walls, ceiling, floor) must be HEAVILY TEXTURED ROUGH PLASTER or CONCRETE in dark earthy tones. No other lights. High contrast: glowing orange rectangles vs dark rough textured cave-like interior. Minimalist furniture. Moody, atmospheric, warm.",
   [InteriorStyle.AMBER_NOIR]: "Amber Noir style. Cinematic, moody interior with strong orange/amber lighting. Large grid windows with a hazy, dystopian city view outside. Silhouette of a figure sitting by the window. Minimalist furniture, deep shadows, warm atmospheric glow. Blade Runner 2049 aesthetic. High contrast, emotional, dramatic.",
-  [InteriorStyle.PAPER_MODEL]: "Interior white paper model. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry."
+  [InteriorStyle.PAPER_MODEL]: "Interior white paper model. Pure white matte paper texture, thin paperly, Slightly creased, a bit crumpled, with a papery texture, Mildly crimped and crinkled. Clean precision cuts, layered paper edges, soft ambient occlusion shadows, studio lighting. Minimalist, abstract, high key. No colors, just white paper geometry.",
+  [InteriorStyle.GAZIR_POT]: "Gazir Pot style interior. Traditional Bengali scroll painting folk art. Flat 2D perspective, bold primary colors (red, yellow, blue, green), distinct black outlines, no 3D shading. Furniture and decor depicted in a stylized, flat manner. Terracotta and earthy tones mixed with vibrant hues. The room should look like a painted scene in a Gazir Pot scroll."
 };
 
 export const VIEW_PROMPTS: Record<ViewType, string> = {
