@@ -135,7 +135,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                                 <img
                                                     src={getThumbnailPath(img)}
                                                     alt={`Showcase ${index + 1}`}
-                                                    loading="lazy"
+                                                    loading={index < 4 ? "eager" : "lazy"}
+                                                    decoding="async"
                                                     width="400"
                                                     height="300"
                                                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"

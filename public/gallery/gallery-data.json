@@ -358,5 +358,55 @@
         "user": "renderman-ai",
         "prompt": "3D printed city model, white plastic",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 42,
+        "image": "/gallery/white-skyscraper-model.png",
+        "style": "White Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "White architectural model, skyscraper",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 43,
+        "image": "/gallery/translucent-museum-model.png",
+        "style": "Translucent Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Translucent architectural model, museum",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 44,
+        "image": "/gallery/ocean-view-interior.jpg",
+        "style": "Photorealistic",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Interior with ocean view",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 45,
+        "image": "/gallery/desert-ruins-model.png",
+        "style": "Ruins Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Desert ruins architectural model",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 46,
+        "image": "/gallery/red-clay-temple.png",
+        "style": "Red Clay Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red clay architectural model, temple",
+        "aspectRatio": "16:9"
     }
 ]
