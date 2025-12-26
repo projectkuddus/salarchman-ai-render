@@ -98,5 +98,55 @@
         "user": "renderman-ai",
         "prompt": "Minimalist interior with arches, warm lighting, textured walls",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 11,
+        "image": "/gallery/concrete-museum-dusk.jpg",
+        "style": "Brutalist",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Concrete museum exterior at dusk, dramatic lighting, brutalist architecture, photorealistic render, AI architecture",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 12,
+        "image": "/gallery/wireframe-museum-concept.jpg",
+        "style": "Wireframe",
+        "type": "Concept",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Wireframe architectural concept, museum design, glowing lines, night rendering, digital art, architectural visualization",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 13,
+        "image": "/gallery/modern-lobby-water-feature.jpg",
+        "style": "Modern Interior",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Modern office lobby with indoor water feature, green wall, industrial staircase, photorealistic interior, sustainable design",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 14,
+        "image": "/gallery/abstract-concrete-massing.jpg",
+        "style": "Abstract",
+        "type": "Concept",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Abstract concrete architectural massing, experimental form, porous structure, soft lighting, 3d render, architectural model",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 15,
+        "image": "/gallery/white-plaster-colonial-model.jpg",
+        "style": "White Plaster Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "White plaster architectural model, colonial palace, intricate details, isometric view, clay render, historical architecture",
+        "aspectRatio": "16:9"
     }
 ]
