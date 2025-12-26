@@ -129,7 +129,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
   [RenderStyle.TRANSLUCENT_ETHEREAL]: '/gallery/translucent-ethereal-thumb.jpg',
-  [RenderStyle.SATELLITE_DRONE]: '/gallery/satellite-drone-thumb.jpg',
+  [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite-drone.jpg',
   [RenderStyle.EVENING_LIGHT]: '/thumbnails/evening-light.jpg',
   [RenderStyle.EVENING_LIGHT_2]: '/thumbnails/twilight-luxury.jpg',
   [RenderStyle.GOLDEN_HOUR_DRAMATIC]: '/thumbnails/golden-hour-dramatic.jpg',
