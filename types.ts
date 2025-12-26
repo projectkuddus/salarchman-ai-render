@@ -9,6 +9,7 @@ export enum RenderStyle {
   EVENING_LIGHT = 'Evening Simple',
   EVENING_LIGHT_2 = 'Evening Dramatic',
   GOLDEN_HOUR_DRAMATIC = 'Dramatic Golden Hour',
+  FOGGY_NIGHT = 'Foggy Night',
 
   // 3D Model-Based
   WIREFRAME = 'Wireframe',
