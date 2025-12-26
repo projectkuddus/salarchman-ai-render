@@ -6,6 +6,7 @@ interface LandingPageProps {
 }
 
 import { TriviaStrip } from './TriviaStrip';
+import { RollingText } from './RollingText';
 
 interface GalleryItem {
     id: number;
@@ -23,14 +24,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     const [galleryImages, setGalleryImages] = React.useState<GalleryItem[]>([]);
     const [visibleCount, setVisibleCount] = React.useState(12);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [roleIndex, setRoleIndex] = React.useState(0);
-
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            setRoleIndex((prev) => (prev + 1) % 3);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, []);
 
     React.useEffect(() => {
         setIsLoading(true);
@@ -115,13 +108,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     <div className="text-center mb-16">
                         <h3 className="text-3xl md:text-5xl font-thin leading-tight text-slate-900 tracking-tight flex flex-col md:block items-center justify-center gap-2">
                             <span>We believe</span>
-                            <div className="inline-grid h-[1.1em] overflow-hidden mx-3 align-bottom w-[220px] md:w-[280px] relative top-[0.1em]">
-                                <div className="transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ transform: `translateY(-${roleIndex * 100}%)` }}>
-                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Creatives</div>
-                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Architects</div>
-                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Designers</div>
-                                </div>
-                            </div>
+                            <RollingText words={['Creatives', 'Architects', 'Designers']} />
                             <span className="block md:inline mt-2 md:mt-0 text-slate-500">
                                 shouldn’t spend their best years learning tools instead of learning how to think.
                             </span>
