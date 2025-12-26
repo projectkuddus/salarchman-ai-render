@@ -5,7 +5,7 @@ interface RollingTextProps {
     interval?: number;
 }
 
-export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500 }) => {
+export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 3000 }) => {
     const [index, setIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
 
@@ -15,7 +15,7 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
             setTimeout(() => {
                 setIndex((prev) => (prev + 1));
                 setAnimating(false);
-            }, 800); // Wait for exit animation to finish before swapping state
+            }, 1000); // Wait for exit animation to finish before swapping state
         }, interval);
 
         return () => clearInterval(timer);
@@ -39,16 +39,16 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
                     100% { transform: translateY(0); opacity: 1; filter: blur(0); }
                 }
                 .char-roll-out {
-                    animation: rollOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                    animation: rollOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
                 }
                 .char-roll-in {
-                    animation: rollIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                    animation: rollIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
                 }
             `}</style>
 
             {/* Container with fixed width based on max word length */}
             <div
-                className="relative transition-all duration-500 ease-in-out flex justify-center"
+                className="relative transition-all duration-800 ease-in-out flex justify-center"
                 style={{ width: `${maxWordLength * 0.6}em` }}
             >
 
@@ -59,7 +59,7 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
                             <span
                                 key={`out-${i}`}
                                 className="inline-block char-roll-out"
-                                style={{ animationDelay: `${i * 0.03}s` }}
+                                style={{ animationDelay: `${i * 0.05}s` }}
                             >
                                 {char === ' ' ? '\u00A0' : char}
                             </span>
@@ -75,7 +75,7 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
                             <span
                                 key={`in-${i}`}
                                 className="inline-block char-roll-in"
-                                style={{ animationDelay: `${i * 0.03 + 0.1}s` }}
+                                style={{ animationDelay: `${i * 0.05 + 0.1}s` }}
                             >
                                 {char === ' ' ? '\u00A0' : char}
                             </span>
