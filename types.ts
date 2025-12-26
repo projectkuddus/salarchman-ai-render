@@ -57,6 +57,7 @@ export enum RenderStyle {
   METALLIC_WOOD_MODEL = 'Metallic & Wood Model',
   WHITE_ARCHITECTURAL_MODEL = 'White Architectural Model',
   CONCRETE_WHITE_MODEL = 'Concrete & White Structure Model',
+  WOOD_ACRYLIC_MODEL = 'Wood & Acrylic Model',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
