@@ -80,46 +80,47 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </nav>
 
             {/* Main Content */}
-            <main className="relative z-10 pt-32 pb-12 px-0 max-w-full">
+            <main className="relative z-10 pt-24 pb-12 px-0 max-w-full">
+
+                {/* Trivia Strip - Top of Page */}
+                <div className="w-full border-b border-slate-100 bg-white/50 backdrop-blur-sm mb-12">
+                    <div className="max-w-7xl mx-auto">
+                        <TriviaStrip />
+                    </div>
+                </div>
 
                 {/* Header / Intro */}
-                <div className="flex flex-col items-center justify-center py-12 text-center space-y-6 mb-0 px-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs font-bold text-blue-600 mb-2 uppercase tracking-wide">
-                        <Sparkles size={12} className="text-blue-600" /> AI Powered Rendering
+                <div className="flex flex-col items-center justify-center py-8 text-center space-y-8 mb-16 px-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-medium text-slate-400 uppercase tracking-widest">
+                        <Sparkles size={10} className="text-slate-400" /> AI Powered Rendering
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-light tracking-tight text-slate-900 leading-tight max-w-4xl">
-                        Transform your sketches into <span className="font-bold">photographic renders.</span>
+                    <h1 className="text-5xl md:text-7xl font-thin tracking-tighter text-slate-900 leading-tight max-w-5xl">
+                        Transform your sketches into <span className="font-normal">photographic renders.</span>
                     </h1>
-                    <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed mx-auto">
+                    <p className="text-slate-400 max-w-lg text-base md:text-lg font-light leading-relaxed mx-auto">
                         your complete international project submission engine from ideation to final board.
                     </p>
                 </div>
 
-                {/* Trivia Strip */}
-                <div className="mb-12">
-                    <TriviaStrip />
-                </div>
-
                 {/* The Renderman Manifesto */}
-                <div className="max-w-3xl mx-auto px-6 mb-24 text-center">
-                    <div className="inline-block mb-6 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-bold tracking-widest uppercase text-slate-500">
-                        The Renderman Manifesto
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-light leading-relaxed text-slate-800 mb-8">
-                        We believe creatives shouldn’t become <span className="font-medium text-slate-900">software operators.</span>
+                <div className="max-w-4xl mx-auto px-6 mb-32 text-center">
+                    <h3 className="text-2xl md:text-4xl font-thin leading-relaxed text-slate-800 mb-10 tracking-tight">
+                        We believe creatives shouldn’t become <span className="font-normal text-slate-900">software operators.</span>
                     </h3>
-                    <div className="space-y-6 text-base md:text-lg text-slate-600 leading-relaxed font-light">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm md:text-base text-slate-500 font-light leading-relaxed text-left max-w-3xl mx-auto">
                         <p>
                             Architects and designers are paid for taste, insight, and problem-solving—not for suffering through tools.
                         </p>
                         <p>
-                            <span className="font-medium text-slate-900">renderman.ai</span> exists to remove friction between imagination and output, so you can spend your best energy on thinking, seeing, and making decisions that matter.
+                            <span className="font-medium text-slate-900">renderman.ai</span> exists to remove friction between imagination and output, so you can spend your best energy on thinking.
                         </p>
-                        <p className="text-xl md:text-2xl font-normal text-slate-900 pt-4">
-                            Less struggle. More clarity. Better work.
+                        <p className="flex items-center text-slate-900 font-medium">
+                            Less struggle. <br />More clarity. <br />Better work.
                         </p>
                     </div>
                 </div>
+
+
 
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
                     {/* Developer Gallery Section */}
