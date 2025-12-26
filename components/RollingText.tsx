@@ -24,20 +24,18 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
     const currentWord = words[index % words.length];
     const nextWord = words[(index + 1) % words.length];
 
-    // Dynamic width based on the longer of the two words during transition
-    const currentWidth = animating
-        ? Math.max(currentWord.length, nextWord.length)
-        : currentWord.length;
+    // Calculate max length for fixed width to prevent layout shifts
+    const maxWordLength = Math.max(...words.map(w => w.length));
 
     return (
-        <div className="relative inline-flex h-[1.1em] items-baseline mx-1.5 font-bold text-slate-900 overflow-visible">
+        <div className="relative inline-flex h-[1.1em] items-baseline mx-2 font-semibold text-slate-900 overflow-hidden align-bottom">
             <style>{`
                 @keyframes rollOut {
                     0% { transform: translateY(0); opacity: 1; filter: blur(0); }
-                    100% { transform: translateY(-120%); opacity: 0; filter: blur(4px); }
+                    100% { transform: translateY(-120%); opacity: 0; filter: blur(2px); }
                 }
                 @keyframes rollIn {
-                    0% { transform: translateY(120%); opacity: 0; filter: blur(4px); }
+                    0% { transform: translateY(120%); opacity: 0; filter: blur(2px); }
                     100% { transform: translateY(0); opacity: 1; filter: blur(0); }
                 }
                 .char-roll-out {
@@ -48,10 +46,10 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
                 }
             `}</style>
 
-            {/* Container with dynamic width transition */}
+            {/* Container with fixed width based on max word length */}
             <div
-                className="relative transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-                style={{ width: `${currentWidth * 0.62}em` }} // Slightly tighter multiplier for compact fit
+                className="relative transition-all duration-500 ease-in-out flex justify-center"
+                style={{ width: `${maxWordLength * 0.6}em` }}
             >
 
                 {/* Exiting Word */}
