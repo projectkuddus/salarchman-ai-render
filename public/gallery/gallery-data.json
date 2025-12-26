@@ -308,5 +308,55 @@
         "user": "renderman-ai",
         "prompt": "Paper model architectural visualization",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 37,
+        "image": "/gallery/red-concrete-iso.png",
+        "style": "Red Concrete Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red concrete architectural model, isometric view",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 38,
+        "image": "/gallery/red-brick-iso.png",
+        "style": "Red Brick Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red brick architectural model, isometric view",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 39,
+        "image": "/gallery/wood-village-model.png",
+        "style": "Wood Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Wooden village architectural model",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 40,
+        "image": "/gallery/grey-pyramid-model.png",
+        "style": "Grey Cardboard Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Grey cardboard architectural model, pyramid structure",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 41,
+        "image": "/gallery/white-city-3dprint.png",
+        "style": "3D Printed City Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "3D printed city model, white plastic",
+        "aspectRatio": "16:9"
     }
 ]
