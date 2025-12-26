@@ -408,5 +408,55 @@
         "user": "renderman-ai",
         "prompt": "Red clay architectural model, temple",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 47,
+        "image": "/gallery/vertical-forest-apartment.jpg",
+        "style": "Eco-Brutalism",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Vertical forest apartment building, night shot, sustainable architecture",
+        "aspectRatio": "2:3"
+    },
+    {
+        "id": 48,
+        "image": "/gallery/ocean-library-interior.png",
+        "style": "Atmospheric Interior",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Library interior with ocean view, blue hour, moody atmosphere",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 49,
+        "image": "/gallery/brick-community-center.png",
+        "style": "Illustration",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Brick community center with people, illustration style",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 50,
+        "image": "/gallery/ruined-palace-model.jpg",
+        "style": "Ruins Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Ruined palace architectural model, desert setting",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 51,
+        "image": "/gallery/white-plaster-community-model.png",
+        "style": "White Plaster Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "White plaster architectural model, community center, clay figures",
+        "aspectRatio": "16:9"
     }
 ]

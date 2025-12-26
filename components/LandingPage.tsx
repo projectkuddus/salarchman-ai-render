@@ -20,7 +20,7 @@ interface GalleryItem {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
-    const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
+    const [galleryImages, setGalleryImages] = React.useState<GalleryItem[]>([]);
     const [visibleCount, setVisibleCount] = React.useState(12);
     const [isLoading, setIsLoading] = React.useState(true);
 
@@ -30,8 +30,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             .then(res => res.json())
             .then((data: GalleryItem[]) => {
                 // Shuffle array to show random mix or just reverse to show newest first
-                const images = data.reverse().map(item => item.image);
-                setGalleryImages(images);
+                setGalleryImages(data.reverse());
             })
             .catch(err => console.error("Failed to load gallery", err))
             .finally(() => setIsLoading(false));
@@ -117,7 +116,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         ) : (
                             <>
                                 <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                                    {galleryImages.slice(0, visibleCount).map((img, index) => {
+                                    {galleryImages.slice(0, visibleCount).map((item, index) => {
                                         // Helper to get thumbnail path
                                         const getThumbnailPath = (path: string) => {
                                             const parts = path.split('.');
@@ -130,11 +129,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                             <div
                                                 key={index}
                                                 className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
-                                                onClick={() => setSelectedImage(img)}
+                                                onClick={() => setSelectedImage(item.image)}
                                             >
                                                 <img
-                                                    src={getThumbnailPath(img)}
-                                                    alt={`Showcase ${index + 1}`}
+                                                    src={getThumbnailPath(item.image)}
+                                                    alt={item.prompt || `Architectural render ${index + 1}`}
+                                                    title={item.prompt}
                                                     loading={index < 4 ? "eager" : "lazy"}
                                                     decoding="async"
                                                     width="400"
@@ -144,7 +144,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                                         const target = e.target as HTMLImageElement;
                                                         // If thumbnail fails, try original. If original fails, fallback.
                                                         if (target.src.includes('_thumb')) {
-                                                            target.src = img;
+                                                            target.src = item.image;
                                                         } else {
                                                             target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
                                                         }
