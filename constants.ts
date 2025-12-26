@@ -62,6 +62,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.ARCH_DOODLE,
       RenderStyle.URBAN_CONCEPT_SKETCH,
       RenderStyle.VIBRANT_DIGITAL_PAINTING,
+      RenderStyle.KRAFT_PAPER_SKETCH,
       RenderStyle.GAZIR_POT
     ]
   },
@@ -152,6 +153,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
   [RenderStyle.URBAN_CONCEPT_SKETCH]: '/gallery/urban-concept-sketch-thumb.jpg',
   [RenderStyle.VIBRANT_DIGITAL_PAINTING]: '/gallery/vibrant-digital-painting-thumb.jpg',
+  [RenderStyle.KRAFT_PAPER_SKETCH]: '/gallery/kraft-paper-sketch-thumb.jpg',
   [RenderStyle.GAZIR_POT]: '/gallery/gazir-pot-thumb-v2.png',
 
   // Architectural Model Photography
@@ -220,6 +222,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.ARCH_DOODLE]: "Architectural illustration, loose naive hand-drawn style, thin black ink pen on white paper, tremulous jittery linework, corner overshoots, no grey washes, purely linework. Densely populated with small scale figures, abstract scalloped vegetation, spontaneous hand-lettering annotations, charming napkin sketch aesthetic.",
   [RenderStyle.URBAN_CONCEPT_SKETCH]: "Urban Concept Sketch style. Detailed architectural illustration with a hand-drawn ink and marker aesthetic. Vibrant colors (yellows, greens, terracottas) with distinct black ink outlines. The scene is densely populated with life: small scale figures, lush vegetation on balconies and rooftops, and street activity. The composition includes handwritten architectural notes and annotations floating around the building. Whimsical, busy, and narrative-driven. White or parchment paper background. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.VIBRANT_DIGITAL_PAINTING]: "Vibrant Digital Painting style. Stylized concept art aesthetic similar to 'Spider-Verse' background art. Bold, saturated colors (blues, purples, oranges) with dramatic lighting. Painterly brushstrokes with hard edges. Geometric simplification of forms. Atmospheric depth with colorful shadows. Urban energy. The look of a high-end digital concept painting. STRICTLY PRESERVE INPUT GEOMETRY.",
+  [RenderStyle.KRAFT_PAPER_SKETCH]: "Kraft Paper Sketch style. Architectural drawing on textured brown kraft paper. High contrast black ink linework for shadows and details. White ink highlights for lighting and volumes. Cross-hatching shading technique. Hand-drawn aesthetic with visible paper grain. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.GAZIR_POT]: "Gazir Pot style. Traditional Bengali scroll painting folk art. Flat 2D perspective, bold primary colors (red, yellow, blue, green), distinct black outlines, no 3D shading. Figures and elements are depicted in a stylized, flat manner. Terracotta and earthy tones mixed with vibrant hues. The architecture should look like a painted backdrop in a Gazir Pot scroll. Maintain the exact geometry of the input but render it as a flat folk art painting.",
 
   // Architectural Model Photography

@@ -60,6 +60,7 @@ export enum RenderStyle {
   WOOD_ACRYLIC_MODEL = 'Wood & Acrylic Model',
   URBAN_CONCEPT_SKETCH = 'Urban Concept Sketch',
   VIBRANT_DIGITAL_PAINTING = 'Vibrant Digital Painting',
+  KRAFT_PAPER_SKETCH = 'Kraft Paper Sketch',
 
   // Legacy mappings (for backward compatibility if needed)
   FUTURISTIC = 'Futuristic',
