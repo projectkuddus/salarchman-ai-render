@@ -99,7 +99,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         Transform your sketches into <span className="font-normal">photographic renders.</span>
                     </h1>
                     <p className="text-slate-400 max-w-lg text-base md:text-lg font-light leading-relaxed mx-auto">
-                        your complete pro grade project submission engine from ideation to final board.
+                        ' Ideation to final board: your complete project submission engine '
                     </p>
                 </div>
 
