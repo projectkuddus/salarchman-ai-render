@@ -98,7 +98,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.METALLIC_WOOD_MODEL,
       RenderStyle.WHITE_ARCHITECTURAL_MODEL,
       RenderStyle.CONCRETE_WHITE_MODEL,
-      RenderStyle.WOOD_ACRYLIC_MODEL
+      RenderStyle.WOOD_ACRYLIC_MODEL,
+      RenderStyle.MINIATURE_BRICK_MODEL
     ]
   }
 ];
@@ -190,6 +191,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/gallery/white-plaster-colonial-model_thumb.jpg',
   [RenderStyle.CONCRETE_WHITE_MODEL]: '/gallery/white-plaster-community-model_thumb.png',
   [RenderStyle.WOOD_ACRYLIC_MODEL]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
+  [RenderStyle.MINIATURE_BRICK_MODEL]: '/thumbnails/styles/miniature-brick-model.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -263,6 +265,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: "White Architectural Model style. The building is rendered as a pristine, all-white physical architectural model. Material is matte white plaster or plastic. Clean, minimalist aesthetic. Soft, diffuse studio lighting with a neutral white/light grey background. No colors, no textures other than the white material. High-end museum quality presentation. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.CONCRETE_WHITE_MODEL]: "Concrete & White Structure Model style. Architectural model photography. The building is rendered as a physical model made of raw grey concrete volumes. All structural details like stairs, railings, walkways, and frames are made of thin white metal or plastic. Minimalist, monochromatic aesthetic. Clean studio lighting with soft shadows on a white background. Scale figures are grey or white. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.WOOD_ACRYLIC_MODEL]: "Wood & Acrylic Model style. Architectural model photography. The building is rendered as a physical model. The lower volumes/base are made of stacked solid wood blocks with realistic grain. The upper volumes/screens are made of translucent white frosted acrylic or plastic panels. Dark grey studio background. White dashed lines on the floor indicating circulation/context. Small white scale figures and stylized wire/wood trees. High contrast, dramatic studio lighting. STRICTLY PRESERVE INPUT GEOMETRY.",
+  [RenderStyle.MINIATURE_BRICK_MODEL]: "Miniature Brick Model style. Physical architectural model made entirely of miniature terracotta bricks. The walls, structures, and details are constructed from tiny, realistic brick blocks. The model sits on a matching brick or paved base. Studio lighting with soft shadows, neutral background. High-end craftsmanship, museum quality model photography. Focus on the texture and scale of the miniature masonry. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",

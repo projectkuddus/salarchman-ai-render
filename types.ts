@@ -62,6 +62,7 @@ export enum RenderStyle {
   WHITE_ARCHITECTURAL_MODEL = 'White Architectural Model',
   CONCRETE_WHITE_MODEL = 'Concrete & White Structure Model',
   WOOD_ACRYLIC_MODEL = 'Wood & Acrylic Model',
+  MINIATURE_BRICK_MODEL = 'Miniature Brick Model',
   URBAN_CONCEPT_SKETCH = 'Urban Concept Sketch',
   VIBRANT_DIGITAL_PAINTING = 'Vibrant Digital Painting',
   KRAFT_PAPER_SKETCH = 'Kraft Paper Sketch',
