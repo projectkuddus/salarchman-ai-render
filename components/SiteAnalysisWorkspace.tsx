@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Box, Upload, X, RefreshCw, Sparkles, Download, Maximize, Image as ImageIcon, Map, MapPin } from 'lucide-react';
+import { Box, Upload, X, RefreshCw, Sparkles, Download, Maximize, Image as ImageIcon, Map, MapPin, Wind, Volume2, Mountain, Eye, Footprints, Compass } from 'lucide-react';
 import { Button } from './Button';
 import { generateArchitecturalRender } from '../services/geminiService';
 import { ViewType, RenderStyle } from '../types';
@@ -8,9 +8,27 @@ interface SiteAnalysisWorkspaceProps {
     template: any;
 }
 
+interface SiteData {
+    location: string;
+    northOrientation: string;
+    windDirection: string;
+    noiseSources: string;
+    topography: string;
+    views: string;
+    access: string;
+}
+
 export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ template }) => {
     const [baseImage, setBaseImage] = useState<string | null>(template.baseImage);
-    const [userInstructions, setUserInstructions] = useState<string>('');
+    const [siteData, setSiteData] = useState<SiteData>({
+        location: '',
+        northOrientation: 'North',
+        windDirection: 'SW',
+        noiseSources: '',
+        topography: '',
+        views: '',
+        access: ''
+    });
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedImage, setGeneratedImage] = useState<string | null>(template.outputImage || null);
     const [error, setError] = useState<string | null>(null);
@@ -40,7 +58,18 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
             // Detailed prompt from the user's reference image
             const basePrompt = `Create a site analysis diagram from this aerial image in a flat vector graphic style. The view is orientated north-facing (north at the top). Use the visible map labels for context to understand the site and surroundings, but remove all existing labels and icons from the final output. Use a muted, desaturated base map with soft greys for buildings and pale tones for context. Retain landscape features such as trees, grass, parks, and water - render these as simplified vector shapes in soft pastel tones (sage greens for vegetation, pale blues for water). Identify the site marked with a red boundary line (if visible, otherwise infer from context or center) and fill it with a soft pastel red with a bold red outline. Add a transparent gradient halo around the site showing its zone of influence. Add dashed radial lines for key sight lines and view corridors to notable landmarks. Show a single sun path arc across the bottom of the diagram - rising from the east (right side) and setting in the west (left side) with simple yellow sun icons at each end and a curved arrow connecting them. Show primary pedestrian and vehicle access routes with bold black arrows. Include a simple north arrow pointing to the top of the diagram. Add your own clean sans-serif labels with leader lines identifying key features, streets, and landmarks relevant to the site. Keep it clean, diagrammatic, and presentation-ready - no photorealism.`;
 
-            const fullPrompt = `${basePrompt} \n\nSPECIFIC PROJECT DETAILS: ${userInstructions}`;
+            const siteContext = `
+            SITE CONTEXT & ENVIRONMENTAL DATA:
+            - Location: ${siteData.location}
+            - North Orientation: ${siteData.northOrientation}
+            - Prevailing Wind: From ${siteData.windDirection}
+            - Noise Sources: ${siteData.noiseSources}
+            - Topography: ${siteData.topography}
+            - Key Views: ${siteData.views}
+            - Access & Circulation: ${siteData.access}
+            `;
+
+            const fullPrompt = `${basePrompt} \n\n${siteContext}`;
 
             // Calculate aspect ratio
             let selectedAspectRatio: any = '1:1';
@@ -132,22 +161,105 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                     )}
                 </div>
 
-                {/* Instructions Input */}
-                <div className="bg-white rounded-xl border border-slate-200 p-4 flex-1 flex flex-col">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                        <MapPin size={10} /> Project Details
-                    </label>
-                    <textarea
-                        value={userInstructions}
-                        onChange={(e) => setUserInstructions(e.target.value)}
-                        placeholder="E.g. The site is the corner lot. Focus on pedestrian access from the park. Highlight the view towards the river."
-                        className="w-full flex-1 min-h-[100px] p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 resize-none mb-4"
-                    />
+                {/* Structured Inputs */}
+                <div className="bg-white rounded-xl border border-slate-200 p-4 flex-1 flex flex-col gap-4">
+                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        <MapPin size={12} /> Project Details
+                    </div>
+
+                    {/* Location */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block">Site Location</label>
+                        <input
+                            type="text"
+                            value={siteData.location}
+                            onChange={(e) => setSiteData({ ...siteData, location: e.target.value })}
+                            placeholder="e.g. Downtown Manchester, UK"
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        {/* North Orientation */}
+                        <div>
+                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Compass size={10} /> North</label>
+                            <select
+                                value={siteData.northOrientation}
+                                onChange={(e) => setSiteData({ ...siteData, northOrientation: e.target.value })}
+                                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                            >
+                                {['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'].map(dir => (
+                                    <option key={dir} value={dir}>{dir}</option>
+                                ))}
+                            </select>
+                        </div>
+                        {/* Wind Direction */}
+                        <div>
+                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Wind size={10} /> Wind From</label>
+                            <select
+                                value={siteData.windDirection}
+                                onChange={(e) => setSiteData({ ...siteData, windDirection: e.target.value })}
+                                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                            >
+                                {['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'].map(dir => (
+                                    <option key={dir} value={dir}>{dir}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Noise Sources */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Volume2 size={10} /> Noise Sources</label>
+                        <input
+                            type="text"
+                            value={siteData.noiseSources}
+                            onChange={(e) => setSiteData({ ...siteData, noiseSources: e.target.value })}
+                            placeholder="e.g. Highway to the North, Train line"
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
+
+                    {/* Topography */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Mountain size={10} /> Topography</label>
+                        <input
+                            type="text"
+                            value={siteData.topography}
+                            onChange={(e) => setSiteData({ ...siteData, topography: e.target.value })}
+                            placeholder="e.g. Flat, Sloping South, Steep"
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
+
+                    {/* Key Views */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Eye size={10} /> Key Views</label>
+                        <input
+                            type="text"
+                            value={siteData.views}
+                            onChange={(e) => setSiteData({ ...siteData, views: e.target.value })}
+                            placeholder="e.g. View to River, Park view"
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
+
+                    {/* Access */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Footprints size={10} /> Access & Circulation</label>
+                        <input
+                            type="text"
+                            value={siteData.access}
+                            onChange={(e) => setSiteData({ ...siteData, access: e.target.value })}
+                            placeholder="e.g. Main entry from High St, Service from rear"
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
 
                     <Button
                         onClick={handleGenerate}
                         disabled={!baseImage || isGenerating}
-                        className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2 py-3 rounded-xl shadow-lg shadow-slate-900/10"
+                        className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2 py-3 rounded-xl shadow-lg shadow-slate-900/10 mt-2"
                     >
                         {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Sparkles size={18} />}
                         {isGenerating ? 'Analyzing Site...' : 'Generate Analysis'}
