@@ -83,7 +83,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.CITY_MODEL_3D_PRINT,
       RenderStyle.WIREFRAME_GLASS_MODEL,
       RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL,
-      RenderStyle.PASTEL_WOOD_GREEN_MODEL
+      RenderStyle.PASTEL_WOOD_GREEN_MODEL,
+      RenderStyle.METALLIC_WOOD_MODEL
     ]
   }
 ];
@@ -164,6 +165,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-glass-model-thumb-v2.jpg',
   [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/gallery/wooden-structure-terracotta-model-thumb-v2.jpg',
   [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb-v2.jpg',
+  [RenderStyle.METALLIC_WOOD_MODEL]: '/gallery/metallic-wood-model-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
