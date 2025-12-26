@@ -126,7 +126,12 @@ export enum DiagramType {
   STRUCTURE = 'Structural Tectonics',
   URBAN_CONTEXT = 'Urban Context & Mapping',
   FORM_EVOLUTION = 'Form Evolution',
-  LIVING_COLLAGE = 'Living Collage Cutaway'
+  LIVING_COLLAGE = 'Living Collage Cutaway',
+  // Core Drawing Set
+  MASTER_PLAN = 'Master Plan / Site Plan',
+  FLOOR_PLAN = 'Floor Plan',
+  SECTION = 'Section',
+  ELEVATION = 'Elevation'
 }
 
 export type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | 'Similar to Input' | 'Similar to Reference';

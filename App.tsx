@@ -5,7 +5,7 @@ import { PricingModal } from './components/PricingModal';
 import { AdminPanel } from './components/AdminPanel';
 import { watermarkService } from './services/watermarkService';
 import { RenderStyle, ViewType, GenerationResult, UserCredits, AspectRatio, ImageSize, CustomStyle, User, IdeationConfig, ElevationSide, DiagramType, CreateMode, InteriorStyle, Atmosphere, UserTier } from './types';
-import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS } from './constants';
+import { INITIAL_CREDITS, CREDIT_COSTS, STYLE_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, IDEATION_ALLOWED_VIEWS, DIAGRAM_PROMPTS, INTERIOR_STYLE_PROMPTS, EXTERIOR_STYLE_THUMBNAILS, INTERIOR_STYLE_THUMBNAILS, EXTERIOR_STYLE_CATEGORIES, ATMOSPHERE_OPTIONS, DIAGRAM_STYLE_CATEGORIES } from './constants';
 import { Button } from './components/Button';
 import { LoginScreen } from './components/LoginScreen';
 import { LandingPage } from './components/LandingPage';
@@ -136,6 +136,29 @@ function App() {
       setSelectedView(ViewType.AXONOMETRIC);
     }
   }, [activeTab, selectedView]);
+
+  // Sync ViewType with DiagramType for Core Drawing Set
+  useEffect(() => {
+    if (activeTab === 'diagram') {
+      switch (selectedDiagramType) {
+        case DiagramType.MASTER_PLAN:
+          setSelectedView(ViewType.TOPSHOT);
+          break;
+        case DiagramType.FLOOR_PLAN:
+          setSelectedView(ViewType.PLAN);
+          break;
+        case DiagramType.SECTION:
+          setSelectedView(ViewType.SECTION);
+          break;
+        case DiagramType.ELEVATION:
+          setSelectedView(ViewType.ELEVATION);
+          break;
+        case DiagramType.EXPLODED:
+          setSelectedView(ViewType.AXONOMETRIC);
+          break;
+      }
+    }
+  }, [selectedDiagramType, activeTab]);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -1372,55 +1395,86 @@ function App() {
               {/* Style Gallery */}
               <div>
                 <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1"><Grid size={10} /> Style Gallery</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  {Object.keys(DIAGRAM_PROMPTS).map((type) => {
-                    const isSelected = selectedDiagramType === type;
 
-                    // Helper to get icon and description for each type
-                    const getDiagramDetails = (t: string) => {
-                      switch (t) {
-                        case 'Concept / Schematic': return { icon: <Lightbulb size={24} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
-                        case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
-                        case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
-                        case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
-                        case 'Climate & Environmental': return { icon: <Wind size={24} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
-                        case 'Sectional Perspective': return { icon: <BoxSelect size={24} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
-                        case 'Activity & Usage': return { icon: <Users size={24} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
-                        case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
-                        case 'Structural Tectonics': return { icon: <Grid3x3 size={24} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
-                        case 'Urban Context & Mapping': return { icon: <Map size={24} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
-                        case 'Form Evolution': return { icon: <GitBranch size={24} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
-                        case 'Living Collage Cutaway': return { icon: <Leaf size={24} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
-                        default: return { icon: <Shapes size={24} />, desc: "Architectural diagram style", color: "text-slate-500" };
-                      }
-                    };
-
-                    const details = getDiagramDetails(type);
-
-                    return (
+                <div className="space-y-2">
+                  {DIAGRAM_STYLE_CATEGORIES.map((category) => (
+                    <div key={category.title}>
                       <button
-                        key={type}
-                        onClick={() => setSelectedDiagramType(type as DiagramType)}
-                        className={`relative overflow-hidden text-left p-4 rounded-2xl border transition-all h-full flex flex-col gap-3 group ${isSelected ? 'bg-slate-900 border-slate-900 shadow-lg scale-[1.02]' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'}`}
+                        onClick={() => toggleCategory(category.title)}
+                        className="w-full flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 hover:text-slate-600 transition-colors group bg-slate-100 p-2 rounded-lg"
                       >
-                        {/* Decorative Background Shape */}
-                        {!isSelected && (
-                          <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-[60px] -mr-4 -mt-4 transition-transform group-hover:scale-110" />
-                        )}
-                        {isSelected && (
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl" />
-                        )}
-
-                        <div className={`relative z-10 ${details.color}`}>
-                          {details.icon}
-                        </div>
-                        <div className="relative z-10">
-                          <h5 className={`text-[11px] font-bold uppercase leading-tight mb-1.5 ${isSelected ? 'text-white' : 'text-slate-700'}`}>{type}</h5>
-                          <p className={`text-[10px] leading-relaxed ${isSelected ? 'text-slate-400' : 'text-slate-400'}`}>{details.desc}</p>
-                        </div>
+                        {category.title}
+                        <ChevronDown size={12} className={`transition-transform duration-200 ${collapsedCategories.includes(category.title) ? '-rotate-90' : ''}`} />
                       </button>
-                    );
-                  })}
+
+                      <div className={`grid grid-cols-2 gap-3 transition-all duration-300 ${collapsedCategories.includes(category.title) ? 'hidden' : 'block'}`}>
+                        {category.styles.map((type) => {
+                          const isSelected = selectedDiagramType === type;
+
+                          // Helper to get icon and description for each type
+                          const getDiagramDetails = (t: string) => {
+                            switch (t) {
+                              // Core Drawing Set
+                              case 'Master Plan / Site Plan': return { icon: <Map size={24} />, desc: "Context & Proposal", color: "text-slate-600" };
+                              case 'Floor Plan': return { icon: <LayoutGrid size={24} />, desc: "Clean Key Levels", color: "text-slate-600" };
+                              case 'Section': return { icon: <Split size={24} />, desc: "Storytelling Sections", color: "text-slate-600" };
+                              case 'Elevation': return { icon: <ArrowUpFromLine size={24} />, desc: "Key Facade", color: "text-slate-600" };
+
+                              // Concept
+                              case 'Concept / Schematic': return { icon: <Lightbulb size={24} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
+                              case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
+                              case 'Form Evolution': return { icon: <GitBranch size={24} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
+
+                              // Arsenal
+                              case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
+                              case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
+                              case 'Climate & Environmental': return { icon: <Wind size={24} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
+                              case 'Activity & Usage': return { icon: <Users size={24} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
+                              case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
+                              case 'Structural Tectonics': return { icon: <Grid3x3 size={24} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
+                              case 'Urban Context & Mapping': return { icon: <MapPin size={24} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
+
+                              // Signature
+                              case 'Sectional Perspective': return { icon: <BoxSelect size={24} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
+                              case 'Living Collage Cutaway': return { icon: <Leaf size={24} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
+
+                              default: return { icon: <Shapes size={24} />, desc: "Architectural diagram style", color: "text-slate-500" };
+                            }
+                          };
+
+                          const details = getDiagramDetails(type);
+
+                          return (
+                            <button
+                              key={type}
+                              onClick={() => setSelectedDiagramType(type as DiagramType)}
+                              className={`relative p-3 rounded-xl border text-left transition-all duration-200 flex flex-col gap-2 group hover:shadow-md ${isSelected
+                                ? 'bg-slate-900 border-slate-900 ring-1 ring-slate-900'
+                                : 'bg-white border-slate-200 hover:border-slate-300'
+                                }`}
+                            >
+                              <div className={`p-2 rounded-lg w-fit transition-colors ${isSelected ? 'bg-slate-800 text-white' : `bg-slate-50 ${details.color}`}`}>
+                                {details.icon}
+                              </div>
+                              <div>
+                                <h5 className={`text-xs font-bold mb-0.5 ${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                                  {type}
+                                </h5>
+                                <p className={`text-[10px] leading-tight ${isSelected ? 'text-slate-400' : 'text-slate-500'}`}>
+                                  {details.desc}
+                                </p>
+                              </div>
+                              {isSelected && (
+                                <div className="absolute top-3 right-3 text-white">
+                                  <Check size={14} />
+                                </div>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 

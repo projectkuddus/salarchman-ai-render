@@ -20,6 +20,7 @@ interface SiteData {
 
 export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ template }) => {
     const [baseImage, setBaseImage] = useState<string | null>(template.baseImage);
+    const [sketchImage, setSketchImage] = useState<string | null>(null);
     const [siteData, setSiteData] = useState<SiteData>({
         location: '',
         northOrientation: 'North',
@@ -34,6 +35,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
     const [error, setError] = useState<string | null>(null);
 
     const baseInputRef = useRef<HTMLInputElement>(null);
+    const sketchInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setFunc: (val: string | null) => void) => {
         const file = e.target.files?.[0];
@@ -69,7 +71,11 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
             - Access & Circulation: ${siteData.access}
             `;
 
-            const fullPrompt = `${basePrompt} \n\n${siteContext}`;
+            let fullPrompt = `${basePrompt} \n\n${siteContext}`;
+
+            if (sketchImage) {
+                fullPrompt += `\n\nREFERENCE SKETCH: A hand-drawn sketch is provided (Image #2). Use the diagrams and notes in this sketch as a PRIMARY source of truth for wind direction, sun path, and key site features.`;
+            }
 
             // Calculate aspect ratio
             let selectedAspectRatio: any = '1:1';
@@ -106,7 +112,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                 ViewType.TOPSHOT, // View Type
                 fullPrompt, // Additional Prompt
                 null, // Site
-                null, // Reference
+                sketchImage, // Reference (Sketch)
                 selectedAspectRatio, // Aspect Ratio
                 '1K', // Image Size
                 [], // Verbs
@@ -254,6 +260,35 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                             placeholder="e.g. Main entry from High St, Service from rear"
                             className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
                         />
+                    </div>
+
+                    {/* Bonus Sketch Upload */}
+                    <div className="pt-2 border-t border-slate-100">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <Sparkles size={10} /> Bonus: Hand Drawn Sketch
+                        </label>
+                        <div
+                            className="border border-dashed border-slate-300 rounded-lg p-3 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors relative"
+                            onClick={() => !sketchImage && sketchInputRef.current?.click()}
+                        >
+                            {sketchImage ? (
+                                <div className="relative w-full h-24">
+                                    <img src={sketchImage} alt="Sketch" className="w-full h-full object-contain" />
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setSketchImage(null); }}
+                                        className="absolute top-0 right-0 bg-black/50 text-white p-1 rounded-full hover:bg-black/70 transition-colors"
+                                    >
+                                        <X size={12} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <Upload size={16} className="text-slate-400 mb-1" />
+                                    <p className="text-xs text-slate-500 text-center">Upload sketch with diagrams</p>
+                                    <input type="file" ref={sketchInputRef} onChange={(e) => handleFileUpload(e, setSketchImage)} className="hidden" />
+                                </>
+                            )}
+                        </div>
                     </div>
 
                     <Button

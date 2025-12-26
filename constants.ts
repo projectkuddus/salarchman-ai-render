@@ -339,8 +339,53 @@ export const DIAGRAM_PROMPTS: Record<DiagramType, string> = {
 
   [DiagramType.FORM_EVOLUTION]: "Form Evolution (Generative Process). A sequence or single composite image showing the 'operations' that created the form. Show the base block -> subtraction -> addition -> final form. Use ghosted red volumes for removed parts and blue for added parts. Aesthetic: Step-by-step diagram, clean, instructional.",
 
-  [DiagramType.LIVING_COLLAGE]: "Living Collage Cutaway Diagram. A highly detailed isometric cutaway or section presented as a whimsical digital collage. 'Dollhouse' view revealing complex interior life. Densely populate every room with lush hanging plants, potted vegetation, detailed furniture, and eclectic decor. Show people engaging in domestic activities (reading, cooking, resting). Aesthetic: Soft textured paper background, muted pastel colors, flat lighting, artistic illustration style (e.g., Fala Atelier, Dogma). Emphasize biophilia, domestic narrative, and 'lived-in' atmosphere."
+  [DiagramType.LIVING_COLLAGE]: "Living Collage Cutaway Diagram. A highly detailed isometric cutaway or section presented as a whimsical digital collage. 'Dollhouse' view revealing complex interior life. Densely populate every room with lush hanging plants, potted vegetation, detailed furniture, and eclectic decor. Show people engaging in domestic activities (reading, cooking, resting). Aesthetic: Soft textured paper background, muted pastel colors, flat lighting, artistic illustration style (e.g., Fala Atelier, Dogma). Emphasize biophilia, domestic narrative, and 'lived-in' atmosphere.",
+
+  // Core Drawing Set Prompts
+  [DiagramType.MASTER_PLAN]: "Master Plan / Site Plan Diagram. Strictly top-down 2D view. Show the building roof plan in context with the surrounding site. Highlight landscape features, paths, and roads with clean vector lines. Use a limited color palette (greens for landscape, greys for hardscape, white for buildings). Add shadows to indicate massing height. Aesthetic: Professional competition site plan, clean, graphic.",
+  [DiagramType.FLOOR_PLAN]: "Architectural Floor Plan Diagram. Strictly top-down 2D view. Clean black and white line drawing. Solid black poche for walls. Clear indication of doors, windows, and furniture layouts. Minimalist and legible. Aesthetic: Professional architectural plan.",
+  [DiagramType.SECTION]: "Architectural Section Diagram. Strictly 2D vertical cut. Solid black poche for cut elements. Lighter lines for elevation elements beyond. Show human scale figures. Aesthetic: Clean, technical, professional section drawing.",
+  [DiagramType.ELEVATION]: "Architectural Elevation Diagram. Strictly 2D orthographic view of the facade. No perspective. Show material textures, shadows, and scale figures. Aesthetic: Professional architectural elevation."
 };
+
+export const DIAGRAM_STYLE_CATEGORIES = [
+  {
+    title: "1) Core Drawing Set (Must-Have)",
+    styles: [
+      DiagramType.MASTER_PLAN,
+      DiagramType.FLOOR_PLAN,
+      DiagramType.SECTION,
+      DiagramType.ELEVATION,
+      DiagramType.EXPLODED
+    ]
+  },
+  {
+    title: "2) Concept Story Visuals",
+    styles: [
+      DiagramType.CONCEPT,
+      DiagramType.FORM_EVOLUTION
+    ]
+  },
+  {
+    title: "3) Diagram Arsenal",
+    styles: [
+      DiagramType.ENVIRONMENTAL,
+      DiagramType.PROGRAMMATIC,
+      DiagramType.CIRCULATION,
+      DiagramType.ACTIVITY,
+      DiagramType.STRUCTURE,
+      DiagramType.GEOMETRY,
+      DiagramType.URBAN_CONTEXT
+    ]
+  },
+  {
+    title: "4) Competition Signature Graphics",
+    styles: [
+      DiagramType.LIVING_COLLAGE,
+      DiagramType.SECTIONAL_PERSP
+    ]
+  }
+];
 
 // Allowed Views for Ideation Mode
 export const IDEATION_ALLOWED_VIEWS = [
