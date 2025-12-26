@@ -88,10 +88,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         <Sparkles size={12} className="text-blue-600" /> AI Powered Rendering
                     </div>
                     <h1 className="text-4xl md:text-6xl font-light tracking-tight text-slate-900 leading-tight max-w-4xl">
-                        Transform your sketches into <span className="font-bold">photorealistic renders.</span>
+                        Transform your sketches into <span className="font-bold">photographic renders.</span>
                     </h1>
                     <p className="text-slate-500 max-w-xl text-sm md:text-base leading-relaxed mx-auto">
-                        Upload your architectural sketches and let our AI generate stunning visualizations in seconds.
+                        your complete international project submission engine from ideation to final board.
                     </p>
                 </div>
 
