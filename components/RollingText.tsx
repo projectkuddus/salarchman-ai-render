@@ -24,8 +24,11 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
     const currentWord = words[index % words.length];
     const nextWord = words[(index + 1) % words.length];
 
+    // Calculate max length for fixed width
+    const maxWordLength = Math.max(...words.map(w => w.length));
+
     return (
-        <div className="relative inline-block h-[1.2em] align-bottom mx-2">
+        <div className="relative inline-block h-[1.2em] align-bottom mx-2 font-bold text-slate-900">
             <style>{`
                 @keyframes rollOut {
                     0% { transform: translateY(0); opacity: 1; filter: blur(0); }
@@ -43,8 +46,8 @@ export const RollingText: React.FC<RollingTextProps> = ({ words, interval = 2500
                 }
             `}</style>
 
-            {/* Container for width transition */}
-            <div className="relative transition-all duration-500 ease-in-out" style={{ width: `${Math.max(currentWord.length, nextWord.length) * 0.65}em` }}>
+            {/* Container with fixed width based on max word length */}
+            <div className="relative transition-all duration-500 ease-in-out" style={{ width: `${maxWordLength * 0.65}em` }}>
 
                 {/* Exiting Word */}
                 {animating && (
