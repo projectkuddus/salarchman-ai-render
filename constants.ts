@@ -20,7 +20,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.HYPERREAL,
       RenderStyle.SEMI_REALISTIC,
       RenderStyle.TRANSLUCENT_ETHEREAL,
-      RenderStyle.SATELLITE_DRONE
+      RenderStyle.SATELLITE_DRONE,
+      RenderStyle.EVENING_LIGHT
     ]
   },
   {
@@ -121,7 +122,8 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
   [RenderStyle.TRANSLUCENT_ETHEREAL]: '/gallery/translucent-ethereal-thumb.jpg',
-  [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite.jpg',
+  [RenderStyle.SATELLITE_DRONE]: '/gallery/satellite-drone-thumb.jpg',
+  [RenderStyle.EVENING_LIGHT]: '/thumbnails/evening-light.jpg',
 
   // 3D Model
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
@@ -197,6 +199,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.CONCEPTUAL]: "Conceptual architectural render, focus on form and massing, abstract white or grey materials, clean aesthetic.",
   [RenderStyle.TRANSLUCENT_ETHEREAL]: "Translucent Ethereal style. The building is rendered as a glowing, semi-transparent volume, like frosted glass or polycarbonate. Soft internal light emanates from within, revealing the structure. Clean, white, and ethereal aesthetic. Realistic lighting and context (blue hour or dusk). STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the translucent material and lighting style.",
   [RenderStyle.SATELLITE_DRONE]: "Satellite to Drone view, aerial photography style, realistic context integration, top-down or high angle.",
+  [RenderStyle.EVENING_LIGHT]: "Evening Light / Blue Hour Architectural Photography. High-end professional architectural photography shot during the 'blue hour' or early evening. The building is illuminated by warm interior lights (3000K) glowing through the glass, contrasting with the deep blue/twilight sky. Exterior facade lighting highlights the architectural form. Soft, atmospheric, and moody. Perfectly balanced exposure. No noise, sharp details. Cinematic and emotional atmosphere. The material palette should be preserved but enhanced by the lighting.",
   [RenderStyle.WIREFRAME]: "Wireframe render, structural lines, blueprint aesthetic, technical view.",
   [RenderStyle.CLAY]: "Clay render, matte white material, ambient occlusion, focus on light and shadow volume.",
   [RenderStyle.WHITE_MODEL]: "White physical model look, clean materials, soft studio lighting, architectural scale model.",
