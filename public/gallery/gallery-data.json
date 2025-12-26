@@ -148,5 +148,55 @@
         "user": "renderman-ai",
         "prompt": "White plaster architectural model, colonial palace, intricate details, isometric view, clay render, historical architecture",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 16,
+        "image": "/gallery/futuristic-silver-model.jpg",
+        "style": "Metallic Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Futuristic silver architectural model, metallic finish, geometric design, Zaha Hadid style, museum concept, 3d print",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 17,
+        "image": "/gallery/cozy-warm-interior.jpg",
+        "style": "Luxury Interior",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Cozy warm interior living room, textured walls, ambient lighting, luxury furniture, photorealistic interior design, wabi sabi",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 18,
+        "image": "/gallery/perforated-brick-sketch.jpg",
+        "style": "Sketch",
+        "type": "Concept",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Architectural sketch, perforated brick facade, community center, hand drawn style, concept art, ink drawing",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 19,
+        "image": "/gallery/concrete-water-museum.jpg",
+        "style": "Brutalist",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Concrete museum by water, blue hour, dramatic lighting, reflection, brutalist architecture, serene atmosphere, photorealistic render",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 20,
+        "image": "/gallery/red-concrete-model.jpg",
+        "style": "Red Concrete Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red concrete architectural model, perforated facade, isometric view, tactile material, contemporary architecture, physical model",
+        "aspectRatio": "16:9"
     }
 ]
