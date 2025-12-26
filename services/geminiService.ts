@@ -1,7 +1,7 @@
 
 import { ViewType, AspectRatio, ImageSize, RenderStyle, IdeationConfig, DiagramType, CreateMode, Atmosphere, ElevationSide } from '../types';
 import { VIEW_PROMPTS, SPATIAL_VERBS, IDEATION_MATERIALS, IDEATION_FORMS, DIAGRAM_PROMPTS, ATMOSPHERE_PROMPTS, INTERIOR_STYLE_PROMPTS } from '../constants';
-import { compressImage } from '../utils/imageUtils';
+import { compressImage, padImageToAspectRatio } from '../utils/imageUtils';
 
 export const generateArchitecturalRender = async (
     base64Image: string,
@@ -25,9 +25,12 @@ export const generateArchitecturalRender = async (
     lightDirection?: number
 ): Promise<string> => {
     try {
-        // --- COMPRESSION ---
+        // --- PADDING & COMPRESSION ---
+        // Pad image to match target aspect ratio to prevent cropping
+        const paddedBase64Image = await padImageToAspectRatio(base64Image, aspectRatio);
+
         // Compress images to ensure they are within Vercel's payload limits (4.5MB)
-        const compressedBase64Image = await compressImage(base64Image);
+        const compressedBase64Image = await compressImage(paddedBase64Image);
 
         // Compress additional images
         const compressedAdditionalImages = await Promise.all(
@@ -145,6 +148,11 @@ export const generateArchitecturalRender = async (
         ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Geometry.` : ''}
         
         CRITICAL GLOBAL INSTRUCTION: Never change any 'object or shape' from the input image. Just convert it into the desired style. Maintain the exact geometry.
+        
+        IMPORTANT: The input image may have been padded with white bars to fit the output aspect ratio. If you see white bars on the sides or top/bottom:
+        1. Keep the central image EXACTLY as is.
+        2. FILL the white areas by extending the scene naturally (outpainting). Match the perspective, lighting, and style of the central image.
+        3. The final output must be a full, seamless image with NO white bars remaining.
         `;
 
             let imageIndex = 2 + additionalBaseImages.length;
