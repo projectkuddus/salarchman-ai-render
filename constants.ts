@@ -20,6 +20,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.HYPERREAL,
       RenderStyle.SEMI_REALISTIC,
       RenderStyle.CONCEPTUAL,
+      RenderStyle.TRANSLUCENT_ETHEREAL,
       RenderStyle.SATELLITE_DRONE
     ]
   },
@@ -112,6 +113,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
+  [RenderStyle.TRANSLUCENT_ETHEREAL]: '/gallery/translucent-ethereal-thumb.jpg',
   [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite.jpg',
 
   // 3D Model
@@ -178,6 +180,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.HYPERREAL]: "Hyperreal cinematic render, extreme detail, dramatic lighting, movie quality, atmospheric depth.",
   [RenderStyle.SEMI_REALISTIC]: "Semi-realistic render, clean and professional, suitable for early presentations, balanced detail.",
   [RenderStyle.CONCEPTUAL]: "Conceptual architectural render, focus on form and massing, abstract white or grey materials, clean aesthetic.",
+  [RenderStyle.TRANSLUCENT_ETHEREAL]: "Translucent Ethereal style. The building is rendered as a glowing, semi-transparent volume, like frosted glass or polycarbonate. Soft internal light emanates from within, revealing the structure. Clean, white, and ethereal aesthetic. Realistic lighting and context (blue hour or dusk). STRICTLY PRESERVE INPUT GEOMETRY. Do not change the form or objects, only apply the translucent material and lighting style.",
   [RenderStyle.SATELLITE_DRONE]: "Satellite to Drone view, aerial photography style, realistic context integration, top-down or high angle.",
   [RenderStyle.WIREFRAME]: "Wireframe render, structural lines, blueprint aesthetic, technical view.",
   [RenderStyle.CLAY]: "Clay render, matte white material, ambient occlusion, focus on light and shadow volume.",
