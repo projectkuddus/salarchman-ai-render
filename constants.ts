@@ -59,7 +59,6 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.PASTEL,
       RenderStyle.TECHNICAL_PEN,
       RenderStyle.BLUEPRINT,
-      RenderStyle.BLUEPRINT,
       RenderStyle.ARCH_DOODLE,
       RenderStyle.GAZIR_POT
     ]
