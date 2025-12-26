@@ -111,29 +111,34 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 </div>
 
                 {/* The Renderman Manifesto */}
-                <div className="max-w-4xl mx-auto px-6 mb-32 text-center">
-                    <h3 className="text-2xl md:text-4xl font-thin leading-relaxed text-slate-800 mb-10 tracking-tight">
-                        We believe <span className="inline-block min-w-[140px] font-normal text-slate-900 transition-all duration-500">
-                            {['Creatives', 'Architects', 'Designers'][roleIndex]}
-                        </span> —shouldn’t spend their best years learning tools instead of learning how to think.
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm md:text-base text-slate-500 font-light leading-relaxed text-left max-w-4xl mx-auto">
-                        <div className="space-y-6">
-                            <p>
-                                The real work is seeing clearly, understanding the problem, and shaping an idea with depth.
-                            </p>
-                            <p>
-                                But most of the time gets burned fighting software just to finish and submit.
-                            </p>
-                        </div>
-                        <div className="space-y-6">
-                            <p>
-                                <span className="font-medium text-slate-900">renderman.ai</span> exists to remove that friction—so the path from idea to execution feels smooth.
-                            </p>
-                            <p>
-                                So you spend more time thinking, and less time suffering to get work done.
-                            </p>
-                            <p className="flex items-center text-slate-900 font-medium pt-2 text-lg">
+                <div className="max-w-3xl mx-auto px-6 mb-32">
+                    <div className="text-center mb-16">
+                        <h3 className="text-3xl md:text-5xl font-thin leading-tight text-slate-900 tracking-tight">
+                            We believe
+                            <div className="inline-grid h-[1.1em] overflow-hidden mx-3 align-bottom">
+                                <div className="transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]" style={{ transform: `translateY(-${roleIndex * 100}%)` }}>
+                                    <div className="h-[1.1em] font-normal text-slate-900">Creatives</div>
+                                    <div className="h-[1.1em] font-normal text-slate-900">Architects</div>
+                                    <div className="h-[1.1em] font-normal text-slate-900">Designers</div>
+                                </div>
+                            </div>
+                            <span className="block md:inline mt-2 md:mt-0 text-slate-500">
+                                shouldn’t spend their best years learning tools instead of learning how to think.
+                            </span>
+                        </h3>
+                    </div>
+
+                    <div className="space-y-8 text-lg md:text-xl text-slate-600 font-light leading-relaxed max-w-2xl mx-auto text-center md:text-justify md:text-center-last">
+                        <p>
+                            The real work is seeing clearly, understanding the problem, and shaping an idea with depth.
+                            But most of the time gets burned fighting software just to finish and submit.
+                        </p>
+                        <p>
+                            <span className="font-medium text-slate-900">renderman.ai</span> exists to remove that friction—so the path from idea to execution feels smooth.
+                            So you spend more time thinking, and less time suffering to get work done.
+                        </p>
+                        <div className="pt-8 flex justify-center">
+                            <p className="text-xl md:text-2xl font-normal text-slate-900 tracking-tight">
                                 Less struggle. More clarity. Great work.
                             </p>
                         </div>
