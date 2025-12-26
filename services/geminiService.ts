@@ -147,7 +147,10 @@ export const generateArchitecturalRender = async (
         INPUTS: 1. Base Geometry (Sketch/Model).
         ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Geometry.` : ''}
         
-        CRITICAL GLOBAL INSTRUCTION: Never change any 'object or shape' from the input image. Just convert it into the desired style. Maintain the exact geometry.
+        CRITICAL GLOBAL INSTRUCTION: 
+        1. STRICTLY PRESERVE GEOMETRY: Never change, add, or remove any 'object or shape' from the input image. 
+        2. NO HALLUCINATIONS: Do not add any new elements (trees, people, cars, buildings, furniture, landscape features) that are not explicitly present in the input image.
+        3. STYLE TRANSFER ONLY: Your ONLY task is to apply the requested material and lighting style to the EXISTING geometry.
         
         IMPORTANT: The input image may have been padded with white bars to fit the output aspect ratio. If you see white bars on the sides or top/bottom:
         1. Keep the central image EXACTLY as is.
