@@ -139,7 +139,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         </p>
                         <div className="pt-8 flex justify-center">
                             <p className="text-xl md:text-2xl font-normal text-slate-900 tracking-tight">
-                                Less struggle. More clarity. Great work.
+                                Less Friction . More Clarity . Great Execution
                             </p>
                         </div>
                     </div>
