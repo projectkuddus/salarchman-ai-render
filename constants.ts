@@ -85,7 +85,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL,
       RenderStyle.PASTEL_WOOD_GREEN_MODEL,
       RenderStyle.METALLIC_WOOD_MODEL,
-      RenderStyle.WHITE_ARCHITECTURAL_MODEL
+      RenderStyle.WHITE_ARCHITECTURAL_MODEL,
+      RenderStyle.CONCRETE_WHITE_MODEL
     ]
   }
 ];
@@ -168,6 +169,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb-v2.jpg',
   [RenderStyle.METALLIC_WOOD_MODEL]: '/gallery/metallic-wood-model-thumb.jpg',
   [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/gallery/white-architectural-model-thumb.jpg',
+  [RenderStyle.CONCRETE_WHITE_MODEL]: '/gallery/concrete-white-model-thumb.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -232,6 +234,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: "Physical architectural model style. Isometric view of small pavilion structures. Materials: light balsa wood, pastel pink painted surfaces, and soft sage green structural elements. Background is a seamless matte sage green color. Clean, minimalist, playful but precise. Soft, even studio lighting. High-end architectural presentation.",
   [RenderStyle.METALLIC_WOOD_MODEL]: "Metallic & Wood Model style. Match the specific aesthetic of the provided reference image (Frank Gehry style model). The building is rendered as a physical architectural model made of bent/curved brushed stainless steel or aluminum sheets. Visible panel seams and rivets. The model sits on a thick, heavy base made of stacked layers of corrugated cardboard or plywood (exposed layered edges). Context: Museum exhibition space with gallery lighting. High contrast between the cool metal and warm wood/cardboard base. STRICTLY PRESERVE INPUT GEOMETRY, but interpret the surfaces as bent metal sheets.",
   [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: "White Architectural Model style. The building is rendered as a pristine, all-white physical architectural model. Material is matte white plaster or plastic. Clean, minimalist aesthetic. Soft, diffuse studio lighting with a neutral white/light grey background. No colors, no textures other than the white material. High-end museum quality presentation. STRICTLY PRESERVE INPUT GEOMETRY.",
+  [RenderStyle.CONCRETE_WHITE_MODEL]: "Concrete & White Structure Model style. Architectural model photography. The building is rendered as a physical model made of raw grey concrete volumes. All structural details like stairs, railings, walkways, and frames are made of thin white metal or plastic. Minimalist, monochromatic aesthetic. Clean studio lighting with soft shadows on a white background. Scale figures are grey or white. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.FUTURISTIC]: "Futuristic style, neon lights, sleek materials, sci-fi aesthetic.",
   [RenderStyle.SKETCHY]: "Sketchy style, loose lines.",
   [RenderStyle.WATERCOLOR]: "Watercolor style, artistic wash.",
