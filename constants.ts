@@ -141,7 +141,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
   [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
   [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
-  [RenderStyle.PAPER_MODEL]: '/thumbnails/styles/Curzon Hall Paper Model.jpg',
+  [RenderStyle.PAPER_MODEL]: '/thumbnails/styles/Paper Model.jpg',
   [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
   [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
@@ -164,11 +164,11 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
-  [RenderStyle.ARCH_DOODLE]: 'https://images.unsplash.com/photo-1531844251246-9a1bfaaeeb9a?w=150&q=60&fm=webp',
+  [RenderStyle.ARCH_DOODLE]: '/thumbnails/styles/Architecture Doodle.jpg',
   [RenderStyle.URBAN_CONCEPT_SKETCH]: '/thumbnails/styles/Urban Concept Sketch.png',
   [RenderStyle.VIBRANT_DIGITAL_PAINTING]: '/thumbnails/styles/Vibrant Digital Paint.png',
   [RenderStyle.KRAFT_PAPER_SKETCH]: '/thumbnails/styles/Kraft Paper Sketch.png',
-  [RenderStyle.GAZIR_POT]: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=150&q=60&fm=webp',
+  [RenderStyle.GAZIR_POT]: '/thumbnails/styles/Gazir Pot.png',
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: '/thumbnails/styles/Metal Model.jpg',
@@ -186,12 +186,12 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.CITY_MODEL_3D_PRINT]: '/thumbnails/styles/3D printed City Model.jpg',
   [RenderStyle.WIREFRAME_GLASS_MODEL]: '/thumbnails/styles/Wireframe and Glass Model.jpg',
   [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/thumbnails/styles/Wooden Structure and terracotta.jpg',
-  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp',
+  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/thumbnails/styles/Pastel Wood & Green Model.jpg',
   [RenderStyle.METALLIC_WOOD_MODEL]: '/thumbnails/styles/Metalic and Wood Model.png',
-  [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/gallery/white-plaster-colonial-model_thumb.jpg',
+  [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/thumbnails/styles/White Architecture Model.png',
   [RenderStyle.CONCRETE_WHITE_MODEL]: '/gallery/white-plaster-community-model_thumb.png',
   [RenderStyle.WOOD_ACRYLIC_MODEL]: '/thumbnails/styles/Wood and Acrylic Model.png',
-  [RenderStyle.MINIATURE_BRICK_MODEL]: '/thumbnails/styles/miniature-brick-model.jpg',
+  [RenderStyle.MINIATURE_BRICK_MODEL]: '/thumbnails/styles/miniature-brick-model.png',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
