@@ -8,6 +8,7 @@ export enum RenderStyle {
   SATELLITE_DRONE = 'Satellite to Drone',
   EVENING_LIGHT = 'Evening Light',
   EVENING_LIGHT_2 = 'Evening 2',
+  GOLDEN_HOUR_DRAMATIC = 'Dramatic Golden Hour',
 
   // 3D Model-Based
   WIREFRAME = 'Wireframe',

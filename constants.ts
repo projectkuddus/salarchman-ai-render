@@ -22,7 +22,8 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.TRANSLUCENT_ETHEREAL,
       RenderStyle.SATELLITE_DRONE,
       RenderStyle.EVENING_LIGHT,
-      RenderStyle.EVENING_LIGHT_2
+      RenderStyle.EVENING_LIGHT_2,
+      RenderStyle.GOLDEN_HOUR_DRAMATIC
     ]
   },
   {
@@ -126,6 +127,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.SATELLITE_DRONE]: '/gallery/satellite-drone-thumb.jpg',
   [RenderStyle.EVENING_LIGHT]: '/thumbnails/evening-light.jpg',
   [RenderStyle.EVENING_LIGHT_2]: '/thumbnails/twilight-luxury.jpg',
+  [RenderStyle.GOLDEN_HOUR_DRAMATIC]: '/thumbnails/golden-hour-dramatic.jpg',
 
   // 3D Model
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
@@ -203,6 +205,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
   [RenderStyle.SATELLITE_DRONE]: "Satellite to Drone view, aerial photography style, realistic context integration, top-down or high angle.",
   [RenderStyle.EVENING_LIGHT]: "Evening Light / Blue Hour Architectural Photography. High-end professional architectural photography shot during the 'blue hour' or early evening. The building is illuminated by warm interior lights (3000K) glowing through the glass, contrasting with the deep blue/twilight sky. Exterior facade lighting highlights the architectural form. Soft, atmospheric, and moody. Perfectly balanced exposure. No noise, sharp details. Cinematic and emotional atmosphere. The material palette should be preserved but enhanced by the lighting.",
   [RenderStyle.EVENING_LIGHT_2]: "Museum Grade Evening Architectural Photography. Ultra-high-end luxury architectural photography shot at twilight. Deep blue sky with dramatic clouds. Warm, inviting interior lighting (3000K) spilling out onto terraces and pools. Reflections in water/glass. Sharp, crystal clear details. Atmospheric and moody but clean. The aesthetic of a high-end hotel or luxury residence feature in ArchDaily or Dezeen. STRICTLY PRESERVE INPUT GEOMETRY.",
+  [RenderStyle.GOLDEN_HOUR_DRAMATIC]: "Dramatic Golden Hour Architectural Photography. The building is struck by intense, warm golden sunlight (low angle sun) against a dark, moody, storm-grey sky. High contrast lighting. The building glows in warm orange/gold tones while the background and shadows remain deep and cool. Professional architectural photography style, sharp details, cinematic lighting, dramatic atmosphere. STRICTLY PRESERVE INPUT GEOMETRY.",
   [RenderStyle.WIREFRAME]: "Wireframe render, structural lines, blueprint aesthetic, technical view.",
   [RenderStyle.CLAY]: "Clay render, matte white material, ambient occlusion, focus on light and shadow volume.",
   [RenderStyle.WHITE_MODEL]: "White physical model look, clean materials, soft studio lighting, architectural scale model.",
