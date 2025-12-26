@@ -115,7 +115,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                             </div>
                         ) : (
                             <>
-                                <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                     {galleryImages.slice(0, visibleCount).map((item, index) => {
                                         // Helper to get thumbnail path
                                         const getThumbnailPath = (path: string) => {
@@ -128,7 +128,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                         return (
                                             <div
                                                 key={index}
-                                                className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                                                className="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer aspect-[4/3]"
                                                 onClick={() => setSelectedImage(item.image)}
                                             >
                                                 <img
@@ -139,7 +139,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                                                     decoding="async"
                                                     width="400"
                                                     height="300"
-                                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
                                                     onError={(e) => {
                                                         const target = e.target as HTMLImageElement;
                                                         // If thumbnail fails, try original. If original fails, fallback.
