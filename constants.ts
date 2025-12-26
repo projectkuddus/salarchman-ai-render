@@ -153,10 +153,10 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb-v2.jpg',
   [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb-v2.jpg',
   [RenderStyle.LEGO_MODEL]: '/gallery/lego-model-thumb-v2.jpg',
-  [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb.jpg',
-  [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-glass-model-thumb.jpg',
-  [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/gallery/wooden-structure-terracotta-model-thumb.jpg',
-  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb.jpg',
+  [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb-v2.jpg',
+  [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-glass-model-thumb-v2.jpg',
+  [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/gallery/wooden-structure-terracotta-model-thumb-v2.jpg',
+  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb-v2.jpg',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
