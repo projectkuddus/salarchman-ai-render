@@ -141,7 +141,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
   [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
-  [RenderStyle.GAZIR_POT]: '/gallery/gazir-pot-thumb.jpg',
+  [RenderStyle.GAZIR_POT]: '/gallery/gazir-pot-thumb-v2.png',
 
   // Architectural Model Photography
   [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb-v2.jpg',
@@ -248,7 +248,7 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.AMBER_TEXTURED]: "/thumbnails/interior/amber-textured.jpg",
   [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp", // Placeholder moody orange
   [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg",
-  [InteriorStyle.GAZIR_POT]: "/gallery/gazir-pot-thumb.jpg"
+  [InteriorStyle.GAZIR_POT]: "/gallery/gazir-pot-thumb-v2.png"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
