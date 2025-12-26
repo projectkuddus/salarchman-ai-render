@@ -322,7 +322,7 @@ export const DIAGRAM_PROMPTS: Record<DiagramType, string> = {
   [DiagramType.EXPLODED]: "Exploded Axonometric Diagram. Deconstruct the building into expanded vertical layers (floor plates, structure, skin, roof) floating above each other to reveal the assembly. Use dashed 'trace lines' connecting the corners to show alignment. Aesthetic: Clean white minimal background, ambient occlusion, vector-style outlines, 'Morphosis' or 'Thom Mayne' style technical complexity.",
 
   [DiagramType.PROGRAMMATIC]: "Programmatic & Zoning Diagram. Render the building geometry as translucent or wireframe containers. Fill specific functional volumes (public, private, circulation) with distinct, vibrant pastel color blocks (Cyan, Magenta, Yellow). Add 3D floating text labels. Aesthetic: 'BIG' (Bjarke Ingels Group) style, iconic, bold, infographic clarity.",
-
+  [DiagramType.ZONING]: "Zoning Diagram. Clear color-coded volumes showing functional zones (Public, Private, Service). Aesthetic: Clean, infographic style.",
   [DiagramType.CIRCULATION]: "Circulation & Flow Diagram. Render the architecture in muted grey or white clay mode. Overlay bold, fluid, ribbon-like arrows indicating human movement. Red for public flow, Blue for services. Highlight vertical cores (stairs/elevators) as solid colored shafts. Show entrances and exits clearly. Aesthetic: UNStudio style, fluid, dynamic vectors.",
 
   [DiagramType.ENVIRONMENTAL]: "Climate & Environmental Analysis. White clay model base. Overlay graphical climate vectors: Yellow gradients for solar gain/radiation on facades, Blue stream-lines for wind ventilation through the building, Red zones for thermal mass. Include a Sun Path arc. Aesthetic: Technical, analytical, 'Transsolar' engineering style.",

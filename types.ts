@@ -118,6 +118,7 @@ export enum DiagramType {
   CONCEPT = 'Concept / Schematic',
   EXPLODED = 'Exploded Axonometric',
   PROGRAMMATIC = 'Programmatic & Zoning',
+  ZONING = 'Zoning Diagram',
   CIRCULATION = 'Circulation & Flow',
   ENVIRONMENTAL = 'Climate & Environmental',
   SECTIONAL_PERSP = 'Sectional Perspective',

@@ -1441,6 +1441,7 @@ function App() {
                               case 'Access & Drop-off': return { icon: <Car size={24} />, desc: "Vehicular Entry", color: "text-slate-500" };
 
                               case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
+                              case 'Zoning Diagram': return { icon: <Layout size={24} />, desc: "Functional Zones", color: "text-rose-600" };
                               case 'Adjacency / Bubble': return { icon: <Network size={24} />, desc: "Program Relations", color: "text-pink-400" };
                               case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
                               case 'Processional Sequence': return { icon: <Footprints size={24} />, desc: "User Journey", color: "text-orange-400" };
