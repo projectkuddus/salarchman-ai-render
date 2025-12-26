@@ -127,11 +127,54 @@ export enum DiagramType {
   URBAN_CONTEXT = 'Urban Context & Mapping',
   FORM_EVOLUTION = 'Form Evolution',
   LIVING_COLLAGE = 'Living Collage Cutaway',
+
   // Core Drawing Set
   MASTER_PLAN = 'Master Plan / Site Plan',
   FLOOR_PLAN = 'Floor Plan',
   SECTION = 'Section',
-  ELEVATION = 'Elevation'
+  ELEVATION = 'Elevation',
+  ROOF_PLAN = 'Roof Plan',
+
+  // Concept Story
+  PARTI_DRAWING = 'Parti Drawing',
+  KEY_PRINCIPLES = 'Key Principles',
+
+  // Diagram Arsenal
+  SUN_PATH = 'Sun Path & Shading',
+  WIND_FLOW = 'Wind Flow & Ventilation',
+  VIEWS_PRIVACY = 'Views & Privacy',
+  NOISE_MAP = 'Noise Map',
+  SLOPE_DRAINAGE = 'Slope & Drainage',
+  LANDSCAPE_TREES = 'Landscape & Trees',
+  ACCESS_DROPOFF = 'Access & Drop-off',
+  ADJACENCY_BUBBLE = 'Adjacency / Bubble',
+  PROCESSIONAL = 'Processional Sequence',
+  TIME_OF_DAY = 'Time-of-Day Use',
+  ENVELOPE_SHADING = 'Envelope & Shading',
+  PASSIVE_COOLING = 'Passive Cooling',
+  WATER_STRATEGY = 'Water Strategy',
+  SUSTAINABILITY = 'Sustainability Scorecard',
+
+  // Signature
+  ICONIC_DIAGRAM = 'Iconic Diagram',
+  EXPLODED_PERSPECTIVE = 'Exploded Perspective',
+  STORYBOARD = 'Storyboard Strip',
+  CINEMATIC_PANEL = 'Cinematic Sequence',
+  MATERIAL_PALETTE = 'Material Palette',
+
+  // Advanced
+  DATA_DRIVEN = 'Data-Driven Diagram',
+  PARAMETRIC_GROWTH = 'Parametric Growth',
+  ASSEMBLY_SEQUENCE = 'Assembly Sequence',
+  PHASING = 'Phasing Diagram',
+  COST_LOGIC = 'Cost Logic',
+  ACCESSIBILITY = 'Accessibility Strategy',
+  FIRE_STRATEGY = 'Fire Strategy',
+
+  // Motion
+  MOTION_FILM = '60-120s Film',
+  ANIMATED_DIAGRAM = 'Animated Diagram',
+  WALKTHROUGH_3D = '3D Walkthrough'
 }
 
 export type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | 'Similar to Input' | 'Similar to Reference';

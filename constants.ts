@@ -345,7 +345,49 @@ export const DIAGRAM_PROMPTS: Record<DiagramType, string> = {
   [DiagramType.MASTER_PLAN]: "Master Plan / Site Plan Diagram. Strictly top-down 2D view. Show the building roof plan in context with the surrounding site. Highlight landscape features, paths, and roads with clean vector lines. Use a limited color palette (greens for landscape, greys for hardscape, white for buildings). Add shadows to indicate massing height. Aesthetic: Professional competition site plan, clean, graphic.",
   [DiagramType.FLOOR_PLAN]: "Architectural Floor Plan Diagram. Strictly top-down 2D view. Clean black and white line drawing. Solid black poche for walls. Clear indication of doors, windows, and furniture layouts. Minimalist and legible. Aesthetic: Professional architectural plan.",
   [DiagramType.SECTION]: "Architectural Section Diagram. Strictly 2D vertical cut. Solid black poche for cut elements. Lighter lines for elevation elements beyond. Show human scale figures. Aesthetic: Clean, technical, professional section drawing.",
-  [DiagramType.ELEVATION]: "Architectural Elevation Diagram. Strictly 2D orthographic view of the facade. No perspective. Show material textures, shadows, and scale figures. Aesthetic: Professional architectural elevation."
+  [DiagramType.ELEVATION]: "Architectural Elevation Diagram. Strictly 2D orthographic view of the facade. No perspective. Show material textures, shadows, and scale figures. Aesthetic: Professional architectural elevation.",
+  [DiagramType.ROOF_PLAN]: "Architectural Roof Plan. Top-down view focusing on roof textures, mechanical equipment, and drainage. Aesthetic: Technical line drawing.",
+
+  // Concept Story
+  [DiagramType.PARTI_DRAWING]: "Parti Diagram / Concept Sketch. A loose, gestural sketch showing the primary design move. Bold strokes, minimal detail. Aesthetic: Hand-drawn marker or ink style.",
+  [DiagramType.KEY_PRINCIPLES]: "Key Principles Diagram. A set of simple, icon-like 3D diagrams explaining the core rules of the design. Aesthetic: Clean, white clay, infographic style.",
+
+  // Diagram Arsenal
+  [DiagramType.SUN_PATH]: "Sun Path & Shading Analysis. 3D massing with solar arc and shadow studies. Yellow/Orange gradients for solar exposure. Aesthetic: Technical environmental analysis.",
+  [DiagramType.WIND_FLOW]: "Wind Flow & Ventilation Diagram. Blue streamlines showing air movement through and around the building. Aesthetic: CFD simulation style, clean vectors.",
+  [DiagramType.VIEWS_PRIVACY]: "Views & Privacy Diagram. Cones of vision extending from the building. Red for blocked views, Green for open views. Gradient opacity for privacy zones.",
+  [DiagramType.NOISE_MAP]: "Noise Mapping Diagram. Concentric waves or gradients showing noise sources from roads/context. Red (loud) to Blue (quiet).",
+  [DiagramType.SLOPE_DRAINAGE]: "Slope & Drainage Analysis. Terrain mesh with arrows indicating water flow direction. Color-coded elevation map.",
+  [DiagramType.LANDSCAPE_TREES]: "Landscape & Vegetation Strategy. Highlight existing vs new trees. Green canopy volumes. Aesthetic: Ecological diagram.",
+  [DiagramType.ACCESS_DROPOFF]: "Access & Circulation Diagram. Arrows showing vehicular drop-off, pedestrian entry, and service routes. Distinct line types for each.",
+  [DiagramType.ADJACENCY_BUBBLE]: "Adjacency / Bubble Diagram. Abstract colored spheres or blobs showing program relationships. Connected by lines.",
+  [DiagramType.PROCESSIONAL]: "Processional Sequence Diagram. A linear unfolding of the user journey. Series of key moments or a path through the building.",
+  [DiagramType.TIME_OF_DAY]: "Time-of-Day Usage Diagram. Split view or sequence showing the building at Morning, Noon, and Night. Lighting changes.",
+  [DiagramType.ENVELOPE_SHADING]: "Envelope & Shading Strategy. Detailed zoom on the facade system. Exploded layers of screens, glass, and structure.",
+  [DiagramType.PASSIVE_COOLING]: "Passive Cooling Strategy. Arrows showing stack effect, cross ventilation, and thermal mass. Blue cool air, Red hot air.",
+  [DiagramType.WATER_STRATEGY]: "Water Strategy Diagram. Rainwater collection paths, retention ponds, and greywater recycling. Blue arrows and zones.",
+  [DiagramType.SUSTAINABILITY]: "Sustainability Scorecard. Infographic style 3D view highlighting green features with icons.",
+
+  // Signature
+  [DiagramType.ICONIC_DIAGRAM]: "The 'Iconic' Diagram. A single, powerful image summarizing the entire project concept. High contrast, memorable geometry.",
+  [DiagramType.EXPLODED_PERSPECTIVE]: "Exploded Perspective. 3D view with components pulled apart towards the viewer. Human scale focus.",
+  [DiagramType.STORYBOARD]: "Storyboard Strip. A sequence of 3-5 frames showing a narrative or user experience. Comic book style layout.",
+  [DiagramType.CINEMATIC_PANEL]: "Cinematic Sequence. Wide aspect ratio frames. Atmospheric, moody, film-like views of key spaces.",
+  [DiagramType.MATERIAL_PALETTE]: "Material Palette Board. A curated composition of material textures (concrete, wood, glass) used in the project.",
+
+  // Advanced
+  [DiagramType.DATA_DRIVEN]: "Data-Driven Diagram. 3D form generated by data. Overlay of graphs, charts, and metrics on the building.",
+  [DiagramType.PARAMETRIC_GROWTH]: "Parametric Growth Diagram. Iterative steps showing algorithmic form generation. Wireframe to solid.",
+  [DiagramType.ASSEMBLY_SEQUENCE]: "Assembly Sequence Diagram. Step-by-step construction process. Cranes, modules, structural framing.",
+  [DiagramType.PHASING]: "Phasing Diagram. Phase 1, Phase 2, Phase 3 expansion. Color-coded stages of growth.",
+  [DiagramType.COST_LOGIC]: "Cost Logic / Efficiency Diagram. Highlight modular components and cost-saving strategies. Infographic overlay.",
+  [DiagramType.ACCESSIBILITY]: "Accessibility Strategy. Wheelchair paths, ramps, and elevator cores highlighted. Universal design focus.",
+  [DiagramType.FIRE_STRATEGY]: "Fire Strategy & Egress. Escape stairs, fire compartments, and travel distances. Red arrows and zones.",
+
+  // Motion
+  [DiagramType.MOTION_FILM]: "Cinematic Architectural Film. A still frame representing a motion picture. High quality, atmospheric.",
+  [DiagramType.ANIMATED_DIAGRAM]: "Animated Diagram Frame. A dynamic view implying movement and change.",
+  [DiagramType.WALKTHROUGH_3D]: "3D Walkthrough View. Eye-level perspective moving through the space."
 };
 
 export const DIAGRAM_STYLE_CATEGORIES = [
@@ -356,6 +398,7 @@ export const DIAGRAM_STYLE_CATEGORIES = [
       DiagramType.FLOOR_PLAN,
       DiagramType.SECTION,
       DiagramType.ELEVATION,
+      DiagramType.ROOF_PLAN,
       DiagramType.EXPLODED
     ]
   },
@@ -363,17 +406,34 @@ export const DIAGRAM_STYLE_CATEGORIES = [
     title: "2) Concept Story Visuals",
     styles: [
       DiagramType.CONCEPT,
-      DiagramType.FORM_EVOLUTION
+      DiagramType.PARTI_DRAWING,
+      DiagramType.FORM_EVOLUTION,
+      DiagramType.KEY_PRINCIPLES
     ]
   },
   {
     title: "3) Diagram Arsenal",
     styles: [
-      DiagramType.ENVIRONMENTAL,
-      DiagramType.PROGRAMMATIC,
+      DiagramType.ENVIRONMENTAL, // General
+      DiagramType.SUN_PATH,
+      DiagramType.WIND_FLOW,
+      DiagramType.VIEWS_PRIVACY,
+      DiagramType.NOISE_MAP,
+      DiagramType.SLOPE_DRAINAGE,
+      DiagramType.LANDSCAPE_TREES,
+      DiagramType.PROGRAMMATIC, // General
+      DiagramType.ZONING, // Note: Programmatic covers Zoning usually, but user asked for Zoning. I'll stick to Programmatic for now or add Zoning if strictly needed. User list: "Zoning diagram". I'll assume Programmatic covers it or add specific if requested. Let's use Programmatic for now as it's already there.
+      DiagramType.ADJACENCY_BUBBLE,
       DiagramType.CIRCULATION,
+      DiagramType.ACCESS_DROPOFF,
+      DiagramType.PROCESSIONAL,
+      DiagramType.TIME_OF_DAY,
       DiagramType.ACTIVITY,
       DiagramType.STRUCTURE,
+      DiagramType.ENVELOPE_SHADING,
+      DiagramType.PASSIVE_COOLING,
+      DiagramType.WATER_STRATEGY,
+      DiagramType.SUSTAINABILITY,
       DiagramType.GEOMETRY,
       DiagramType.URBAN_CONTEXT
     ]
@@ -381,8 +441,33 @@ export const DIAGRAM_STYLE_CATEGORIES = [
   {
     title: "4) Competition Signature Graphics",
     styles: [
-      DiagramType.LIVING_COLLAGE,
-      DiagramType.SECTIONAL_PERSP
+      DiagramType.ICONIC_DIAGRAM,
+      DiagramType.SECTIONAL_PERSP,
+      DiagramType.EXPLODED_PERSPECTIVE,
+      DiagramType.STORYBOARD,
+      DiagramType.CINEMATIC_PANEL,
+      DiagramType.MATERIAL_PALETTE,
+      DiagramType.LIVING_COLLAGE
+    ]
+  },
+  {
+    title: "5) Advanced / Rare but Deadly",
+    styles: [
+      DiagramType.DATA_DRIVEN,
+      DiagramType.PARAMETRIC_GROWTH,
+      DiagramType.ASSEMBLY_SEQUENCE,
+      DiagramType.PHASING,
+      DiagramType.COST_LOGIC,
+      DiagramType.ACCESSIBILITY,
+      DiagramType.FIRE_STRATEGY
+    ]
+  },
+  {
+    title: "8) Motion / Digital Submission",
+    styles: [
+      DiagramType.MOTION_FILM,
+      DiagramType.ANIMATED_DIAGRAM,
+      DiagramType.WALKTHROUGH_3D
     ]
   }
 ];

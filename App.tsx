@@ -144,6 +144,9 @@ function App() {
         case DiagramType.MASTER_PLAN:
           setSelectedView(ViewType.TOPSHOT);
           break;
+        case DiagramType.ROOF_PLAN:
+          setSelectedView(ViewType.TOPSHOT);
+          break;
         case DiagramType.FLOOR_PLAN:
           setSelectedView(ViewType.PLAN);
           break;
@@ -1419,24 +1422,63 @@ function App() {
                               case 'Floor Plan': return { icon: <LayoutGrid size={24} />, desc: "Clean Key Levels", color: "text-slate-600" };
                               case 'Section': return { icon: <Split size={24} />, desc: "Storytelling Sections", color: "text-slate-600" };
                               case 'Elevation': return { icon: <ArrowUpFromLine size={24} />, desc: "Key Facade", color: "text-slate-600" };
+                              case 'Roof Plan': return { icon: <Umbrella size={24} />, desc: "Roof & Drainage", color: "text-slate-600" };
 
                               // Concept
                               case 'Concept / Schematic': return { icon: <Lightbulb size={24} />, desc: "Simplified massing with arrows showing core design idea", color: "text-amber-400" };
-                              case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
+                              case 'Parti Drawing': return { icon: <PenTool size={24} />, desc: "Gestural Sketch", color: "text-amber-500" };
+                              case 'Key Principles': return { icon: <Target size={24} />, desc: "Core Rules", color: "text-amber-600" };
                               case 'Form Evolution': return { icon: <GitBranch size={24} />, desc: "Step-by-step generative design process", color: "text-cyan-500" };
 
                               // Arsenal
-                              case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
-                              case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
                               case 'Climate & Environmental': return { icon: <Wind size={24} />, desc: "Sun path, wind flow, and thermal analysis", color: "text-emerald-500" };
+                              case 'Sun Path & Shading': return { icon: <Sun size={24} />, desc: "Solar Arc & Shadows", color: "text-yellow-500" };
+                              case 'Wind Flow & Ventilation': return { icon: <Wind size={24} />, desc: "Air Movement", color: "text-blue-400" };
+                              case 'Views & Privacy': return { icon: <Eye size={24} />, desc: "Visual Cones", color: "text-purple-400" };
+                              case 'Noise Map': return { icon: <Volume2 size={24} />, desc: "Acoustic Analysis", color: "text-red-400" };
+                              case 'Slope & Drainage': return { icon: <Mountain size={24} />, desc: "Terrain & Flow", color: "text-stone-500" };
+                              case 'Landscape & Trees': return { icon: <Trees size={24} />, desc: "Vegetation Strategy", color: "text-green-600" };
+                              case 'Access & Drop-off': return { icon: <Car size={24} />, desc: "Vehicular Entry", color: "text-slate-500" };
+
+                              case 'Programmatic & Zoning': return { icon: <Cuboid size={24} />, desc: "Color-coded functional zoning and volumes", color: "text-rose-500" };
+                              case 'Adjacency / Bubble': return { icon: <Network size={24} />, desc: "Program Relations", color: "text-pink-400" };
+                              case 'Circulation & Flow': return { icon: <ArrowUpRight size={24} />, desc: "Flow paths, movement vectors, and access", color: "text-orange-500" };
+                              case 'Processional Sequence': return { icon: <Footprints size={24} />, desc: "User Journey", color: "text-orange-400" };
+                              case 'Time-of-Day Use': return { icon: <Clock size={24} />, desc: "Temporal Usage", color: "text-indigo-400" };
                               case 'Activity & Usage': return { icon: <Users size={24} />, desc: "Ghosted view with activity mapping and usage", color: "text-pink-500" };
-                              case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
+
                               case 'Structural Tectonics': return { icon: <Grid3x3 size={24} />, desc: "X-ray view of load-bearing skeletal system", color: "text-indigo-500" };
+                              case 'Envelope & Shading': return { icon: <Shield size={24} />, desc: "Facade System", color: "text-teal-500" };
+                              case 'Passive Cooling': return { icon: <Thermometer size={24} />, desc: "Thermal Strategy", color: "text-cyan-400" };
+                              case 'Water Strategy': return { icon: <Droplet size={24} />, desc: "Rainwater & Reuse", color: "text-blue-600" };
+                              case 'Sustainability Scorecard': return { icon: <Leaf size={24} />, desc: "Green Features", color: "text-green-500" };
+
+                              case 'Geometric Analysis': return { icon: <Ruler size={24} />, desc: "Regulating lines, symmetry, and proportions", color: "text-slate-500" };
                               case 'Urban Context & Mapping': return { icon: <MapPin size={24} />, desc: "Relationship to city fabric and mapping", color: "text-teal-600" };
 
                               // Signature
+                              case 'Iconic Diagram': return { icon: <Star size={24} />, desc: "The 'Logo' Idea", color: "text-yellow-400" };
+                              case 'Exploded Axonometric': return { icon: <Layers size={24} />, desc: "Vertical deconstruction of layers and assembly", color: "text-blue-500" };
+                              case 'Exploded Perspective': return { icon: <Maximize2 size={24} />, desc: "Human Scale Parts", color: "text-blue-600" };
                               case 'Sectional Perspective': return { icon: <BoxSelect size={24} />, desc: "3D cut revealing interior life and depth", color: "text-purple-500" };
+                              case 'Storyboard Strip': return { icon: <Film size={24} />, desc: "Narrative Frames", color: "text-slate-700" };
+                              case 'Cinematic Sequence': return { icon: <Video size={24} />, desc: "Film-like Views", color: "text-slate-800" };
+                              case 'Material Palette': return { icon: <Palette size={24} />, desc: "Textures & Tones", color: "text-stone-600" };
                               case 'Living Collage Cutaway': return { icon: <Leaf size={24} />, desc: "Whimsical cutaway with lush plants and life", color: "text-lime-600" };
+
+                              // Advanced
+                              case 'Data-Driven Diagram': return { icon: <BarChart3 size={24} />, desc: "Metrics & Graphs", color: "text-cyan-600" };
+                              case 'Parametric Growth': return { icon: <Workflow size={24} />, desc: "Algorithmic Form", color: "text-indigo-600" };
+                              case 'Assembly Sequence': return { icon: <Construction size={24} />, desc: "Construction Steps", color: "text-orange-600" };
+                              case 'Phasing Diagram': return { icon: <TrendingUp size={24} />, desc: "Growth Stages", color: "text-green-500" };
+                              case 'Cost Logic': return { icon: <DollarSign size={24} />, desc: "Efficiency & Cost", color: "text-emerald-600" };
+                              case 'Accessibility Strategy': return { icon: <Accessibility size={24} />, desc: "Universal Design", color: "text-blue-500" };
+                              case 'Fire Strategy': return { icon: <Flame size={24} />, desc: "Egress & Safety", color: "text-red-500" };
+
+                              // Motion
+                              case '60-120s Film': return { icon: <Film size={24} />, desc: "Cinematic Movie", color: "text-purple-600" };
+                              case 'Animated Diagram': return { icon: <Play size={24} />, desc: "Dynamic Motion", color: "text-pink-600" };
+                              case '3D Walkthrough': return { icon: <Camera size={24} />, desc: "Immersive Tour", color: "text-blue-500" };
 
                               default: return { icon: <Shapes size={24} />, desc: "Architectural diagram style", color: "text-slate-500" };
                             }
