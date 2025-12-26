@@ -126,7 +126,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="flex items-center justify-center">
                             <h2 className="text-2xl font-light text-slate-900 flex items-center gap-2">
-                                <Box size={20} /> Showcase Gallery
+                                <Box size={20} /> Renderman Gallery
                             </h2>
                         </div>
 
