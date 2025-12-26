@@ -19,7 +19,6 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.SIMILAR_TO_REF,
       RenderStyle.HYPERREAL,
       RenderStyle.SEMI_REALISTIC,
-      RenderStyle.CONCEPTUAL,
       RenderStyle.TRANSLUCENT_ETHEREAL,
       RenderStyle.SATELLITE_DRONE
     ]
@@ -27,6 +26,7 @@ export const EXTERIOR_STYLE_CATEGORIES = [
   {
     title: "3D Model-Based",
     styles: [
+      RenderStyle.CONCEPTUAL,
       RenderStyle.WIREFRAME,
       RenderStyle.CLAY,
       RenderStyle.WHITE_MODEL,
