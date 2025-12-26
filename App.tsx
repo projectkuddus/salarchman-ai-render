@@ -23,7 +23,8 @@ import {
   ConcreteGraphic, WhiteCardGraphic, BlueFoamGraphic, WoodBlockGraphic, CardboardGraphic, TranslucentGraphic,
   OrthogonalGraphic, OrganicGraphic, CurvilinearGraphic, FacetedGraphic, CrystallineGraphic, ParametricGraphic, DeconstructivistGraphic,
   MorningGraphic, NoonGraphic, SunsetGraphic,
-  ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic
+  ExtrudeGraphic, BranchGraphic, MergeGraphic, NestGraphic, InflateGraphic, StackGraphic, SubtractGraphic, PunchGraphic, SplitGraphic, CarveGraphic, NotchGraphic, TwistGraphic, FoldGraphic, ShearGraphic, CantileverGraphic, LiftGraphic, TerraceGraphic, BendGraphic, ShiftGraphic, RotateGraphic, OffsetGraphic, TaperGraphic, InterlockGraphic, DefaultGraphic,
+  LaminateGraphic, GradeGraphic, EmbedGraphic, FractureGraphic, ExcavateGraphic
 } from './components/IdeationGraphics';
 import { generateAnimation } from './services/veoService';
 import { AnimationView } from './components/AnimationView';
@@ -776,50 +777,40 @@ function App() {
 
   const getVerbIcon = (name: string) => {
     switch (name) {
-      case 'Extrude': return <ArrowUpSquare size={12} />;
-      case 'Branch': return <GitBranch size={12} />;
-      case 'Merge': return <Merge size={12} />;
-      case 'Nest': return <BoxSelect size={12} />;
-      case 'Inflate': return <Expand size={12} />;
-      case 'Stack': return <Layers size={12} />;
-      case 'Subtract': return <MinusSquare size={12} />;
-      case 'Punch': return <Target size={12} />;
-      case 'Split': return <Split size={12} />;
-      case 'Carve': return <Eraser size={12} />;
-      case 'Notch': return <Puzzle size={12} />;
-      case 'Twist': return <RotateCw size={12} />;
-      case 'Fold': return <Scroll size={12} />;
-      case 'Shear': return <MoveDiagonal size={12} />;
-      case 'Cantilever': return <ArrowRightFromLine size={12} />;
-      case 'Lift': return <ArrowUpFromLine size={12} />;
-      case 'Terrace': return <Signal size={12} />;
-      case 'Bend': return <CornerUpRight size={12} />;
-      case 'Shift': return <MoveDiagonal size={12} />;
-      case 'Rotate': return <RotateCw size={12} />;
-      case 'Offset': return <Expand size={12} />;
-      case 'Taper': return <Minimize2 size={12} />;
-      case 'Interlock': return <Puzzle size={12} />;
-      case 'Laminate': return <Copy size={12} />;
-      case 'Grade': return <TrendingUp size={12} />;
-      case 'Embed': return <ArrowDownToLine size={12} />;
-      case 'Fracture': return <Zap size={12} />;
-      case 'Excavate': return <Shovel size={12} />;
-      case 'Wrap': return <WrapText size={12} />;
-      case 'Weave': return <Network size={12} />;
-      case 'Hinge': return <DoorOpen size={12} />;
-      case 'Pivot': return <Disc size={12} />;
-      case 'Slide': return <MoveHorizontal size={12} />;
-      case 'Compress': return <Shrink size={12} />;
-      case 'Expand': return <Maximize size={12} />;
-      case 'Pleat': return <FoldVertical size={12} />;
-      case 'Seam': return <ScissorsLineDashed size={12} />;
-      case 'Stretch': return <Scaling size={12} />;
-      case 'Infiltrate': return <GitMerge size={12} />;
-      case 'Augment': return <PlusSquare size={12} />;
-      case 'React': return <Activity size={12} />;
-      default: return <Sparkles size={12} />;
+      case 'Extrude': return <ExtrudeGraphic />;
+      case 'Branch': return <BranchGraphic />;
+      case 'Merge': return <MergeGraphic />;
+      case 'Nest': return <NestGraphic />;
+      case 'Inflate': return <InflateGraphic />;
+      case 'Stack': return <StackGraphic />;
+      case 'Laminate': return <LaminateGraphic />;
+      case 'Grade': return <GradeGraphic />;
+      case 'Embed': return <EmbedGraphic />;
+
+      case 'Subtract': return <SubtractGraphic />;
+      case 'Punch': return <PunchGraphic />;
+      case 'Split': return <SplitGraphic />;
+      case 'Carve': return <CarveGraphic />;
+      case 'Notch': return <NotchGraphic />;
+      case 'Fracture': return <FractureGraphic />;
+      case 'Excavate': return <ExcavateGraphic />;
+
+      case 'Twist': return <TwistGraphic />;
+      case 'Fold': return <FoldGraphic />;
+      case 'Shear': return <ShearGraphic />;
+      case 'Cantilever': return <CantileverGraphic />;
+      case 'Lift': return <LiftGraphic />;
+      case 'Terrace': return <TerraceGraphic />;
+      case 'Bend': return <BendGraphic />;
+      case 'Shift': return <ShiftGraphic />;
+      case 'Rotate': return <RotateGraphic />;
+      case 'Offset': return <OffsetGraphic />;
+      case 'Taper': return <TaperGraphic />;
+      case 'Interlock': return <InterlockGraphic />;
+      default: return <DefaultGraphic />;
     }
   };
+
 
   const getMaterialGraphic = (name: string) => {
     switch (name) {

@@ -137,90 +137,48 @@ export const SunsetGraphic = () => (
 
 // --- OPERATIONS ---
 
-export const ExtrudeGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="flex flex-col items-center gap-1">
-            <div className="w-6 h-2 border-2 border-slate-400 border-dashed"></div>
-            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[6px] border-b-slate-400"></div>
-            <div className="w-6 h-6 bg-slate-600 rounded-sm"></div>
-        </div>
+const IconWrapper = ({ src, alt }: { src: string, alt: string }) => (
+    <div className="w-full h-full flex items-center justify-center p-1">
+        <img src={src} alt={alt} className="w-full h-full object-contain drop-shadow-sm" />
     </div>
 );
 
-export const BranchGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-600">
-            <path d="M12 20v-8m0 0l-4-4m4 4l4-4" />
-        </svg>
-    </div>
-);
+export const ExtrudeGraphic = () => <IconWrapper src="/icons/ideation/extrude.png" alt="Extrude" />;
+export const BranchGraphic = () => <IconWrapper src="/icons/ideation/branch.png" alt="Branch" />;
+export const MergeGraphic = () => <IconWrapper src="/icons/ideation/merge.png" alt="Merge" />;
+export const NestGraphic = () => <IconWrapper src="/icons/ideation/nest.png" alt="Nest" />;
+export const InflateGraphic = () => <IconWrapper src="/icons/ideation/inflate.png" alt="Inflate" />;
+export const StackGraphic = () => <IconWrapper src="/icons/ideation/stack.png" alt="Stack" />;
+export const LaminateGraphic = () => <IconWrapper src="/icons/ideation/laminate.png" alt="Laminate" />;
+export const GradeGraphic = () => <IconWrapper src="/icons/ideation/grade.png" alt="Grade" />;
+export const EmbedGraphic = () => <IconWrapper src="/icons/ideation/embed.png" alt="Embed" />;
 
-export const MergeGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center relative">
-        <div className="w-5 h-5 bg-slate-500 rounded-full absolute left-3 mix-blend-multiply"></div>
-        <div className="w-5 h-5 bg-slate-500 rounded-full absolute right-3 mix-blend-multiply"></div>
-    </div>
-);
-
-export const NestGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-slate-600 flex items-center justify-center">
-            <div className="w-4 h-4 bg-slate-400"></div>
-        </div>
-    </div>
-);
-
-export const InflateGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-slate-400 rounded-md flex items-center justify-center relative">
-            <div className="absolute -inset-1 border border-slate-300 rounded-lg border-dashed"></div>
-            <div className="w-1 h-1 bg-slate-600"></div>
-        </div>
-    </div>
-);
-
-export const StackGraphic = () => (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-0.5">
-        <div className="w-6 h-3 bg-slate-400 rounded-sm"></div>
-        <div className="w-6 h-3 bg-slate-500 rounded-sm"></div>
-        <div className="w-6 h-3 bg-slate-600 rounded-sm"></div>
-    </div>
-);
-
-export const SubtractGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="w-8 h-8 bg-slate-600 relative">
-            <div className="absolute top-0 right-0 w-4 h-4 bg-white border-l border-b border-slate-300"></div>
-        </div>
-    </div>
-);
-
-export const PunchGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="w-8 h-8 bg-slate-600 flex items-center justify-center">
-            <div className="w-3 h-3 bg-white rounded-sm"></div>
-        </div>
-    </div>
-);
-
-export const SplitGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center gap-1">
-        <div className="w-3 h-8 bg-slate-600"></div>
-        <div className="w-0.5 h-8 border-l border-dashed border-slate-400"></div>
-        <div className="w-3 h-8 bg-slate-600"></div>
-    </div>
-);
-
-export const CarveGraphic = () => (
-    <div className="w-full h-full flex items-center justify-center">
-        <div className="w-8 h-8 bg-slate-600 rounded-tr-xl"></div>
-    </div>
-);
+// Subtractive (Placeholders for now, using existing SVGs or simple shapes if not generated)
+export const SubtractGraphic = () => <IconWrapper src="/icons/ideation/subtract.png" alt="Subtract" />;
+export const PunchGraphic = () => <IconWrapper src="/icons/ideation/punch.png" alt="Punch" />;
+export const SplitGraphic = () => <IconWrapper src="/icons/ideation/split.png" alt="Split" />;
+export const CarveGraphic = () => <IconWrapper src="/icons/ideation/carve.png" alt="Carve" />;
 
 export const NotchGraphic = () => (
     <div className="w-full h-full flex items-center justify-center">
         <div className="w-8 h-8 bg-slate-600 relative">
             <div className="absolute top-1/2 right-0 w-2 h-2 bg-white transform -translate-y-1/2"></div>
+        </div>
+    </div>
+);
+
+export const FractureGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-8 h-8 bg-slate-600 relative overflow-hidden">
+            <div className="absolute inset-0 border-r-2 border-white transform rotate-12 translate-x-1"></div>
+        </div>
+    </div>
+);
+
+export const ExcavateGraphic = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-8 h-8 bg-slate-600 border-4 border-slate-600 flex items-center justify-center">
+            <div className="w-6 h-6 bg-white/90 rounded-sm"></div>
         </div>
     </div>
 );
