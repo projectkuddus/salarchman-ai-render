@@ -106,20 +106,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         Transform your sketches into <span className="font-normal">photographic renders.</span>
                     </h1>
                     <p className="text-slate-400 max-w-lg text-base md:text-lg font-light leading-relaxed mx-auto">
-                        your complete international project submission engine from ideation to final board.
+                        your complete pro grade project submission engine from ideation to final board.
                     </p>
                 </div>
 
                 {/* The Renderman Manifesto */}
                 <div className="max-w-3xl mx-auto px-6 mb-32">
                     <div className="text-center mb-16">
-                        <h3 className="text-3xl md:text-5xl font-thin leading-tight text-slate-900 tracking-tight">
-                            We believe
-                            <div className="inline-grid h-[1.1em] overflow-hidden mx-3 align-bottom">
-                                <div className="transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]" style={{ transform: `translateY(-${roleIndex * 100}%)` }}>
-                                    <div className="h-[1.1em] font-normal text-slate-900">Creatives</div>
-                                    <div className="h-[1.1em] font-normal text-slate-900">Architects</div>
-                                    <div className="h-[1.1em] font-normal text-slate-900">Designers</div>
+                        <h3 className="text-3xl md:text-5xl font-thin leading-tight text-slate-900 tracking-tight flex flex-col md:block items-center justify-center gap-2">
+                            <span>We believe</span>
+                            <div className="inline-grid h-[1.1em] overflow-hidden mx-3 align-bottom w-[220px] md:w-[280px] relative top-[0.1em]">
+                                <div className="transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ transform: `translateY(-${roleIndex * 100}%)` }}>
+                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Creatives</div>
+                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Architects</div>
+                                    <div className="h-[1.1em] font-normal text-slate-900 flex justify-center">Designers</div>
                                 </div>
                             </div>
                             <span className="block md:inline mt-2 md:mt-0 text-slate-500">
