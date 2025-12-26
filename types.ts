@@ -7,6 +7,7 @@ export enum RenderStyle {
   TRANSLUCENT_ETHEREAL = 'Translucent Ethereal',
   SATELLITE_DRONE = 'Satellite to Drone',
   EVENING_LIGHT = 'Evening Light',
+  EVENING_LIGHT_2 = 'Evening 2',
 
   // 3D Model-Based
   WIREFRAME = 'Wireframe',
