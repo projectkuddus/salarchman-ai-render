@@ -451,7 +451,7 @@ export const DIAGRAM_STYLE_CATEGORIES = [
     ]
   },
   {
-    title: "5) Advanced / Rare but Deadly",
+    title: "5) Advanced Data Driven Diagram",
     styles: [
       DiagramType.DATA_DRIVEN,
       DiagramType.PARAMETRIC_GROWTH,
@@ -463,7 +463,7 @@ export const DIAGRAM_STYLE_CATEGORIES = [
     ]
   },
   {
-    title: "8) Motion / Digital Submission",
+    title: "6) Motion / Animation",
     styles: [
       DiagramType.MOTION_FILM,
       DiagramType.ANIMATED_DIAGRAM,

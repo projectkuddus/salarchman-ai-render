@@ -1397,7 +1397,7 @@ function App() {
 
               {/* Style Gallery */}
               <div>
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1"><Grid size={10} /> Style Gallery</h4>
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1"><Grid size={10} /> Professional Presentation Package</h4>
 
                 <div className="space-y-2">
                   {DIAGRAM_STYLE_CATEGORIES.map((category) => (
@@ -1410,7 +1410,7 @@ function App() {
                         <ChevronDown size={12} className={`transition-transform duration-200 ${collapsedCategories.includes(category.title) ? '-rotate-90' : ''}`} />
                       </button>
 
-                      <div className={`grid grid-cols-2 gap-3 transition-all duration-300 ${collapsedCategories.includes(category.title) ? 'hidden' : 'block'}`}>
+                      <div className={`grid grid-cols-2 gap-2 transition-all duration-300 ${collapsedCategories.includes(category.title) ? 'hidden' : 'block'}`}>
                         {category.styles.map((type) => {
                           const isSelected = selectedDiagramType === type;
 
@@ -1491,7 +1491,7 @@ function App() {
                             <button
                               key={type}
                               onClick={() => setSelectedDiagramType(type as DiagramType)}
-                              className={`relative p-2 rounded-xl border text-left transition-all duration-200 flex flex-col gap-1.5 group hover:shadow-md ${isSelected
+                              className={`relative p-2 rounded-xl border text-left transition-all duration-200 flex flex-col gap-1.5 group hover:shadow-md aspect-[4/3] ${isSelected
                                 ? 'bg-slate-900 border-slate-900 ring-1 ring-slate-900'
                                 : 'bg-white border-slate-200 hover:border-slate-300'
                                 }`}
@@ -1499,11 +1499,11 @@ function App() {
                               <div className={`p-1.5 rounded-lg w-fit transition-colors ${isSelected ? 'bg-slate-800 text-white' : `bg-slate-50 ${details.color}`}`}>
                                 {details.icon}
                               </div>
-                              <div>
-                                <h5 className={`text-[10px] font-bold mb-0.5 ${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                              <div className="flex-1 flex flex-col justify-end">
+                                <h5 className={`text-[10px] font-bold mb-0.5 line-clamp-1 ${isSelected ? 'text-white' : 'text-slate-900'}`}>
                                   {type}
                                 </h5>
-                                <p className={`text-[9px] leading-tight ${isSelected ? 'text-slate-400' : 'text-slate-500'}`}>
+                                <p className={`text-[9px] leading-tight line-clamp-2 ${isSelected ? 'text-slate-400' : 'text-slate-500'}`}>
                                   {details.desc}
                                 </p>
                               </div>
