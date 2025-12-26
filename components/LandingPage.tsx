@@ -117,27 +117,42 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                         ) : (
                             <>
                                 <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                                    {galleryImages.slice(0, visibleCount).map((img, index) => (
-                                        <div
-                                            key={index}
-                                            className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
-                                            onClick={() => setSelectedImage(img)}
-                                        >
-                                            <img
-                                                src={img}
-                                                alt={`Showcase ${index + 1}`}
-                                                loading="lazy"
-                                                width="400"
-                                                height="300"
-                                                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
-                                                onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                                                }}
-                                            />
-                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                                        </div>
-                                    ))}
+                                    {galleryImages.slice(0, visibleCount).map((img, index) => {
+                                        // Helper to get thumbnail path
+                                        const getThumbnailPath = (path: string) => {
+                                            const parts = path.split('.');
+                                            const ext = parts.pop();
+                                            const base = parts.join('.');
+                                            return `${base}_thumb.${ext}`;
+                                        };
+
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="break-inside-avoid group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                                                onClick={() => setSelectedImage(img)}
+                                            >
+                                                <img
+                                                    src={getThumbnailPath(img)}
+                                                    alt={`Showcase ${index + 1}`}
+                                                    loading="lazy"
+                                                    width="400"
+                                                    height="300"
+                                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-100"
+                                                    onError={(e) => {
+                                                        const target = e.target as HTMLImageElement;
+                                                        // If thumbnail fails, try original. If original fails, fallback.
+                                                        if (target.src.includes('_thumb')) {
+                                                            target.src = img;
+                                                        } else {
+                                                            target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                                                        }
+                                                    }}
+                                                />
+                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                                            </div>
+                                        );
+                                    })}
                                 </div>
 
                                 {visibleCount < galleryImages.length && (
