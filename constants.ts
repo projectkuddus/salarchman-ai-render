@@ -129,7 +129,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.HYPERREAL]: '/thumbnails/hyperreal.jpg',
   [RenderStyle.SEMI_REALISTIC]: '/thumbnails/semi-realistic.jpg',
   [RenderStyle.CONCEPTUAL]: '/thumbnails/conceptual.jpg',
-  [RenderStyle.TRANSLUCENT_ETHEREAL]: '/gallery/translucent-ethereal-thumb.jpg',
+  [RenderStyle.TRANSLUCENT_ETHEREAL]: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=150&q=60&fm=webp',
   [RenderStyle.SATELLITE_DRONE]: '/thumbnails/satellite-drone.jpg',
   [RenderStyle.EVENING_LIGHT]: '/thumbnails/evening-light.jpg',
   [RenderStyle.EVENING_LIGHT_2]: '/thumbnails/twilight-luxury.jpg',
@@ -140,7 +140,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WIREFRAME]: '/thumbnails/wireframe.jpg',
   [RenderStyle.CLAY]: '/thumbnails/clay.jpg',
   [RenderStyle.WHITE_MODEL]: '/thumbnails/white-model.jpg',
-  [RenderStyle.PAPER_MODEL]: '/gallery/paper-model-thumb.jpg',
+  [RenderStyle.PAPER_MODEL]: '/thumbnails/Paper Model.jpg',
   [RenderStyle.AMBIENT_OCCLUSION]: '/thumbnails/ambient-occlusion.jpg',
 
   [RenderStyle.MATERIAL_STUDY]: '/thumbnails/material-study.jpg',
@@ -152,7 +152,7 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_NPR]: '/thumbnails/watercolor-npr.jpg',
   [RenderStyle.MINIATURE]: '/thumbnails/miniature.jpg',
   [RenderStyle.LOW_POLY]: '/thumbnails/low-poly.jpg',
-  [RenderStyle.DESERT_RUIN]: '/gallery/desert-ruin-thumb.jpg',
+  [RenderStyle.DESERT_RUIN]: '/gallery/ruined-palace-model_thumb.jpg',
 
   // Hand-Drawn
   [RenderStyle.PENCIL_SKETCH]: '/thumbnails/pencil-sketch.jpg',
@@ -163,33 +163,33 @@ export const EXTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [RenderStyle.WATERCOLOR_WASH]: '/thumbnails/watercolor-wash.jpg',
   [RenderStyle.TECHNICAL_PEN]: '/thumbnails/technical-pen.jpg',
   [RenderStyle.BLUEPRINT]: '/thumbnails/blueprint.jpg',
-  [RenderStyle.ARCH_DOODLE]: '/gallery/arch-doodle-thumb.jpg',
-  [RenderStyle.URBAN_CONCEPT_SKETCH]: '/gallery/urban-concept-sketch-thumb.jpg',
-  [RenderStyle.VIBRANT_DIGITAL_PAINTING]: '/gallery/vibrant-digital-painting-thumb.jpg',
-  [RenderStyle.KRAFT_PAPER_SKETCH]: '/gallery/kraft-paper-sketch-thumb.jpg',
-  [RenderStyle.GAZIR_POT]: '/gallery/gazir-pot-thumb-v2.png',
+  [RenderStyle.ARCH_DOODLE]: 'https://images.unsplash.com/photo-1531844251246-9a1bfaaeeb9a?w=150&q=60&fm=webp',
+  [RenderStyle.URBAN_CONCEPT_SKETCH]: 'https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?w=150&q=60&fm=webp',
+  [RenderStyle.VIBRANT_DIGITAL_PAINTING]: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=150&q=60&fm=webp',
+  [RenderStyle.KRAFT_PAPER_SKETCH]: 'https://images.unsplash.com/photo-1513346940221-18f4601d88dd?w=150&q=60&fm=webp',
+  [RenderStyle.GAZIR_POT]: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=150&q=60&fm=webp',
 
   // Architectural Model Photography
-  [RenderStyle.METAL_MODEL]: '/gallery/metal-model-thumb-v2.jpg',
-  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-model-thumb-v2.jpg',
-  [RenderStyle.WOOD_MODEL]: '/gallery/wood-model-thumb-v2.jpg',
-  [RenderStyle.RED_BRICK_MODEL]: '/gallery/red-brick-model-thumb-v2.jpg',
-  [RenderStyle.BRONZE_MODEL]: '/gallery/bronze-model-thumb-v2.jpg',
-  [RenderStyle.RED_CONCRETE_MODEL]: '/gallery/red-concrete-model-thumb-v2.jpg',
-  [RenderStyle.CONCRETE_PLANS_MODEL]: '/gallery/concrete-plans-model-thumb-v2.jpg',
-  [RenderStyle.WOOD_VEGETATION_MODEL]: '/gallery/wood-vegetation-model-thumb-v2.jpg',
-  [RenderStyle.WOOD_WHITE_MODEL]: '/gallery/wood-white-model-thumb-v2.jpg',
-  [RenderStyle.DARK_BRUTALIST_MODEL]: '/gallery/dark-brutalist-model-thumb-v2.jpg',
-  [RenderStyle.GREY_CARDBOARD_MODEL]: '/gallery/grey-cardboard-model-thumb-v2.jpg',
-  [RenderStyle.LEGO_MODEL]: '/gallery/lego-model-thumb-v2.jpg',
-  [RenderStyle.CITY_MODEL_3D_PRINT]: '/gallery/city-model-3d-print-thumb-v2.jpg',
-  [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-glass-model-thumb-v2.jpg',
-  [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: '/gallery/wooden-structure-terracotta-model-thumb-v2.jpg',
-  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: '/gallery/pastel-wood-green-model-thumb-v2.jpg',
-  [RenderStyle.METALLIC_WOOD_MODEL]: '/gallery/metallic-wood-model-thumb.jpg',
-  [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/gallery/white-architectural-model-thumb.jpg',
-  [RenderStyle.CONCRETE_WHITE_MODEL]: '/gallery/concrete-white-model-thumb.jpg',
-  [RenderStyle.WOOD_ACRYLIC_MODEL]: '/gallery/wood-acrylic-model-thumb.jpg',
+  [RenderStyle.METAL_MODEL]: '/gallery/futuristic-silver-model_thumb.jpg',
+  [RenderStyle.CONCRETE_MODEL]: '/gallery/concrete-water-museum_thumb.jpg',
+  [RenderStyle.WOOD_MODEL]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
+  [RenderStyle.RED_BRICK_MODEL]: '/gallery/brick-community-center_thumb.png',
+  [RenderStyle.BRONZE_MODEL]: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp',
+  [RenderStyle.RED_CONCRETE_MODEL]: '/gallery/red-concrete-model_thumb.jpg',
+  [RenderStyle.CONCRETE_PLANS_MODEL]: '/gallery/abstract-concrete-massing_thumb.jpg',
+  [RenderStyle.WOOD_VEGETATION_MODEL]: '/gallery/concrete-green-house_thumb.jpg',
+  [RenderStyle.WOOD_WHITE_MODEL]: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp',
+  [RenderStyle.DARK_BRUTALIST_MODEL]: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=150&q=60&fm=webp',
+  [RenderStyle.GREY_CARDBOARD_MODEL]: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&q=60&fm=webp',
+  [RenderStyle.LEGO_MODEL]: 'https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?w=150&q=60&fm=webp',
+  [RenderStyle.CITY_MODEL_3D_PRINT]: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=150&q=60&fm=webp',
+  [RenderStyle.WIREFRAME_GLASS_MODEL]: '/gallery/wireframe-museum-concept_thumb.jpg',
+  [RenderStyle.WOODEN_STRUCTURE_TERRACOTTA_MODEL]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
+  [RenderStyle.PASTEL_WOOD_GREEN_MODEL]: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=150&q=60&fm=webp',
+  [RenderStyle.METALLIC_WOOD_MODEL]: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp',
+  [RenderStyle.WHITE_ARCHITECTURAL_MODEL]: '/gallery/white-plaster-colonial-model_thumb.jpg',
+  [RenderStyle.CONCRETE_WHITE_MODEL]: '/gallery/white-plaster-community-model_thumb.png',
+  [RenderStyle.WOOD_ACRYLIC_MODEL]: 'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp',
 
   // Legacy Fallbacks
   [RenderStyle.FUTURISTIC]: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=150&q=60&fm=webp",
@@ -275,7 +275,7 @@ export const STYLE_PROMPTS: Record<string, string> = {
 
 export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.SIMILAR_TO_REF]: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=150&q=60&fm=webp", // Reusing exterior ref image
-  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=60&fm=webp", // Missing file
+  [InteriorStyle.PHOTOREALISTIC]: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=150&q=60&fm=webp",
   [InteriorStyle.DHAKA_LUXURY]: "/thumbnails/interior/dhaka-luxury.jpg",
   [InteriorStyle.ART_DECO]: "/thumbnails/interior/art-deco.jpg",
   [InteriorStyle.FUTURISTIC_INT]: "/thumbnails/interior/futuristic.jpg",
@@ -289,11 +289,11 @@ export const INTERIOR_STYLE_THUMBNAILS: Record<string, string> = {
   [InteriorStyle.SCANDINAVIAN]: "/thumbnails/interior/scandinavian.jpg",
   [InteriorStyle.INDUSTRIAL]: "/thumbnails/interior/industrial.jpg",
   [InteriorStyle.AMBER_TEXTURED]: "/thumbnails/interior/amber-textured.jpg",
-  [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp", // Placeholder moody orange
+  [InteriorStyle.AMBER_NOIR]: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=150&q=60&fm=webp",
   [InteriorStyle.PAPER_MODEL]: "/paper-output.jpg",
-  [InteriorStyle.GAZIR_POT]: "/gallery/gazir-pot-thumb-v2.png",
-  [InteriorStyle.BLUE_AMBIENCE]: "/gallery/blue-ambience-thumb.png",
-  [InteriorStyle.SOFT_BRUTALIST]: "/gallery/soft-brutalist-thumb.jpg"
+  [InteriorStyle.GAZIR_POT]: "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=150&q=60&fm=webp",
+  [InteriorStyle.BLUE_AMBIENCE]: "https://images.unsplash.com/photo-1558433916-90a36b44753f?w=150&q=60&fm=webp",
+  [InteriorStyle.SOFT_BRUTALIST]: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=150&q=60&fm=webp"
 };
 
 export const INTERIOR_STYLE_PROMPTS: Record<string, string> = {
