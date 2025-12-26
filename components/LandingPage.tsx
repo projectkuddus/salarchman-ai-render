@@ -23,6 +23,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     const [galleryImages, setGalleryImages] = React.useState<GalleryItem[]>([]);
     const [visibleCount, setVisibleCount] = React.useState(12);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [roleIndex, setRoleIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setRoleIndex((prev) => (prev + 1) % 3);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     React.useEffect(() => {
         setIsLoading(true);
@@ -105,18 +113,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 {/* The Renderman Manifesto */}
                 <div className="max-w-4xl mx-auto px-6 mb-32 text-center">
                     <h3 className="text-2xl md:text-4xl font-thin leading-relaxed text-slate-800 mb-10 tracking-tight">
-                        We believe creatives shouldn’t become <span className="font-normal text-slate-900">software operators.</span>
+                        We believe <span className="inline-block min-w-[140px] font-normal text-slate-900 transition-all duration-500">
+                            {['Creatives', 'Architects', 'Designers'][roleIndex]}
+                        </span> —shouldn’t spend their best years learning tools instead of learning how to think.
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm md:text-base text-slate-500 font-light leading-relaxed text-left max-w-3xl mx-auto">
-                        <p>
-                            Architects and designers are paid for taste, insight, and problem-solving—not for suffering through tools.
-                        </p>
-                        <p>
-                            <span className="font-medium text-slate-900">renderman.ai</span> exists to remove friction between imagination and output, so you can spend your best energy on thinking.
-                        </p>
-                        <p className="flex items-center text-slate-900 font-medium">
-                            Less struggle. <br />More clarity. <br />Better work.
-                        </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm md:text-base text-slate-500 font-light leading-relaxed text-left max-w-4xl mx-auto">
+                        <div className="space-y-6">
+                            <p>
+                                The real work is seeing clearly, understanding the problem, and shaping an idea with depth.
+                            </p>
+                            <p>
+                                But most of the time gets burned fighting software just to finish and submit.
+                            </p>
+                        </div>
+                        <div className="space-y-6">
+                            <p>
+                                <span className="font-medium text-slate-900">renderman.ai</span> exists to remove that friction—so the path from idea to execution feels smooth.
+                            </p>
+                            <p>
+                                So you spend more time thinking, and less time suffering to get work done.
+                            </p>
+                            <p className="flex items-center text-slate-900 font-medium pt-2 text-lg">
+                                Less struggle. More clarity. Great work.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
