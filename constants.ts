@@ -19,11 +19,16 @@ export const EXTERIOR_STYLE_CATEGORIES = [
       RenderStyle.SIMILAR_TO_REF,
       RenderStyle.HYPERREAL,
       RenderStyle.SEMI_REALISTIC,
-      RenderStyle.TRANSLUCENT_ETHEREAL,
-      RenderStyle.SATELLITE_DRONE,
+      RenderStyle.SATELLITE_DRONE
+    ]
+  },
+  {
+    title: "Night Light Photography",
+    styles: [
       RenderStyle.EVENING_LIGHT,
       RenderStyle.EVENING_LIGHT_2,
-      RenderStyle.GOLDEN_HOUR_DRAMATIC
+      RenderStyle.GOLDEN_HOUR_DRAMATIC,
+      RenderStyle.TRANSLUCENT_ETHEREAL
     ]
   },
   {
