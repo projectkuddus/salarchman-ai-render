@@ -48,5 +48,55 @@
         "user": "renderman-ai",
         "prompt": "White plaster architectural model, community center, clay figures",
         "aspectRatio": "16:9"
+    },
+    {
+        "id": 6,
+        "image": "/gallery/red-clay-iso-model.png",
+        "style": "Red Clay Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red clay architectural model, isometric view, domes",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 7,
+        "image": "/gallery/red-clay-perspective-model.png",
+        "style": "Red Clay Model",
+        "type": "Model Photography",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Red clay architectural model, perspective view, mosque architecture",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 8,
+        "image": "/gallery/concrete-green-house.jpg",
+        "style": "Eco-Brutalism",
+        "type": "Exterior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Concrete house with lush greenery, sustainable architecture",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 9,
+        "image": "/gallery/luxury-office-interior.jpg",
+        "style": "Luxury Interior",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Luxury office interior, classic style, chandeliers",
+        "aspectRatio": "16:9"
+    },
+    {
+        "id": 10,
+        "image": "/gallery/minimalist-arches-interior.png",
+        "style": "Minimalist Interior",
+        "type": "Interior",
+        "category": "render",
+        "user": "renderman-ai",
+        "prompt": "Minimalist interior with arches, warm lighting, textured walls",
+        "aspectRatio": "16:9"
     }
 ]
