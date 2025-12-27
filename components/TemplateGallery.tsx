@@ -4,6 +4,7 @@ import { Button } from './Button';
 import { MaterialSwapWorkspace } from './MaterialSwapWorkspace';
 import { SiteAnalysisWorkspace } from './SiteAnalysisWorkspace';
 import { DesignInsertionWorkspace } from './DesignInsertionWorkspace';
+import { FloorPlanWorkspace } from './FloorPlanWorkspace';
 
 export interface Template {
     id: string;
@@ -102,13 +103,13 @@ export const TEMPLATES: Template[] = [
     {
         id: 'floor-plan-iso',
         title: 'Floor Plan to Isometric',
-        description: 'Convert 2D floor plans into 3D isometric renders.',
+        description: 'Turn a flat floor plan into a stunning 3D cutaway diorama.',
         category: 'Interior',
-        baseImage: 'https://images.unsplash.com/photo-1593604340977-2b6f00c5643b?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=800&auto=format&fit=crop',
-        prompt: '3D isometric floor plan render, cutaway view. Realistic textures, furniture, and lighting. Clean white background.',
-        style: 'Isometric',
-        instructions: 'Upload a 2D floor plan to generate a detailed 3D isometric view. (Coming Soon)'
+        baseImage: '/templates/floor-plan-input.png',
+        outputImage: '/templates/floor-plan-output.png',
+        prompt: 'Create a 45-degree isometric 3D cutaway model of this floor plan in a Blender-style diorama aesthetic. Model ONLY what is visible in the plan. Walls must be crisp white. Interior flooring must be warm oak wood. Warm atmospheric lighting.',
+        style: 'Realistic',
+        instructions: 'Upload a 2D floor plan to generate a detailed 3D isometric view.'
     },
     {
         id: 'restoration',
@@ -183,6 +184,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     <SiteAnalysisWorkspace template={selectedTemplate} />
                 ) : selectedTemplateId === 'design-insertion' ? (
                     <DesignInsertionWorkspace template={selectedTemplate} />
+                ) : selectedTemplateId === 'floor-plan-iso' ? (
+                    <FloorPlanWorkspace template={selectedTemplate} />
                 ) : (
                     <>
                         {/* Left Column of Workspace: Inputs */}
