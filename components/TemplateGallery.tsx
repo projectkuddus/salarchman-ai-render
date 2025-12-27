@@ -5,6 +5,7 @@ import { MaterialSwapWorkspace } from './MaterialSwapWorkspace';
 import { SiteAnalysisWorkspace } from './SiteAnalysisWorkspace';
 import { DesignInsertionWorkspace } from './DesignInsertionWorkspace';
 import { FloorPlanWorkspace } from './FloorPlanWorkspace';
+import { BuildingRestorationWorkspace } from './BuildingRestorationWorkspace';
 
 export interface Template {
     id: string;
@@ -116,11 +117,11 @@ export const TEMPLATES: Template[] = [
         title: 'Building Restoration',
         description: 'Visualize restoration of old or damaged buildings.',
         category: 'Exterior',
-        baseImage: 'https://images.unsplash.com/photo-1599695665288-6625272c72b8?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1599695665288-6625272c72b8?q=80&w=800&auto=format&fit=crop', // Placeholder
-        prompt: 'Architectural restoration visualization. Restore the building to its original glory. Clean facade, repaired details, fresh paint. Photorealistic.',
-        style: 'Restoration',
-        instructions: 'Upload a photo of an old building to see it restored. (Coming Soon)'
+        baseImage: '/templates/restoration-input.png',
+        outputImage: '/templates/restoration-output.png',
+        prompt: 'Restore this derelict building to a fully renovated state. Clean and repair all stonework. Replace boarded-up openings with new glazed doors and windows. Remove overgrown vegetation. Add contemporary lighting and a landscaped entrance. Keep the original architectural character and proportions.',
+        style: 'Realistic',
+        instructions: 'Upload a photo of an old building. Add details about the desired restoration.'
     },
     {
         id: 'cad-render',
@@ -186,6 +187,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     <DesignInsertionWorkspace template={selectedTemplate} />
                 ) : selectedTemplateId === 'floor-plan-iso' ? (
                     <FloorPlanWorkspace template={selectedTemplate} />
+                ) : selectedTemplateId === 'restoration' ? (
+                    <BuildingRestorationWorkspace template={selectedTemplate} />
                 ) : (
                     <>
                         {/* Left Column of Workspace: Inputs */}
