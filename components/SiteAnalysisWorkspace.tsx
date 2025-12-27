@@ -16,6 +16,7 @@ interface SiteData {
     topography: string;
     views: string;
     access: string;
+    googleMapsLink: string;
 }
 
 export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ template }) => {
@@ -23,12 +24,13 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
     const [sketchImage, setSketchImage] = useState<string | null>(null);
     const [siteData, setSiteData] = useState<SiteData>({
         location: '',
-        northOrientation: 'North',
+        northOrientation: 'Top (Up)',
         windDirection: 'SW',
         noiseSources: '',
         topography: '',
         views: '',
-        access: ''
+        access: '',
+        googleMapsLink: ''
     });
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedImage, setGeneratedImage] = useState<string | null>(template.outputImage || null);
@@ -58,12 +60,30 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
 
         try {
             // Detailed prompt from the user's reference image
-            const basePrompt = `Create a site analysis diagram from this aerial image in a flat vector graphic style. The view is orientated north-facing (north at the top). Use the visible map labels for context to understand the site and surroundings, but remove all existing labels and icons from the final output. Use a muted, desaturated base map with soft greys for buildings and pale tones for context. Retain landscape features such as trees, grass, parks, and water - render these as simplified vector shapes in soft pastel tones (sage greens for vegetation, pale blues for water). Identify the site marked with a red boundary line (if visible, otherwise infer from context or center) and fill it with a soft pastel red with a bold red outline. Add a transparent gradient halo around the site showing its zone of influence. Add dashed radial lines for key sight lines and view corridors to notable landmarks. Show a single sun path arc across the bottom of the diagram - rising from the east (right side) and setting in the west (left side) with simple yellow sun icons at each end and a curved arrow connecting them. Show primary pedestrian and vehicle access routes with bold black arrows. Include a simple north arrow pointing to the top of the diagram. Add your own clean sans-serif labels with leader lines identifying key features, streets, and landmarks relevant to the site. Keep it clean, diagrammatic, and presentation-ready - no photorealism.`;
+            const basePrompt = `Create a detailed 3D isometric site analysis diagram from this aerial image. The view should be a 3D bird's-eye view (isometric projection) looking down at the site. Extrude all buildings to show their massing and height relative to the context. The site itself should be highlighted with a soft, translucent pastel red volume or a bold red outline on the ground plane.
+
+            Style & Aesthetics:
+            - Clean, professional architectural presentation style.
+            - Soft, matte materials (clay render or white model aesthetic with pastel accents).
+            - Muted colors: Sage greens for trees/parks, pale blues for water, soft greys for surrounding context buildings.
+            - No photorealism - keep it diagrammatic and readable.
+
+            Analysis Elements (3D):
+            - Sun Path: A floating 3D arc showing the sun's trajectory (East to West) with a yellow sun sphere.
+            - Wind: Floating 3D arrows indicating prevailing wind direction (curved or straight, soft blue/white).
+            - Access: 3D arrows draped over the roads showing vehicle and pedestrian entry points.
+            - Views: Dashed cones of vision or lines radiating from the site to key landmarks.
+            - Labels: Clean, floating text labels with leader lines pointing to key features (e.g., "Main Road", "Park", "River").
+            
+            Context:
+            - Use the provided Google Maps location (if any) and visual cues from the image to infer the correct building heights and density.
+            - Remove existing map labels/icons from the base image.`;
 
             const siteContext = `
             SITE CONTEXT & ENVIRONMENTAL DATA:
             - Location: ${siteData.location}
-            - North Orientation: ${siteData.northOrientation}
+            - Google Maps Link: ${siteData.googleMapsLink}
+            - North Orientation (in input image): ${siteData.northOrientation}
             - Prevailing Wind: From ${siteData.windDirection}
             - Noise Sources: ${siteData.noiseSources}
             - Topography: ${siteData.topography}
@@ -108,8 +128,8 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
             const result = await generateArchitecturalRender(
                 baseImage,
                 'Diagram', // Style
-                'Vector Site Analysis', // Style Instruction
-                ViewType.TOPSHOT, // View Type
+                '3D Isometric Site Analysis', // Style Instruction
+                ViewType.AXONOMETRIC, // View Type
                 fullPrompt, // Additional Prompt
                 null, // Site
                 sketchImage, // Reference (Sketch)
@@ -185,29 +205,41 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                         />
                     </div>
 
+                    {/* Google Maps Link */}
+                    <div>
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><MapPin size={10} /> Google Maps Link (Optional)</label>
+                        <input
+                            type="text"
+                            value={siteData.googleMapsLink}
+                            onChange={(e) => setSiteData({ ...siteData, googleMapsLink: e.target.value })}
+                            placeholder="Paste Google Maps URL here..."
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        />
+                    </div>
+
                     <div className="grid grid-cols-2 gap-3">
                         {/* North Orientation */}
                         <div>
-                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Compass size={10} /> North</label>
+                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Compass size={10} /> Where is North in this image?</label>
                             <select
                                 value={siteData.northOrientation}
                                 onChange={(e) => setSiteData({ ...siteData, northOrientation: e.target.value })}
                                 className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
                             >
-                                {['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'].map(dir => (
+                                {['Top (Up)', 'Top-Right', 'Right', 'Bottom-Right', 'Bottom (Down)', 'Bottom-Left', 'Left', 'Top-Left'].map(dir => (
                                     <option key={dir} value={dir}>{dir}</option>
                                 ))}
                             </select>
                         </div>
                         {/* Wind Direction */}
                         <div>
-                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Wind size={10} /> Wind From</label>
+                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Wind size={10} /> Prevailing Wind (Cardinal)</label>
                             <select
                                 value={siteData.windDirection}
                                 onChange={(e) => setSiteData({ ...siteData, windDirection: e.target.value })}
                                 className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
                             >
-                                {['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'].map(dir => (
+                                {['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].map(dir => (
                                     <option key={dir} value={dir}>{dir}</option>
                                 ))}
                             </select>
