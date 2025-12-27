@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             viewType,
             additionalPrompt,
             siteBase64Image,
-            referenceBase64Image,
+            referenceBase64Images, // Changed from single to array
             aspectRatio,
             imageSize,
             selectedVerbs,
@@ -70,8 +70,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             parts.push({ inlineData: { data: siteBase64Image.split(',')[1] || siteBase64Image, mimeType: getMimeType(siteBase64Image) } });
         }
 
-        if (referenceBase64Image) {
-            parts.push({ inlineData: { data: referenceBase64Image.split(',')[1] || referenceBase64Image, mimeType: getMimeType(referenceBase64Image) } });
+        if (referenceBase64Images && Array.isArray(referenceBase64Images)) {
+            referenceBase64Images.forEach((img: string) => {
+                parts.push({
+                    inlineData: {
+                        data: img.split(',')[1] || img,
+                        mimeType: getMimeType(img),
+                    },
+                });
+            });
         }
 
         if (req.body.material1Image) {

@@ -12,24 +12,19 @@ interface SiteData {
     location: string;
     northOrientation: string;
     windDirection: string;
-    noiseSources: string;
-    topography: string;
-    views: string;
-    access: string;
+    projectDetails: string;
     googleMapsLink: string;
 }
 
 export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ template }) => {
     const [baseImage, setBaseImage] = useState<string | null>(template.baseImage);
     const [sketchImage, setSketchImage] = useState<string | null>(null);
+    const [styleImages, setStyleImages] = useState<string[]>([]);
     const [siteData, setSiteData] = useState<SiteData>({
         location: '',
         northOrientation: 'Top (Up)',
         windDirection: 'SW',
-        noiseSources: '',
-        topography: '',
-        views: '',
-        access: '',
+        projectDetails: '',
         googleMapsLink: ''
     });
     const [isGenerating, setIsGenerating] = useState(false);
@@ -38,6 +33,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
 
     const baseInputRef = useRef<HTMLInputElement>(null);
     const sketchInputRef = useRef<HTMLInputElement>(null);
+    const styleInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setFunc: (val: string | null) => void) => {
         const file = e.target.files?.[0];
@@ -49,6 +45,21 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                 }
             };
             reader.readAsDataURL(file);
+        }
+    };
+
+    const handleStyleImagesUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            Array.from(files).forEach((file: File) => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    if (event.target?.result && typeof event.target.result === 'string') {
+                        setStyleImages(prev => [...prev, event.target.result as string]);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
         }
     };
 
@@ -107,10 +118,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
             - Google Maps Link: ${siteData.googleMapsLink}
             - North Orientation (in input image): ${siteData.northOrientation}
             - Prevailing Wind: From ${siteData.windDirection}
-            - Noise Sources: ${siteData.noiseSources}
-            - Topography: ${siteData.topography}
-            - Key Views: ${siteData.views}
-            - Access & Circulation: ${siteData.access}
+            - Project Details & Constraints: ${siteData.projectDetails}
             `;
 
             let fullPrompt = `${basePrompt} \n\n${siteContext}`;
@@ -149,22 +157,22 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
 
             const result = await generateArchitecturalRender(
                 baseImage,
-                'Diagram', // Style
-                '3D Isometric Site Analysis', // Style Instruction
-                ViewType.AXONOMETRIC, // View Type
-                fullPrompt, // Additional Prompt
-                null, // Site
-                sketchImage, // Reference (Sketch)
-                selectedAspectRatio, // Aspect Ratio
-                '1K', // Image Size
-                [], // Verbs
-                undefined, // Ideation Config
-                undefined, // Diagram Type
-                'Exterior', // Create Mode
-                [], // Atmospheres
-                undefined, // Elevation Side
-                null, // Material 1
-                null // Material 2
+                'Diagram',
+                '3D Isometric Site Analysis',
+                ViewType.AXONOMETRIC,
+                fullPrompt,
+                sketchImage, // siteBase64Image (Context)
+                styleImages, // referenceBase64Images (Style)
+                selectedAspectRatio,
+                '1K',
+                [],
+                undefined,
+                undefined,
+                'Exterior',
+                [],
+                undefined,
+                null,
+                null
             );
 
             setGeneratedImage(result);
@@ -268,52 +276,43 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                         </div>
                     </div>
 
-                    {/* Noise Sources */}
+                    {/* Project Details */}
                     <div>
-                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Volume2 size={10} /> Noise Sources</label>
-                        <input
-                            type="text"
-                            value={siteData.noiseSources}
-                            onChange={(e) => setSiteData({ ...siteData, noiseSources: e.target.value })}
-                            placeholder="e.g. Highway to the North, Train line"
-                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><MapPin size={10} /> Project Details</label>
+                        <textarea
+                            value={siteData.projectDetails}
+                            onChange={(e) => setSiteData({ ...siteData, projectDetails: e.target.value })}
+                            placeholder="Describe site conditions, constraints, design goals, noise sources, topography, views, access..."
+                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 min-h-[100px]"
                         />
                     </div>
 
-                    {/* Topography */}
-                    <div>
-                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Mountain size={10} /> Topography</label>
-                        <input
-                            type="text"
-                            value={siteData.topography}
-                            onChange={(e) => setSiteData({ ...siteData, topography: e.target.value })}
-                            placeholder="e.g. Flat, Sloping South, Steep"
-                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-                        />
-                    </div>
-
-                    {/* Key Views */}
-                    <div>
-                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Eye size={10} /> Key Views</label>
-                        <input
-                            type="text"
-                            value={siteData.views}
-                            onChange={(e) => setSiteData({ ...siteData, views: e.target.value })}
-                            placeholder="e.g. View to River, Park view"
-                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-                        />
-                    </div>
-
-                    {/* Access */}
-                    <div>
-                        <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Footprints size={10} /> Access & Circulation</label>
-                        <input
-                            type="text"
-                            value={siteData.access}
-                            onChange={(e) => setSiteData({ ...siteData, access: e.target.value })}
-                            placeholder="e.g. Main entry from High St, Service from rear"
-                            className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-                        />
+                    {/* Style Reference Images */}
+                    <div className="pt-2 border-t border-slate-100">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <Sparkles size={10} /> Style References (Optional)
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                            {styleImages.map((img, idx) => (
+                                <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border border-slate-200 group">
+                                    <img src={img} alt={`Style ${idx}`} className="w-full h-full object-cover" />
+                                    <button
+                                        onClick={() => setStyleImages(prev => prev.filter((_, i) => i !== idx))}
+                                        className="absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >
+                                        <X size={10} />
+                                    </button>
+                                </div>
+                            ))}
+                            <div
+                                className="aspect-square border border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors"
+                                onClick={() => styleInputRef.current?.click()}
+                            >
+                                <Upload size={16} className="text-slate-400 mb-1" />
+                                <span className="text-[10px] text-slate-500">Add</span>
+                                <input type="file" ref={styleInputRef} onChange={handleStyleImagesUpload} multiple className="hidden" />
+                            </div>
+                        </div>
                     </div>
 
                     {/* Bonus Sketch Upload */}

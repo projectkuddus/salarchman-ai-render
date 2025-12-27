@@ -10,7 +10,7 @@ export const generateArchitecturalRender = async (
     viewType: ViewType,
     additionalPrompt: string = "",
     siteBase64Image?: string | null,
-    referenceBase64Image?: string | null,
+    referenceBase64Images: string[] = [], // Changed to array
     aspectRatio: AspectRatio = "1:1",
     imageSize: ImageSize = "1K",
     selectedVerbs: string[] = [],
@@ -38,7 +38,9 @@ export const generateArchitecturalRender = async (
         );
 
         const compressedSiteImage = siteBase64Image ? await compressImage(siteBase64Image) : null;
-        const compressedReferenceImage = referenceBase64Image ? await compressImage(referenceBase64Image) : null;
+        const compressedReferenceImages = await Promise.all(
+            referenceBase64Images.map(img => compressImage(img))
+        );
         const compressedMaterial1Image = material1Image ? await compressImage(material1Image) : null;
         const compressedMaterial2Image = material2Image ? await compressImage(material2Image) : null;
 
@@ -99,7 +101,7 @@ export const generateArchitecturalRender = async (
         INPUTS:
         1. First Image: The **Base Room/Space** (Sketch or Photo).
         ${additionalBaseImages.length > 0 ? `2-${1 + additionalBaseImages.length}. Additional views of the Base Space.` : ''}
-        ${referenceBase64Image ? `${2 + additionalBaseImages.length}. Style Reference.` : ''}
+        ${referenceBase64Images.length > 0 ? `${2 + additionalBaseImages.length}-${2 + additionalBaseImages.length + referenceBase64Images.length - 1}. Style References.` : ''}
 
         TASK:
         Transform the Base Space into a high-end interior design render.
@@ -118,11 +120,11 @@ export const generateArchitecturalRender = async (
         USER NOTES: ${additionalPrompt}
         `;
 
-            if (referenceBase64Image) {
+            if (referenceBase64Images.length > 0) {
                 if (styleName === 'Similar to Reference Image') {
-                    prompt += `\nREFERENCE IMAGE INSTRUCTION: STRICTLY match the interior style, furniture, lighting, and mood of the Reference Image. The output must look like it belongs to the same project as the reference.`;
+                    prompt += `\nREFERENCE IMAGE INSTRUCTION: STRICTLY match the interior style, furniture, lighting, and mood of the Reference Images. The output must look like it belongs to the same project as the references.`;
                 } else {
-                    prompt += `\nREFERENCE IMAGE INSTRUCTION: Extract the color palette, furniture style, and material choices from the Reference Image and apply them to the Base Space.`;
+                    prompt += `\nREFERENCE IMAGE INSTRUCTION: Extract the color palette, furniture style, and material choices from the Reference Images and apply them to the Base Space.`;
                 }
             }
 
@@ -160,7 +162,7 @@ export const generateArchitecturalRender = async (
 
             let imageIndex = 2 + additionalBaseImages.length;
             let siteImageIndex = -1;
-            let refImageIndex = -1;
+            let refImageStartIndex = -1;
             let mat1ImageIndex = -1;
             let mat2ImageIndex = -1;
 
@@ -170,10 +172,10 @@ export const generateArchitecturalRender = async (
                 imageIndex++;
             }
 
-            if (referenceBase64Image) {
-                prompt += `\n      ${imageIndex}. Style Reference.`;
-                refImageIndex = imageIndex;
-                imageIndex++;
+            if (referenceBase64Images.length > 0) {
+                prompt += `\n      ${imageIndex}-${imageIndex + referenceBase64Images.length - 1}. Style References.`;
+                refImageStartIndex = imageIndex;
+                imageIndex += referenceBase64Images.length;
             }
 
             if (material1Image) {
@@ -213,13 +215,13 @@ export const generateArchitecturalRender = async (
                 }
             }
 
-            if (referenceBase64Image) {
+            if (referenceBase64Images.length > 0) {
                 if (viewType === ViewType.SIMILAR_TO_REF) {
-                    prompt += `\nREFERENCE: Use Image #${refImageIndex} as the strict reference for CAMERA ANGLE and PERSPECTIVE. Also apply materials and mood from it.`;
+                    prompt += `\nREFERENCE: Use Image #${refImageStartIndex} as the strict reference for CAMERA ANGLE and PERSPECTIVE. Also apply materials and mood from it.`;
                 } else if (styleName === RenderStyle.SIMILAR_TO_REF) {
-                    prompt += `\nREFERENCE: Use Image #${refImageIndex} as the strict reference for ARCHITECTURAL STYLE, MATERIALS, and MOOD.`;
+                    prompt += `\nREFERENCE: Use Images #${refImageStartIndex}-${refImageStartIndex + referenceBase64Images.length - 1} as the strict reference for ARCHITECTURAL STYLE, MATERIALS, and MOOD.`;
                 } else {
-                    prompt += `\nREFERENCE: Apply materials and mood from Image #${refImageIndex}.`;
+                    prompt += `\nREFERENCE: Apply materials and mood from Images #${refImageStartIndex}-${refImageStartIndex + referenceBase64Images.length - 1}.`;
                 }
             }
 
@@ -242,7 +244,7 @@ export const generateArchitecturalRender = async (
                 base64Image: compressedBase64Image,
                 additionalBaseImages: compressedAdditionalImages,
                 siteBase64Image: compressedSiteImage,
-                referenceBase64Image: compressedReferenceImage,
+                referenceBase64Images: compressedReferenceImages, // Send array
                 material1Image: compressedMaterial1Image,
                 material2Image: compressedMaterial2Image,
                 aspectRatio,
