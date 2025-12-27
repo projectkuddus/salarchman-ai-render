@@ -60,24 +60,46 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
 
         try {
             // Detailed prompt from the user's reference image
-            const basePrompt = `Create a detailed 3D isometric site analysis diagram from this aerial image. The view should be a 3D bird's-eye view (isometric projection) looking down at the site. Extrude all buildings to show their massing and height relative to the context. The site itself should be highlighted with a soft, translucent pastel red volume or a bold red outline on the ground plane.
-
-            Style & Aesthetics:
-            - Clean, professional architectural presentation style.
-            - Soft, matte materials (clay render or white model aesthetic with pastel accents).
-            - Muted colors: Sage greens for trees/parks, pale blues for water, soft greys for surrounding context buildings.
-            - No photorealism - keep it diagrammatic and readable.
-
-            Analysis Elements (3D):
-            - Sun Path: A floating 3D arc showing the sun's trajectory (East to West) with a yellow sun sphere.
-            - Wind: Floating 3D arrows indicating prevailing wind direction (curved or straight, soft blue/white).
-            - Access: 3D arrows draped over the roads showing vehicle and pedestrian entry points.
-            - Views: Dashed cones of vision or lines radiating from the site to key landmarks.
-            - Labels: Clean, floating text labels with leader lines pointing to key features (e.g., "Main Road", "Park", "River").
+            const basePrompt = `Create a highly detailed, professional 3D isometric site analysis diagram from this aerial image.
             
-            Context:
-            - Use the provided Google Maps location (if any) and visual cues from the image to infer the correct building heights and density.
-            - Remove existing map labels/icons from the base image.`;
+            CRITICAL: The specific site is marked with a RED OUTLINE or RED FILL in the input image. You MUST strictly isolate this area as the project site. Extrude the massing within this red boundary to show the proposed building volume (conceptual massing).
+
+            LOCATION CONTEXT:
+            - Use the provided Location and Google Maps Link to determine the correct latitude/longitude.
+            - ACCURATE SUN PATH: Generate a 3D sun path arc that is scientifically accurate for this specific location's latitude. Show the sun's position (e.g., Summer Solstice).
+            - ACCURATE WIND: Use the prevailing wind direction for this specific geographic region (unless overridden by user input).
+
+            REQUIRED ANALYSIS LAYERS (Must be visualized in 3D):
+            1.  **Sun & Shading**:
+                -   Draw a clear yellow 3D arc for the sun path.
+                -   Cast realistic shadows based on the sun's position to show self-shading and impact on neighbors.
+                -   Label "Solar Heat Gain" on exposed facades.
+            
+            2.  **Wind & Ventilation**:
+                -   Draw 3D flow arrows around the building massing.
+                -   Blue arrows for cool prevailing winds.
+                -   Red arrows for blocked or warm air pockets.
+                -   Show how the building form allows for cross-ventilation if applicable.
+
+            3.  **Access & Circulation**:
+                -   **Drop-off**: Mark the main vehicle drop-off point with a specific icon/label.
+                -   **Service**: Show a separate service route/entry with a dashed line.
+                -   **Pedestrian**: Bold arrows showing main entry approach.
+
+            4.  **Noise & Privacy**:
+                -   **Noise**: Visualize noise sources (e.g., from main roads) using jagged/zigzag lines or sound wave icons hitting the facade.
+                -   **Privacy**: Use gradient planes or icons to indicate private zones vs public active frontages.
+
+            5.  **Vegetation & Topography**:
+                -   **Existing Trees**: Identify existing trees on the site (from the image). Mark them as "Preserved" with green canopies.
+                -   **Slope**: If the site is sloping (check user input), show drainage arrows pointing downslope.
+
+            STYLE:
+            -   High-end architectural diagram.
+            -   Clean white/clay model base for the city context.
+            -   Pastel colors for analysis overlays (Yellow=Sun, Blue=Wind, Red=Site/Noise, Green=Nature).
+            -   Floating 3D text labels with leader lines for all key elements.
+            -   Remove all original map labels/pins.`;
 
             const siteContext = `
             SITE CONTEXT & ENVIRONMENTAL DATA:
@@ -181,7 +203,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                         >
                             <Upload size={32} className="mb-3 opacity-50" />
                             <p className="text-sm font-medium text-slate-900">Upload Site Map</p>
-                            <p className="text-xs text-slate-400 mt-1">Google Maps Screenshot or Plan</p>
+                            <p className="text-xs text-slate-400 mt-1 text-center px-4">Google Maps Screenshot<br /><span className="text-red-500 font-medium">Mark site with RED outline</span></p>
                             <input type="file" ref={baseInputRef} onChange={(e) => handleFileUpload(e, setBaseImage)} className="hidden" />
                         </div>
                     )}
