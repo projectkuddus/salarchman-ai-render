@@ -39,7 +39,7 @@ export const generateArchitecturalRender = async (
 
         const compressedSiteImage = siteBase64Image ? await compressImage(siteBase64Image) : null;
         const compressedReferenceImages = await Promise.all(
-            referenceBase64Images.map(img => compressImage(img))
+            (referenceBase64Images || []).map(img => compressImage(img))
         );
         const compressedMaterial1Image = material1Image ? await compressImage(material1Image) : null;
         const compressedMaterial2Image = material2Image ? await compressImage(material2Image) : null;

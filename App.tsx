@@ -656,7 +656,7 @@ function App() {
 
       const resultImage = await generateArchitecturalRender(
         uploadedImage, selectedStyle, styleInstruction, viewToUse, prompt,
-        createMode === 'Exterior' ? siteImage : null, referenceImage, selectedAspectRatio, selectedImageSize,
+        createMode === 'Exterior' ? siteImage : null, referenceImage ? [referenceImage] : [], selectedAspectRatio, selectedImageSize,
         verbsToUse, ideationConfig, diagramTypeToUse, createMode,
         activeTab === 'render' && createMode === 'Exterior' ? selectedAtmospheres : [],
         (activeTab === 'render' && createMode === 'Exterior' && selectedView === ViewType.ELEVATION) ? elevationSide : undefined,
