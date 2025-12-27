@@ -69,21 +69,23 @@ export const BuildingRestorationWorkspace: React.FC<BuildingRestorationWorkspace
         setError(null);
 
         try {
-            const fullPrompt = `Restore this derelict building to a fully renovated state. 
+            const fullPrompt = `Restore this derelict building to a BRAND NEW, fully finished state.
             
             CORE TASKS:
-            - Clean and repair all stonework/brickwork.
-            - Replace boarded-up openings with new glazed doors and windows.
-            - Remove overgrown vegetation and debris.
-            - Add contemporary lighting and a landscaped entrance.
-            - Keep the original architectural character and proportions.
-            - Keep everything else in the scene exactly the same (background, context).
+            - INTELLIGENTLY RECONSTRUCT missing or damaged architectural details (cornices, moldings, railings) that may have been lost over time.
+            - Make the building look exactly as it did on the day it was built: pristine, clean, and perfect.
+            - Clean and repair all stonework/brickwork to a new condition.
+            - Replace boarded-up openings with new glazed doors and windows that match the original style.
+            - Remove ALL overgrown vegetation, debris, and signs of decay.
+            - Add subtle contemporary lighting and a landscaped entrance if appropriate.
+            - Keep the original architectural character and proportions strictly intact.
+            - Keep the background and context exactly the same.
             
             SPECIFIC DETAILS:
             ${projectDetails}
             
             OUTPUT STYLE:
-            Photorealistic, high-end architectural photography. Restored to its peak condition.`;
+            Photorealistic, high-end architectural photography. Brand new, pristine condition.`;
 
             // Calculate aspect ratio
             let selectedAspectRatio: any = '16:9';
