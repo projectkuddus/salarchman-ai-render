@@ -3,6 +3,7 @@ import { Layout, Home, Building2, Trees, Sofa, ArrowRight, Star, Copy, Box, Spar
 import { Button } from './Button';
 import { MaterialSwapWorkspace } from './MaterialSwapWorkspace';
 import { SiteAnalysisWorkspace } from './SiteAnalysisWorkspace';
+import { DesignInsertionWorkspace } from './DesignInsertionWorkspace';
 
 export interface Template {
     id: string;
@@ -90,13 +91,13 @@ export const TEMPLATES: Template[] = [
     {
         id: 'design-insertion',
         title: 'Design Insertion',
-        description: 'Insert your design into an existing site photo.',
+        description: 'Seamlessly insert your 3D model into a site photo.',
         category: 'Exterior',
-        baseImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=800&auto=format&fit=crop',
+        baseImage: '/templates/design-insertion-input.jpg',
+        outputImage: '/templates/design-insertion-output.jpg',
         prompt: 'Photorealistic architectural montage. Insert modern building design into the provided site context. Match lighting, shadows, and perspective.',
         style: 'Realistic',
-        instructions: 'Upload a site photo and your 3D model view to merge them seamlessly. (Coming Soon)'
+        instructions: 'Upload a site photo (with RED OUTLINE for location) and your 3D model view. The AI will merge them seamlessly.'
     },
     {
         id: 'floor-plan-iso',
@@ -180,6 +181,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     <MaterialSwapWorkspace template={selectedTemplate} />
                 ) : selectedTemplateId === 'site-analysis' ? (
                     <SiteAnalysisWorkspace template={selectedTemplate} />
+                ) : selectedTemplateId === 'design-insertion' ? (
+                    <DesignInsertionWorkspace template={selectedTemplate} />
                 ) : (
                     <>
                         {/* Left Column of Workspace: Inputs */}
