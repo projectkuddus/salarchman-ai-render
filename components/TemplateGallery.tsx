@@ -81,8 +81,8 @@ export const TEMPLATES: Template[] = [
         title: 'Site Analysis Diagram',
         description: 'Generate international studio-level 3D site analysis with environmental data.',
         category: 'Urban',
-        baseImage: '/templates/site analysis input image.jpg',
-        outputImage: '/templates/site-analysis_output.png',
+        baseImage: '/templates/site-analysis-input-image.jpg',
+        outputImage: '/templates/site-analysis-output.png',
         prompt: 'International studio level architectural site analysis diagram. 3D isometric view. Extrude volume massing based on the input plan/satellite image to show building heights. Features: 1) Sun path + shading logic with solar arc. 2) Wind flow + ventilation logic arrows. 3) Views + privacy analysis. 4) Noise map visualization. 5) Slope + drainage indicators. 6) Existing trees preserved vs removed. 7) Access + drop-off + service routes. 8) Location map hierarchy (city -> neighborhood -> plot). 9) Site plan details: edges, access, levels. 10) Sun/shadow diagrams + heat zones. 11) Wind diagram + comfort zones. 12) Surrounding building heights / privacy. 13) Opportunities vs constraints (simple 2-column layout). 14) Key design response rules (e.g., "open to north, block west sun"). Style: Professional, clean, high-end architectural presentation, vector-style overlays on 3D massing, pastel colors, clear legends.',
         style: 'Diagram',
         instructions: 'Upload a site plan or satellite image. In the "Project Details" section, please provide: 1) Site Location & Coordinates, 2) North Orientation, 3) Prevailing Wind Direction, 4) Main Noise Sources, 5) Topography/Slope details, 6) Key Views to preserve/block. This ensures the analysis is 100% accurate to your site.'
