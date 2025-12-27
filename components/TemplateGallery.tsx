@@ -6,6 +6,7 @@ import { SiteAnalysisWorkspace } from './SiteAnalysisWorkspace';
 import { DesignInsertionWorkspace } from './DesignInsertionWorkspace';
 import { FloorPlanWorkspace } from './FloorPlanWorkspace';
 import { BuildingRestorationWorkspace } from './BuildingRestorationWorkspace';
+import { CadRenderWorkspace } from './CadRenderWorkspace';
 
 export interface Template {
     id: string;
@@ -128,11 +129,11 @@ export const TEMPLATES: Template[] = [
         title: 'CAD to Plan/Section Render',
         description: 'Turn CAD line drawings into textured renders.',
         category: 'Interior',
-        baseImage: 'https://images.unsplash.com/photo-1631557348938-1a52994f7963?q=80&w=800&auto=format&fit=crop',
-        outputImage: 'https://images.unsplash.com/photo-1631557348938-1a52994f7963?q=80&w=800&auto=format&fit=crop', // Placeholder
-        prompt: 'Architectural plan render, top-down view. Realistic textures, flooring, furniture, and shadows. Professional presentation style.',
-        style: 'Plan Render',
-        instructions: 'Upload a CAD file or line drawing to generate a textured plan or section render. (Coming Soon)'
+        baseImage: '/templates/cad-render-input.png',
+        outputImage: '/templates/cad-render-input.png', // Using input as placeholder for output
+        prompt: 'Render this CAD line drawing into a professional architectural presentation. Maintain exact scale. Add realistic textures, lighting, and depth.',
+        style: 'Realistic',
+        instructions: 'Upload a CAD plan, section, or elevation. Select the view type and add details.'
     }
 ];
 
@@ -189,6 +190,8 @@ export const TemplateGallery: React.FC<TemplateGalleryProps> = ({ selectedTempla
                     <FloorPlanWorkspace template={selectedTemplate} />
                 ) : selectedTemplateId === 'restoration' ? (
                     <BuildingRestorationWorkspace template={selectedTemplate} />
+                ) : selectedTemplateId === 'cad-render' ? (
+                    <CadRenderWorkspace template={selectedTemplate} />
                 ) : (
                     <>
                         {/* Left Column of Workspace: Inputs */}
