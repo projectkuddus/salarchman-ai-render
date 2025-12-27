@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Box, Upload, X, RefreshCw, Sparkles, Download, Maximize, Image as ImageIcon, Map, MapPin, Wind, Volume2, Mountain, Eye, Footprints, Compass } from 'lucide-react';
+import { Box, Upload, X, RefreshCw, Sparkles, Download, Maximize, Image as ImageIcon, Map, MapPin, Volume2, Mountain, Eye, Footprints } from 'lucide-react';
 import { Button } from './Button';
 import { generateArchitecturalRender } from '../services/geminiService';
 import { ViewType, RenderStyle } from '../types';
@@ -10,8 +10,7 @@ interface SiteAnalysisWorkspaceProps {
 
 interface SiteData {
     location: string;
-    northOrientation: string;
-    windDirection: string;
+
     projectDetails: string;
     googleMapsLink: string;
 }
@@ -22,8 +21,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
     const [styleImages, setStyleImages] = useState<string[]>([]);
     const [siteData, setSiteData] = useState<SiteData>({
         location: '',
-        northOrientation: 'Top (Up)',
-        windDirection: 'SW',
+
         projectDetails: '',
         googleMapsLink: ''
     });
@@ -116,8 +114,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
             SITE CONTEXT & ENVIRONMENTAL DATA:
             - Location: ${siteData.location}
             - Google Maps Link: ${siteData.googleMapsLink}
-            - North Orientation (in input image): ${siteData.northOrientation}
-            - Prevailing Wind: From ${siteData.windDirection}
+
             - Project Details & Constraints: ${siteData.projectDetails}
             `;
 
@@ -247,34 +244,7 @@ export const SiteAnalysisWorkspace: React.FC<SiteAnalysisWorkspaceProps> = ({ te
                         />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                        {/* North Orientation */}
-                        <div>
-                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Compass size={10} /> Where is North in this image?</label>
-                            <select
-                                value={siteData.northOrientation}
-                                onChange={(e) => setSiteData({ ...siteData, northOrientation: e.target.value })}
-                                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-                            >
-                                {['Top (Up)', 'Top-Right', 'Right', 'Bottom-Right', 'Bottom (Down)', 'Bottom-Left', 'Left', 'Top-Left'].map(dir => (
-                                    <option key={dir} value={dir}>{dir}</option>
-                                ))}
-                            </select>
-                        </div>
-                        {/* Wind Direction */}
-                        <div>
-                            <label className="text-xs font-medium text-slate-700 mb-1 block flex items-center gap-1"><Wind size={10} /> Prevailing Wind (Cardinal)</label>
-                            <select
-                                value={siteData.windDirection}
-                                onChange={(e) => setSiteData({ ...siteData, windDirection: e.target.value })}
-                                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-                            >
-                                {['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].map(dir => (
-                                    <option key={dir} value={dir}>{dir}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
+
 
                     {/* Project Details */}
                     <div>
